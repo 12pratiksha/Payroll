@@ -1,0 +1,743 @@
+<div class="page-wrapper">
+
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Selected List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Selected List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()"><i class="fas fa-bars"></i> Show
+                        Table</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <div class="card">
+                    <!-- <div class="card-header">
+                        <h3 class="card-title mb-0">  Candidate Information  </h3>
+                       
+                    </div> -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profile-basic" *ngIf="details.length>0">
+                                    <div class="row" *ngFor="let item of details">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <div class="title">Name:</div>
+                                                        <div class="text">{{item.first_name}} {{item.middle_name}}
+                                                            {{item.last_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Qualification:</div>
+                                                        <div class="text">{{item.description}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">DOB</div>
+                                                        <div class="text">{{item.date_of_birth | date}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Experience</div>
+                                                        <div class="text">{{item.experience}}</div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+
+                                                <li>
+                                                    <div class="title">Email:</div>
+
+                                                    <div class="text">{{item.email}}</div>
+
+                                                </li>
+                                                <li>
+                                                    <div class="title">Position Applied</div>
+                                                    <div class="text"> {{item.designation}} </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Address:</div>
+                                                    <div class="text">{{item.city}} {{item.state}}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Skill:</div>
+                                                    <div class="text">{{item.skills}}</div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card" *ngIf="pTechRDetails.length>0">
+            <div class="card-header">
+                <h3 class="card-title mb-0"> Previous Technical Round Details </h3>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="profile-basic">
+                            <div class="row" *ngFor="let item of pTechRDetails; let i = index"
+                                style="border: 1px solid #000000;">
+                                <div class="col-md-6">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Round Name:</div>
+                                                <div class="text">{{item.round}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Evaluation Date:</div>
+                                                <div class="text">{{item.date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Interview Date:</div>
+                                                <div class="text">{{item.on_date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Job Knowledge:</div>
+                                                <div class="text">{{item.job_knowledge}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Candidate Enthusiasm:</div>
+                                                <div class="text">{{item.candidate_enthusiasm}}&nbsp;</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Personal Appearance:</div>
+                                                <div class="text">{{item.personal_appearance}}&nbsp;</div>
+                                            </li>
+
+
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Round Type:</div>
+                                            <div class="text">{{item.type}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interviewee:</div>
+                                            <div class="text">{{item.fname}} {{item.lname}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interview Time:</div>
+                                            <div class="text">{{item.at_time }}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Comments:</div>
+                                            <div class="text">{{item.comments}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title"> Overall Evaluation And Recommendation:</div>
+
+                                            <div class="text">{{item.overall_evaluation_and_recommendation}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Decision Making:</div>
+                                            <div class="text">{{item.decision_making}}&nbsp;</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="pHrRDetails.length>0">
+            <div class="card-header">
+                <h3 class="card-title mb-0"> Previous HR Round Details </h3>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="profile-basic">
+                            <div class="row" *ngFor="let item of pHrRDetails; let i = index"
+                                style="border: 1px solid #000000;">
+                                <div class="col-md-6">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Round Name:</div>
+                                                <div class="text">{{item.round}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Evaluation Date:</div>
+                                                <div class="text">{{item.date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Interview Date:</div>
+                                                <div class="text">{{item.on_date | date}}&nbsp;</div>
+                                            </li>
+
+
+                                            <li>
+                                                <div class="title">last_employer:</div>
+                                                <div class="text">{{item.last_employer}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Comments:</div>
+                                                <div class="text">{{item.additional_remarks}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Present Salary:</div>
+                                                <div class="text">{{item.present_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Expected Salary:</div>
+                                                <div class="text">{{item.expected_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Professional Presentation:</div>
+                                                <div class="text">{{item.professional_presentation}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Communication Skills:</div>
+                                                <div class="text">{{item.communication_skills}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Expected Salary:</div>
+                                                <div class="text">{{item.expected_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Has Applied Before</div>
+                                                <div class="text">{{item.has_candidate_applied_before}}&nbsp;</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="personal-info">
+
+                                        <li>
+                                            <div class="title">Round Type:</div>
+                                            <div class="text">{{item.type}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interviewee:</div>
+                                            <div class="text">{{item.fname}} {{item.lname}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interview Time:</div>
+                                            <div class="text">{{item.at_time }}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title"> Hiring Comments:</div>
+                                            <div class="text">{{item.hiring_comments}}&nbsp;</div>
+                                        </li>
+
+
+
+                                        <li>
+                                            <div class="title"> Other Benifits:</div>
+                                            <div class="text">{{item.other_benefits}}&nbsp;</div>
+                                        </li>
+
+
+                                        <li>
+                                            <div class="title">Reason For Leaving:</div>
+                                            <div class="text">{{item.reasonfor_leaving}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Additional Remarks:</div>
+                                            <div class="text">{{item.additional_remarks}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Present Salary:</div>
+                                            <div class="text">{{item.present_salary}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Salary Offered</div>
+                                            <div class="text">{{item.salary_offered}}&nbsp;</div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Appointment Form </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <form class="needs-validation" novalidate [formGroup]="offerForm">
+                                <div class="form-row row">
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Experience Checked?</label>
+                                                    <div class="leave-inline-form">
+
+                                                        <input type="radio" formControlName="experienceChecked"
+                                                            value="Yes">
+                                                          <label for="yes">Yes</label> &nbsp;&nbsp;
+                                                        <input type="radio" formControlName="experienceChecked"
+                                                            value="No">
+                                                          <label for="no">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Document 1</label>
+
+                                                    <div class="leave-inline-form">
+                                                        <input type="radio" id="yes2" formControlName="document1"
+                                                            value="Yes">
+                                                          <label for="yes">Yes</label> &nbsp;&nbsp;
+                                                        <input type="radio" id="no2" formControlName="document1"
+                                                            value="No">
+                                                          <label for="no">No</label>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <label class="focus-label">Attach Doc 1</label>
+                                        <input type="file" formControlName="attachDoc1" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Document 2</label>
+                                                    <div class="leave-inline-form">
+
+                                                        <input type="radio" id="yes3" formControlName="document2"
+                                                            value="Yes">
+                                                          <label for="yes">Yes</label> &nbsp;&nbsp;
+                                                        <input type="radio" id="no3" formControlName="document2"
+                                                            value="No">
+                                                          <label for="no">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <label class="focus-label">Attach Doc 2</label>
+                                        <input type="file" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Document 3</label>
+                                                    <div class="leave-inline-form">
+
+                                                        <input type="radio" id="yes4" formControlName="document3"
+                                                            value="Yes">
+                                                          <label for="yes">Yes</label> &nbsp;&nbsp;
+                                                        <input type="radio" id="no4" formControlName="document3"
+                                                            value="No">
+                                                          <label for="no">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <label class="focus-label">Attach Doc 3</label>
+                                        <input type="file" formControlName="attachDoc3" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+
+
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label> Joining Date <small class="text-danger">*</small></label>
+                                            <input type="text" class="form-control datetimepicker"
+                                                formControlName="joiningDate" bsDatepicker type="text"
+                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                            <small
+                                                *ngIf="offerForm.get('joiningDate').invalid && offerForm.get('joiningDate').touched"
+                                                class="text-danger"> *Joining Date is Required</small>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-sm-12">
+                                        <h3 class="card-title mb-0"> Other Details : </h3><br>
+
+
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Employee Code<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="employeeCode" class="form-control">
+                                            <small
+                                                *ngIf="offerForm.get('employeeCode').invalid && offerForm.get('employeeCode').touched"
+                                                class="text-danger"> *Employee Code is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Pan No<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="panno" class="form-control">
+                                            <small
+                                                *ngIf="offerForm.get('panno').invalid && offerForm.get('panno').touched"
+                                                class="text-danger"> *Pan No. is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Grade</label><small class="text-danger">*</small>
+                                            <select formControlName="grade" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of grade">{{item.name}}</option>
+
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('grade').invalid && offerForm.get('grade').touched"
+                                                class="text-danger"> *Grade is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Religion<small class="text-danger">*</small></label>
+                                            <select formControlName="religion" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of religion">{{item.name}}</option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('religion').invalid && offerForm.get('religion').touched"
+                                                class="text-danger"> *Religion is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Blood Group<small class="text-danger">*</small></label>
+                                            <select formControlName="bloodGroup" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of bloodGroup">{{item.name}}</option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('bloodGroup').invalid && offerForm.get('bloodGroup').touched"
+                                                class="text-danger"> *Blood Group is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Categories<small class="text-danger">*</small></label>
+                                            <select formControlName="categories" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of categories">{{item.categoryName}}</option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('categories').invalid && offerForm.get('categories').touched"
+                                                class="text-danger"> *Categories is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Department<small class="text-danger">*</small></label>
+                                            <select formControlName="department" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of departments">{{item.departmentName}}
+                                                </option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('department').invalid && offerForm.get('department').touched"
+                                                class="text-danger"> *Department is Required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Branch<small class="text-danger">*</small></label>
+                                            <select formControlName="branch" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of branchList">{{item.branchName}}</option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('branch').invalid && offerForm.get('branch').touched"
+                                                class="text-danger"> *Branch is Required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Permanant Address</label>
+                                            <input type="text" formControlName="permanantadd" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>whatsapp No</label>
+                                            <input type="text" formControlName="whatsappno" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Emergency Contact No.</label>
+                                            <input type="text" formControlName="emgcontactno" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Reporting Manager 1<small class="text-danger">*</small></label>
+                                            <select formControlName="reportingManager" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of lstEmployee" [value]="item.employeeCode">
+                                                    [{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}
+                                                </option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('reportingManager').invalid && offerForm.get('reportingManager').touched"
+                                                class="text-danger"> *Reporting Manager 1 is Required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Reporting Manager 2<small class="text-danger">*</small></label>
+                                            <select formControlName="reportingManager2"
+                                                class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of lstEmployee" [value]="item.employeeCode">
+                                                    [{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}
+                                                </option>
+                                            </select>
+                                            <small
+                                                *ngIf="offerForm.get('reportingManager2').invalid && offerForm.get('reportingManager2').touched"
+                                                class="text-danger"> *Reporting Manager 2 is Required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <input type="checkbox" class="checkbox-all" formControlName="probation"> <label
+                                            style="margin-left: 5px;"> Probation</label>
+
+                                        <div class="form-group form-focus mb-0" *ngIf="offerForm.value.probation">
+                                            <label>Probation Date<small class="text-danger">*</small></label>
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker
+                                                    [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }"
+                                                    formControlName="probationDate">
+                                                <small
+                                                    *ngIf="offerForm.get('probationDate').invalid && offerForm.get('probationDate').touched"
+                                                    class="text-danger"> *Probation Date is Required</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group form-focus mb-0">
+                                            <label>Template Name<small class="text-danger">*</small></label>
+                                            <ng-select class="form-select form-control" formControlName="templateName">
+                                                <ng-option value="">--Select--</ng-option>
+                                                <ng-option *ngFor="let item of template" [value]="item.templateId">[{{item.templateId}}] {{item.templateName}}</ng-option>
+                                            </ng-select>
+
+                                            <small *ngIf="offerForm.get('templateName').invalid && offerForm.get('templateName').touched" class="text-danger"> *Template Name is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3" style=" margin-top: 20px;">
+                                        <a class="btn btn-success btn-search" (click)="serach()"><i class="fas fa-search me-2"></i> Search </a>
+                                    </div>
+                                    
+                                    <div class="col-sm-12 col-md-12" *ngIf="!offerForm.get('templateName').invalid">
+                                        <section class="content" *ngIf="content" [innerHTML]="content"></section>
+
+                                        </div>
+
+                                        <div>
+                                            <div class="row">
+                                            <ng-container formArrayName="newRequest" *ngFor="let item of quantities().controls; let i = index;">
+
+                                                <div>
+                                                  
+                                                        <div class="col-sm-3 col-md-3">
+                                                            <div [formGroupName]="i" class="col-sm-3">
+                                                                <lable>Variable{{i+1}}:</lable>
+                                                                <input type="text" class="form-control" formControlName="variable">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                            </ng-container>
+                                        </div>
+                                        </div>
+
+                                        <div>
+                                            <div class="row">
+                                            <ng-container  *ngIf="offerLetter">
+
+                                                <div>
+                                                  
+                                                        <div class="col-sm-3 col-md-3">
+                                                        To Download Offer Letter Click Link    <td><a href="{{this.baseurl}}/empdoc/{{offerLetter}}" target="_blank" class="fas fa-bars" ></a></td>
+                                                        </div>
+                                                    </div>
+                                                
+                                            </ng-container>
+                                        </div>
+                                        </div>
+
+
+
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                    <button class="btn btn-primary" (click)="submit()">Submit</button>
+                                    <button class="btn" (click)="hideContainer()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>

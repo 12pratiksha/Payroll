@@ -1,0 +1,264 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Create Meeting</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Create Meeting</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="filter-row row" *ngIf="!showMyContainer">
+        <div class="col-md-12">
+
+            <form class="needs-validation" [formGroup]="filterMeeting">
+                <div class="row">
+
+                    <div class="col-sm-3 col-md-3">
+                        <label>From Date<small class="text-danger">*</small></label>
+                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fdate">
+                        <small *ngIf="filterMeeting.get('fdate').invalid && filterMeeting.get('fdate').touched" class="text-danger">*This field is required</small>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3">
+                        <label>To Date<small class="text-danger">*</small></label>
+                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="tdate">
+                        <small *ngIf="filterMeeting.get('tdate').invalid && filterMeeting.get('tdate').touched" class="text-danger">*This field is required</small>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3">
+                        <label class="focus-label">Status<small class="text-danger">*</small></label>
+                        <select type='text' class="form-control" formControlName="status">
+                                    <option value="">--Select--</option>
+                                    <option value="0">Pending</option>
+                                    <option value="1">CLose</option>
+                                    <option value="2">Cancel</option>
+                        </select>
+                        <small *ngIf="filterMeeting.get('status').invalid && filterMeeting.get('status').touched" class="text-danger">*This field is required</small>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3" style="margin-top: 12px;margin-top: 10px;">
+                        <a class="btn btn-primary" style="width: 250px;font-size: 18px;height: 5px; background-color: #38414A;border: #38414A; " (click)="search()">Search </a>
+                    </div>
+
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th style="width: 7px">Attendees</th>
+                                    <th>Meeting Created By</th>
+                                    <th>View Details</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.date | date}}</td>
+                                    <td>{{item.time}}</td>
+                                    <td>
+                                        <div *ngFor="let item1 of item.meetingAttendies|slice:0:visibleItemsCount; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div>
+                                        <a class="button" style="color :rgb(255, 120, 73); margin-left: 90px;" *ngIf="item.meetingAttendies?.length>4 && showMore" (click)="toggleVisibility(i,item.meetingAttendies)">Show More</a>
+                                        <a class="button" style="color :rgb(255, 120, 73); margin-left: 90px;" *ngIf="item.meetingAttendies?.length>4 && !showMore" (click)="toggleVisibility(i,item.meetingAttendies)">Show Less</a>
+
+                                    </td>
+                                    <td>{{item.cfirstName}} {{item.cmiddleName}} {{item.clastName}}</td>
+                                    <div>
+                                        <button class="btn-primary" (click)="view(item)" style="width: 90px;">View</button>
+                                    </div>
+                                    <td>{{item.mettingStatus == 0? 'Pending':item.mettingStatus == 1? 'Close':'Cancel'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="!tableData">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th style="width: 7px">Attendees</th>
+                                    <th>Meeting Created By</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.date | date}}</td>
+                                    <td>{{item.time}}</td>
+                                    <td>
+                                        <div *ngFor="let item1 of item.meetingAttendies|slice:0:visibleItemsCount; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div>
+                                        <div class="btn-primary" style="color :rgb(255, 120, 73); margin-left: 90px;" (click)="toggleVisibility(item.meetingAttendies)">Show More</div>
+                                    </td>
+                                    <td>{{item.cfirstName}} {{item.cmiddleName}} {{item.clastName}}</td>
+                                    <td>{{item.mettingStatus == 0? 'Pending':item.mettingStatus == 1? 'Close':'Cancel'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="showMyContainer">
+        <div class="card" style="background: #f7f6f5;">
+            <div class="card-header" style="background: #f4baa7;height: 40px;">
+
+                <label><div style="margin-left: 630px;width: 100%;">MEETING DETAILS</div></label>
+
+
+            </div>
+            <div class="card-body">
+
+                <div class="profile-basic">
+                    <div class="row">
+                        <div class="col-md-5" style="font-size: 16px;">
+                            <div class="profile-info-left">
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Title:</div>
+                                        <div class="text">{{viewData.title}}</div>
+
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Date:</div>
+                                        <div class="text">{{viewData.date| date}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Attendees:</div>
+                                        <div class="text" *ngFor="let item of viewData.meetingAttendies; let i=index;">{{i+1}}.{{item.firstName}} {{item.middleName}} {{item.lastName}}</div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-md-7" style="font-size: 16px;">
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Time:</div>
+                                    <div class="text">{{viewData.time}}</div>
+                                </li>
+                                <li *ngFor="let item of viewData.meetingMom ;let i=index">
+                                    <div class="title">Meeting Agenda {{i+1}}:</div>
+                                    <div class="text">{{item.meetingMomName}}</div>
+                                </li>
+                                <li>
+                                    <div class="title">Remark:</div>
+
+                                    <div class="text">{{viewData.agenda}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card" style="background: #f7f6f5;">
+            <div class="card-header" style="background: #f4baa7;height: 40px;">
+
+                <label><div style="margin-left: 350%;width: 100%;">TASK ASSIGN DETAILS</div></label>
+
+
+            </div>
+            <div class="card-body">
+                <div class="profile-basic">
+                    <div class="row">
+                        <div class="col-md-5" style="font-size: 16px;">
+                            <div class="profile-info-left">
+                                <ul class="personal-info">
+
+                                    <li>
+                                        <div class="title">Next Meeting Date:</div>
+                                        <div class="text">{{feedbackData.nextMeetingDate| date}}</div>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-md-7" style="font-size: 16px;">
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Next Meeting Time:</div>
+                                    <div class="text">{{feedbackData.nextMeetingtime}}</div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let item of feedbackData.meetingdescription; let i=index">
+                        <div>
+                            <h3>{{i+1}}.{{item.meetingMomName}}</h3>
+                        </div>
+                        <div class="col-md-5" style="font-size: 16px;">
+                            <div class="profile-info-left">
+                                <ul class="personal-info">
+
+                                    <li>
+                                        <div class="title">Description:</div>
+                                        <div class="text">{{item.description}}</div>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-md-7" style="font-size: 16px;">
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Assign Employees:</div>
+                                    <div class="text" *ngFor="let item1 of item.meetingTaskAsignEmp; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

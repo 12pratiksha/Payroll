@@ -1,0 +1,1937 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row" *ngIf="editId !== 'add'">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Profile</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="card mb-0" *ngIf="editId !== 'add'">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a><img class="images" *ngIf="image; else other" [src]="image"></a>
+
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left" *ngIf="empDetails">
+                                        <h3 class="user-name m-t-0 mb-0">{{firstName}} {{lastName}}</h3>
+                                        <h6 class="text-muted">Department : {{depart}}</h6>
+                                        <small class="text-muted">Designation : {{desig}}</small>
+                                        <div class="staff-id">Employee Code : {{empDetails.employeeCode}}</div>
+                                        <div class="small doj text-muted">Date of Join : {{empDetails.dateOfJoining | date}}</div>
+                                        <!-- <div class="staff-msg"><a class="btn btn-custom" routerLink="/layout/apps/chat">Send
+                                                Message</a></div> -->
+                                    </div>
+
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        <!-- <li>
+                                            <div class="title">Phone:</div>
+                                            <div class="text"><a href="">9876543210</a></div>
+                                        </li> -->
+                                        <li>
+                                            <div class="title">Email:</div>
+
+                                            <div class="text" *ngIf="companyEmailId">{{companyEmailId}}</div>
+                                            <div class="text" *ngIf="!companyEmailId">no data available</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Birthday:</div>
+                                            <div class="text">{{dateOfBirth | date}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Address:</div>
+                                            <div class="text">{{address}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Gender:</div>
+                                            <div class="text">{{gender}}</div>
+                                        </li>
+                                        <!-- <li>
+                                            <div class="title">Reports to:</div>
+                                            <div class="text">
+                                                <div class="avatar-box">
+                                                    <div class="avatar avatar-xs">
+                                                        <img src="assets/img/profiles/avatar-16.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                               
+                                               <a>    {{empDetails.reportingManager}}
+                                                </a>
+                                            </div>
+                                        </li> -->
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon"><i
+                                    class="fas fa-pencil-alt"></i></a></div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card tab-box mt-3">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                    <li class="nav-item"><a href="#emp_profile" data-bs-toggle="tab" class="nav-link active">Profile</a></li>
+                    <!-- <li class="nav-item"><a href="#personalInfo" data-bs-toggle="tab" class="nav-link">Personal</a></li> -->
+                    <li class="nav-item"><a href="#education" data-bs-toggle="tab" class="nav-link">Education</a></li>
+                    <li class="nav-item"><a href="#experience" data-bs-toggle="tab" class="nav-link">Experience</a></li>
+                    <li class="nav-item"><a href="#emp_admin" data-bs-toggle="tab" *ngIf="usertype=='Admin' || usertype=='Super Admin'" class="nav-link">Administration</a></li>
+                    <li class="nav-item"><a href="#bank_statutory" data-bs-toggle="tab" *ngIf="usertype=='Admin' || usertype=='Super Admin'" class="nav-link">Payment</a></li>
+                    <li class="nav-item"><a href="#upload_doc" data-bs-toggle="tab" class="nav-link">Upload Document</a></li>
+                    <li class="nav-item"><a href="#week_off" data-bs-toggle="tab" *ngIf="usertype=='Admin' || usertype=='Super Admin'" class="nav-link">Employee Week Off</a></li>
+                    <!-- <li class="nav-item"><a href="#assets_assigned" data-bs-toggle="tab" class="nav-link">Assets Assigned List</a></li> -->
+                    <!-- <li class="nav-item"><a href="#emp_master" data-bs-toggle="tab" class="nav-link">Emp Master Form</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+
+        <!-- Profile Info Tab -->
+        <div id="emp_profile" class="pro-overview tab-pane fade show active">
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-header" style="background: #f4baa7;height: 40px;">
+                            <h3>
+                                <div style="width: 100%;">Education Informations</div>
+                            </h3>
+                        </div>
+                        <div class="card-body">
+
+                            <!-- <h3 class="card-title"> -->
+                            <!-- <a class="edit-icon" data-bs-toggle="modal"
+                                    data-bs-target="#education_info"><i class="fas fa-pencil-alt"></i></a> -->
+                            <!-- </h3> -->
+                            <div class="experience-box">
+                                <ul class="experience-list" *ngFor="let item of employeeQual">
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a class="name">{{item.college}}</a>
+                                                <div>{{item.qualification}}</div>
+                                                <span class="time">{{item.passingYear | date}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">International College of Arts and Science
+                                                    (PG)</a>
+                                                <div>Msc Computer Science</div>
+                                                <span class="time">2000 - 2003</span>
+                                            </div>
+                                        </div>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-header" style="background: #f4baa7;height: 40px;">
+                            <h3>
+                                <div style="width: 100%;">Experience</div>
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- <h3 class="card-title">Experience -->
+                            <!-- <a class="edit-icon" data-bs-toggle="modal"
+                                    data-bs-target="#experience_info"><i class="fas fa-pencil-alt"></i></a> -->
+                            <!-- </h3> -->
+                            <div class="experience-box">
+                                <ul class="experience-list" *ngFor="let item of empExp">
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a class="name">{{item.designation}} at {{item.organization}}</a>
+                                                <span class="time">{{item.startDate | date}} - {{item.endDate | date}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">Web Designer at Ron-tech</a>
+                                                <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">Web Designer at Dalt Technology</a>
+                                                <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                            </div>
+                                        </div>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="upload_doc">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header" style="background: #f4baa7;height: 40px;">
+                            <h3>
+                                <div style="width: 100%;">Upload Document</div>
+                            </h3>
+                        </div>
+                        <!-- <div class="card-header">
+                            <h1 class="card-title mb-0"></h1>
+                        </div> -->
+
+                        <div class="card-body">
+                            <form [formGroup]="uploadDocForm">
+
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Document Name</label>
+                                        <input type="text" class="form-control" placeholder="Document Name" formControlName="documentName">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Document Type</label>
+                                        <input type="text" class="form-control" placeholder="Document Type" formControlName="documentType">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Document Number</label>
+                                        <input type="text" class="form-control" placeholder="Document Number" formControlName="documentNum">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Document File </label><br>
+                                        <input class="form-control" type="file" #docUpload (change)="uploadFile($event)">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="uploadDocument()">Upload</button>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" *ngIf="!showMyContainer">
+                <div class="col-sm-12">
+                    <div class="card mb-0">
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table mb-0" *ngIf="documentDetails">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Document Name</th>
+                                            <th>Document Number</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of documentDetails ;let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.docName}}</td>
+                                            <td>{{item.docNo}} </td>
+                                            <td>
+                                                <!-- <a [href]="download.url" [download]="download.filename">
+                    {{ download.filename }}
+                  </a> -->
+                                                <a (click)="download(item)" class="fas fa-download"></a>&nbsp;&nbsp;
+                                                <!-- <a href="{{item.imageName}}"  class="fas fa-download" download="item.imageName.pdf"></a>&nbsp;&nbsp; -->
+                                                <a (click)="deleteDoc(item.emplDocId)"> <i class="far fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /Projects Tab -->
+
+
+
+        <!-- Payment -->
+        <div class="tab-pane fade" id="bank_statutory">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <form [formGroup]="paymentForm">
+                            <div class="card-header" style="background: #f4baa7;height: 40px;">
+                                <h3>
+                                    <div style="width: 100%;">Payment Form</div>
+                                </h3>
+                            </div>
+                            <!-- <div class="card-header">
+                                <h1 class="card-title mb-0">Payment Form</h1>
+                            </div> -->
+                            <div class="card-body">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                        <label>Payment Method</label>
+                                        <select class="form-select form-control" formControlName="paymentMethod">
+                                <option >--Select--</option>
+                                <option >Cash</option>
+                                <option >Cheque</option>
+                                <option >Bank Transfer</option>
+                                <option>DD</option>
+                                <option>NEFT</option>
+                            </select>
+
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>Payee Name</label>
+                                        <input type="text" class="form-control" placeholder="Payee Name" formControlName="payeeName">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Bank Name</label>
+
+                                        <input type="text" class="form-control" placeholder="Payee Name" formControlName="bankName">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Branch Code</label>
+                                        <input type="text" class="form-control" placeholder="Branch Code" formControlName="branchCode">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>Branch Name</label>
+                                        <input type="text" class="form-control" placeholder="Branch Name" formControlName="branchName">
+                                    </div>
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Branch Phone</label>
+                                        <input type="text" class="form-control" placeholder="Branch Phone" formControlName="branchPhone" mask="000-000-0000">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>Account Type</label>
+                                        <select class="form-select form-control" formControlName="accountType">
+                                    <option >--Select--</option>
+                                    <option >Current</option>
+                                    <option >Savings</option>
+                                    <option >Salary</option>
+                                    <option >Fixed</option>
+                                   
+                                </select>
+
+                                    </div>
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Account No</label>
+                                        <input type="text" class="form-control" placeholder="Account No" formControlName="accountNo">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>IFSC Code</label>
+                                        <input type="text" class="form-control" placeholder="IFSC Code" formControlName="ifscCode">
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" (click)="updatePaymentDetails()">Update </button>
+                            <button class="btn ">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- assetes assigned list -->
+
+        <div id="assets_assigned" class="tab-pane fade">
+            <div class="row" *ngIf="!showAssetForm">
+                <div class="col-md-6">
+                    <div class="page-head-box">
+                        <h3> Assets List</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="add-emp-section">
+                        <a class="btn btn-success btn-add-emp" (click)="showAssetForm=!showAssetForm"><i class="fas fa-plus"></i> Add </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row" *ngIf="!showAssetForm">
+                <div class="col-sm-12">
+                    <div class="card mb-0">
+
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+                                <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Employee Code</th>
+                                            <th>Issue Date</th>
+                                            <th>Asset Name</th>
+                                            <th>Description</th>
+                                            <th>Issued By</th>
+                                            <th>Given For</th>
+                                            <th>Period</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>61</td>
+                                            <td>21/03/2021</td>
+                                            <td>Laptop</td>
+                                            <td>Lenevo ThinkPad5</td>
+                                            <td>Garrett Winters</td>
+                                            <td>Office Use</td>
+                                            <td>2 years</td>
+                                            <td style="color: Green;">Active</td>
+                                            <td>
+                                                <a><i class="fas fa-pen"></i></a>
+                                                <a><i class="far fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- assetes assigned list -->
+
+        <!-- assets assigned form -->
+
+        <div class="row" *ngIf="showAssetForm">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header" style="background: #f4baa7;height: 40px;">
+                        <h3>
+                            <div style="width: 100%;">Employee Assets Assigned Form</div>
+                        </h3>
+                    </div>
+                    <!-- <div class="card-header">
+                        <h1 class="card-title mb-0">Employee Assets Assigned Form</h1>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="assetsAssignedForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee Id </label> {{employeeCode}}
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Asset Name</label>
+                                            <select class="form-select form-control" formControlName="assetName">
+                                        <option>Laptop</option>
+                                        <option>Mobile</option>
+                                    </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Asset Value</label>
+                                            <input type="text" class="form-control" placeholder="Asset Value" formControlName="assetValue">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Issue Date</label>
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="issueDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="formFile" class="form-label">Attachment</label>
+                                            <input class="form-control" formControlName="attachment" type="file" id="formFile" (change)="uploadAssetsFile($event)">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Given For</label>
+                                            <select class="form-select form-control" formControlName="givenFor">
+                                        <option>Office use</option>
+                                        <option>Personal Use</option>
+                                    </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>T&C</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="tandc">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Status</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Repeat Asset</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="repeatAsset">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" (click)="assetsAssigned()">Submit</button>
+                                    <button class="btn" (click)="showAssetForm=!showAssetForm">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--end assets assignrd form -->
+
+        <!-- Employee Week Off -->
+        <div id="week_off" class="tab-pane fade">
+
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header" style="background: #f4baa7;height: 40px;">
+                        <h3>
+                            <div style="width: 100%;">Employee Week Off Form</div>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="addLeaveForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Off Day <span class="text-danger">*</span></label>
+                                        <select class="form-select form-control" formControlName="offDay">
+                                    
+                                    <option>Sunday</option>
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                    <option>Saturday</option>
+                                    <option>Sunday</option>
+                                </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Full Day/Half Day <span class="text-danger">*</span></label>
+                                        <select class="form-select form-control" formControlName="dayFullHalf">
+                                        
+                                        <option>Full Day</option>
+                                        <option>First Half</option>
+                                        <option>Second Half</option>
+                                        
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label>Week No<span class="text-danger">*</span></label>
+                                        <select class="form-select form-control" formControlName="weekno">
+                                        
+                                        <option>Week 1</option>
+                                        <option>Week 2</option>
+                                        <option>Week 3</option>
+                                        <option>Week 4</option>
+                                        <option>Week 5</option>
+                                        <option>All</option>
+                                        
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Applicable Date</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="aplicableDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Status</label>
+                                    <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                </div>
+
+                            </div>
+                            <button class="btn btn-primary" (click)="addLeaves()">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="weekoff" class="table table-striped custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Week Day </th>
+                                <th>Week Off type</th>
+                                <th>Week No.</th>
+                                <th>Applicable Date</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of weekoff let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.offDay}}</td>
+                                <td>{{item.dayFullHalf}}</td>
+                                <td>{{item.weekNo}}</td>
+                                <td>{{item.aplicableDate | date}}</td>
+                                <td>{{item.status}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!--end of Employee Week Off -->
+
+        <!-- Admin emp form -->
+        <div class="tab-pane fade" id="emp_admin">
+
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header" style="background: #f4baa7;height: 40px;">
+                        <h3>
+                            <div style="width: 100%;">Administrative Information Form</div>
+                        </h3>
+                    </div>
+                    <!-- <div class="card-header">
+                        <h1 class="card-title mb-0">Administrative Information Form</h1>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="adminEmployeeForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+
+                                            <div class="col-md-3 align-self-center">
+                                                <label class="col-form-label">Salary On<span
+                                            class="text-danger">*</span></label></div>
+                                            <div class="col-md-9">
+                                                <select class="form-select form-control" formControlName="salaryon">
+                                        <option>Select</option>
+                                        <option>Daily</option>
+                                        <option>Hour</option>
+                                        <option>Month</option>
+                                    </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>TDS Applicable </label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="tdsapplicable">
+                                    </div>
+
+
+
+
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>PT Applicable </label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="ptApplicable">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>ESI Applicable </label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="esiapplicable">
+                                    </div>
+
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>ESI No.</label></div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="ESI No." formControlName="esino" mask="0000000000000000">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>ESI Dispensary</label></div>
+                                            <div class="col-md-9">
+                                                <input type="text" placeholder="ESI Dispensary" class="form-control" formControlName="esidespensary" mask="0000000000000000">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Compensatory Off Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="compoff">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>UAN</label> </div>
+                                            <div class="col-md-9"><input type="text" class="form-control" placeholder="UAN No." formControlName="uan"></div>
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>PF Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="pfapplicable">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>PF No.</label> </div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="PF No." formControlName="pfno"> </div>
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>PF Special</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="pfspecial">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>Employer PF Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="epfapplicable">
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Employer PF Special</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="epfspecial">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>EDLI No.</label></div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="EDLI No." formControlName="edli"> </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Gratuity Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="gratuityApplicable">
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>Gratuity No.</label> </div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="Gratuity No." formControlName="gratuityNo"> </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>OT Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="otapplicable" [(ngModel)]="otApplicable">
+
+                                        <div class="col-md-6 mb-3" *ngIf="otApplicable">
+                                            <select class="form-select form-control" formControlName="headName" (change)="onChange($event)">
+                        <option value="">--Select--</option>
+                        <option value="CTC">CTC</option>
+                        <option value="Basic">Basic</option>
+                        <option value="Gross">Gross</option>
+                        <option value="Fixed Hourly">Fixed Hourly</option>
+                        <option value="Fixed Day">Fixed Day</option>
+                        <option value="Formula">Formula</option>
+                    </select>
+                                        </div>
+                                        <div class="form-row row">
+
+                                            <div *ngIf="adminEmployeeForm.value.headName=='Fixed Hourly'" class="col-md-6 mb-3">
+                                                <label>Hours</label>
+                                                <input type="number" placeholder="Enter hours" class="form-control" formControlName="otOvertime">
+                                            </div>
+
+                                            <div *ngIf="adminEmployeeForm.value.headName=='Fixed Hourly'" class="col-md-6 mb-3">
+                                                <label>Rupees per hour</label>
+                                                <input type="number" class="form-control" placeholder="Enter rupees per hour" formControlName="otHoursAllowance">
+                                            </div>
+                                            <div *ngIf="adminEmployeeForm.value.headName=='Fixed Day'" class="col-md-6 mb-3">
+                                                <label>Day</label>
+                                                <input type="number" class="form-control" placeholder="Enter day" formControlName="dailyBases">
+                                            </div>
+                                            <div *ngIf="adminEmployeeForm.value.headName=='Fixed Day'" class="col-md-6 mb-3">
+                                                <label>Rupees per day</label>
+                                                <input type="number" class="form-control" placeholder="Enter rupees per day" formControlName="dailyBasesAllowance">
+                                            </div>
+                                            <!-- <div *ngIf="formula" class="col-md-6 mb-3">
+                                                <select class="form-select form-control" formControlName="dailyBases">
+                            <option value="">--Select--</option>
+                            <option>Formula1</option>
+                            <option>Formula2</option>
+                            <option>Formula3</option>
+                        </select>
+                                            </div> -->
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>Aadhaar Card No.</label> </div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="Aadhaar Card No." formControlName="aadharCardNo"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center">
+                                                <label>RFID Card No.</label></div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="RFID Card No." formControlName="rfidCardNo" mask="0000000000000000"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center"> <label>Voter Card No.</label></div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="Voter Card No." formControlName="votercardNo"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Resignation Date </label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="DOR">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Date of Leaving</label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="DOL">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Bonus Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="bonusapplicable">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label>Bonus Special</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="bonusspecial">
+                                    </div>
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3 align-self-center"> <label>Notice Period(Days)</label></div>
+                                                <div class="col-md-9"> <input type="number" class="form-control" formControlName="noticePeriod" min="1"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Bond Applicable</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="bondpplicable">
+                                    </div>
+
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3 align-self-center">
+                                                    <label>Bond Period(Days)</label></div>
+                                                <div class="col-md-9"> <input type="number" class="form-control" formControlName="bondPeriod" min="1" placeholder="Bond Period(Days)"> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-3 align-self-center">
+                                                <label>Bond Amount(Rs)</label></div>
+                                            <div class="col-md-9"> <input type="text" class="form-control" placeholder="Bond Amount(Rs)" formControlName="bondamount"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <div class="col-md-3 align-self-center">
+                                                <label>Bond Documents</label></div>
+
+                                            <div class="col-md-9"> <select class="form-select form-control" formControlName="bondDocuments" (change)="bondDocumentsvalue($event)">
+                              <option *ngFor="let item of bondDocuments; let i = index"  [value]="i">{{item.value}}</option>
+                           
+                              </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+                                </div>
+                                <button class="btn btn-primary" (click)="addAdminInfo()">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bank payment  -->
+
+        <!-- personal-info -->
+
+        <div class="tab-pane fade" id="personalInfo">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form>
+                        <div class="card-header" style="background: #f4baa7;height: 40px;">
+                            <h3>
+                                <div style="width: 100%;">Education Details Form</div>
+                            </h3>
+                        </div>
+                        <!-- <div class="card-header">
+                            <h1 class="card-title mb-0">Education Details Form</h1>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Passport No</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Passport Expiry Date</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tel</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nationality <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Religion</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Marital status <span class="text-danger">*</span></label>
+                                    <select class="form-select form-control">
+                                    <option value="">--Select--</option>
+                                    <option>Single</option>
+                                    <option>Married</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Employment of spouse</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>No. of children </label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- end of personal-info -->
+
+        <!-- Education form -->
+
+
+        <div class="tab-pane fade" id="education">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form [formGroup]="educationForm">
+                        <!-- <div class="card-header">
+                            <h1 class="card-title mb-0">Education Details Form</h1>
+                        </div> -->
+                        <div class="card-header" style="background: #f4baa7;height: 40px;">
+                            <h3>
+                                <div style="width: 100%;">Education Details Form</div>
+                            </h3>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Degree/Graduation<a class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Qualification<span class="text-danger">*</span></label>
+                                            <select class="form-select form-control" formControlName="qualification">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of qualification">{{item.name}}</option>
+                                            
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>University/Board</label>
+                                            <select class="form-select form-control" formControlName="unibord">
+                                            <option value="">--Select--</option>
+                                            <option>Pune University</option>
+                                            <option>Mumbai University</option>
+                                            <option>Others</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>College/School</label>
+                                            <input type="text" class="form-control floating" formControlName="college">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Complete Date</label>
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="completeDate">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Score</label>
+                                            <input type="text" class="form-control floating" formControlName="score">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="submit-section">
+                                        <button class="btn btn-primary" (click)="addEducationInfo()" *ngIf="!updateQual">Submit</button>
+                                        <button class="btn btn-primary" (click)="updateQualification()" *ngIf="updateQual">Update</button>
+                                        <button class="btn " (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </form>
+
+
+                </div>
+
+                <div class="table-responsive">
+                    <table *ngIf="employeeQual" class="table table-striped custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Qualification </th>
+                                <th>Bord/University</th>
+                                <th>School/College</th>
+                                <th>Passing Year</th>
+                                <th>Passing Score</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of employeeQual ;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.qualification}}</td>
+                                <td>{{item.board}}</td>
+                                <td>{{item.college}}</td>
+                                <td>{{item.passingYear | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.score}}</td>
+                                <td class="text-end ico-sec justify-content-end">
+                                    <a (click)="editQual(item.emplQualifId)"><i class="fas fa-pen"></i></a>
+                                    <a (click)="deleteQual(item.emplQualifId)"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!--End of  Education form -->
+
+
+        <!-- experience form -->
+
+        <div class="tab-pane fade" id="experience">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <form >
+            <div class="card-header">
+                <h1 class="card-title mb-0">Experience Details Form</h1>
+            </div> -->
+
+                    <form [formGroup]="experienceForm">
+                        <!-- <div class="form-scroll"> -->
+                        <div class="card">
+                            <div class="card-header" style="background: #f4baa7;height: 40px;">
+                                <h3>
+                                    <div style="width: 100%;">Experience Informations</div>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- <h3 class="card-title">Experience Informations <a class="delete-icon"><i class="fa fa-trash-o"></i></a></h3> -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Organisation </label>
+                                            <input type="text" class="form-control" formControlName="lastOrg">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <label>Designation</label>
+                                            <input type="text" class="form-control" formControlName="designation">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Salary</label>
+                                            <input type="text" class="form-control" formControlName="salary">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Period From</label>
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control datetimepicker" formControlName="fromDate">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Period To</label>
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control datetimepicker" formControlName="toDate">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Reason of Leaving</label>
+                                            <input type="text" class="form-control" formControlName="reason">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="submit-section">
+                                        <button class="btn btn-primary" (click)="empExperience()" *ngIf="!updateExperience">Submit</button>
+                                        <button class="btn btn-primary" (click)="updateExp()" *ngIf="updateExperience">Update</button>
+                                        <button class="btn " (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- </div> -->
+
+                    </form>
+                    <!-- <button class="btn btn-primary" (click)="updatePaymentDetails()">Update form</button>
+            <button class="btn ">Cancel</button>
+                </form>  -->
+                </div>
+
+                <div class="table-responsive">
+                    <table *ngIf="empExp" class="table table-striped custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>SalaryonLeaving</th>
+                                <th> Organization</th>
+                                <th>Designation </th>
+                                <th>ReasonForLeaving</th>
+                                <th>StartDate </th>
+                                <th>EndDate</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of empExp let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.lastSalary}}</td>
+                                <td>{{item.organization}}</td>
+                                <td>{{item.designation}}</td>
+                                <td>{{item.leavingReason}}</td>
+                                <td>{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                                <td class="text-end ico-sec justify-content-end">
+                                    <a (click)="editExp(item.emplExperienceId)"><i class="fas fa-pen"></i></a>
+                                    <a (click)="deleteExp(item.emplExperienceId)"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--end of experience form -->
+
+
+
+
+    </div>
+</div>
+
+
+
+<!-- /Page Content -->
+
+<!-- Profile Modal -->
+<div id="profile_info" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Profile Information</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-img-wrap edit-img">
+                                <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
+                                <div class="fileupload btn">
+                                    <span class="btn-text">edit</span>
+                                    <input class="upload" type="file">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" value="John">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" value="Doe">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Birth Date</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" value="05/06/1985">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select class="form-select form-control">
+                                            <option value="male selected">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" class="form-control" value="4487 Snowbird Lane">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" class="form-control" value="New York">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" class="form-control" value="United States">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Pin Code</label>
+                                <input type="text" class="form-control" value="10523">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" class="form-control" value="631-889-3206">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Department <span class="text-danger">*</span></label>
+                                <select class="form-select form-control">
+                                    <option>Select Department</option>
+                                    <option>Web Development</option>
+                                    <option>IT Management</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Designation <span class="text-danger">*</span></label>
+                                <select class="form-select form-control">
+                                    <option>Select Designation</option>
+                                    <option>Web Designer</option>
+                                    <option>Web Developer</option>
+                                    <option>Android Developer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Reports To <span class="text-danger">*</span></label>
+                                <select class="form-select form-control">
+                                    <option>-</option>
+                                    <option>Wilmer Deluna</option>
+                                    <option>Lesley Grauer</option>
+                                    <option>Jeffery Lalor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Profile Modal -->
+
+<!-- Personal Info Modal -->
+<div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Personal Information</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Passport No</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Passport Expiry Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tel</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nationality <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Religion</label>
+                                <div class="cal-icon">
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Marital status <span class="text-danger">*</span></label>
+                                <select class="form-select form-control">
+                                    
+                                    <option>Single</option>
+                                    <option>Married</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employment of spouse</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>No. of children </label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Personal Info Modal -->
+
+<!-- Family Info Modal -->
+<div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Family Informations</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-scroll">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Family Member <a class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Relationship <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Education Informations <a class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Relationship <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-more">
+                                    <a><i class="fa fa-plus-circle"></i> Add More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Family Info Modal -->
+
+<!-- Emergency Contact Modal -->
+
+<!-- /Emergency Contact Modal -->
+
+<!-- Education Modal -->
+<div id="education_info" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Education Informations</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="educationForm">
+                    <div class="form-scroll">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Degree/Graduation<a class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Qualification<span class="text-danger">*</span></label>
+                                            <select class="form-select form-control" formControlName="qualification">
+                                                
+                                                <option>HSC</option>
+                                                <option>SSC</option>
+                                                <option>BA</option>
+                                                <option>B.Com</option>
+                                                <option>BSC</option>
+                                                <option>Diploma</option>
+                                                <option>Degree</option>
+                                                <option>Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>University/Board</label>
+                                            <input type="text" class="form-control floating" formControlName="unibord">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>College/School</label>
+                                            <input type="text" class="form-control floating" formControlName="college">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Complete Date</label>
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="completeDate">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Score</label>
+                                            <input type="text" class="form-control floating" formControlName="score">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- school / college -->
+
+                        <!-- <div class="card">
+    <div class="card-body">
+        <h3 class="card-title">School / College <a 
+                class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>School / College</label>
+                    <input type="text"  class="form-control floating">
+                    </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label >Subject<span class="text-danger">*</span></label>
+                    <select class="form-select form-control">
+                        
+                       
+                    </select>
+                </div>
+            </div>
+            
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Starting Date</label>
+                    <div class="cal-icon">
+                        <input class="form-control datetimepicker" type="text" bsDatepicker
+                            type="text"
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                            value="01/05/2006">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Complete Date</label>
+                    <div class="cal-icon">
+                        <input class="form-control datetimepicker" type="text" bsDatepicker
+                            type="text"
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                            value="31/05/2006">
+                    </div>
+                    
+                </div>
+            </div>
+           
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Score</label>
+                    <input type="text"   class="form-control floating">
+                    
+                </div>
+            </div>
+ 
+            <div class="col-md-6">
+                <label for="formFile" class="form-label">Upload Document</label>
+                <input class="form-control" type="file" id="formFile">
+              </div>
+
+        </div>
+    </div>
+</div> -->
+
+                        <!-- end school / college -->
+                        <!-- <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Education Informations <a
+                                        class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" value="Oxford University" class="form-control floating">
+                                            <label class="focus-label">Institution</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" value="Computer Science" class="form-control floating">
+                                            <label class="focus-label">Subject</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <div class="cal-icon">
+                                                <input value="01/06/2002" class="form-control datetimepicker"
+                                                    type="text" bsDatepicker type="text"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                            </div>
+                                            <label class="focus-label">Starting Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    value="31/05/2006" class="form-control floating datetimepicker">
+                                            </div>
+                                            <label class="focus-label">Complete Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" value="BE Computer Science"
+                                                class="form-control floating">
+                                            <label class="focus-label">Degree</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus focused">
+                                            <input type="text" value="Grade A" class="form-control floating">
+                                            <label class="focus-label">Grade</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-more">
+                                    <a><i class="fa fa-plus-circle"></i> Add More</a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" (click)="addEducationInfo()">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Education Modal -->
+
+<!-- Experience Modal -->
+<div id="experience_info" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Experience Informations</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-scroll">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Experience Informations <a class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Organisation </label>
+                                            <input type="text" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <label>Designation</label>
+                                            <input type="text" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Salary</label>
+                                            <input type="text" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Period From</label>
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control datetimepicker">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Period To</label>
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" class="form-control datetimepicker">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Reason of Leaving</label>
+                                            <input type="text" class="form-control">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Experience Informations <a 
+                                        class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <input type="text" class="form-control floating"
+                                                >
+                                            <label class="focus-label">Company Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <input type="text" class="form-control floating" >
+                                            <label class="focus-label">Location</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <input type="text" class="form-control floating" >
+                                            <label class="focus-label">Job Position</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    class="form-control floating datetimepicker">
+                                            </div>
+                                            <label class="focus-label">Period From</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-focus">
+                                            <div class="cal-icon">
+                                                <input type="text" bsDatepicker type="text"
+                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                                    class="form-control floating datetimepicker" >
+                                            </div>
+                                            <label class="focus-label">Period To</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add-more">
+                                    <a ><i class="fa fa-plus-circle"></i> Add More</a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Experience Modal -->

@@ -1,0 +1,163 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Create Meeting</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Create Meeting</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="row filter-row">
+            <div class="col-md-12">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i>Add New</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showMyContainer==false">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th style="width: 7px">Attendees</th>
+                                    <th *ngIf="usertype=='Admin' || usertype=='Super Admin'">Meeting Created By</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.date | date}}</td>
+                                    <td>{{item.time}}</td>
+                                    <td>
+                                        <!-- <div *ngFor="let item1 of item.meetingAttendies; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div> -->
+                                        <div *ngFor="let item1 of item.meetingAttendies|slice:0:visibleItemsCount; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div>
+                                        <a class="button" style="color :rgb(255, 120, 73); margin-left: 90px;" *ngIf="item.meetingAttendies?.length>4 && showMore" (click)="toggleVisibility(i,item.meetingAttendies)">Show More</a>
+                                        <a class="button" style="color :rgb(255, 120, 73); margin-left: 90px;" *ngIf="item.meetingAttendies?.length>4 && !showMore" (click)="toggleVisibility(i,item.meetingAttendies)">Show Less</a>
+
+                                    </td>
+                                    <td *ngIf="usertype=='Admin' || usertype=='Super Admin'">{{item.cfirstName}} {{item.cmiddleName}} {{item.clastName}}</td>
+                                    <td class="text-end ico-sec justify-content-end" style="padding-right:80px;">
+                                        <a class="fas fa-pen" (click)="edit(item)"></a>
+                                        <a (click)="delete(item.createMeetingId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="showMyContainer==true">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form class="needs-validation" [formGroup]="createMeetingForm">
+                        <div class="form-row row">
+
+                            <div class="col-md-4 mb-3">
+                                <label>Meeting Title<small class="text-danger">*</small></label>
+                                <input type="text" class="form-control" formControlName="meetingTitle">
+                                <small *ngIf="createMeetingForm.get('meetingTitle').invalid && createMeetingForm.get('meetingTitle').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Date<small class="text-danger">*</small></label>
+                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                <small *ngIf="createMeetingForm.get('date').invalid && createMeetingForm.get('date').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Time<small class="text-danger">*</small></label>
+                                <input type="time" step="1" class="form-control" formControlName="time">
+                                <small *ngIf="createMeetingForm.get('time').invalid && createMeetingForm.get('time').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="focus-label">Location<small class="text-danger">*</small></label>
+                                <input type='text' class="form-control" formControlName="location">
+                                <small *ngIf="createMeetingForm.get('location').invalid && createMeetingForm.get('location').touched" class="text-danger">*This Field is Required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="focus-label">Mode Of Meeting<small class="text-danger">*</small></label>
+                                <select type='text' class="form-select form-control" formControlName="type">
+                                <option value="">--Select--</option>
+                                <option value="Online">Online</option>
+                                <option value="On Site">On Site</option>
+                                </select>
+                                <small *ngIf="createMeetingForm.get('type').invalid && createMeetingForm.get('type').touched" class="text-danger">*This Field is Required</small>
+                            </div>
+
+
+                            <div class="col-md-4 mb-3">
+                                <label>Meeting Attendees:<small class="text-danger">*</small></label>
+                                <div>
+                                    <ngx-bootstrap-multiselect class="multselect" [options]="employee" [(ngModel)]="optionsModel" [value]="employee.id" formControlName="attendees" [texts]="myTexts" [settings]="mySettings">
+
+                                    </ngx-bootstrap-multiselect>
+                                </div>
+                                <!-- <small *ngIf="createMeetingForm.get('attendees').invalid && createMeetingForm.get('attendees').touched" class="text-danger">*This field is required</small> -->
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Remark<small class="text-danger"></small></label>
+                                <input type="text" class="form-control" formControlName="remark">
+                                <!-- <small *ngIf="createMeetingForm.get('remark').invalid && createMeetingForm.get('remark').touched" class="text-danger">*This field is required</small> -->
+                            </div>
+
+                            <div class="card" style="margin: 5px;">
+                                <div class="col-md-3 mb-3">
+                                    <button let i=index; class="fa fa-plus add" (click)="addRequest()">Add Agenda</button>
+                                </div>
+
+                                <ng-container formArrayName="agendaArray" *ngFor="let item of quantities().controls; let i = index;">
+                                    <div class="row" [formGroupName]="i">
+                                        <div class="col-md-4 mb-3">
+                                            <label>Meeting Agenda {{i+1}}<small class="text-danger">*</small></label>
+                                            <textarea type="text" class="form-control" formControlName="meetingMomName"></textarea>
+                                            <small *ngIf="quantities().controls[i].get('meetingMomName').invalid && quantities().controls[i].get('meetingMomName').touched" class="text-danger">*This field is required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3" style="margin-top: 20px;">
+                                            <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+
+                    </form>
+                    <a class="btn btn-primary" (click)="submit()" *ngIf="!editId">Submit<img  src="/assets/img/loader/button.gif" *ngIf="submitLoader" style="width: 15px; height:15px;"> </a>
+                    <button class="btn btn-primary" (click)="updateForm(editId)" *ngIf="editId">Update</button>
+                    <button class="btn" (click)="cancel()">Cancel</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

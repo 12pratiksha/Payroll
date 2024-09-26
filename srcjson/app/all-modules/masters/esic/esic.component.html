@@ -1,0 +1,94 @@
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>ESIC Master Form</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Statutory Compliance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">ESIC</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+
+                <a class="btn btn-success btn-add-emp" routerLink='/layout/masters/esic' routerLinkActive="router-link-active"><i class="fas fa-bars"></i>Show Table</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h1 class="card-title mb-0">ESIC Master Form</h1>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="esicMasterForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>State <small>*</small></label>
+                                        <select class="form-select form-control" formControlName="state">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of states" [value]="item.stateId">{{item.stateName}}</option>
+                                  </select>
+                                        <small *ngIf="esicMasterForm.get('state').invalid && esicMasterForm.get('state').touched">This Field is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="focus-label">Effective Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="effectiveDate">
+                                            </div>
+
+                                        </div>
+                                        <small *ngIf="esicMasterForm.get('effectiveDate').invalid && esicMasterForm.get('effectiveDate').touched">This Field is Required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Employee Contribution(%) <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="employeeContribution">
+                                        <small *ngIf="esicMasterForm.get('employeeContribution').invalid && esicMasterForm.get('employeeContribution').touched">This Field is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Employer Contribution(%) <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="employerContribution">
+                                        <small *ngIf="esicMasterForm.get('employerContribution').invalid && esicMasterForm.get('employerContribution').touched">This Field is Required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Max Amount <small>*</small></label>
+                                        <input type="number" class="form-control" formControlName="maxAmount">
+                                        <small *ngIf="esicMasterForm.get('maxAmount').invalid && esicMasterForm.get('maxAmount').touched">This Field is Required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Status </label>
+                                        <input type="checkbox" class="checkbox-all ms-5 ng-untouched ng-pristine ng-valid" formControlName="status">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="submit()" *ngIf="(this.editId == 'add'); else other_content;">Submit</button>
+                                <ng-template #other_content> <button class="btn btn-primary" (click)="update()">Update</button></ng-template>
+
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

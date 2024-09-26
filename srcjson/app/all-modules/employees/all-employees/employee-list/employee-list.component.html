@@ -1,0 +1,419 @@
+<div class="content container-fluid">
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Employee</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">General SetUp</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employees</li>
+                        <li class="breadcrumb-item active" aria-current="page">All Employees</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus" ></i> Create New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-bars" ></i>Show Table</a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table datatable [dtOptions]="dtOptions" class="table datatable" *ngIf="!lstEmployee">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Employee Code</th>
+                                    <!-- <th>Email</th>
+                            <th>State</th>
+                            <th>Branch</th> -->
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <!-- <th>Category</th>
+                            <th>Grade</th> -->
+                                    <th class="text-nowrap">Status</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of lstEmployee; let i = index">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="table datatable" *ngIf="lstEmployee">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Employee Code</th>
+                                    <!-- <th>Email</th>
+                        <th>State</th>
+                        <th>Branch</th> -->
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <!-- <th>Category</th>
+                        <th>Grade</th> -->
+                                    <th class="text-nowrap">Status</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let row of lstEmployee; let i = index">
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a (click)="employeeProfileDetails(row.employeeId)" *ngIf="row.imageName" class="avatar"><img [src]="path+row.imageName" /></a>
+                                            <a (click)="employeeProfileDetails(row.employeeId)" *ngIf="!row.imageName" class="avatar"><img src="/assets/img/user.jpg"></a>
+                                            <a (click)="employeeProfileDetails(row.employeeId)">{{row.firstName}} {{row.middleName}} {{row.lastName}}
+                                    <span>{{row.designation}} </span></a>
+                                        </h2>
+                                    </td>
+                                    <td>{{row.employeeCode}}</td>
+                                    <!-- <td>{{row.companyEmailId}}</td> -->
+                                    <!-- <td>{{row.contractor}}</td> -->
+                                    <!-- <td>{{row.state}}</td>
+                        <td>{{row.branch}}</td> -->
+                                    <td>{{row.department}}</td>
+                                    <td>{{row.designation}}</td>
+                                    <!-- <td>{{row.category}}</td>
+                        <td>{{row.grade}}</td>-->
+                                    <!-- <td *ngIf="(row.status == true)" style="color: Green;">Active</td>
+                        <td *ngIf="(row.status == false)" style="color: red;">Inactive</td> -->
+                                    <td class="text-center">
+                                        <div class="action-label"><a class="role-info role-bg-two" [ngStyle]="{'color': row.status == 0 ? '#839613' : row.status == 1 ? '#1fb81f' : row.status == 2 ? 'red' : row.status == 3 ? '#34b4eb' : '#a383bf'}">
+                            {{row.status == 0?'Inactive': row.status == 1 ? "Active": row.status == 2? "Deleted": row.status == 3? "Block": row.status == 4? "Onhold": "FNF"}}</a>
+                                        </div>
+                                    </td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="editEmployee(row.employeeId)"><i class="fas fa-pen"></i></a>
+                                        <!-- <a (click)="deleteEmployee(row.employeeId)"><i class="far fa-trash-alt"></i></a> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <img class="loader" src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <img class="loader" src="/assets/img/loader/loader.gif" *ngIf="!lstEmployee">  -->
+<div class="row" *ngIf="showMyContainer">
+    <div class="col-sm-12">
+
+
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title mb-0">Employee Master Form</h1>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <form class="needs-validation" novalidate [formGroup]="addEmployeeForm">
+                            <div class="form-row row">
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Employee Code</label>
+                                    <input type="text" class="form-control" placeholder="Employee Code" formControlName="employeeCode">
+
+                                    <small *ngIf="addEmployeeForm.get('employeeCode').invalid && addEmployeeForm.get('employeeCode').touched" class="text-danger"> *Employee is Required</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" placeholder="First Name" formControlName="FirstName">
+                                    <small *ngIf="addEmployeeForm.get('FirstName').invalid && addEmployeeForm.get('FirstName').touched" class="text-danger"> *FirstName is Required</small>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Middel Name</label>
+                                    <input type="text" class="form-control" placeholder="Middel Name" formControlName="MiddleName">
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name" formControlName="LastName">
+                                    <small *ngIf="addEmployeeForm.get('LastName').invalid && addEmployeeForm.get('LastName').touched" class="text-danger"> *Last Name is Required</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Gender</label>
+                                    <select class="form-select form-control" formControlName="Gender">
+                                        <option value = "">--Select Gender--</option>
+                                        <option value = "Female">Female</option>
+                                        <option value = "Male">Male</option>
+                                      
+                                    </select>
+
+                                    <small *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched" class="text-danger"> *Gender is Required</small>
+
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Experience</label>
+                                    <input type="number" class="form-control" placeholder="Experience" formControlName="Experience">
+
+                                </div>
+
+                            </div>
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Blood Group</label>
+                                    <select class="form-select form-control" formControlName="bloodGroup">
+                                       <option value="">--Select--</option>
+                                        <option value="A">A</option>
+                                        <option value="AB">AB</option>
+                                        <option value="O">O</option>
+                                    </select>
+                                    <small *ngIf="addEmployeeForm.get('bloodGroup').invalid && addEmployeeForm.get('bloodGroup').touched" class="text-danger"> *Blood Group is Required</small>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Religion</label>
+                                    <select class="form-select form-control" formControlName="religion">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of religion">{{item.name}}</option>
+                                    </select>
+                                    <small *ngIf="addEmployeeForm.get('religion').invalid && addEmployeeForm.get('religion').touched" class="text-danger"> *Religion is Required</small>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Pan No.</label>
+                                    <input type="text" class="form-control" placeholder="Pan No." formControlName="panno">
+                                    <small *ngIf="addEmployeeForm.get('panno').invalid && addEmployeeForm.get('panno').touched" class="text-danger"> *Pan No. is Required</small>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Upload Photo</label>
+                                    <input #myInput type="file" class="form-control" placeholder="Upload Photo" (change)="handleUpload($event)">
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+
+                                    <label class="focus-label">Date Of Birth</label>
+                                    <div class="form-group form-focus mb-0">
+                                        <div class="cal-icon">
+                                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="DOB">
+                                        </div>
+                                        <small *ngIf="addEmployeeForm.get('DOB').invalid && addEmployeeForm.get('DOB').touched" class="text-danger"> *Date of Birth is Required</small>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+
+                                    <label class="focus-label">Date of Joining</label>
+                                    <div class="form-group form-focus mb-0">
+                                        <div class="cal-icon">
+                                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="DOJ">
+                                        </div>
+                                        <small *ngIf="addEmployeeForm.get('DOJ').invalid && addEmployeeForm.get('DOJ').touched" class="text-danger"> *Date of Joining is Required</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Company Email ID</label>
+                                    <input type="text" class="form-control" placeholder="Company Email ID" formControlName="Email">
+                                    <small *ngIf="addEmployeeForm.get('Email').invalid && addEmployeeForm.get('Email').touched" class="text-danger"> *Email is Required</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Personal Email ID</label>
+                                    <input type="text" class="form-control" placeholder="Personal Email ID" formControlName="personalEmail">
+                                    <small *ngIf="addEmployeeForm.get('personalEmail').invalid && addEmployeeForm.get('personalEmail').touched" class="text-danger"> *Email is Required</small>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row row">
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Address</label>
+                                    <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                                    <small *ngIf="addEmployeeForm.get('address').invalid && addEmployeeForm.get('address').touched" class="text-danger"> *Address is Required</small>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>State</label>
+                                    <select class="form-select form-control" formControlName="State">
+                                      <option value="">--Select--</option>
+                                        <option *ngFor="let item of stateList">{{item.stateName}}</option>
+                                     
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Branch</label>
+                                    <select class="form-select form-control" formControlName="Branch">
+                                        <ng-container *ngFor="let item of branchList">
+                                        <option *ngIf="item.branchName"  [value]="item.branchName">{{item.branchName}}</option>
+                                        </ng-container>
+                                    </select>
+                                    <small *ngIf="addEmployeeForm.get('Branch').invalid && addEmployeeForm.get('Branch').touched" class="text-danger"> *Branch Required</small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Category</label>
+                                    <select class="form-select form-control" formControlName="Category">
+                                        <option value="">--Select--</option>
+                                        <ng-container *ngFor="let item of categories">
+                                        <option  [value]="item.categoryName" *ngIf="item.status">{{item.categoryName}}</option>
+                                    </ng-container>
+                                    </select>
+                                    <small *ngIf="addEmployeeForm.get('Category').invalid && addEmployeeForm.get('Category').touched" class="text-danger"> *Category is Required</small>
+                                </div>
+
+
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Department</label>
+
+                                    <select class="form-select form-control" formControlName="Department">
+                                            <option value="">--Select--</option>
+                                            <ng-container *ngFor="let item of departments"><option  [value]="item.departmentName" *ngIf="item.status">{{item.departmentName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    <small *ngIf="addEmployeeForm.get('Department').invalid && addEmployeeForm.get('Department').touched" class="text-danger"> *Department is Required</small>
+                                </div>
+
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Designation</label>
+
+                                    <select class="form-select form-control" formControlName="Designation">
+                                            <option value="">--Select--</option>
+                                            <ng-container *ngFor="let item of designations">
+                                            <option  [value]="item.name" *ngIf="item.status">{{item.name}}</option>
+                                        </ng-container>
+                                        </select>
+                                    <small *ngIf="addEmployeeForm.get('Designation').invalid && addEmployeeForm.get('Designation').touched" class="text-danger"> *Designation is Required</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label> Probation</label>
+                                    <input type="checkbox" class="checkbox-all" formControlName="probation">
+                                </div>
+                            </div>
+
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Grade</label>
+
+                                    <select class="form-select form-control" formControlName="Grade">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of grade">{{item.name}}</option>
+                                        </select>
+                                    <small *ngIf="addEmployeeForm.get('Grade').invalid && addEmployeeForm.get('Grade').touched" class="text-danger"> *Grade is Required</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Reporting Manager1</label>
+
+                                    <ng-select class="form-select form-control" formControlName="ReportingManager" aria-placeholder="--select Status--">
+                                        <ng-option value="">--Select--</ng-option>
+                                        <ng-option *ngFor="let item of lstEmployee" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+                                    <small *ngIf="addEmployeeForm.get('ReportingManager').invalid && addEmployeeForm.get('ReportingManager').touched" class="text-danger"> *Reporting Manager is Required</small>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Reporting Manager2</label>
+                                    <ng-select class="form-select form-control" formControlName="ReportingManager2" aria-placeholder="--select Status--">
+                                        <ng-option value="">--Select--</ng-option>
+                                        <ng-option *ngFor="let item of lstEmployee" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+                                    <small *ngIf="addEmployeeForm.get('ReportingManager2').invalid && addEmployeeForm.get('ReportingManager2').touched" class="text-danger"> *Reporting Manager is Required</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Reporting Manager3</label>
+                                    <ng-select class="form-select form-control" formControlName="ReportingManager3" aria-placeholder="--select Status--">
+                                        <ng-option value="">--Select--</ng-option>
+                                        <ng-option *ngFor="let item of lstEmployee" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+                                    <small *ngIf="addEmployeeForm.get('ReportingManager3').invalid && addEmployeeForm.get('ReportingManager3').touched" class="text-danger"> *Reporting Manager is Required</small>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Status</label>
+                                    <select class="form-select form-control" formControlName="empstatus" aria-placeholder="--select Status--">
+                                        <option value="">--Select--</option>
+                                        <option value = "true">Active</option>
+                                        <option value = "false">Inactive</option>
+                                      
+                                    </select>
+
+
+                                    <small *ngIf="addEmployeeForm.get('empstatus').invalid && addEmployeeForm.get('empstatus').touched" class="text-danger"> *Status is Required</small>
+
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Contractor</label>
+                                    <select class="form-select form-control" formControlName="contractor">
+                                        <option value="">--Select--</option>
+                                    <option *ngFor="let item of contractorData">{{item.name}}</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>FingerPrint Id</label>
+                                    <input type="text" class="form-control" placeholder="Personal Email ID" formControlName="fingerprint">
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            <button class="btn btn-primary" *ngIf="(employeeID == undefined)" (click)="addEmployes()">Submit form</button>
+                            <button class="btn btn-primary" *ngIf="employeeID" (click)="updateEmployee()">Update form</button>
+                            <button class="btn " (click)="cancel()">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

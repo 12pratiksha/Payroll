@@ -1,0 +1,110 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Time Office Policy List </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Time Office Policy List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Header -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+         <div class="add-emp-section">
+             <!-- <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i>Show Table</a> -->
+             <a class="btn btn-success btn-add-emp" routerLink="/layout/masters/officeTimePolicy"><i class="fas fa-plus"></i>Add New</a>
+         </div>
+        </div>
+    </div>
+    
+       
+    <div class="row filter-row">
+    <div class="row" > 
+        <div class="col-md-12">
+            <div class="table-responsive" >
+                 <table class="table table-striped custom-table datatable" datatable [dtOptions]="dtOptions" *ngIf="!tableData"
+                  >
+                    <thead>
+                        <tr>
+                           <th>Employee Code</th>
+                           <th>Employee Name</th>
+                           <th>Permissible Late Arrival Minutes</th>
+                           <th>Permissible Early Departure Minutes</th>
+                           <th>Duplicate Check Minutes</th>
+                           <th>Working Hrs Start With Shift Start Time </th>
+                           <th>Working Hrs End With Shift End Time </th>
+                           <th>Mark LWL as LLL</th>
+                           <th>Mark LHL as LLL</th>
+                           <th>Mark LAL as LLL</th>
+                           <th>Mark AWA as AAA</th>
+                           <th>Mark AHA as AAA</th>
+                           <th>Show HW = Total HW - OT</th>
+                           <th>Deduct Out Work from Working Hours</th>
+                           <th>Mark Miss Punch As Absent</th>
+                           <th>Mark Miss Punch As HalfDay</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tableData">
+                          
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="datatable table table-stripped mb-0" datatable [dtOptions]="dtOptions" *ngIf="tableData"
+                >
+                  <thead>
+                      <tr>
+                         <th>Employee Code</th>
+                         <th>Employee Name</th>
+                         <th>Permissible Late Arrival Minutes</th>
+                         <th>Permissible Early Departure Minutes</th>
+                         <th>Duplicate Check Minutes</th>
+                         <th>Working Hrs Start With Shift Start Time </th>
+                         <th>Working Hrs End With Shift End Time </th>
+                         <th>Mark LWL as LLL</th>
+                         <th>Mark LHL as LLL</th>
+                         <th>Mark LAL as LLL</th>
+                         <th>Mark AWA as AAA</th>
+                         <th>Mark AHA as AAA</th>
+                         <th>Show HW = Total HW - OT</th>
+                         <th>Deduct Out Work from Working Hours</th>
+                         <th>Mark Miss Punch As Absent</th>
+                         <th>Mark Miss Punch As HalfDay</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of tableData">
+                        <td>{{item.employee_code}}</td>
+                        <td>{{item.first_name}} {{item.middle_name}} {{item.last_name}}</td>
+                        <td>{{item.permissible_late_arrival_minutes}}</td>
+                        <td>{{item.permissible_early_departure_minutes}}</td>
+                        <td>{{item.duplicate_check_minutes}}</td>
+                        <td><i class="fas fa-solid fa-times false" *ngIf="!item.working_hours_start_with_shift_start_time"></i> <i class="fa fa-check true" *ngIf="item.working_hours_start_with_shift_start_time;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.working_hours_end_with_shift_end_time"></i> <i class="fa fa-check true" *ngIf="item.working_hours_end_with_shift_end_time;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.marklwlaslll"></i> <i class="fa fa-check true"   *ngIf="item.marklwlaslll;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.marklhlaslll"></i> <i class="fa fa-check true"   *ngIf="item.marklhlaslll;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.marklalaslll"></i> <i class="fa fa-check true"   *ngIf="item.marklalaslll;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.markawaasaaa"></i> <i class="fa fa-check true"   *ngIf="item.markawaasaaa;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.markahaasaaa"></i> <i class="fa fa-check true"   *ngIf="item.markahaasaaa;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.showhwtotalhwot"></i> <i class="fa fa-check true"   *ngIf="item.showhwtotalhwot;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.deduct_out_work_from_working_hours"></i> <i class="fa fa-check true" *ngIf="item.deduct_out_work_from_working_hours;"></i></td>
+                        <td> <i class="fas fa-solid fa-times false" *ngIf="!item.mark_miss_punch_as_absent"></i> <i class="fa fa-check true" *ngIf="item.mark_miss_punch_as_absent;"></i></td>
+                        <td><i class="fas fa-solid fa-times false"  *ngIf="!item.mark_misspunch_as_half_day"></i> <i class="fa fa-check true" *ngIf="item.mark_misspunch_as_half_day;"></i></td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

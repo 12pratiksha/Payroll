@@ -1,0 +1,161 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Employee PF Report</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee PF Report</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Employee PF Report</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="filterForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4">
+                                        <label>Year<small class="text-danger">*</small></label>
+                                        <select class="form-select form-control" formControlName="year">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of year">{{item}}</option>
+                                        </select>
+                                        <small *ngIf="filterForm.get('year').invalid && filterForm.get('year').touched" class="text-danger">Year is required</small>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Month<small class="text-danger">*</small></label>
+                                        <select class="form-select form-control" formControlName="month">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of months">{{item.name}}</option>
+                                        </select>
+                                        <small *ngIf="filterForm.get('month').invalid && filterForm.get('month').touched" class="text-danger">Month is required</small>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Search By</label>
+                                        <br>
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                        <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="employeeId">
+                                        <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                        <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                        <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4 " *ngIf="userType=='Admin'">
+                                        <label>PF No.</label>
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                            <input type="text" placeholder="--Select--" matInput [matAutocomplete]="pf_data" (keyup)="getPfNo($event)" [ngModel]="selectedno" formControlName="pfno">
+                                            <mat-autocomplete class="matautocss" #pf_data="matAutocomplete" style="padding: 1px;">
+                                            <mat-option *ngFor="let data of pfNo" [value]="data.epfno" (click)="displayEpfno(data.epfno)">
+                                            <span>{{data.epfno}}</span>
+                                            </mat-option>
+                                            </mat-autocomplete>
+                                            </mat-form-field>
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-primary" (click)="search()">Search    </button>&nbsp;
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="tableData">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                        <thead>
+                            <tr height="100px" style="font-size:15px; font-weight:600;">
+                                <td style="width:100%" colspan="11">
+                                    <table style="width:100%;border-right: 1px solid white; text-align:center;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                        <tr>
+                                            <td style="width: 12% !important;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                            <div style="width: 205px;height:170px;background-repeat: no-repeat;background-size: cover;background-position: 0px 0px 0px 0px;" [ngStyle]="{backgroundImage: 'url(&quot;'+ imageName +'&quot;)'}">
+                                            </div>
+                                            <td style="width:70%;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                                <div style="text-align: center;font-size: 25px !important;" *ngIf="branchName==null">{{companyName}}</div>
+                                                <div style="text-align: center;font-size: 18px !important;" *ngIf="branchName">{{branchName}}</div>
+                                                <div style="text-align: center; font-size: 15px !important;">{{address}}</div>
+                                                <div style="text-align: center; font-size: 15px !important;">Employee PF Report</div>
+                                                <div style="text-align: center; font-size: 15px !important;">{{month}}-{{Year}}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Srno</th>
+                                <th>Employee Code</th>
+                                <th>Employee Name</th>
+                                <th *ngFor="let value of allelemnets">
+                                    <span *ngIf="value.elementtype.indexOf('Addition')!=-1">
+                                      {{value.elementName}} 
+                                    </span>
+                                </th>
+                                <th>Basic + DA</th>
+                                <th>Provident Fund</th>
+                                <th>A(15%) </th>
+                                <th>B(8.33%) </th>
+                                <th>(A+B)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tableData; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.employeeCode}}</td>
+                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                <td *ngFor="let value of allelemnets">
+                                    <span *ngFor="let allowvalue of item.allowances">
+                                    <span *ngIf="value.elementName==allowvalue.elementName && value.elementtype.indexOf('Addition')!=-1">
+                                           {{allowvalue.actualelementAmount}}
+                                    </span>
+                                    </span>
+                                </td>
+                                <td>{{item.basicPlusDA}}</td>
+                                <td>{{item.pf}}</td>
+                                <td>{{item.a}}</td>
+                                <td>{{item.b}}</td>
+                                <td>{{item.aplusb}}</td>
+                            </tr>
+                               
+                        </tbody>
+                        <tr>
+                            <td><strong>Total:</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td  *ngFor="let column of displayedColumns"></td>
+                            <!-- <td *ngFor="let column of displayedColumns1">{{ columnTotals[column] || 0 }}</td> -->
+                            <!-- <td *ngFor="let name of columnTotals | keyvalue">{{ 0 }}</td> -->
+                            <!-- <td *ngFor="let column of allelemnets">{{ columnTotals[column] }}</td> -->
+                            <td>{{ totalBasicPlusDA }}</td>
+                            <td>{{ totalPF }}</td>
+                            <td>{{ totalA }}</td>
+                            <td>{{ totalB }}</td>
+                            <td>{{ totalAplusB }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

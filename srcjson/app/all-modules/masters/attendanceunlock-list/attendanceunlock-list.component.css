@@ -1,0 +1,8 @@
+small{
+    color: red;
+}
+.input-group-text {
+    background-color: #f7f7f7;
+    border-color: #e3e3e3;
+    height: 36px !important;
+}

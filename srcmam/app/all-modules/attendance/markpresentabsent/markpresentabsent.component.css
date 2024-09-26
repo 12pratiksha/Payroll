@@ -1,0 +1,13 @@
+ .btn-primary {
+    background-color: #FF7849;
+    width:120px;
+    /* vertical-align: middle; */
+    
+}
+/* table.table td, table.table th {
+    border-color: #dee2e6;
+}
+table.dataTable > tbody > tr.selected > * {
+    box-shadow: inset 0 0 0 9999px rgba(2, 117, 216, 0.9);
+    
+} */ 

@@ -1,0 +1,92 @@
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Element List</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Masters</li>
+                       <li class="breadcrumb-item">Payroll Setup</li>
+                       <li class="breadcrumb-item active" aria-current="page">Element List</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-8">
+
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+               <a  class="btn btn-success btn-add-emp" (click)="payRollForm('add')"><i class="fas fa-plus"></i>Create New</a>
+               
+           </div>
+           
+       </div>
+   </div>
+   <!-- /Search Filter -->
+   <div class="row" > 
+    <div class="col-md-12">
+        <div class="card">
+        <div class="table-responsive">
+            <table class="table  custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="tableData">
+                <thead>
+                    <tr>
+                        <th> Name</th>
+                        <th> Condition</th>
+                        <th> Sys. Define</th>
+                        <th class="text-nowrap">Status</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                       <td>{{item.name}}</td>
+                       <td>{{item.conduction}}</td>
+                       <td>{{item.sysDefine}}</td>
+                       <td>{{item.status}}</td>
+                       <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen" (click)="payRollForm(item.pelementId)"></i></a>
+                            <a  ><i class="far fa-trash-alt" (click)="delete(item.pelementId)"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="!tableData">
+                <thead>
+                    <tr>
+                        <th> Name</th>
+                        <th> Condition</th>
+                        <th> Sys. Define</th>
+                        <th class="text-nowrap">Status</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                       <td>{{item.name}}</td>
+                       <td>{{item.conduction}}</td>
+                       <td>{{item.sysDefine}}</td>
+                       <td>{{item.status}}</td>
+                       <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen" (click)="payRollForm(item.pelementId)"></i></a>
+                            <a  ><i class="far fa-trash-alt" (click)="delete(item.pelementId)"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> 
+    </div>
+</div>
+   
+   </div>
+   
+  

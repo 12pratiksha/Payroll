@@ -1,0 +1,187 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Leave Encashment</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Leave Encashment</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!-- Custom Boostrap Validation -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">Leave Encashment</h4>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <form [formGroup]="leaveEncashmantFrom">
+                                        <div class="form-row row">
+                                            <div class="col-md-4 mb-3">
+                                                <label>State</label>
+                                                <select class="form-select form-control" formControlName="state">
+                                                <option value = "">--Select State--</option>
+                                               <option *ngFor="let item of stateData" [value]="item.stateId">{{item.stateName}}</option>
+                                             </select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Branch</label>
+                                                <select class="form-select form-control" formControlName="branch">
+                                                <option value = "">--Select Branch--</option>
+                                                <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                             </select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Category</label>
+                                                <select class="form-select form-control" formControlName="category">
+                                                <option value = "">--Select Category--</option>
+                                                <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>
+                                             </select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Department</label>
+                                                <select class="form-select form-control" formControlName="department">
+                                                <option value = "">--Select Department--</option>
+                                                <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>
+                                             </select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Designation</label>
+                                                <select class="form-select form-control" formControlName="designation">
+                                                <option value = "">--Select Designation--</option>
+                                                <option *ngFor="let item of designation" [value]="item.designationMasterId">{{item.name}}</option>
+                                             </select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Search By</label>
+                                                <ng-select class="form-select form-control" formControlName="searchBy">
+                                                    <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                                </ng-select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Grade/Cadre</label>
+                                                <select class="form-select form-control" formControlName="grade">
+                                                <option value = "">--Select Grade--</option>
+                                                <option *ngFor="let item of grade" [value]="item.lookupMasterId">{{item.name}}</option>
+                                             </select>
+                                                <!-- <small
+                                            *ngIf="addEmployeeForm.get('Gender').invalid && addEmployeeForm.get('Gender').touched"
+                                            class="text-danger"> *Gender is Required</small> -->
+                                            </div>
+                                            <div class="col-md-4 mb-3" style="margin-top: auto;">
+                                                <button class="btn btn-primary" (click)="findEmployees()">Find Employee</button>
+                                            </div>
+                                            <div class="col-md-4 mb-3"></div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Leave Type <small class="text-danger">*</small></label>
+                                                <select class="form-select form-control" formControlName="leaveType">
+                                                <option value = "">--Select Leave Type--</option>
+                                                <option *ngFor="let item of leave" [value]="item.lookupMasterId">{{item.name}}</option>
+                                             </select>
+                                                <small *ngIf="leaveEncashmantFrom.get('leaveType').invalid && leaveEncashmantFrom.get('leaveType').touched" class="text-danger"> *Leave is Required</small>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>Formula <small  class="text-danger">*</small></label>
+                                                <select class="form-select form-control" formControlName="formula">
+                                                <option value = "">--Select Formula--</option>
+                                                <!-- <option value="Annual Attendance *15/305">Annual Attendance *15/305</option> -->
+                                                <option value="Basic/30 *leave balance">Basic/30 *leave balance</option>
+                                                <option value="Gross Salary *(No. of leaves)/26">Gross Salary *(No. of leaves)/26</option>
+                                                <!-- <option value="1 day Gross *(No. of Leaves)">1 day Gross *(No. of Leaves)</option>  -->
+                                            </select>
+                                                <small *ngIf="leaveEncashmantFrom.get('formula').invalid && leaveEncashmantFrom.get('formula').touched" class="text-danger"> *Leave is Required</small>
+                                            </div>
+
+                                            <div class="col-md-4 mb-3" style="margin-top: auto;">
+                                                <button class="btn btn-primary" (click)="encash()">Encash</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Branch</th>
+                                <th>Department</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of employee; let i = index" (click)="selectRow(i, item)">
+                                <td>{{item.employeeCode}}</td>
+                                <td>{{item.firstName}} {{item.lastName}}</td>
+                                <td>{{item.branch}}</td>
+                                <td>{{item.department}}</td>
+                                <td>{{item.status == 0?'Active':'Inactive'}}</td>
+                                <!-- <td class="text-end ico-sec justify-content-end">
+
+                                    <a (click)="editCity(city.id)"><i class="fas fa-pen"></i></a>
+                                    <a (click)="deleteCity(city.id)"><i class="far fa-trash-alt"></i></a>
+                                </td> -->
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

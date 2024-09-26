@@ -1,0 +1,185 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>State</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">General SetUp</li>
+                        <li class="breadcrumb-item active" aria-current="page">State </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add State</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable id="datatable" [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="stateData">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">State Code</th>
+                                    <th style="text-align: center;">State name</th>
+
+                                    <th style="text-align: center;">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let state of stateData">
+                                    <td style="text-align: center;">{{state.stateCode}}</td>
+                                    <td style="text-align: center;">{{state.stateName}}</td>
+
+
+                                    <td class="text-end ico-sec justify-content-center">
+                                        <a (click)="editState(state.stateId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="deleteState(state.stateId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable id="datatable" [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!stateData">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">State Code</th>
+                                    <th style="text-align: center;">State name</th>
+                                    <!-- <th>Region name</th>
+                                    <th>Country name</th> -->
+                                    <th style="text-align: center;">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let state of stateData">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">State Master Form</h4>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="addStateForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                        <!-- <div class="form-group form-focus select-focus mb-0"> -->
+                                        <label class="focus-label">Country Name</label>
+                                        <select class="form-select floating form-control" formControlName="countryName" (change)="onChange($event.target.value)">
+                                               <option  *ngFor="let item of countrylist" [value]="item.countryId">{{item.countryName}}</option>
+                                               
+                                           </select>
+                                        <!-- <small
+                                           *ngIf="addStateForm.get('countryName').invalid && addStateForm.get('countryName').touched"
+                                           class="text-danger"> *Country Name is Required</small> -->
+                                        <!-- </div> -->
+
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Region Name</label>
+                                        <select class="form-select floating form-control" formControlName="regionName" value="">
+                                          <option value="">--Select--</option>
+                                            <option *ngFor="let region of regionList" [value]="region.regionId"> {{region.regionName}} </option>
+                                        </select>
+                                        <!-- <small
+                                        *ngIf="addStateForm.get('regionName').invalid && addStateForm.get('regionName').touched"
+                                        class="text-danger"> *Region Name is Required</small> -->
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>State Code</label>
+                                        <input type="text" onlyNumber class="form-control" placeholder="State Code" required formControlName="stateCode">
+                                        <!-- <small
+                                        *ngIf="addStateForm.get('stateCode').invalid && addStateForm.get('stateCode').touched"
+                                        class="text-danger"> *State Code is Required</small> -->
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>State Name</label>
+                                        <input type="text" class="form-control" placeholder="State Name" required formControlName="stateName">
+                                        <!-- <small
+                                        *ngIf="addStateForm.get('stateName').invalid && addStateForm.get('stateName').touched"
+                                        class="text-danger"> *State Name is Required</small> -->
+                                    </div>
+
+                                </div>
+
+
+
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="stateID" (click)="update()">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="(stateID == undefined)" (click)="addState()">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

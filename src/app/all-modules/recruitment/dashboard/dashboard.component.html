@@ -1,0 +1,518 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+
+    <!-- Page Content -->
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>User Job Dashboard 1 </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">User Job Dashboard</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Content Starts -->
+        <!-- <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                    <li class="nav-item"><a class="nav-link active" routerLink="/layout/userdashboard/user-dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/useralljobs/user-all-jobs">All </a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/savedjobs/saved-jobs">Saved</a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/appliedjobs/applied-jobs">Applied</a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/interviewing/interviewing">Interviewing</a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/offeredjobs/offered-jobs">Offered</a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/visitedjobs/visited-jobs">Visitied </a></li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/layout/archivedjobs/archived-jobs">Archived </a></li>
+                </ul>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card flex-fill tickets-card">
+                    <div class="card-header">
+                        <div class="text-center w-100 p-3">
+                            <h3 class="bl-text mb-1">{{offer}}</h3>
+                            <h2>Offered</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card flex-fill tickets-card">
+                    <div class="card-header">
+                        <div class="text-center w-100 p-3">
+                            <h3 class="bl-text mb-1">{{applied}}</h3>
+                            <h2>Applied</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card flex-fill tickets-card">
+                    <div class="card-header">
+                        <div class="text-center w-100 p-3">
+                            <h3 class="bl-text mb-1">0</h3>
+                            <h2>Visited</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card flex-fill tickets-card">
+                    <div class="card-header">
+                        <div class="text-center w-100 p-3">
+                            <h3 class="bl-text mb-1">12</h3>
+                            <h2>Saved</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-12 jb-dashboard">
+                <div class="row">
+                    <div class="col-md-7 text-center d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-header">
+                                <h3 class="card-title">Profiles Overview</h3>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Last 6 months
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item">Last 6 months</a>
+                                        <a class="dropdown-item">Last 3 months</a>
+                                        <a class="dropdown-item">Last 1 months</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">							
+                                <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-header">
+                                <h3 class="card-title">Latest Jobs</h3>
+                            </div>
+
+                            <div class="card-body">
+                                <ul class="jb-info">
+                                    <li class="row">
+                                        <div class="col-md-8">
+                                            <div class="jb-li-content">
+                                                <h3>UI Developer</h3>
+                                                <h5>Experience</h5>
+                                            </div>
+                                            <div class="jb-li-content mt-1">
+                                                <h6>1 hour Ago</h6>
+                                                <h2>9 years</h2>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            <button class="btn btn-primary">Apply Now</button>
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="col-md-8">
+                                            <div class="jb-li-content">
+                                                <h3>UI Developer</h3>
+                                                <h5>Experience</h5>
+                                            </div>
+                                            <div class="jb-li-content mt-1">
+                                                <h6>1 hour Ago</h6>
+                                                <h2>9 years</h2>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            <button class="btn btn-primary">Apply Now</button>
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="col-md-8">
+                                            <div class="jb-li-content">
+                                                <h3>UI Developer</h3>
+                                                <h5>Experience</h5>
+                                            </div>
+                                            <div class="jb-li-content mt-1">
+                                                <h6>1 hour Ago</h6>
+                                                <h2>9 years</h2>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            <button class="btn btn-primary">Apply Now</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>										
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Offered Jobs</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-nowrap custom-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Job Title</th>
+                                        <th>Department</th>
+                                        <th class="text-center">Job Type</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><a routerLink="/layout/jobs/job-details">Web Developer</a></td>
+                                        <td>Development</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Full Time
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end text-center">
+                                            <a data-bs-toggle="modal" data-bs-target="#edit_job"><i class="fas fa-pen"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#delete_job"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><a routerLink="/layout/jobs/job-details">Web Designer</a></td>
+                                        <td>Designing</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-success"></i> Part Time
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end text-center">
+                                            <a data-bs-toggle="modal" data-bs-target="#edit_job"><i class="fas fa-pen"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#delete_job"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><a routerLink="/layout/jobs/job-details">Android Developer</a></td>
+                                        <td>Android</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Internship
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end text-center">
+                                            <a data-bs-toggle="modal" data-bs-target="#edit_job"><i class="fas fa-pen"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#delete_job"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Requirement List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Department</th>
+                                        <th>Start Date</th>
+                                        <th>Job Type</th>
+                                        <th>Vacancy</th>
+                                        <th>Pending Vacancy</th>
+                                        <th>Approver</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData_display|slice:0:5; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.request_date | date}}</td>
+
+                                            <td>{{item.department}}</td>
+                                            <td>{{item.expected_joining_date | date}}</td>
+                                            <td>{{item.designation}}</td>
+                                            <td>{{item.no_of_vacancy}}</td>
+                                            <td>{{item.no_of_pending_vacancy}}</td>
+                                            <td>{{item.approver}}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length==0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Department</th>
+                                        <th>Start Date</th>
+                                        <th>Job Type</th>
+                                        <th>Vacancy</th>
+                                        <th>Pending Vacancy</th>
+                                        <th>Approver</th>
+                                        <th>Actions</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData_display; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.request_date | date}}</td>
+
+                                            <td>{{item.department}}</td>
+                                            <td>{{item.expected_joining_date | date}}</td>
+                                            <td>{{item.designation}}</td>
+                                            <td>{{item.no_of_vacancy}}</td>
+                                            <td>{{item.no_of_pending_vacancy}}</td>
+                                            <td>{{item.approver}}</td>
+                                            <td class="text-center">
+                                                <div class="action-label">
+                                                    <a class="role-info role-bg-two" (click)="enterCand(item)">
+                                                        <i class="fa fa-dot-circle-o text-danger"></i> Enter Candiate
+                                                    </a>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <a>
+                                                    <i class="btn-primary" (click)="close">Close</i>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Offer History List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Offer Date</th>
+                                        <th>offersalary</th>
+                                        <th>Number of offers</th>
+                                        <th>View Offer Letter</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData|slice:0:5; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                            <td>{{item.offer_date}}</td>
+                                            <td>{{item.offer_salary}}</td>
+                                            <td>{{item.number_of_offers}}</td>
+                                            <td>
+                                                <a href="{{baseurl}}/empdoc/{{item.offerlattername}}" target="_blank " class="fas fa-bars "></a>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions " class="table custom-table datatable " *ngIf="!tableData ">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Offer Date</th>
+                                        <th>offersalary</th>
+                                        <th>Number of offers</th>
+                                        <th>View Offer Letter</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData; let i=i ndex ">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                            <td>{{item.offer_date}}</td>
+                                            <td>{{item.offer_salary}}</td>
+                                            <td>{{item.number_of_offers}}</td>
+                                            <td>
+                                                <a href="{{item.offerlatter_location}}{{item.offerlattername}} " target="_blank " class="fas fa-bars "></a>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Applied Jobs</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-nowrap custom-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Job Title</th>
+                                        <th>Department</th>
+                                        <th>Start Date</th>
+                                        <th>Expire Date</th>
+                                        <th class="text-center">Job Type</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><a routerLink="/layout/jobs/job-details">Web Developer</a></td>
+                                        <td>Development</td>
+                                        <td>3 Mar 2019</td>
+                                        <td>31 May 2019</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Full Time
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-one" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Open
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <a data-bs-toggle="modal" data-bs-target="#edit_job"><i class="fas fa-pen"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#delete_job"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><a routerLink="/layout/jobs/job-details">Web Designer</a></td>
+                                        <td>Designing</td>
+                                        <td>3 Mar 2019</td>
+                                        <td>31 May 2019</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-success"></i> Part Time
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-one" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-success"></i> Closed
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <a data-bs-toggle="modal" data-bs-target="#edit_job"><i class="fas fa-pen"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#delete_job"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><a routerLink="/layout/jobs/job-details">Android Developer</a></td>
+                                        <td>Android</td>
+                                        <td>3 Mar 2019</td>
+                                        <td>31 May 2019</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Internship
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-one" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Cancelled
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <a data-bs-toggle="modal" data-bs-target="#edit_job"><i class="fas fa-pen"></i></a>
+                                            <a data-bs-toggle="modal" data-bs-target="#delete_job"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- /Content End -->
+
+    </div>
+    <!-- /Page Content -->
+
+</div>
+<!-- /Page Wrapper -->

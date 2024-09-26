@@ -1,0 +1,111 @@
+
+
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Salary Due Remarks List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">Payroll</li>
+                        <li class="breadcrumb-item">Salary</li>
+                        <li class="breadcrumb-item">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Salary Due Remarks</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row filter-row">
+        <div class="col-md-8">
+ 
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <a  class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+                
+            </div>
+            
+        </div>
+    </div>
+
+
+       <div class="row" >
+           <div class="col-sm-12">
+               <div class="card" >
+                   <h4 class="card-title mb-0">Salary Due Remarks Form</h4>
+               
+               <div class="card-body" >
+                   <div class="row"> 
+                       <div class="col-sm">
+                           <form class="needs-validation" novalidate  [formGroup]="salarySlipForm">
+                               <div class="form-row row">
+
+                            <div class="col-md-4 mb-3">
+                                <label>Employee Id <small>*</small></label>
+                                   <!-- <ng-select class="form-select form-control" formControlName="empId" >
+                                       <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>                                 
+                                     </ng-select>   -->
+                                     <mat-form-field class="example-full-width" appearance="outline">
+                                        <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="empId" >
+                                        <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                            <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                                <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                     <small
+                                     *ngIf="salarySlipForm.get('empId').invalid && salarySlipForm.get('empId').touched"
+                                     class="text-danger"> *This Field is Required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Month</label>
+                                <select class="form-select form-control" formControlName="month" >
+                                   <option value="">--Select--</option>  
+                                   <option *ngFor="let item of month">{{item}}</option>                            
+                                  </select>   
+                                   
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label>Year</label>
+                                <select class="form-select form-control" formControlName="year" >
+                                   <option value="">--Select--</option>  
+                                   <option *ngFor="let item of year">{{item}}</option>                            
+                                  </select>   
+                                   
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Remarks <small>*</small></label>
+                                   <input class=" form-control" type="text" formControlName="remark" >
+                                   <small
+                                    *ngIf="salarySlipForm.get('remark').invalid && salarySlipForm.get('remark').touched"
+                                    class="text-danger"> *This Field is Required</small>
+                            </div>
+                        </div> 
+                               <button class="btn btn-primary">Submit</button>
+                              
+                             
+                               <button class="btn" >Cancel</button>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   
+</div>
+ 
+   
+   
+ 
+   
+   
+   
+   

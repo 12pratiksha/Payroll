@@ -1,0 +1,90 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Compose Email Master11 </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Create Template</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card mb-0">
+                        <form [formGroup]="tempForm">
+                            <div class="row">
+                                <div class="card-body">
+                                    <div class="form-row row">
+                                        <div class="col-md-3 mb-3">
+                                            <label>Template Name <small class="text-danger">*</small></label>
+                                            <input type="text" class="form-control" formControlName="templateName">
+                                            <small *ngIf="tempForm.get('templateName').invalid && tempForm.get('templateName').touched" class="text-danger">This field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Type<small class="text-danger">*</small></label>
+                                            <select type="text" class="form-control" formControlName="type" (change)="getVariable($event)">
+                                                <option value="">--Select--</option>
+                                                <option value="Joining Letter">Joining Letter</option>
+                                                <option value="Resignation Letter">Resignation Letter</option>
+                                                <option value="Offer Letter">Offer Letter</option>
+                                                <option value="Releving Letter">Releving Letter</option>
+                                                </select>
+                                            <small *ngIf="tempForm.get('type').invalid && tempForm.get('type').touched" class="text-danger">This field is Required</small>
+                                        </div>
+                                <div class="row">
+                                    <div class="col-md-8" style="margin-top: 10px;">
+                                        <label>Sample Body  <small class="text-danger">*</small></label>
+                                        <ckeditor style="height: 20rem;" #editor [data]=data [editor]="Editor" formControlName="template1" (change)="onChange1($event)"></ckeditor>
+                                    </div>
+
+                                    <div class="col-md-8" style="margin-top: 10px">
+                                        <label>Main Body  <small class="text-danger">*</small></label>
+                                        <ckeditor style="height: 20rem;" #editor [data]=data [editor]="Editor" formControlName="template" (change)="onChange($event)"></ckeditor>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="card" *ngIf="variables" style="margin-top: -368px;">
+                                        <div class="card-header" style="font-size: 20px;background-color:orange;color: white;">
+                                            Some pre-define variables
+                                        </div>
+                                        <div class="card-body" style="font-size: 18px;">
+                                          <div><label>FirstName:</label> {{variables[0].firstName}}</div>
+                                          <div><label>LastName:</label> {{variables[0].lastName}}</div>
+                                          <div><label>MiddleName:</label> {{variables[0].middleName}}</div>
+                                          <div><label>Gender:</label> {{variables[0].gender}}</div>
+                                          <div><label>Date Of Birth:</label> {{variables[0].dateOfBirth}}</div>
+                                          <div><label>Availability:</label> {{variables[0].availability}}</div>
+                                          <div><label>City:</label> {{variables[0].city}}</div>
+                                          <div><label>Experience:</label> {{variables[0].experience}}</div>
+                                          <div><label>Skills:</label> {{variables[0].skills}}</div>
+                                          <div><label>Qualification:</label> {{variables[0].qualification}}</div>
+                                          <div><label>Phone:</label> {{variables[0].Phone}}</div>
+                                          <div><label>State:</label> {{variables[0].state}}</div>
+                                          <div><label>Email:</label> {{variables[0].email}}</div>
+                                          <div><label>Age:</label> {{variables[0].age}}</div>
+                                          <div><label>ApplicationDate:</label> {{variables[0].applicationDate}}</div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary" (click)="submit()">Submit</button>
+                                <button class="btn">Cancel</button>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,271 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Daily Attendance Report</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Daily Attendance Report</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Daily Attendance Report </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="filterForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>From Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                                            </div>
+                                            <small *ngIf="filterForm.get('fromDate').invalid && filterForm.get('fromDate').touched" style="color:red">*This field is required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>To Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                        <div class="cal-icon">
+                                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                        </div>
+                                        <small *ngIf="filterForm.get('toDate').invalid && filterForm.get('toDate').touched" style="color:red">*This field is required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>State</label>
+                                        <select class="form-select form-control" formControlName="state">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of state" [value]="item.stateId">{{item.stateName}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch</label>
+                                        <select class="form-select form-control" formControlName="branch" (change)="onChange($event)">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Category</label>
+                                        <select class="form-select form-control" formControlName="category">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of category" [value]="item.categoryId">{{item.categoryName}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Department</label>
+                                        <select class="form-select form-control" formControlName="department">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of department" [value]="item.departmentId">{{item.departmentName}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Search By</label>
+                                        <br>
+                                        <!-- <ng-select class="form-select form-control" formControlName="employeeId">
+                                            <ng-option value="">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employees ; let i = index" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                        </ng-select> -->
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                        <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="employeeId">
+                                        <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                        <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                        <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        </mat-form-field>
+                                        <!-- <div class="col-md-4 mb-3">ss
+                                        <label class="">Employee<small> *</small></label>
+                                    <ng-select class="form-select form-control"  formControlName="employee" >
+                                        <ng-option *ngFor="let item of employees; let i = index" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+                                    <small *ngIf="leaveApplicationForm.get('employee').invalid && leaveApplicationForm.get('employee').touched">Employee is required</small>
+                                    </div> -->
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                        <option value="">--Select--</option>
+                                        <option>Active</option>
+                                        <option>InActive</option>
+                                        <option>Delete</option>
+                                        <option>Block</option>
+                                        <option>Hold</option>
+                                        <option>FNF</option>
+                                    </select>
+                                    </div>
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>Salary</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of salary" value="item.value">{{item.key}}</option>
+                                       
+                                    </select>
+                                    </div> -->
+
+                                </div>
+                                <button class="btn btn-primary" (click)="search()">Search    </button>&nbsp;
+                                <!-- <button class="btn btn-primary" (click)="getReport()">Get Report</button> -->
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12" *ngIf="data">
+        <div class="card mb-0">
+            <div class="col-sm-4 col-md-3">
+                <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="data" id="sectionToPrint" #epltable>
+
+
+
+        <div class="col-md-12">
+            <div class="card mb-0">
+
+                <div class="table-responsive" *ngIf="data">
+                    <table datatable class="datatable table table-stripped mb-0" id="datatable">
+                        <thead>
+                            <tr height="100px" style="font-size:15px; font-weight:600;">
+                                <td style="width:100%" colspan="16">
+                                    <table style="width:100%;border-right: 1px solid white; text-align:center;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                        <tr>
+                                            <td style="width: 12% !important;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                            <div style="width: 205px;height:170px;background-repeat: no-repeat;background-size: cover;background-position: 0px 0px 0px 0px;" [ngStyle]="{backgroundImage: 'url(&quot;'+ imageName +'&quot;)'}">
+                                            </div>
+                                            <td style="width:70%;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                            <div style="text-align: center;font-size: 25px !important;" *ngIf="branchName==null">{{companyName}}</div>
+                                            <div style="text-align: center;font-size: 18px !important;" *ngIf="branchName">{{branchName}}</div>
+                                            <div style="text-align: center; font-size: 15px !important;">{{address}}</div>
+                                            <div style="text-align: center; font-size: 15px !important;">Daily Attendance Report</div>
+                                            <div style="text-align: center; font-size: 15px !important;">{{fromd}}-{{tod}}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">Srno</th>
+                                <th rowspan="2">Employee Code</th>
+                                <th rowspan="2">Employee Name</th>
+                                <th rowspan="2">Date</th>
+                                <th colspan="3">Attendance</th>
+                                <th colspan="3">Shift</th>
+                                <th colspan="2">Non Working</th>
+                                <th rowspan="2">Present(Day/Half)</th>
+                                <th rowspan="2">Attendance</th>
+                                <th rowspan="2">Late</th>
+                                <th rowspan="2">Early</th>
+                                <th rowspan="2">Present</th>
+                            </tr>
+                            <tr>
+                                <th>In Time</th>
+                                <th>Out Time</th>
+                                <th>Worked HRS</th>
+                                <th>HRS</th>
+                                <th>In Time</th>
+                                <th>Out Time</th>
+                                <th>Type</th>
+                                <th>Day/Half</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.employeeCode}}</td>
+                                <th>{{item.firstName}} {{item.middlename}} {{item.lastName}}</th>
+                                <td>{{item.date|date:"dd-MM-yyyy"}}</td>
+                                <td>
+                                    <ng-container *ngIf="item.ainTime">
+                                        {{item.ainTime[0]
+                                        < 10? '0' + item.ainTime[0]: item.ainTime[0]}}:{{item.ainTime[1] < 10? '0' + item.ainTime[1]: item.ainTime[1]}}:{{item.ainTime[2] < 10? '0' + item.ainTime[2]: item.ainTime[2]}} </ng-container>
+                                        <ng-container *ngIf="!item.ainTime">00:00</ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.aoutTime">{{item.aoutTime[0]
+                                        < 10? '0' + item.aoutTime[0]: item.aoutTime[0]}}:{{item.aoutTime[1] < 10? '0' + item.aoutTime[1]: item.aoutTime[1]}}:{{item.aoutTime[2] < 10? '0' + item.aoutTime[2]: item.aoutTime[2]}}</ng-container>
+                                        <ng-container *ngIf="!item.aoutTime">00.00</ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.workedhours">{{item.workedhours[0]
+                                        < 10? '0' + item.workedhours[0]: item.workedhours[0]}}:{{item.workedhours[1] < 10? '0' + item.workedhours[1]: item.workedhours[1]}}:{{item.workedhours[2] < 10? '0' + item.workedhours[2]: item.workedhours[2]}} </ng-container>
+                                        <ng-container *ngIf="!item.workedhours"></ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.shrs">
+                                        {{item.shrs[0]
+                                        < 10? '0' + item.shrs[0]: item.shrs[0]}}:{{item.shrs[1] < 10? '0' + item.shrs[1]: item.shrs[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.shrs">00:00</ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.sinTime">
+                                        {{item.sinTime[0]
+                                        < 10? '0' + item.sinTime[0]: item.sinTime[0]}}:{{item.sinTime[1] < 10? '0' + item.sinTime[1]: item.sinTime[1]}}</ng-container>
+                                        <ng-container *ngIf="!item.sinTime">00:00</ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.soutTime">
+                                        {{item.soutTime[0]
+                                        < 10? '0' + item.soutTime[0]: item.soutTime[0]}}:{{item.soutTime[1] < 10? '0' + item.soutTime[1]: item.soutTime[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.soutTime">00:00</ng-container>
+                                </td>
+                                <td>{{item.nonType}}</td>5
+                                <td>{{item.nonDayOrHalf}}</td>
+                                <td></td>
+                                <td>{{item.attendance}}</td>
+                                <td>
+                                    <ng-container *ngIf="item.late">
+                                        {{item.late[0]
+                                        < 10? '0' + item.late[0]: item.late[0]}}:{{item.late[1] < 10? '0' + item.late[1]: item.late[1]}}</ng-container>
+                                        <ng-container *ngIf="!item.late">00:00</ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.early">
+                                        {{item.early[0]
+                                        < 10? '0' + item.early[0]: item.early[0]}}:{{item.early[1] < 10? '0' + item.early[1]: item.early[1]}}</ng-container>
+                                        <ng-container *ngIf="!item.early">00:00</ng-container>
+                                </td>
+                                <td>{{item.present}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,98 @@
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>User Form</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">General SetUp</li>
+                        <li class="breadcrumb-item">Users</li>
+                        <li class="breadcrumb-item active" aria-current="page">User Form </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-8">
+
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+               <a  class="btn btn-success btn-add-emp" (click)="reImburse('add')"><i class="fas fa-plus"></i>Create New</a>
+               
+           </div>
+           
+       </div>
+   </div>
+   <!-- /Search Filter -->
+   <div class="row" > 
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <div class="card mb-0">
+                <div class="card-body">
+            <table class="table datatable" datatable  [dtOptions]="dtOptions" *ngIf="tableData">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User Name</th>
+                        <th>Role Name </th>
+                        <th>Role Type Name </th>
+                        <th>Status</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                       <td>{{item.firstName}} {{item.middelName}}  {{item.lastName}}</td>
+                       <td>{{item.userName}}</td>
+                       <td>{{item.roleName}}</td>
+                       <td>{{item.roleType}}</td>
+                       <td>
+                        {{item.status == 0?'Inactive': item.status == 1 ? "Active": item.status == 2? "Deleted": item.status == 3? "Block": item.status == 4? "Onhold": "FNF"}}
+                       </td>
+                       <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen" (click)="edit(item.userid)"></i></a>
+                            <a  ><i class="far fa-trash-alt" (click)="delete(item.userid)"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="!tableData">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User Name</th>
+                        <th>Role Name </th>
+                        <th>Role Type Name </th>
+                        <th>Status</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                    
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">  -->
+    </div>
+</div>
+   
+   </div>
+  
+   
+  

@@ -1,0 +1,71 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Compose Email Master </h3>
+
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Compose Email </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card mb-0">
+                        <form [formGroup]="mailForm">
+                            <div class="card-body">
+
+                                <div class="col-md-3 mb-3">
+
+                                    <label for="inputField"><small Class="text-danger">*</small>To:</label>
+                                    <input type="text" name="to" class="form-control" [value]="" formControlName="to">
+                                    <small *ngIf="mailForm.get('to').invalid && mailForm.get('to').touched" class="text-danger">*This field is required</small>
+
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+
+                                    <label>Cc:</label>
+                                    <input type="text" class="form-control" formControlName="cc">
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label>Bcc:</label>
+                                    <input type="text" class="form-control" formControlName="bcc">
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label>Subject:<small class="text-danger">*</small></label>
+                                    <input type="text" class="form-control" formControlName="subject">
+                                </div>
+
+                                <div class="col-md-12" style="margin-top: 10px;">
+                                    <label>Body:</label>
+                                    <ckeditor style="height: 20rem;" #editor [data]=data [editor]="Editor" (blur)="onBlur($event)" (ready)="onReady($event)" formControlName="template"></ckeditor>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <!-- <button class="btn btn-primary" type="button"><span>Add File</span></button>&nbsp; -->
+                                <button class="btn btn-primary" (click)="submit()">Submit</button>
+                                <button class="btn">Cancel</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

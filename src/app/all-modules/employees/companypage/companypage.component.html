@@ -1,0 +1,196 @@
+<!--Page Content-->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Company</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/employees/employeepage">Employees</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Company</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Header -->
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-bars" ></i> Show Table</a>
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i> Create New</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="result_display?.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of result_display">
+                                    <td>{{company.companyName}}</td>
+                                    <td>{{company.cityName}}</td>
+                                    <td>{{company.stateName}}</td>
+                                    <td>{{company.countryName}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a data-bs-toggle="modal" data-bs-target="#edit_company" (click)="edit(company.companyInformationId)"><i class="fas fa-pen"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#delete_company" (click)="delete(company.companyInformationId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="result_display?.length==0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of result_display">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Company Master Form</h4>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate (ngSubmit)="basicFormSubmit()" [formGroup]="basicForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom01">Company Name <small class="text-danger">*</small></label>
+                                        <input type="text" class="form-control" id="validationCustom01" placeholder="Company Name" value="" required formControlName="companyName">
+                                        <small *ngIf="basicForm.get('companyName').invalid && basicForm.get('companyName').touched" class="text-danger"> *Company Name is required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom02">Company Code <small class="text-danger">*</small></label>
+                                        <input type="text" class="form-control" id="validationCustom02" placeholder="Company Code" value="" required formControlName="companyCode">
+                                        <small *ngIf="basicForm.get('companyCode').invalid && basicForm.get('companyCode').touched" class="text-danger"> *Company Code is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom02">Logo</label>
+                                        <input type="file" class="form-control" (change)="onChange($event)">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom02">Country <small class="text-danger">*</small></label>
+                                        <select class="form-select floating form-control" formControlName="country">
+                                            <option value="">--Select--</option>
+                                             <option *ngFor="let item of countryList" [value]="item.countryId"> {{item.countryName}} </option>
+                                          </select>
+                                        <small *ngIf="basicForm.get('country').invalid && basicForm.get('country').touched" class="text-danger"> *Country is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">State <small class="text-danger">*</small></label>
+                                        <select class="form-select floating form-control" formControlName="state">
+                                           <option value="">--Select--</option>
+                                            <option *ngFor="let item of statesList" [value]="item.stateId"> {{item.stateName}} </option>
+                                         </select>
+                                        <small *ngIf="basicForm.get('state').invalid && basicForm.get('state').touched" class="text-danger"> *State is required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">City Name <small class="text-danger">*</small></label>
+                                        <select class="form-select floating form-control" formControlName="city">
+                                            <option value="">--select City--</option>
+                                            <option *ngFor="let item of cityList" [value]="item.id">{{item.cityName}}</option>
+                                         </select>
+                                        <small *ngIf="basicForm.get('city').invalid && basicForm.get('city').touched" class="text-danger"> *City is required</small>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom01">Mission <small class="text-danger">*</small></label>
+                                        <input type="text" class="form-control" id="validationCustom01" placeholder="Mission" value="" required formControlName="mission">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom02">Vision <small class="text-danger">*</small></label>
+                                        <input class="form-control" id="validationCustom02" placeholder="Vision" value="" required formControlName="vision">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label for="validationCustom02">Software Expiry Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-4">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="softwareExpiryDate">
+                                            </div>
+                                            <small
+                                            *ngIf="basicForm.get('softwareExpiryDate').invalid && basicForm.get('softwareExpiryDate').touched"
+                                            class="text-danger"> *Expiry Date is required</small>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+                                <button [disabled]="submitLoader" class="btn btn-primary" type="submit" (click)="addCompany()" *ngIf="!btnUpdate" [disabled]="!basicForm.valid">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" type="submit" (click)="update()" *ngIf="btnUpdate" [disabled]="!basicForm.valid">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn" type="submit" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--/Page Content-->

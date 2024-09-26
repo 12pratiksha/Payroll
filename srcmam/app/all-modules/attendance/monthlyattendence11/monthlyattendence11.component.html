@@ -1,0 +1,442 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Salary Sheet</h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendence & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendence</li>
+                        <li class="breadcrumb-item active" aria-current="page">Salary Sheet</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card mb-0">
+                    <!-- <form [formGroup]="form">  -->
+                    <div class="row">
+                        <!-- <div class="col-sm-6 col-md-3">  
+                       
+                            <label>Month </label>
+                            <ng-select class="form-select form-control" formControlName="month">
+                               
+                                <ng-option *ngFor="let item of month" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                        
+                    </div>
+                  <div class="col-sm-4 col-md-3"> 
+                  <label >Year <span  style="color: red;">*</span></label>
+                         <ng-select class="form-select form-control" formControlName="year" >
+                             <ng-option *ngFor="let item of years" [value]="item" >{{item}} </ng-option>
+                         </ng-select>
+                   <small *ngIf="form.get('year').invalid && form.get('year').touched"> Year is required *</small>
+                  </div>
+
+                  <div class="col-sm-4 col-md-3" style="height: 80px;">  
+                    <a class="btn btn-success btn-search" (click)="test()" style="margin: auto;
+                    margin-top: 11px;"><i class="fas fa-search me-2"></i> Search </a>
+                </div>
+                </div> -->
+                        <form [formGroup]="payrollForm">
+                            <div class="form-row row">
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Year <span  style="color: red;">*</span></label>
+                                    <ng-select class="form-select form-control" formControlName="year">
+                                        <ng-option *ngFor="let item of years" [value]="item">{{item}} </ng-option>
+                                    </ng-select>
+                                    <small *ngIf="form.get('year').invalid && form.get('year').touched"> Year is required *</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+
+                                    <label>Month </label>
+                                    <ng-select class="form-select form-control" formControlName="month">
+
+                                        <ng-option *ngFor="let item of month" [value]="item">{{item}}</ng-option>
+                                    </ng-select>
+
+                                </div>
+
+                                <!-- <div class="col-md-4 mb-3">
+                        <label >Employee Id <small>*</small></label>
+                    <select class="form-select form-control" formControlName="employeeid">
+                        <option value="">--Select--</option>
+                        <option *ngFor="let item of months" [value]="item.name">{{item.employeeId}}</option>
+                    </select>
+                    <small *ngIf="payrollForm.get('employeeId').invalid && payrollForm.get('employeeId').touched">Employee Id is required *</small>
+                  </div> -->
+
+                                <div class="col-md-4 mb-3">
+                                    <label>State</label>
+                                    <select class="form-select form-control" formControlName="state">
+                            <option value="">--Select--</option>
+                           <option *ngFor="let item of stateData" [value]="item.stateId">{{item.stateName}}</option>
+                        </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Branch</label>
+                                    <select class="form-select form-control" formControlName="branch">
+                                <option value="">--Select--</option>
+                               <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                            </select>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Category</label>
+                                    <select class="form-select form-control" formControlName="category">
+                                    <option value="">--Select--</option>
+                                   <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+
+                                    <label>Department</label>
+                                    <select class="form-select form-control" formControlName="department">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>
+                            </select>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Sub-Department</label>
+                                    <select class="form-select form-control" formControlName="subDepartment">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let item of subDepartments" [value]="item.subDepartmentId">{{item.subDepartmentName}}</option>
+                            </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Designation</label>
+                                    <select class="form-select form-control" formControlName="designation">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let item of designations" [value]=item.designationMasterId>{{item.name}}</option>
+                            </select>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Grade</label>
+
+                                    <select class="form-select form-control" formControlName="grade">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of grade" [value]="item.lookupMasterId">{{item.name}}</option>
+                                </select>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Search By</label>
+                                    <ng-select class="form-select form-control" formControlName="searchBy">
+                                        <ng-option *ngFor="let item of employeeslist" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+
+                                </div>
+
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Status</label>
+                                    <select class="form-select form-control" formControlName="status">
+                                        <option value="1" selected>Active</option>
+                                        <option value="0"> InActive</option>
+                                        <option value="2">Delete</option>
+                                        <option value="3">Block</option>
+                                        <option value="4">Hold</option>
+                                        <option value="5">FNF</option>
+                            </select>
+                                </div>
+
+                                <!-- <div class="col-md-4 mb-3">
+                            <label  >Salary</label>
+                            <select class="form-select form-control" formControlName="status">
+                               <option value="">--Select--</option>
+                               <option *ngFor="let item of salary" value="item.value">{{item.key}}</option>
+                               
+                            </select>
+                        </div> -->
+
+                            </div>
+                            <div class="col-sm-4 col-md-3" style="height: 80px;">
+                                <a class="btn btn-success btn-search" (click)="test()" style="margin: auto;
+                        margin-top: 11px;"><i class="fas fa-search me-2"></i> Search </a>
+                            </div>
+
+
+                        </form>
+                        <!-- {{allowance | json}} -->
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="col-sm-4 col-md-3">
+                                    <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                                    <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="sectionToPrint" #epltable>
+                            <div class="col-sm-12">
+                                <div class="card mb-0">
+
+                                    <div class="card-body" style="width:100%;overflow-x: scroll;">
+
+
+                                        <!-- <table mat-table [dataSource]="employees" style="width: 100%;">
+                                    <span *matColumnDef="let emprow; columns: displayedColumns;" >
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <mat-checkbox >
+                                        </mat-checkbox>
+                                    </th>
+                                     
+                                    </span>
+                              
+                
+                                 
+                                  
+                                  
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                    >  </tr>
+                                </table>  -->
+
+
+
+                                        <table class="table table-striped table-bordered table-sm row-border hover" id="datatable">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr.No.</th>
+                                                    <th>Employee Code</th>
+                                                    <th>EPF No.</th>
+                                                    <th>UAN</th>
+                                                    <th>Pan No.</th>
+                                                    <th>IFSC Code</th>
+                                                    <th>EAccount No.</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Department</th>
+                                                    <th>Designation</th>
+                                                    <th>Total Days</th>
+                                                    <th>Paid Days</th>
+
+                                                    <th *ngFor="let value of allelemnets">
+                                                        <span *ngIf="value.elementtype.indexOf('Addition')!=-1">
+                                            {{value.elementName}} ({{value.elementtype}})
+                                        </span>
+
+                                                    </th>
+                                                    <th>Total Addition</th>
+
+                                                    <th *ngFor="let value of allelemnets1">
+                                                        <span *ngIf="value.elementtype.indexOf('Deduction')!=-1">
+                                               {{value.elementName}} ({{value.elementtype}})
+                                            </span>
+                                                    </th>
+
+                                                    <th>PF</th>
+                                                    <th>PT</th>
+                                                    <th>Total Deduction</th>
+                                                    <th>Salary</th>
+                                                </tr>
+
+
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr *ngFor="let item of employees; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{item.employeeCode}}</td>
+                                                    <td>{{item.epfno}}</td>
+                                                    <td>{{item.uan}}</td>
+                                                  
+                                                    <td>{{item.panNo}}</td>
+                                                    <td>{{item.ifscCode}}</td>
+                                                    <td>{{item.eaccountNo}}</td>
+                                                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                    <td>{{item.department}}</td>
+                                                    <td>{{item.designation}}</td>
+                                                    <td>{{item.days}}</td>
+                                                    <td>{{item.prsent}}</td>
+
+                                                    <td *ngFor="let value of allelemnets">
+                                                        <span *ngFor="let allowvalue of item.allowances">
+                                            <span *ngIf="value.elementName==allowvalue.elementName && value.elementtype.indexOf('Addition')!=-1">
+                                            {{allowvalue.actualelementAmount}}
+                                            <!-- {{allowvalue.elementAmount}} -->
+                                            </span>
+                                                        </span>
+                                                    </td>
+
+                                                    <td>{{item.addition}}</td>
+
+                                                    <td *ngFor="let value of allelemnets1">
+                                                        <span *ngFor="let allowvalue of item.allowances">
+                                            <span *ngIf="value.elementName==allowvalue.elementName && value.elementtype.indexOf('Deduction')!=-1">
+                                            {{allowvalue.actualelementAmount}}
+                                            <!-- {{allowvalue.elementAmount}}     -->
+                                        </span>
+                                                        </span>
+                                                    </td>
+
+                                                    <td>{{item.pf}}</td>
+                                                    <td>{{item.pt}}</td>
+                                                    <td>{{item.deduction}}</td>
+                                                    <td>{{item.netSalary}}</td>
+
+
+
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+
+                                        <!-- <table class="table table-striped table-bordered table-sm row-border hover" id="datatable">
+        
+                                        <thead>
+                                            <tr>
+                                            <th>Sr.No.</th>
+                                            <th>Employee Id</th>
+                                            <th>EPF No.</th>
+                                            <th>UAN</th>  
+                                            <th>Pan No.</th>
+                                            <th>EAccount No.</th>
+                                            <th>Employee Name</th>
+                                            <th>Department</th>
+                                            <th>Designation</th>
+                                            <th>Total Days</th>
+                                            <th>Paid Days</th>
+                                            <th *ngFor="let value of allelemnets">{{value.elementName}}</th>
+                                           
+                                            <th>Salary</th>
+                                        </tr>
+
+                                
+                                </thead>
+                               
+                                <tbody>
+                                    
+                                    <tr    *ngFor="let item of employees; let i = index" >
+                                        <td>{{i+1}}</td> 
+                                        <td>{{item.employeeId}}</td>
+                                        <td>{{item.epfno}}</td>
+                                        <td>{{item.uan}}</td>
+                                        <td>{{item.panNo}}</td>
+                                        <td>{{item.eaccountNo}}</td>
+                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                        <td>{{item.department}}</td>
+                                        <td>{{item.designation}}</td>
+                                        <td>{{item.totalDays}}</td>
+                                        <td>{{item.paidDays}}</td>
+                                        
+                                        <td *ngFor="let value of allelemnets">
+                                            <span *ngFor="let allowvalue of item.allowances">
+                                                <span *ngIf="value.elementName==allowvalue.elementName">
+                                                    {{allowvalue.elementAmount}}
+                                                </span>
+                                            </span>
+                                        </td>
+                                   
+                                        <td>{{item.netSalary}}</td>
+                                      
+                                      
+        
+                                    </tr>
+                                   
+                                </tbody>
+                               
+                            </table> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <!-- 
+
+
+
+
+            
+                                <div class="table-responsive">
+
+                                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0" >
+        
+                                        <thead>
+                                   <tr >
+                                        <th>EmpCode</th>
+                                        <th>Name</th>
+                                        <th>Pfno</th>
+                                        <th>Dept</th>
+                                        <th>Desg</th>
+                                        <th *ngFor="let value of allelemnets">
+                                            {{value.elementName}}
+
+
+                                        </th> 
+                                        <th>Net Salary</th>
+                                    </tr>
+                                </thead>
+                               
+                                <tbody>
+                                    <tr >
+                                        <td>EmpCode</td>
+                                        <td>Name</td>
+                                        <td>Pfno</td>
+                                        <td>Dept</td>
+                                        <td>Desg</td>
+                                        <td *ngFor="let value of allelemnets">
+                                            {{value.elementName}}
+
+
+                                        </td> 
+                                        <td>Net Salary</td>
+                                    </tr>
+                                    <tr    *ngFor="let item of employees; let i = index" >
+                                          
+                                        <td>{{item.employeeCode}}</td>
+                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                        <td>{{item.epfno}}</td>
+                                        <td>{{item.department}}</td>
+                                        <td>{{item.designation}}</td>
+                                        <td *ngFor="let value of allelemnets">
+                                            
+
+
+                                        </td>
+                                        <td>{{item.netSalary}}</td>
+                                       
+                                     
+                                    </tr>
+                                   
+                                </tbody>
+                               
+                            </table>
+ -->
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>

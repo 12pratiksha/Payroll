@@ -1,0 +1,247 @@
+
+<div class="page-wrapper">
+<!-- Page Content -->
+<div class="content container-fluid ">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Replacement</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item" >Recruitment</li>
+                        <li class="breadcrumb-item active" aria-current="page">Replacement</li>
+                       
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="container"><i class="fas fa-plus"></i> Add New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="!container"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+
+    <div class="row" *ngIf="container">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped custom-table mb-0 datatable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Job Title</th>
+                            <th>Department</th>
+                            <th>Start Date</th>
+                            <th class="text-center">Job Type</th>
+                            <th class="text-center">Status</th>
+                            <th>Applicants</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                          <td>1</td>
+                          <td>Java Developer</td>
+                          <td>Application Development</td>
+                          <td>04-01-2023</td>
+                          <td>Sr. Developer</td>
+                          <td>Active</td>
+                          <td>14</td>
+                          <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen"></i></a>
+                            <a ><i class="far fa-trash-alt"></i></a>
+                        </td>
+                        </tr>
+                        <tr >
+                          <td>2</td>
+                          <td>Angular Developer</td>
+                          <td>Application Development</td>
+                          <td>14-01-2023</td>
+                          <td>jr. Developer</td>
+                          <td>Active</td>
+                          <td>4</td>
+                          <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen"></i></a>
+                            <a ><i class="far fa-trash-alt"></i></a>
+                        </td>
+                        </tr>
+                        <tr >
+                          <td>3</td>
+                          <td>Angular Developer</td>
+                          <td>Application Development</td>
+                          <td>14-01-2023</td>
+                          <td>jr. Developer</td>
+                          <td>Active</td>
+                          <td>4</td>
+                          <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen"></i></a>
+                            <a ><i class="far fa-trash-alt"></i></a>
+                        </td>
+                        </tr>
+                        <tr > 
+                            <td>4</td>
+                            <td>Java Developer</td>
+                            <td>Application Development</td>
+                            <td>04-01-2023</td>
+                            <td>Sr. Developer</td>
+                            <td>Active</td>
+                            <td>14</td>
+                            <td class="text-end ico-sec justify-content-end">
+                              <a ><i class="fas fa-pen"></i></a>
+                              <a ><i class="far fa-trash-alt"></i></a>
+                          </td>
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" *ngIf="!container">
+        <div class="col-sm-12">
+    
+            <!-- Custom Boostrap Validation -->
+            <div class="card" >
+                <div class="card-header">
+                    <h1 class="card-title mb-0">New Replacement Form</h1>
+                   
+                </div>
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate  [formGroup]="jobForm">
+                                <div class="form-row row">
+                                    <div class="col-md-3 mb-3">
+                                       
+                                        <div class="form-group">
+                                            <label>Request Date</label>
+                                            <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" 
+                                            formControlName="requestDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="focus-label">Against<small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="against" >
+                                           <!-- <option *ngFor="let item of statesList" [value]='item.stateName' > {{item.stateName}} </option> -->
+                                          <option value="">--Select--</option>
+                                       </select>
+                                      
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="focus-label">Department<small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="department" >
+                                          <option value="">--Select--</option>
+                                          <option value="1">Department 1</option>
+                                          <option value="2">Department 2</option>
+                                            <!-- <option *ngFor="let item of regionList" [value]="item.regionName"> {{item.regionName}} </option> -->
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3">
+                                        <label class="focus-label">HOD<small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="hod" >
+                                           <!-- <option *ngFor="let item of statesList" [value]='item.stateName' > {{item.stateName}} </option> -->
+                                          <option value="">--Select--</option>
+                                       </select>
+                                      
+                                    </div>
+                                   <div class="col-md-3 mb-3">
+                                    <label >No. of Vacancy <small>*</small></label>
+                                    <input type="number" class="form-control" 
+                                          required formControlName="vacancy">
+                                    </div>
+
+                                    <div class="col-md-3 mb-3">
+                                        <label >Job Description<small>*</small></label>
+                                    <textarea class="form-control" 
+                                           formControlName="jobDescription">
+                                    </textarea>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label>Expected Joining Date</label>
+                                            <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" 
+                                            formControlName="expectedDoj">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label >Required Exp. <small>*</small></label>
+                                        <input type="number" class="form-control" 
+                                              required formControlName="requiredExp">
+                                        </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label >Age Group <small>*</small></label>
+                                        <div class="form-row row ">
+                                            <div class="col-md-3">
+                                                <div class="hours">
+                                                    <input type="text"  class="form-control" 
+                                                    formControlName="from">
+                                            <small  style="color:black; margin-left: 8px;">From</small>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="hours">
+                                           <input type="text"  class="form-control" 
+                                           formControlName="to">
+                                             <small  style="color:black; margin-left: 8px;">To</small>
+                                        </div>
+                                        </div>
+                                    </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Required Gender<small>*</small></label>
+                                            <select class="form-select floating form-control" formControlName="gender" >
+                                              <option value="">--Select--</option>
+                                              <option >Male</option>
+                                              <option >Female</option>
+                                             
+                                           </select>
+                                           </div>
+                                           <div class="col-md-3 mb-3">
+                                            <label >Other Requirements<small>*</small></label>
+                                        <textarea class="form-control" 
+                                               formControlName="requirement">
+                                        </textarea>
+                                            </div>
+                                           <div class="col-md-3 mb-3">
+                                            <label >Passport requirement</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="passport">
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Recruiter Name<small>*</small></label>
+                                                <select class="form-select floating form-control" formControlName="recruiter" >
+                                                  <option value="">--Select--</option>
+                                                  <option >Male</option>
+                                                  <option >Female</option>
+                                                 
+                                               </select>
+                                               </div>
+
+                                    </div>
+     
+                                <!-- <button class="btn btn-primary" >Update </button> -->
+                                <button class="btn btn-primary"  (click)="add()" >Submit</button>
+                                <button class="btn "   (click)="hideContainer()" >Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div>  
+
+    </div>
+
+</div>

@@ -1,0 +1,12 @@
+.profile-img-wrap {
+    height: 100px !important;
+    position: absolute !important;
+    
+    background: #fff !important;
+    /* overflow: hidden; */
+}
+.profile-img-wrap img {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}

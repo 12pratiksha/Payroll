@@ -1,0 +1,664 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>New Requirement</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Manage Jobs</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer('add')" *ngIf="container"><i class="fas fa-plus"></i> Add Job</a>
+                    <!-- <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="!container"><i class="fas fa-bars"></i> Show Table</a> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="container">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">New Requirement List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Department</th>
+                                        <th>Start Date</th>
+                                        <th>Job Type</th>
+                                        <th>Vacancy</th>
+                                        <th *ngIf="mytype=='Admin'">Approver</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData_display; let i = index">
+                                        <td>{{i+1}}.</td>
+                                        <td>{{item.request_date | date}}</td>
+                                        <td>{{item.department}}</td>
+                                        <td>{{item.expected_joining_date | date}}</td>
+                                        <td>{{item.designation}}</td>
+                                        <td>{{item.no_of_vacancy}}</td>
+                                        <td *ngIf="mytype=='Admin'">{{item.approver}}</td>
+                                        <td>
+                                            <span *ngIf="item.status==false">Not Approved</span>
+                                            <span *ngIf="item.status==true">Approved</span>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <a><i class="fas fa-pen" (click)="edit(item)"></i></a>
+                                            <a><i class="far fa-trash-alt" (click)="delete(item.new_requirement_id)" ></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length==0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Department</th>
+                                        <th>Start Date</th>
+                                        <th>Job Type</th>
+                                        <th>Vacancy</th>
+                                        <th *ngIf="mytype=='Admin'">Approver</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData_display; let i = index">
+                                        <td>{{i+1}}.</td>
+                                        <td>{{item.request_date | date}}</td>
+                                        <td>{{item.department}}</td>
+                                        <td>{{item.expected_joining_date | date}}</td>
+                                        <td>{{item.designation}}</td>
+                                        <td>{{item.no_of_vacancy}}</td>
+                                        <td *ngIf="mytype=='Admin'">{{item.approver}}</td>
+                                        <td>
+                                            <span *ngIf="item.status==false">Not Approved</span>
+                                            <span *ngIf="item.status==true">Approved</span>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <!-- <a ><i class="fas fa-check"></i></a> -->
+                                            <a><i class="fas fa-pen" (click)="edit(item)"></i></a>
+                                            <a><i class="far fa-trash-alt" (click)="delete(item.new_requirement_id)" ></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row" *ngIf="!container">
+            <div class="col-sm-12">
+
+                <!-- Custom Boostrap Validation -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">New Requirement Form</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="jobForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-3 mb-3">
+
+
+                                            <div class="form-group">
+                                                <label>Request Date <small>*</small></label>
+                                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="requestDate">
+                                                <small *ngIf="jobForm.get('requestDate').invalid && jobForm.get('requestDate').touched">This Field is Required *</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <button (click)="addRequest()" class="btn btn-primary" style="margin-top: 1rem;" [disabled]="jobForm.controls.requestDate.invalid">New Requirement</button>
+                                        </div>
+                                        <ng-container formArrayName="newRequest" *ngFor="let item of jobForm.get('newRequest').controls; let i = index;">
+                                            <div class="col-md-12" style="text-align: center; margin: 15px 0 15px 0; background-color: aliceblue;">
+                                                <h1> Requirement {{i+1}}</h1>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <div [formGroupName]="i" class="col-sm-12">
+
+                                                        <div class="form-row row">
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Type<small class="text-danger">*</small></label>
+                                                                <select class="form-select floating form-control" formControlName="type">
+                                                                <option value="">--Select--</option>
+                                                                <option >New</option>
+                                                                <option >Existing</option>
+                                                                </select>
+                                                                <!-- <small *ngIf="quantities().controls[i].get('type').value.invalid && quantities().controls[i].get('type').touched" class="text-danger"></small> -->
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3" *ngIf="item.controls.type.value == 'Existing'">
+                                                                <label>Replacement</label>
+                                                                <input type="checkbox" class="checkbox-all ms-5" formControlName="replacement">
+
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3" *ngIf="item.controls.replacement.value == true && item.controls.type.value == 'Existing'">
+                                                                <label class="focus-label">Candidate<small>*</small></label>
+                                                                <ng-select class="form-select form-control" formControlName="candidate" (change)="onSelectionChange($event)">
+                                                                    <ng-option value="">--Select--</ng-option>
+                                                                    <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                                                </ng-select>
+                                                                <small *ngIf="item.controls.candidate.invalid && item.controls.candidate.touched">This Field is Required *</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+
+                                                                <label class="focus-label">Department<small>*</small></label>
+                                                                <select class="form-select floating form-control" formControlName="department">
+                                                                <option value="">--Select--</option>
+                                                                <option *ngFor="let item of department" [value]="item.departmentId">{{item.departmentName}}</option>
+                                                                </select>
+                                                                <small *ngIf="item.controls.department.invalid && item.controls.department.touched">This Field is Required *</small>
+                                                            </div>
+                                                            <div class="col-md-3 mb-3" *ngIf="item.controls.type.value=='Existing'">
+                                                                <label class="focus-label">Designation <small>*</small></label>
+                                                                <ng-select class="form-select form-control" formControlName="designation">
+                                                                    <ng-option value="">--Select--</ng-option>
+                                                                    <ng-option *ngFor="let item of designation" [value]="item.designationMasterId">{{item.name}}</ng-option>
+                                                                </ng-select>
+                                                                <small *ngIf="item.controls.designation.invalid && item.controls.designation.touched">This Field is Required *</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3" *ngIf="item.controls.type.value=='New'">
+                                                                <label>Designation <small>*</small></label>
+                                                                <input type="text" class="form-control" formControlName="designation">
+                                                                <!-- <small *ngIf="item.controls.reqExperience.invalid && item.controls.reqExperience.touched">This Field is Required *</small> -->
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="">Approver<small>*</small></label>
+                                                                <ng-select class="form-select  form-control" formControlName="approver">
+                                                                    <ng-option *ngFor="let item of approver; let i = index" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                                                                </ng-select>
+                                                                <small *ngIf="item.controls.approver.invalid && item.controls.approver.touched">* This Field is Required </small>
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>No. of Vacancy <small>*</small></label>
+                                                                <input type="number" class="form-control" required formControlName="noOfVacancy" min="1">
+                                                                <small *ngIf="item.controls.noOfVacancy.invalid && item.controls.noOfVacancy.touched">* This Field is Required </small>
+                                                            </div>
+
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Expected Joining Date</label>
+                                                                <input type="text" class="form-control datetimepicker" required type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="expectedJoiningDate">
+                                                                <small *ngIf="item.controls.expectedJoiningDate.invalid && item.controls.expectedJoiningDate.touched">* This Field is Required </small>
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Required Exp. <small>*</small></label>
+                                                                <input type="text" class="form-control" required formControlName="requiredExp" maxlength="2">
+                                                                <small *ngIf="item.controls.requiredExp.invalid && item.controls.requiredExp.touched">* This Field is Required </small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Location<small>*</small></label>
+                                                                <select class="form-select floating form-control" required formControlName="location">
+                                                                <option value="">--Select--</option>
+                                                                <option *ngFor="let item of branch">{{item.branchName}}</option>
+                                                                </select>
+                                                                <small *ngIf="item.controls.location.invalid && item.controls.location.touched">* This Field is Required </small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Skills<small>*</small></label>
+                                                                <select class="form-select floating form-control" required formControlName="skills">
+                                                                <option value="">--Select--</option>
+                                                                <option value="Technical">Technical</option>
+                                                                <option value="Non-Technical">Non-Technical</option>
+                                                                </select>
+                                                                <small *ngIf="item.controls.skills.invalid && item.controls.skills.touched">* This Field is Required </small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Required Gender</label>
+                                                                <select class="form-select floating form-control" required formControlName="requiredGender">
+                                                                <option value="">--Select--</option>
+                                                                <option >Male</option>
+                                                                <option >Female</option>
+                                                                <option >Both</option>
+                                                                </select>
+                                                                <small *ngIf="item.controls.requiredGender.invalid && item.controls.requiredGender.touched">* This Field is Required </small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Age Group <small>*</small></label>
+                                                                <div class="form-row row ">
+                                                                    <div class="col-md-3">
+                                                                        <div class="hours">
+                                                                            <input type="text" required class="form-control" min="18" mask="00" formControlName="ageGroupFrom">
+                                                                            <small style="color:black; margin-left: 8px;">From</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="hours">
+                                                                            <input type="text" required class="form-control" max="60" mask="00" formControlName="toAgeGroup">
+                                                                            <small style="color:black; margin-left: 8px;">To</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <small *ngIf="item.controls.ageGroupFrom.invalid && item.controls.ageGroupFrom.touched || item.controls.toAgeGroup.invalid && item.controls.toAgeGroup.touched">* This Field is Required </small>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Job Description<small>*</small></label>
+                                                                <textarea class="form-control" formControlName="jobDescription"></textarea>
+                                                                <!-- <small *ngIf="item.controls.jobDescription.invalid && item.controls.jobDescription.touched">This Field is Required *</small> -->
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Other Requirements<small>*</small></label>
+                                                                <textarea class="form-control" formControlName="otherRequirements"></textarea>
+                                                                <!-- <small *ngIf="item.controls.other.invalid && item.controls.other.touched">This Field is Required *</small> -->
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Passport requirement</label>
+                                                                <input type="checkbox" class="checkbox-all ms-5" formControlName="passport">
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <button class="btn btn-primary" (click)="remove(i)">Remove Requirement</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <button class="btn btn-primary" *ngIf="editId == 'add'" (click)="add()">Submit</button>
+                                    <button class="btn btn-primary" *ngIf="editId != 'add'" (click)="update()">Update</button>
+                                    <button class="btn " (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+<!-- /Page Content -->
+
+
+<!-- Add Job Modal -->
+<!-- <div id="add_job" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Job</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="addJobs()" [formGroup]="addManageJobs">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input class="form-control" type="text"  [class.invalid]="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched"
+                                formControlName="addJobTitle">
+                                <div
+                                *ngIf="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched">
+                                <small
+                                    *ngIf="addManageJobs.get('addJobTitle').invalid && addManageJobs.get('addJobTitle').touched"
+                                    class="text-danger"> *Job title is required</small>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <select class="form-select form-control" [class.invalid]="addManageJobs.get('addDepartment').invalid && addManageJobs.get('addDepartment').touched"
+                                formControlName="addDepartment">
+                                    <option>-</option>
+                                    <option>Web Development</option>
+                                    <option>Application Development</option>
+                                    <option>IT Management</option>
+                                    <option>Accounts Management</option>
+                                    <option>Support Management</option>
+                                    <option>Marketing</option>
+                                </select>
+                                <div
+                                *ngIf="addManageJobs.get('addDepartment').invalid && addManageJobs.get('addDepartment').touched">
+                                <small
+                                    *ngIf="addManageJobs.get('addDepartment').invalid && addManageJobs.get('addDepartment').touched"
+                                    class="text-danger"> *Department is required</small>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Location</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>No of Vacancies</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Experience</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Salary From</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Salary To</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Type</label>
+                                <select class="form-select form-control">
+                                    <option>Full Time</option>
+                                    <option>Part Time</option>
+                                    <option>Internship</option>
+                                    <option>Temporary</option>
+                                    <option>Remote</option>
+                                    <option>Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-select form-control">
+                                    <option>Open</option>
+                                    <option>Closed</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="addManageJobs.get('addStartDate').invalid && addManageJobs.get('addStartDate').touched"
+                                formControlName="addStartDate">
+                                <div
+                                *ngIf="addManageJobs.get('addStartDate').invalid && addManageJobs.get('addStartDate').touched">
+                                <small
+                                    *ngIf="addManageJobs.get('addStartDate').invalid && addManageJobs.get('addStartDate').touched"
+                                    class="text-danger"> *Start date is required</small>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Expired Date</label>
+                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="addManageJobs.get('addExpireDate').invalid && addManageJobs.get('addExpireDate').touched"
+                                formControlName="addExpireDate">
+                                <div
+                                *ngIf="addManageJobs.get('addExpireDate').invalid && addManageJobs.get('addExpireDate').touched">
+                                <small
+                                    *ngIf="addManageJobs.get('addExpireDate').invalid && addManageJobs.get('addExpireDate').touched"
+                                    class="text-danger"> *Expire date is required</small>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- /Add Job Modal -->
+
+<!-- Edit Job Modal -->
+<!-- <div id="edit_job" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Job</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="editJobs()" [formGroup]="editManageJobs">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input class="form-control" type="text"  [class.invalid]="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched"
+                                formControlName="editJobTitle">
+                                <div
+                                *ngIf="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched">
+                                <small
+                                    *ngIf="editManageJobs.get('editJobTitle').invalid && editManageJobs.get('editJobTitle').touched"
+                                    class="text-danger"> *Job Title is required</small>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <select class="form-select form-control" [class.invalid]="editManageJobs.get('editDepartment').invalid && editManageJobs.get('editDepartment').touched"
+                                formControlName="editDepartment">
+                                    <option>-</option>
+                                    <option selected>Web Development</option>
+                                    <option>Application Development</option>
+                                    <option>IT Management</option>
+                                    <option>Accounts Management</option>
+                                    <option>Support Management</option>
+                                    <option>Marketing</option>
+                                </select>
+                                <div
+                                *ngIf="editManageJobs.get('editDepartment').invalid && editManageJobs.get('editDepartment').touched">
+                                <small
+                                    *ngIf="editManageJobs.get('editDepartment').invalid && editManageJobs.get('editDepartment').touched"
+                                    class="text-danger"> *Department is required</small>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Location</label>
+                                <input class="form-control" type="text" value="California">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>No of Vacancies</label>
+                                <input class="form-control" type="text" value="5">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Experience</label>
+                                <input class="form-control" type="text" value="2 Years">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input class="form-control" type="text" value="-">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Salary From</label>
+                                <input type="text" class="form-control" value="32k">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Salary To</label>
+                                <input type="text" class="form-control" value="38k">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Job Type</label>
+                                <select class="form-select form-control">
+                                    <option selected>Full Time</option>
+                                    <option>Part Time</option>
+                                    <option>Internship</option>
+                                    <option>Temporary</option>
+                                    <option>Remote</option>
+                                    <option>Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-select form-control">
+                                    <option selected>Open</option>
+                                    <option>Closed</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="editManageJobs.get('editStartDate').invalid && editManageJobs.get('editStartDate').touched"
+                                formControlName="editStartDate" (bsValueChange)="from($event)">
+                                <div
+                                *ngIf="editManageJobs.get('editStartDate').invalid && editManageJobs.get('editStartDate').touched">
+                                <small
+                                    *ngIf="editManageJobs.get('editStartDate').invalid && editManageJobs.get('editStartDate').touched"
+                                    class="text-danger"> *Start Date is required</small>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Expired Date</label>
+                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="editManageJobs.get('editExpireDate').invalid && editManageJobs.get('editExpireDate').touched"
+                                formControlName="editExpireDate" (bsValueChange)="to($event)">
+                                <div
+                                *ngIf="editManageJobs.get('editExpireDate').invalid && editManageJobs.get('editExpireDate').touched">
+                                <small
+                                    *ngIf="editManageJobs.get('editExpireDate').invalid && editManageJobs.get('editExpireDate').touched"
+                                    class="text-danger"> *Expired Date is required</small>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" data-bs-dismiss="modal">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- /Edit Job Modal -->
+
+<!-- Delete Job Modal -->
+<!-- <div class="modal custom-modal fade" id="delete_job" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Job</h3>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a  class="btn btn-primary continue-btn" (click)="deleteJobs()">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a  data-bs-dismiss="modal"
+                                class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- /Delete Job Modal -->

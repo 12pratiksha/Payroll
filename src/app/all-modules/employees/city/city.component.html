@@ -1,0 +1,197 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>City</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item">General SetUp</li>
+                            <li class="breadcrumb-item active" aria-current="page">City </li>
+                        </ol>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add City</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" id="datatable" class="datatable table table-stripped mb-0" *ngIf="city_display?.length!=0">
+                            <!-- <tfoot style="display: table-row-group;">
+                                <tr>
+                                  <th><input type="text" placeholder="Search city name" name="search-city-name"/></th>
+                                  <th><input type="text" placeholder="Search state name" name="search-state-name"/></th>
+                                  <th><input type="text" placeholder="Search region name" name="search-region-name"/></th>
+                                  <th><input type="text" placeholder="Search country name" name="search-country-name"/></th>
+                                  <th><input type="text" placeholder="Search country name" style="display: none;"></th>
+                                </tr>
+                              </tfoot> -->
+                            <thead>
+                                <tr>
+                                    <th>City Name</th>
+                                    <th>State name</th>
+                                    <th>Region name</th>
+                                    <th>Country name</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let city of city_display; let i = index" (click)="selectRow(i, city)">
+                                    <td>{{city.cityName}}</td>
+                                    <td>{{city.stateName}}</td>
+                                    <td>{{city.regionName}}</td>
+                                    <td>{{city.countryName}}</td>
+
+                                    <td class="text-end ico-sec justify-content-end">
+
+                                        <a (click)="editCity(city.id)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="deleteCity(city.id)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                        <!-- <table datatable id="datatable" [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!cityList">
+                            <thead>
+                                <tr>
+                                    <th>City Name</th>
+                                    <th>State name</th>
+                                    <th>Region name</th>
+                                    <th>Country name</th>
+                                    <th>Action</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let city of cityList">
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="cityList">  -->
+    </div>
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">City Master Form</h4>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="addcityForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                        <!-- <div class="form-group form-focus select-focus mb-0"> -->
+                                        <label class="focus-label">Country Name <small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="countryName" (change)="onChange($event.target.value)">
+                                               <option  *ngFor="let item of countrylist" [value]="item.countryId">{{item.countryName}}</option>
+                                          
+                                           </select>
+
+                                        <!-- </div> -->
+                                        <small *ngIf="addcityForm.get('countryName').invalid && addcityForm.get('countryName').touched" class="text-danger"> *Country Name is Required</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Region Name <small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="regionName" value="">
+                                           <option *ngFor="let item of regionList" [value]="item.regionId"> {{item.regionName}} </option>
+                                          
+                                       </select>
+                                        <small *ngIf="addcityForm.get('regionName').invalid && addcityForm.get('regionName').touched" class="text-danger"> *Region Name is Required</small>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">State Name <small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="stateName">
+                                           <option *ngFor="let item of statesList" [value]='item.stateId' > {{item.stateName}} </option>
+                                          
+                                       </select>
+                                        <small *ngIf="addcityForm.get('stateName').invalid && addcityForm.get('stateName').touched" class="text-danger"> *State Name is Required</small>
+                                    </div>
+                                    <!-- <div class="col-md-6 mb-3">
+                                    <label >State Name</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="State Code" value="" required formControlName="statename">
+                                 </div> -->
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>City Name <small>*</small></label>
+                                        <input type="text" class="form-control" placeholder="City Name" required formControlName="cityName">
+                                        <small *ngIf="addcityForm.get('cityName').invalid && addcityForm.get('cityName').touched" class="text-danger"> *City Name is Required</small>
+                                    </div>
+
+                                </div>
+
+                                <!-- <button *ngIf="cityId">Edit</button>
+                                <button *ngIf="(cityId == undefined)">Add</button> -->
+
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="cityId" (click)="updateCity()">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="(cityId == undefined)" (click)="addCity()">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn " (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

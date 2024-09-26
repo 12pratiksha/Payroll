@@ -1,0 +1,155 @@
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Transfer Requisition Master Form</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee Change</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee Transfer</li>
+                        <li class="breadcrumb-item active" aria-current="page">Transfer Requisition Master </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+
+                <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h1 class="card-title mb-0">Transfer Requisition Master Form</h1>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="requisitionForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Effective Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                            </div>
+                                            <small *ngIf="requisitionForm.get('date').invalid && requisitionForm.get('date').touched" class="text-danger"> *Date is Required</small>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Description</label>
+
+                                        <textarea class="form-control" formControlName="description"> </textarea>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>State</label>
+                                        <select class="form-select form-control" formControlName="state">
+                                       <option value="">--Select--</option> 
+                                       <option *ngFor="let item of stateList" [value]="item.stateId">{{item.stateName}}</option>                                
+                                     </select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch</label>
+                                        <select class="form-select form-control" formControlName="branch">
+                                       <option value="">--Select--</option>  
+                                       <option *ngFor="let item of branchList" [value]="item.id">{{item.branchName}}</option>                               
+                                     </select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Categoty</label>
+                                        <select class="form-select form-control" formControlName="category">
+                                       <option value="">--Select--</option> 
+                                       <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>                                
+                                     </select>
+
+                                    </div>
+                                    <!-- <div class="col-md-4 mb-3">
+                                <label>Sub-Categoty</label>
+                                   <select class="form-select form-control" formControlName="subcategory" >
+                                       <option value="">--Select--</option>                                 
+                                     </select>  
+                                   
+                            </div> -->
+                                    <!-- <div class="col-md-4 mb-3">
+                                <label>Department</label>
+                                   <select class="form-select form-control" formControlName="department" >
+                                       <option value="">--Select--</option>                                 
+                                     </select>  
+                                   
+                            </div> -->
+                                    <div class="col-md-4 mb-3">
+                                        <label>Department</label>
+                                        <select class="form-select form-control" formControlName="department">
+                                       <option value="">--Select--</option>   
+                                       <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>                              
+                                     </select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Sub-Department</label>
+                                        <select class="form-select form-control" formControlName="subdepartment">
+                                       <option value="">--Select--</option>         
+                                       <option *ngFor="let item of subDepartments" [value]="item.subDepartmentId">{{item.subDepartmentName}}</option>                        
+                                     </select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Relocation Amount <small>*</small></label>
+                                        <input class=" form-control" type="number" formControlName="amount">
+                                        <small *ngIf="requisitionForm.get('amount').invalid && requisitionForm.get('amount').touched" class="text-danger"> *Amount is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Employee Id</label>
+                                        <ng-select class="form-select form-control" formControlName="empId">
+                                            <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Reporting Manager</label>
+                                        <ng-select class="form-select form-control" formControlName="reportingManager">
+                                            <ng-option *ngFor="let item of employees" [value]="item.firstName + ' ' +item.middleName + ' ' +item.lastName">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Reporting Manager2</label>
+                                        <ng-select class="form-select form-control" formControlName="reportingManager2">
+                                            <ng-option *ngFor="let item of employees" [value]="item.firstName + ' ' +item.middleName + ' ' +item.lastName">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="addTransferRequisition()">Submit</button>
+
+
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

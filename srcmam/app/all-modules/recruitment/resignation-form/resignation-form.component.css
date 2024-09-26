@@ -1,0 +1,39 @@
+.page-head-box {
+    background-color: transparent;
+    display: flex;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -17px;
+}
+
+.mat-form-field-appearance-outline {
+    width: 480px;
+    padding: 2px;
+}
+
+.example-full-width {
+    height: 60px;
+    padding-bottom: 60px;
+}
+
+.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
+    height: 25px;
+    padding: 1.5px;
+    font-size: 15px;
+}
+
+
+/* .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 important!;
+} */
+
+
+/* .mat-form-field-appearance-outline {
+   
+} */
+
+
+/* .mat-form-field-appearance-outline .mat-form-field-infix {} */

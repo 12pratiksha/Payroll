@@ -1,0 +1,15 @@
+.select2-container .select2-selection--single{
+    height:34px !important;
+}
+.select2-container--default .select2-selection--single{
+         border: 1px solid #ccc !important; 
+     border-radius: 0px !important; 
+}
+.loader{
+    margin: 0 0 0% 25%;
+    width: 500px;
+    height: 350px;
+}
+small{
+    color:red
+}

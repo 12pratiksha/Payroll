@@ -1,0 +1,155 @@
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Drop Down List Entries</h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Drop Down List Entries</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i>Show Table</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="tabeData">
+                            <thead>
+                                <tr>
+                                    <th>Lookup Type Name11111</th>
+                                    <th>Lookup Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tabeData">
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a><i class="fas fa-pen" (click)="edit(item.lookupMasterId)"></i></a>
+                                        <a><i class="far fa-trash-alt" (click)="delete(item.lookupMasterId)"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!tabeData">
+                            <thead>
+                                <tr>
+                                    <th>Lookup Type Name1111</th>
+                                    <th>Lookup Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tabeData">
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a><i class="fas fa-pen" (click)="edit(item.lookupMasterId)"></i></a>
+                                        <a><i class="far fa-trash-alt" (click)="delete(item.lookupMasterId)"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <ng-template *ngIf="loader"><img class="loader " src="/assets/img/loader/loader.gif"></ng-template>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h1 class="card-title mb-0">Lookup Master Form</h1>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="lookupForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>LookupType 1111<small>*</small></label>
+                                        <select class="form-select form-control" formControlName="lookUp" (change)="onChange($event)">
+                                           <option value="">--Select--</option>
+                                           <option *ngFor="let item of type">{{item}}</option>
+                                         </select>
+                                        <small *ngIf="lookupForm.get('lookUp').invalid && lookupForm.get('lookUp').touched" class="text-danger"> *State is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Lookup Name <small>*</small></label>
+                                        <input type="text" class="form-control" placeholder="Leave Description" formControlName="lookUpName">
+                                        <small *ngIf="lookupForm.get('lookUpName').invalid && lookupForm.get('lookUpName').touched" class="text-danger"> *Name is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Lookup Description</label>
+                                        <input type="text" class="form-control" placeholder="Leave Description" formControlName="description">
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Parent LookupType Name<span>*</span></label>
+                                        <select class="form-select form-control" formControlName="parentLookUp">
+                                           <option value="">--Select--</option>
+                                           <option *ngFor="let item of lookupType" [value]="item.code">{{item.code}}</option>
+                                         </select>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-primary" (click)="submit()" *ngIf="!updateButton">Submit</button>
+                                <button type="button" class="btn btn-primary" (click)="update()" *ngIf="updateButton">Update</button>
+                                <button type="button" class="btn " (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

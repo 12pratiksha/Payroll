@@ -1,0 +1,303 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>New Requirement</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Manage Jobs</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="container"><i class="fas fa-plus"></i> Add Job</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="!container"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row" *ngIf="container">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">New Requirement List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                        <th>Department</th>
+                                        <th>Start Date</th>
+                                        <th>Job Type</th>
+                                        <th>Vacancy</th>
+                                        <th>Approver</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let item of tableData; let i = index">
+                                        <td>{{i+1}}.</td>
+                                        <td>{{item.requestDate | date}}</td>
+                                        <td>{{d.department}}</td>
+                                        <td>{{d.expectedJoiningDate | date:dd-MM-yyyy}}</td>
+                                        <td>{{d.designation}}</td>
+                                        <td>{{d.noOfVacancy}}</td>
+                                        <td>{{d.approver}}</td>
+
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="role-info role-bg-two" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-dot-circle-o text-danger"></i>{{item.status}}
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <!-- <a><i class="fas fa-check"></i></a> -->
+                                            <a><i class="fas fa-pen" (click)="edit(item.new_requirement_id)"></i></a>
+                                            <a><i class="far fa-trash-alt" (click)="delete(item.new_requirement_id)" ></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">New Requirement Form</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="jobForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-3 mb-3">
+
+                                            <div class="form-group">
+                                                <label>Request Date <small class="text-danger">*</small></label>
+                                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="requestDate">
+                                            </div>
+                                            <small *ngIf="jobForm.get('requestDate').invalid && jobForm.get('requestDate').touched" class="text-danger">This Field is Required *</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+
+                                            <button let i=index; (click)="addRequest()" class="btn btn-primary" style="margin-top: 1rem;" [disabled]="jobForm.controls.requestDate.invalid">New Requirement</button>
+                                        </div>
+
+                                        <ng-container formArrayName="newRequest" *ngFor="let item of quantities().controls; let i = index;">
+                                            <div class="col-md-12" style="text-align: center; margin: 15px 0 15px 0; background-color: aliceblue;">
+                                                <h1> Requirement </h1>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <div [formGroupName]="i" class="col-sm-12">
+
+                                                        <div class="form-row row">
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Type<small class="text-danger">*</small></label>
+                                                                <select class="form-select floating form-control" formControlName="type">
+                                                                <option value="">--Select--</option>
+                                                                <option >New</option>
+                                                                <option >Existing</option>
+                                                                </select>
+                                                                <!-- <small *ngIf="quantities().controls[i].get('type').value.invalid && quantities().controls[i].get('type').touched" class="text-danger"></small> -->
+                                                            </div>
+
+
+                                                            <div class="col-md-3 mb-3" *ngIf="newRequest.value[i].type == 'Existing'">
+                                                                <label>Replacement</label>
+                                                                <input type="checkbox" class="checkbox-all ms-5" formControlName="replacement">
+
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3" *ngIf="newRequest.value[i].replacement == true && newRequest.value[i].type == 'Existing'">
+                                                                <label class="focus-label">Candidate<small>*</small></label>
+                                                                <ng-select class="form-select form-control" formControlName="candidate" (change)="onSelectionChange($event)">
+                                                                    <ng-option value="">--Select--</ng-option>
+                                                                    <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                                                </ng-select>
+                                                                <small *ngIf="item.controls.candidate.invalid && item.controls.candidate.touched">This Field is Required *</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Department<small class="text-danger">*</small></label>
+                                                                <ng-select class="form-select form-control" formControlName="department">
+                                                                    <ng-option value="">--Select--</ng-option>
+                                                                    <ng-option *ngFor="let item of department" [value]="item.departmentId">{{item.departmentName}}</ng-option>
+                                                                </ng-select>
+                                                                <small *ngIf="item.controls.department.invalid && item.controls.department.touched" class="text-danger">*This Field is Required</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3" *ngIf="newRequest.value[i].type == 'Existing'">
+
+                                                                <label class="focus-label">Designation <small>*</small></label>
+                                                                <ng-select class="form-select form-control" formControlName="designation">
+                                                                    <ng-option value="">--Select--</ng-option>
+                                                                    <ng-option *ngFor="let item of designation" [value]="item.designationMasterId">{{item.name}}</ng-option>
+                                                                </ng-select>
+                                                                <!-- <small *ngIf="quantities().controls[i].designation.invalid && quantities().controls[i].designation.touched">This Field is Required</small> -->
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3" *ngIf="newRequest.value[i].type == 'New'">
+                                                                <label>Designation <small>*</small></label>
+                                                                <input type="text" class="form-control" formControlName="designation">
+                                                                <!-- <small *ngIf="item.controls.reqExperience.invalid && item.controls.reqExperience.touched">This Field is Required *</small> -->
+                                                            </div>
+                                                            <!-- <div class="col-md-4 mb-3" *ngIf="usertype=='Admin' || usertype=='Super Admin'">
+                                            <label class="">Employee<small> *</small></label>
+                                        <ng-select class="form-select form-control"  formControlName="employee" >
+                                            <ng-option *ngFor="let item of employees; let i = index" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+                                        <small *ngIf="changePasswordForm.get('employee').invalid && changePasswordForm.get('employee').touched">Employee is required</small>
+                                        </div> -->
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Approver<small class="text-danger">*</small></label>
+                                                                <ng-select class="form-select form-control" formControlName="approver">
+                                                                    <ng-option value="">--Select--</ng-option>
+                                                                    <ng-option *ngFor="let item of approver" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                                                                </ng-select>
+                                                                <small *ngIf="item.controls.approver.invalid && item.controls.approver.touched" class="text-danger">*This Field is Required</small>
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>No. of Vacancy <small class="text-danger">*</small></label>
+                                                                <input type="number" class="form-control" required formControlName="noOfVacancy">
+                                                                <small *ngIf="item.controls.noOfVacancy.invalid && item.controls.noOfVacancy.touched" class="text-danger">This Field is Required *</small>
+                                                            </div>
+
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Expected Joining Date<small class="text-danger">*</small></label>
+                                                                <!-- <mat-form-field>
+                                                                    <input matInput [matDatepicker]="picker" [min]="todayDate" placeholder="Date" formControlName="expectedJoiningDate">
+                                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                    <mat-datepicker #picker></mat-datepicker>
+                                                                </mat-form-field> -->
+                                                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [minDate]="todayDate" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="expectedJoiningDate">
+                                                                <small *ngIf="item.controls.expectedJoiningDate.invalid && item.controls.expectedJoiningDate.touched" class="text-danger">This Field is Required *</small>
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Required Exp. <small class="text-danger">*</small></label>
+                                                                <input class="form-control" required formControlName="requiredExp" maxlength="2" minlength="1">
+                                                                <small *ngIf="item.controls.requiredExp.invalid && item.controls.requiredExp.touched" class="text-danger">This Field is Required *</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Location<small class="text-danger">*</small></label>
+                                                                <select class="form-select floating form-control" formControlName="location">
+                                                                <option value="">--Select--</option>
+                                                                <option *ngFor="let item of branch" [value]="item.branchName">{{item.branchName}}</option>
+                                                                </select>
+                                                                <small *ngIf="item.controls.location.invalid && item.controls.location.touched" class="text-danger">*This Field is Required</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Skills<small class="text-danger">*</small></label>
+                                                                <select class="form-select floating form-control" formControlName="skills">
+                                                                <option value="">--Select--</option>
+                                                                <option value="Technical">Technical</option>
+                                                                <option value="Non-Technical">Non-Technical</option>
+                                             
+                                                                </select>
+                                                                <small *ngIf="item.controls.skills.invalid && item.controls.skills.touched" class="text-danger">*This Field is Required</small>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label class="focus-label">Required Gender</label>
+                                                                <select class="form-select floating form-control" formControlName="requiredGender">
+                                                                <option value="">--Select--</option>
+                                                                <option >Male</option>
+                                                                <option >Female</option>
+                                                                <option >Both</option>
+                                                                </select>
+                                                                <small *ngIf="item.controls.requiredGender.invalid && item.controls.requiredGender.touched">This Field is Required *</small>
+                                                            </div>
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Other Requirements</label>
+                                                                <textarea class="form-control" formControlName="otherRequirements"></textarea>
+                                                                <!-- <small *ngIf="item.controls.other.invalid && item.controls.other.touched">This Field is Required *</small> -->
+                                                            </div>
+
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Age Group </label>
+                                                                <div class="form-row row ">
+                                                                    <div class="col-md-3">
+                                                                        <div class="hours">
+                                                                            <input type="text" class="form-control" min="18" mask="00" formControlName="ageGroupFrom">
+                                                                            <small style="color:black; margin-left: 8px;">From</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="hours">
+                                                                            <input type="text" class="form-control" max="60" mask="00" formControlName="toAgeGroup">
+                                                                            <small style="color:black; margin-left: 8px;">To</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <small *ngIf="item.controls.ageFrom.invalid && item.controls.ageFrom.touched || item.controls.ageTo.invalid && item.controls.ageTo.touched">This Field is Required *</small> -->
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Passport requirement</label>
+                                                                <input type="checkbox" class="checkbox-all ms-5" formControlName="passport">
+                                                            </div>
+                                                            <div class="col-md-5 mb-3">
+                                                                <label>Job Description<small>*</small></label>
+                                                                <textarea class="form-control" rows="4" cols="15" formControlName="jobDescription">
+                                            </textarea>
+                                                                <!-- <small *ngIf="item.controls.jobDescription.invalid && item.controls.jobDescription.touched">This Field is Required *</small> -->
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <button class="btn btn-primary" *ngIf="newRequest.value.length>=2" (click)="remove(i)">Remove Requirement</button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </ng-container>
+
+                                    </div>
+
+
+                                    <button class="btn btn-primary" *ngIf="editId == 'add'" (click)="add(i,'add')">Submit</button>
+                                    <button class="btn btn-primary" *ngIf="editId != 'add'" (click)="add('update')"><span *ngIf="type==n">Update</span>
+                            <span *ngIf="type!=n">Approve</span></button>
+                                    <button class="btn " (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

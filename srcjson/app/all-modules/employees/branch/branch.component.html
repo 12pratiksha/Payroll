@@ -1,0 +1,205 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Branch</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item">General SetUp</li>
+                            <li class="breadcrumb-item active" aria-current="page">Branch </li>
+                        </ol>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add Branch</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" id="datatable" class="datatable table table-stripped mb-0" *ngIf="branch">
+                            <thead>
+                                <tr>
+                                    <th>Branch Code</th>
+                                    <th>Branch name</th>
+
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let branch of branch">
+                                    <td>{{branch.branchCode}}</td>
+                                    <td>{{branch.branchName}}</td>
+                                    <td>{{(branch.status == true)?'Active':'Inactive'}}</td>
+
+
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(branch.id)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(branch.id)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" id="datatable" class="datatable table table-stripped mb-0" *ngIf="!branch">
+                            <thead>
+                                <tr>
+                                    <th>Branch Code</th>
+                                    <th>Branch name</th>
+
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let branch of branch">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+        </div>
+    </div>
+    <div class="row" *ngIf="showMyContainer">
+
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title mb-0">Branch Master Form</h2>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="branchMasterForm">
+                                <div class="form-row row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">State Name <small>*</small></label>
+                                        <select class="form-select floating form-control" formControlName="stateName" (change)="getCity($event.target.value)">
+                               <option value="">--Select--</option>
+                                <option *ngFor="let item of statesList" [value]="item.stateId"> {{item.stateName}} </option>
+                             </select>
+                                        <small *ngIf="branchMasterForm.get('stateName').invalid && branchMasterForm.get('stateName').touched" class="text-danger"> *State Name is Required</small>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Branch Name <small>*</small></label>
+                                        <input type="text" class="form-control" placeholder="Branch Name" required formControlName="branchName">
+                                        <small *ngIf="branchMasterForm.get('branchName').invalid && branchMasterForm.get('branchName').touched" class="text-danger"> *Branch Name is Required</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Branch Code <small>*</small></label>
+                                        <input type="text" class="form-control" placeholder="Branch Code" required formControlName="branchCode">
+                                        <small *ngIf="branchMasterForm.get('branchCode').invalid && branchMasterForm.get('branchCode').touched" class="text-danger"> *Branch Name is Required</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Address</label>
+                                        <input type="text" class="form-control" formControlName="address">
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Tel No.</label>
+                                        <input type="text" class="form-control" placeholder="Tel No." formControlName="telePhoneNo" mask="000-000-0000">
+
+                                    </div>
+                                    <!-- <div class="col-md-6 mb-3">
+                            <label class="focus-label">Fax No.</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Fax No."  required formControlName="faxNo">
+    
+                        </div> -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">E-Mail <small>*</small></label>
+                                        <input type="text" class="form-control" placeholder="E-Mail" required formControlName="emailId">
+                                        <small *ngIf="branchMasterForm.controls.emailId.errors && branchMasterForm.get('emailId').touched" class="text-danger"> *Invalid Email</small>
+                                        <!-- <small
+                            *ngIf="branchMasterForm.get('emailId').invalid && branchMasterForm.get('emailId').touched"
+                            class="text-danger"> * Email is Required</small> -->
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">City Name </label>
+                                        <select class="form-select floating form-control" formControlName="branchCity">
+                                <option>--select City--</option>
+                                <option *ngFor="let item of cityList" [value]="item.id">{{item.cityName}}</option>
+                             </select>
+                                    </div>
+
+                                    <!-- <div class="col-md-6 mb-3">
+                            <label class="focus-label">Esi City Code</label>
+                            <input type="text" class="form-control" 
+                            placeholder="Esi City Code"  required formControlName="cityCode">
+    
+                        </div> -->
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <select class="form-select form-control" placeholder="Status" formControlName="status">
+                                <!-- <option>--Select--</option> -->
+                                <option value = "true">Active</option>
+                                <option value = "false">Inactive</option>
+                                
+                            </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Logo </label>
+                                        <input type="file" accept=".png, .jpg, .jpeg" class="form-control" (change)="onChange($event, 'logo')">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <img src="{{baseurl}}/comimages/{{logo}}" style="width:150px;height:150px" >
+                                    </div>
+
+                                </div>
+                                <button [disabled]="submitLoader" class="btn btn-primary" (click)="addBranch()" *ngIf="!update">Submit<img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" (click)="updateBranch()" *ngIf="update">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn" (click)="cancel()">Cancel</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

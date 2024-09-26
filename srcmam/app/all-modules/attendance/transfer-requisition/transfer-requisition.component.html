@@ -1,0 +1,117 @@
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Transfer Requisition List</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                       <li class="breadcrumb-item active" aria-current="page">Employee Change</li>
+                       <li class="breadcrumb-item active" aria-current="page">Employee Transfer</li>
+                       <li class="breadcrumb-item active" aria-current="page">Transfer Requisition</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-8">
+
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+               <a  class="btn btn-success btn-add-emp" (click)="form('submit')"><i class="fas fa-plus"></i>Create New</a>
+               
+           </div>
+           
+       </div>
+   </div>
+   <!-- /Search Filter -->
+
+<div class="content container-fluid">
+   <div class="row filter-row" > 
+       <div class="col-md-12">
+           <div class="table-responsive">
+               <table  datatable [dtOptions]="dtOptions" class="table table-striped custom-table datatable" *ngIf="tableData">
+                   <thead >
+                       <tr>
+                           <th rowspan="2" >FromDate</th>
+                           <th rowspan="2">StateName</th>
+                           <th rowspan="2">Branch Name</th>
+                           <th rowspan="2">CategoryName</th>
+                           <th rowspan="2">DepartmentName</th>
+                           <th colspan="6">Employee</th>
+                        </tr>
+                        <!-- <tr> -->
+                            <td>EmployeeCode</td>
+                            <td>EmployeeFullName</td>
+                            <td>StateName</td>
+                            <td>BranchName	</td>
+                            <td>Reloaction Amount	</td>
+                            <td>Status	</td>
+                           
+                        <!-- </tr> -->
+                   </thead>
+                   <tbody *ngFor="let item of tableData">
+                       <td>{{item.formDate | date:'dd-MM-yyyy'}}</td>
+                       <td>{{item.stateName}}</td>
+                       <td>{{item.reportingManager}}</td>
+                       <td>{{item.CategoryName}}</td>
+                       <td>{{item.emDepartmentName}}</td>
+                       <td>{{item.employeeCode}}</td>
+                       <td>{{item.firstName}} {{item.lastName}}</td>
+                       <td>{{item.stateName}}</td>
+                       <td>{{item.trmBrachName}}</td>
+                       <td>{{item.relocationAmount}}</td>
+                       <td>{{item.status == true?'Active':'Inactive'}}</td>
+                   </tbody>
+               </table>
+               <table  datatable  [dtOptions]="dtOptions" class="table table-striped custom-table datatable" *ngIf="!tableData">
+                   <thead >
+                       <tr>
+                           <th rowspan="2">FromDate</th>
+                           <th rowspan="2">StateName</th>
+                           <th rowspan="2">Branch Name</th>
+                           <th rowspan="2">CategoryName</th>
+                           <th rowspan="2">DepartmentName</th>
+                           <th colspan="2">Employee</th>
+                        </tr>
+                        <tr>
+                            <td>EmployeeCode</td>
+                            <td>EmployeeFullName</td>
+                            <td>StateName</td>
+                            <td>BranchName	</td>
+                            <td>Reloaction Amount	</td>
+                            <td>Status	</td>
+                           
+                        </tr>
+                   </thead>
+                   <tbody *ngFor="let item of tableData">
+                       <td>{{item.formDate | date:'dd-MM-yyyy'}}</td>
+                       <td>{{item.stateName}}</td>
+                       <td>{{item.reportingManager}}</td>
+                       <td>{{item.CategoryName}}</td>
+                       <td>{{item.emDepartmentName}}</td>
+                       <td>{{item.employeeCode}}</td>
+                       <td>{{item.firstName}} {{item.lastName}}</td>
+                       <td>{{item.stateName}}</td>
+                       <td>{{item.trmBrachName}}</td>
+                       <td>{{item.relocationAmount}}</td>
+                       <td>{{item.status == true?'Active':'Inactive'}}</td>
+                   </tbody>
+               </table>
+               <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> 
+           </div>
+       </div>
+   </div>
+</div>
+   </div>
+   
+ 
+   
+  

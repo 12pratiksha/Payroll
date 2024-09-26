@@ -1,0 +1,74 @@
+
+
+
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Salary Slip Remarks Entry </h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Payroll</li>
+                       <li class="breadcrumb-item">Salary</li>
+                       <li class="breadcrumb-item">Manage</li>
+                       <li class="breadcrumb-item active" aria-current="page">Salary Slip Remarks</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-8">
+
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+               <a  class="btn btn-success btn-add-emp" (click)="salaryDue('add')"><i class="fas fa-plus"></i>Create New</a>
+               
+           </div>
+           
+       </div>
+   </div>
+   <!-- /Search Filter -->
+   <div class="row" > 
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped custom-table datatable" datatable  [dtOptions]="dtOptions" >
+                <thead>
+                    <tr>
+                        <th>Employee Code</th>
+                        <th>Employee Name</th>
+                        <th>Month</th>
+                        <th>Year</th>
+                        <th>Remark</th>
+                        <th>Status</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td>q</td>
+                        <td>q</td>
+                        <td>q</td>
+                        <td>q</td>
+                        <td>q</td>
+                        <td>q</td>
+                       <td class="text-end ico-sec justify-content-end">
+                            <!-- <a ><i class="fas fa-pen" (click)="salaryDue(update)"></i></a>
+                            <a  ><i class="far fa-trash-alt" (click)="delete()"></i></a> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+   
+   </div>
+   
+  

@@ -1,0 +1,103 @@
+<div class="content container-fluid">
+
+    <div class="row filter-row" style="height: 121px;">
+        <div class="col-md-12">
+            <form [formGroup]="shiftScheduling">
+                <div class="row">
+                    <div class="col-sm-4 col-md-3" *ngIf="userType!='Admin'">
+                        <div class="form-group form-focus mb-0">
+                            <label>Employee <span  style="color: red;">*</span></label>
+                            <ng-select class="form-select form-control" formControlName="employee" (change)="getSchedules($event)">
+                                <!-- <option value=" ">--Select--</option> -->
+                                <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                            </ng-select>
+                            <small *ngIf="shiftScheduling.get('employee').invalid && shiftScheduling.get('employee').touched"> Employee is required *</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-3" *ngIf="userType=='Admin'">
+                        <div class="form-group form-focus mb-0">
+                            <label>Employee <span  style="color: red;">*</span></label>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="employee">
+                                <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                    <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                        <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <small *ngIf="shiftScheduling.get('employee').invalid && shiftScheduling.get('employee').touched"> Employee is required *</small>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <label>Month <span  style="color: red;">*</span></label>
+                            <ng-select class="form-select form-control" formControlName="month" (change)="test()">
+                                <ng-option *ngFor="let item of months" [id]="item.number" [value]="item.id">{{item.month}} </ng-option>
+                            </ng-select>
+                            <small *ngIf="shiftScheduling.get('month').invalid && shiftScheduling.get('month').touched"> Month is required *</small>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <label>Year <span  style="color: red;">*</span></label>
+                            <ng-select class="form-select form-control" formControlName="year" (change)="test()">
+                                <ng-option *ngFor="let item of years" [value]="item">{{item}} </ng-option>
+                            </ng-select>
+                            <small *ngIf="shiftScheduling.get('year').invalid && shiftScheduling.get('year').touched"> Year is required *</small>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-md-3" style="height: 80px;">
+                        <a class="btn btn-success btn-search" (click)="getShiftSchedules()" style="margin: auto;
+                         margin-top: 11px;"><i class="fas fa-search me-2"></i> Search </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="calander">
+                    <div class="dateControl">
+                        <div class="monthName"> {{ calendarCreator.getMonthName(monthNumber) }} &nbsp; {{ year }} </div>
+                    </div>
+                    <div class="calendar ">
+                        <table class="col-md-12">
+                            <tr>
+                                <th *ngFor='let weekDay of weekDaysName' class="day csthead">{{ weekDay }}</th>
+                            </tr>
+                            <tr *ngIf="shift1">
+                                <td *ngFor='let day of monthDays' class="day">{{ day.number }} <img src="/assets/img/loader/button.gif" *ngIf="hide && day.number" style="width: 15px; height: auto; margin-left: 90px;">
+                                    <div *ngIf="day.number" class="selectDiv">
+                                        <select [(ngModel)]="shiftValue[day.number]">
+                                        <option value=""></option>
+                                        <option value="weekoff"> Week Off</option>
+                                        <option *ngFor="let item of shift1" [value]="item.shiftName">{{item.shiftName}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="add-emp-section" style="margin: 0px 0 10px 0;">
+                            <a class="btn btn-primary" (click)="submit()" style="margin-right: 10px;">Submit</a>
+                            <a class="btn " (click)="reset()">Reset</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0" style="color: red;">{{errorMessage}}</h5>
+        </div>
+    </div>
+
+</div>

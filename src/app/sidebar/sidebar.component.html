@@ -1,0 +1,1003 @@
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-left slimscroll">
+        <perfect-scrollbar [scrollIndicators]="false">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a [ngClass]="{ 'active' : urlComplete.mainUrl === 'dashboard' }" class="nav-link" id="v-pills-dashboard-tab" data-bs-toggle="pill" title="Dashboard" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true" (click)="route()">
+                    <span class="material-icons-outlined">
+                        home
+                    </span>
+                </a>
+
+                <a [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees'}" class="nav-link" id="v-pills-employees-tab" title="Employees" data-bs-toggle="pill" href="#v-pills-employees" role="tab" aria-controls="v-pills-employees" aria-selected="false" *ngIf="menu?.includes(12188)||menu?.includes(12189)||menu?.includes(12190) ||menu?.includes(12191)||menu?.includes(12192)||menu?.includes(12193)||menu?.includes(12194)||menu?.includes(12195)||menu?.includes(12196)||menu?.includes(12197)||menu?.includes(12198)||menu?.includes(12199)||menu?.includes(12200)||menu?.includes(12201)||menu?.includes(12202)||menu?.includes(12203)||menu?.includes(12204)||menu?.includes(12205)||menu?.includes(12206)||menu?.includes(12207)||menu?.includes(12208) ||usertype=='Admin' || usertype=='Super Admin'">
+                    <span class="material-icons-outlined">
+                        people
+                    </span>
+                </a>
+                <a [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" class="nav-link" id="v-pills-masters-tab" title="Masters" data-bs-toggle="pill" href="#v-pills-masters" role="tab" aria-controls="v-pills-masters" aria-selected="false" *ngIf="menu?.includes(12219)||menu?.includes(12222)||menu?.includes(12227)||menu?.includes(12231)||menu?.includes(12235)||menu?.includes(12238)||menu?.includes(12242)||menu?.includes(12246)||menu?.includes(12247)||menu?.includes(12250)||menu?.includes(12253)||menu?.includes(12258)||menu?.includes(12257) || usertype=='Admin' || usertype=='Super Admin'">
+                    <span class="material-icons-outlined">
+                        person
+                    </span>
+                </a>
+                <a [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" class="nav-link" id="v-pills-attendance-tab" title="Attendance & Leave" data-bs-toggle="pill" href="#v-pills-attendance" role="tab" aria-controls="v-pills-clients" aria-selected="false"
+                    *ngIf="menu?.includes(12296)|| menu?.includes(12299)||menu?.includes(12308)||menu?.includes(12313)||menu?.includes(12324)||menu?.includes(12326)||menu?.includes(88812)|| usertype=='Admin' || usertype=='Super Admin'">
+                    <span class="material-icons-outlined">
+                        perm_contact_calendar
+                    </span>
+                </a>
+                <a [ngClass]="{ 'active' : urlComplete.mainUrl === 'reports' || urlComplete.mainUrl === 'employeereports' || urlComplete.mainUrl === 'payslipreports' || urlComplete.mainUrl === 'projectreports' || urlComplete.mainUrl === 'paymentreports' || urlComplete.mainUrl === 'taskreports' || urlComplete.mainUrl === 'userreports' || urlComplete.mainUrl === 'attendancereports' || urlComplete.mainUrl === 'leavereports' || urlComplete.mainUrl === 'dailyreports' }"
+                    class="nav-link" id="v-pills-reports-tab" title="Reports" data-bs-toggle="pill" href="#v-pills-reports" role="tab" aria-controls="v-pills-reports" aria-selected="false" *ngIf="menu?.includes(88813) || usertype=='Admin' || usertype=='Super Admin'">
+                    <span class="material-icons-outlined">
+                        report_gmailerrorred
+                    </span>
+                </a>
+
+                <a [ngClass]="{ 'active' : urlComplete.mainUrl === 'payroll' }" class="nav-link" id="v-pills-payroll-tab" title="Payroll" data-bs-toggle="pill" href="#v-pills-payroll" role="tab" aria-controls="v-pills-payroll" aria-selected="false" *ngIf="menu?.includes(12351)||menu?.includes(12358)||menu?.includes(12361) || usertype=='Admin' || usertype=='Super Admin'">
+                    <span class="material-icons-outlined">
+                        request_quote
+                    </span>
+                </a>
+                <a [ngClass]="{'active' : urlComplete.mainUrl === 'recruitment'}" class="nav-link" data-bs-toggle="pill" href="#v-pills-recruitment" role="tab" aria-controls="v-pills-recruitment" title="Recruitment" aria-selected="false" *ngIf="menu?.includes(12367)|| menu?.includes(12379)||menu?.includes(12369)||menu?.includes(12370)||menu?.includes(12371)||menu?.includes(12372)||menu?.includes(12373)||menu?.includes(12374)||menu?.includes(12375)||menu?.includes(12376)||menu?.includes(12377)|| usertype=='Admin' || usertype=='Super Admin'">
+                    <span class="material-icons-outlined">
+                        verified_user
+                    </span>
+                </a>
+                <a [ngClass]="{'active' : urlComplete.mainUrl === 'tds'}" class="nav-link" data-bs-toggle="pill" href="#v-pills-tds" role="tab" aria-controls="v-pills-tds" title="Tds" aria-selected="false">
+                    <span class="material-icons-outlined">
+                       
+                            receipt
+                           
+                    </span>
+                </a>
+                <a [ngClass]="{'active' : urlComplete.mainUrl === 'meeting'}" class="nav-link" data-bs-toggle="pill" href="#v-pills-meeting" role="tab" aria-controls="v-pills-meeting" title="Meeting" aria-selected="false">
+                    <span class="material-icons-outlined">
+                        
+                            groups
+                           
+                    </span>
+                </a>
+                <a [ngClass]="{'active' : urlComplete.mainUrl === 'training'}" class="nav-link" data-bs-toggle="pill" href="#v-pills-training" role="tab" aria-controls="v-pills-meeting" title="Meeting" aria-selected="false">
+                    <span class="material-icons-outlined">
+                        
+                        receipt
+                           
+                    </span>
+                </a>
+
+            </div>
+        </perfect-scrollbar>
+    </div>
+    <div class="sidebar-right">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'dashboard' }" class="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+                <p>Dashboard</p>
+                <ul>
+                    <li routerLink="/layout/dashboard/admin" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'admin' }" href="javascript:" *ngIf="type=='Admin' ">Admin Dashboard</a></li>
+                    <li routerLink="/layout/dashboard/employee" *ngIf="!usertype"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'employee' }" href="javascript:" *ngIf="type==!'Admin' ">Employee Dashboard</a></li>
+                </ul>
+            </div>
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'employees' }" class="tab-pane fade" id="v-pills-employees" role="tabpanel" aria-labelledby="v-pills-employees-tab">
+                <p>General SetUp</p>
+                <ul>
+                    <!-- <li routerLink="/layout/employees/companypage" *ngIf="menu?.includes(12188) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'companypage' }">Company</a>
+                    </li> -->
+                    <li routerLink="/layout/employees/companyInfo" *ngIf="menu?.includes(12189) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'companyInfo' }">Company-Info</a>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="menu?.includes(12190) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'employees' }">Employees <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/employeelist" *ngIf="menu?.includes(12191) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'employeelist' }" href="javascript:">All Employees</a>
+                            </li>
+                            <li routerLink="/layout/employees/importEmployee" *ngIf="menu?.includes(12192) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importEmployee' }" href="javascript:">Import Employees</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="menu?.includes(12193) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'employees'  }">Departments <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/departments" *ngIf="menu?.includes(12194) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'departments' }" href="javascript:">Department</a>
+                            </li>
+                            <li routerLink="/layout/employees/importDeprtment" *ngIf="menu?.includes(12195) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importDeprtment' }" href="javascript:">Import Department</a>
+                            </li>
+
+                            <li routerLink="/layout/employees/sub-departments" *ngIf="menu?.includes(12196) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'sub-departments' }" href="javascript:">Sub-Department</a>
+                            </li>
+
+                            <li routerLink="/layout/employees/importSubDeprtment" *ngIf="menu?.includes(12197) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importSubDeprtment' }" href="javascript:">Import Sub-Department</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="menu?.includes(12198) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'designation' }">Designations<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/designation" *ngIf="menu?.includes(12199) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'designation' }" href="javascript:">Designation</a>
+                            </li>
+                            <li routerLink="/layout/employees/importDesignation" *ngIf="menu?.includes(12200) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importDesignation' }" href="javascript:">Import Designation</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'adminchangepassword' }">Admin<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/adminchangepassword" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'adminchangepassword' }" href="javascript:">Change Admin Password</a>
+                            </li>
+                           
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="menu?.includes(12201) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'user' }">Users<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/user" *ngIf="menu?.includes(12202) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'user' }" href="javascript:">User Master</a>
+                            </li>
+                            <li routerLink="/layout/employees/changePassword">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'changePassword' }" href="javascript:">Change Password</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li routerLink="/layout/employees/country" *ngIf="menu?.includes(12203) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'country' }">Country</a>
+                    </li>
+
+                    <li routerLink="/layout/employees/state" *ngIf="menu?.includes(12204) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'state' }">State</a>
+                    </li>
+                    <li routerLink="/layout/employees/city" *ngIf="menu?.includes(12205) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'city' }">City</a>
+                    </li>
+                    <li routerLink="/layout/employees/branch" *ngIf="menu?.includes(12206) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'branch' }">Branch</a>
+                    </li>
+
+                    <li routerLink="/layout/employees/region" *ngIf="menu?.includes(12207) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'region' }">Region</a>
+                    </li>
+
+                    <li routerLink="/layout/employees/categories" *ngIf="menu?.includes(12208) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'categories' }">Categories</a>
+                    </li>
+                    <!-- <li routerLink="/layout/employees/qualification">
+                        <a href="javascript:"
+                            [ngClass]="{ 'active' : urlComplete.subUrl === 'qualification' }">Qualification</a>
+                    </li> -->
+                    <li routerLink="/layout/employees/connectionToDb" *ngIf="menu?.includes(12209) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'active' : urlComplete.subUrl === 'connectionToDb' }">Connection To DB</a>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'designation' }">Database Backup<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/importDatabaseComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importDatabaseComponent' }" href="javascript:">Import Database</a>
+                            </li>
+                            <li routerLink="/layout/employees/exportdatabaseComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'exportdatabaseComponent' }" href="javascript:">Export Database</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'employees' }" *ngIf="usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'designation' }">Setting<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/employees/insertsettingComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'insertsettingComponent' }" href="javascript:">Settings</a>
+                            </li>
+                            
+                            <!-- <li routerLink="/layout/employees/expiryDateSettingComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'expiryDateSettingComponent' }" href="javascript:">Expiry Date Setting</a>
+                            </li> -->
+
+                        </ul>
+                    </li>
+
+
+
+
+                </ul>
+            </div>
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'masters'  }" class="tab-pane fade" id="v-pills-masters" role="tabpanel" aria-labelledby="v-pills-masters-tab">
+                <p>Masters</p>
+                <ul>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12219) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Shift Plans <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/shift" *ngIf="menu?.includes(12220) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'shift' }" href="javascript:">Shift</a>
+                            </li>
+                            <li routerLink="/layout/masters/shiftImport" *ngIf="menu?.includes(12221) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'shiftImport' }" href="javascript:">Import Shift </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12222) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Attendance Setup<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/officeTimePolicy" *ngIf="menu?.includes(12223) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'officeTimePolicy' }" href="javascript:">Time Office Policy List</a>
+                            </li>
+                            <!-- <li routerLink="/layout/masters/attendanceLockList" *ngIf="menu?.includes(12224) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'attendanceLockList' }" href="javascript:">Attendance Lock List</a>
+                            </li> -->
+                            <li routerLink="/layout/masters/attendanceLockUnlock" *ngIf="menu?.includes(12225) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'attendanceLockUnlock' }" href="javascript:">Attendance Lock Unlock List</a>
+                            </li>
+                            <li routerLink="/layout/masters/subDepShiftAllocation" *ngIf="menu?.includes(12226) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'subDepShiftAllocation' }" href="javascript:">Sub-Department With Shift Allocation</a>
+                            </li>
+                            <li routerLink="/layout/masters/policySetting">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'policySetting' }" href="javascript:">Policy Setting</a>
+                            </li>
+                        </ul>
+
+
+                    </li>
+
+
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12258) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Late Coming Policy <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/lateDeparturePlan" *ngIf="menu?.includes(9911) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'lateDeparturePlan' }" href="javascript:">Late Deduction Plan List</a>
+                            </li>
+                            <li routerLink="/layout/masters/lateDeductionPlan" *ngIf="menu?.includes(9912) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'lateDeductionPlan' }" href="javascript:">Late Deduction Plan Assign</a>
+                            </li>
+                            <li routerLink="/layout/masters/lateDeductionHistory" *ngIf="menu?.includes(9913) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'lateDeductionHistory' }" href="javascript:">Late Deduction Plan Assigned History List</a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12227) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Early Departure Policy <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/earlyDeparturePlanList" *ngIf="menu?.includes(12228) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'earlyDeparturePlanList' }" href="javascript:">Early Departure Plan List</a>
+                            </li>
+                            <li routerLink="/layout/masters/earlyDeparturePlanAssign" *ngIf="menu?.includes(12229) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'earlyDeparturePlanAssign' }" href="javascript:">Early Departure Plan Assign</a>
+                            </li>
+                            <li routerLink="/layout/masters/earlyDeparturePlanHistory" *ngIf="menu?.includes(12230) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'earlyDeparturePlanHistory' }" href="javascript:">Early Departure Plan Assigned History List</a>
+                            </li>
+                            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' || urlComplete.subUrl === 'otAdjustmentSetup' || urlComplete.subUrl === 'otAdjustmentHistory' }" *ngIf="menu?.includes(12231) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">OT Adjustment Policy <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/otAdjustmentSetup" *ngIf="menu?.includes(12232) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'otAdjustmentSetup' }" href="javascript:">OT Adjustment Setup</a>
+                            </li>
+                            <li routerLink="/layout/masters/otAdjustmentAssign" *ngIf="menu?.includes(12233) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'otAdjustmentAssign' }" href="javascript:">OT Adjustment Plan Assign</a>
+                            </li>
+                            <li routerLink="/layout/masters/otAdjustmentHistory" *ngIf="menu?.includes(12234) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'otAdjustmentHistory' }" href="javascript:">OT Adjustment Plan History List</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12235) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:void(0);">Non Working Days<span class="menu-arrow"></span></a>
+                        <ul style="display: none;" class="ms-3">
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12236) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Holidays<span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li routerLink="/layout/masters/holidays" *ngIf="menu?.includes(12236) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'holidays' }" href="javascript:"> Holidays</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12238) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }"> Off Day  <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li routerLink="/layout/masters/offDay" *ngIf="menu?.includes(12239) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'offDay' }" href="javascript:"> Off Day </a>
+                                    </li>
+                                    <li routerLink="/layout/masters/specialWorkingDayy" *ngIf="menu?.includes(12240) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'specialWorkingDayy' }" href="javascript:">Define Special Working Day </a>
+                                    </li>
+                                    <li routerLink="/layout/masters/specialNonWorkingDay" *ngIf="menu?.includes(12241) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'specialNonWorkingDay' }" href="javascript:">Define Non-Special Working Day </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12242) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Payroll SetUp<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/payElementMaster" *ngIf="menu?.includes(12243) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'payElementMaster' }" href="javascript:">Pay Element Master</a>
+                            </li>
+                            <li routerLink="/layout/masters/importPayElement" *ngIf="menu?.includes(12244) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importPayElement' }" href="javascript:">Import Pay Element Master</a>
+                            </li>
+                            <li routerLink="/layout/masters/salaryFormulas" *ngIf="menu?.includes(12245) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salaryFormulas' }" href="javascript:">Salary Formulas</a>
+                            </li>
+
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12246) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Policy Setting<span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+
+                                    <li routerLink="/layout/masters/salaryPolicy" *ngIf="menu?.includes(4321) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salaryPolicy' }" href="javascript:">Salary Calender</a>
+                                    </li>
+                                    <li routerLink="/layout/masters/salaryCalenderManual" *ngIf="menu?.includes(6789) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salaryCalenderManual' }" href="javascript:">Salary Calender Manual List</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+
+
+
+                        </ul>
+                    </li>
+
+
+                    <li routerLink="/layout/masters/leaveAllocation"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'leaveAllocation'}" *ngIf="menu?.includes(12246) || usertype=='Admin' || usertype=='Super Admin'">Leave Allocation</a></li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12247)  || usertype=='Admin' || usertype=='Super Admin' ">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Dropdown Entries<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/dropdownEntries"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'dropdownEntries'}" *ngIf="menu?.includes(12248) || usertype=='Admin' || usertype=='Super Admin'"> Dropdown List Entries</a></li>
+                            <li routerLink="/layout/masters/importDropdownEntries"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'importDropdownEntries'}" *ngIf="menu?.includes(12249) || usertype=='Admin' || usertype=='Super Admin'"> Import Dropdown Entries</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12250) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Others<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/workFlow" *ngIf="menu?.includes(12251) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'workFlow' }" href="javascript:">Work Flow Configuration</a>
+                            </li>
+
+                            <li routerLink="/layout/masters/setupConfiguration" *ngIf="menu?.includes(12252) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'setupConfiguration' }" href="javascript:">SetUp Configuration</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!-- 
+                       
+                   -->
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12253) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Role Centre<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/roleMaster" *ngIf="menu?.includes(12254) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'roleMaster' }" href="javascript:">Roles</a>
+                            </li>
+                            <li routerLink="/layout/masters/assignRole" *ngIf="menu?.includes(12255) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'assignRole' }" href="javascript:">Assign Roles</a>
+                            </li>
+                            <li routerLink="/layout/masters/importRoleAssign" *ngIf="menu?.includes(12256) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importRoleAssign' }" href="javascript:">Import Assign Roles</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'masters' }" *ngIf="menu?.includes(12257) || usertype=='Admin' || usertype=='Super Admin' ">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'masters' }">Statutory Compliance Setup<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/masters/ProvidentFund" *ngIf="menu?.includes(12258) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'ProvidentFund' }" href="javascript:">Provident Fund</a>
+                            </li>
+                            <li routerLink="/layout/masters/esic" *ngIf="menu?.includes(12259) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'esic' }" href="javascript:">ESIC</a>
+                            </li>
+
+                            <li routerLink="/layout/masters/pt" *ngIf="menu?.includes(12260) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'shiftImport' }" href="javascript:">Professional Tax</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'humanResorces' }" class="tab-pane fade" id="v-pills-humanResorces" role="tabpanel" aria-labelledby="v-pills-humanResorces-tab">
+                <p>Human Resorces</p>
+                <ul>
+                    <li routerLink="/layout/humanResorces/allAssets"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'allAssets'}">All Assets</a></li>
+                </ul>
+                <ul>
+                    <li routerLink="/layout/humanResorces/composeEmail"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'humanResorces'}">Compose Email</a></li>
+                </ul>
+            </div> -->
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'attendance&leave' }" class="tab-pane fade" id="v-pills-attendance" role="tabpanel" aria-labelledby="v-pills-attendance-tab">
+                <p>Attendance & Leave</p>
+                <ul>
+                    <li class="sub-menu" *ngIf="menu?.includes(12296) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:void(0);">Employee<span class="menu-arrow"></span></a>
+                        <ul style="display: none;" class="ms-3">
+
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12297) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'manage' }"> Manage <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+
+                                    <li routerLink="/layout/attendance&leave/manage/emplyeeCompliance">
+                                        <a [ngClass]="{ 'active' : urlComplete.childUrl === 'emplyeeCompliance' }" href="javascript:">Employee Compliance</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                        </ul>
+
+
+                    </li>
+
+                    <li class="sub-menu" *ngIf="menu?.includes(12299) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:void(0);">Leaves<span class="menu-arrow"></span></a>
+                        <ul style="display: none;" class="ms-3">
+
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12300) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'leave' }"> Manage <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+
+                                    <li routerLink="/layout/attendance&leave/leave/leaveApplication" *ngIf="menu?.includes(7713) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.childUrl === 'leaveApplication' }" href="javascript:">Leave Application </a>
+                                    </li>
+
+                                    <!-- <li routerLink="/layout/attendance&leave/leaveApprovalList" *ngIf="menu?.includes(7714) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'leaveApprovalList' }"
+                                    href="javascript:">Leave Approvals</a>
+                            </li> -->
+
+                                    <li routerLink="/layout/attendance&leave/LeaveList" *ngIf="menu?.includes(7726) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'LeaveList' }" href="javascript:">Leave List</a>
+                                    </li>
+
+                                    <li routerLink="/layout/attendance&leave/leaveEncash" *ngIf="menu?.includes(7715) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'leaveEncash' }" href="javascript:">Leave Encashment </a>
+                                    </li>
+                                    <li routerLink="/layout/attendance&leave/shortLeaves" *ngIf="menu?.includes(7716) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'shortLeaves' }" href="javascript:">Short Leaves </a>
+                                    </li>
+                                    <li routerLink="/layout/attendance&leave/outDutyMaster" *ngIf="menu?.includes(7717) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'outDutyMaster' }" href="javascript:">Out Duty</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12306) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }"> Import Opening Leave Balance  <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li routerLink="/layout/attendance&leave/importLeaveBalance">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importLeaveBalance' }" href="javascript:">Import Opening Leave Balance  </a>
+                                    </li>
+
+
+
+                                </ul>
+                            </li>
+
+                        </ul>
+
+
+                    </li>
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12308) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }">Shift Planning <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/attendance&leave/shiftScheduling" *ngIf="menu?.includes(12309) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'shiftScheduling' }" href="javascript:">Shift Scheduling (calendar)</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/assignEmployeeShift" *ngIf="menu?.includes(12310) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'assignEmployeeShift' }" href="javascript:attendance&leave/assignEmployeeShift">Shift Scheduling (Normal)</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/shiftHistory" *ngIf="menu?.includes(12311) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'shiftHistory' }" href="javascript:">Shift Scheduling History</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/importShiftAssign" *ngIf="menu?.includes(12312) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importShiftAssign' }" href="javascript:">Shift Assign</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12313) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }">Attendance <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12314) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }"> Manage <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li routerLink="/layout/attendance&leave/regularization" *ngIf="menu?.includes(7718) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'regularization' }" href="javascript:/layout/attendance&leave/regularization">Regularization Approvals </a>
+                                    </li>
+
+                                    <li routerLink="/layout/attendance&leave/markpresentabsent" *ngIf="menu?.includes(7726) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'markpresentabsent' }" href="javascript:/layout/attendance&leave/markpresentabsent">Mark Present/Absent </a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/attendance" *ngIf="menu?.includes(12316) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'attendance' }" href="javascript:">Attendance List</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/customAttendance" *ngIf="menu?.includes(12317) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'customAttendance' }" href="javascript:">Custom Daily Attendance (Normal)</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/attendanceListCalendar" *ngIf="menu?.includes(12318) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'attendanceListCalendar' }" href="javascript:">Custom Daily Attendance (Calendar)</a>
+
+                            </li>
+                            <li routerLink="/layout/attendance&leave/monthlyattendence11" *ngIf="menu?.includes(12368) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'monthlyattendence11' }" href="javascript:">Salary Sheet</a>
+                            </li>
+
+                            <li routerLink="/layout/attendance&leave/importDailyAttendance" *ngIf="menu?.includes(12367) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importDailyAttendance' }" href="javascript:">Import Daily Attendance</a>
+                            </li>
+
+                            <li routerLink="/layout/attendance&leave/importMonthlyDailyManualAttendance" *ngIf="menu?.includes(12366) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importMonthlyDailyManualAttendance' }" href="javascript:">Import Monthly Daily Manual Attendance</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/monthlyTotalAttendance" *ngIf="menu?.includes(12319) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'monthlyTotalAttendance' }" href="javascript:">Monthly Total Attendance</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/importmonthlyTotalAttendance" *ngIf="menu?.includes(12320) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importmonthlyTotalAttendance' }" href="javascript:">Import Monthly Total Attendance</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/importAttendance" *ngIf="menu?.includes(12321) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importAttendance' }" href="javascript:">Import Attendance With Shift</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/importAttendanceWithShift" *ngIf="menu?.includes(12322) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importAttendanceWithShift' }" href="javascript:">Import Attendance Shift Change</a>
+                            </li>
+                            <!-- <li routerLink="/layout/attendance&leave/leave/importDailyAttendance" *ngIf="menu?.includes(12323) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.childUrl === 'importDailyAttendance' }" href="javascript:">Import Daily Attendance</a>
+                            </li> -->
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(12324) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }">Attendance Process<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/attendance&leave/processAttendance" *ngIf="menu?.includes(12325) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'processAttendance' }" href="javascript:">Attendance Process</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <!--  -->
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }" *ngIf="menu?.includes(88812) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }">Compensatory Leave<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/attendance&leave/EcoffApplication" *ngIf="menu?.includes(1010) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'EcoffApplication' }" href="javascript:">ECoff Application</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/EcoffApplicationList" *ngIf="menu?.includes(1011) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'EcoffApplicationList' }" href="javascript:">ECoff Application List</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/EcoffApprovalList" *ngIf="menu?.includes(1012) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'EcoffApprovalList' }" href="javascript:">ECoff Approval List</a>
+                            </li>
+                            <li routerLink="/layout/attendance&leave/coffApplication" *ngIf="menu?.includes(1013) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'coffApplication' }" href="javascript:">ECoff Application Import</a>
+                            </li>
+                            <!-- <li routerLink="/layout/attendance&leave/coffApplicationList">
+                            <a [ngClass]="{ 'active' : urlComplete.subUrl === 'coffApplicationList' }"
+                                href="javascript:">Coff Application List</a>
+                        </li>
+                        <li routerLink="/layout/attendance&leave/coffApprovalList">
+                            <a [ngClass]="{ 'active' : urlComplete.subUrl === 'coffApprovalList' }"
+                                href="javascript:">Coff Approval List</a>
+                        </li> -->
+
+                        </ul>
+                    </li>
+
+                    <li class="sub-menu" *ngIf="menu?.includes(12326) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:void(0);">Employee Change<span class="menu-arrow"></span></a>
+                        <ul style="display: none;" class="ms-3">
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'attendance&leave' }">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'attendance&leave' }"> Employee Transfer <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li routerLink="/layout/attendance&leave/transferRequisition" *ngIf="menu?.includes(12327) || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'transferRequisition' }" href="javascript:/layout/attendance&leave/transferRequisition">Transfer Requisitions</a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+
+
+                        </ul>
+
+
+                    </li>
+                </ul>
+
+            </div>
+
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'payroll' }" class="tab-pane fade" id="v-pills-payroll" role="tabpanel" aria-labelledby="v-pills-payroll-tab">
+                <p>Payroll</p>
+                <ul>
+                    <li class="sub-menu" *ngIf="menu?.includes(12351) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:void(0);">Salary<span class="menu-arrow"></span></a>
+                        <ul style="display: none;" class="ms-3">
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'payroll' }" *ngIf="menu?.includes('12352') || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'payroll' }">Import<span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+
+                                    <li routerLink="/layout/payroll/importSalaryWithFormula" *ngIf="menu?.includes('9158') || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'importSalaryWithFormula' }" href="javascript:">Import Salary with Formula</a>
+                                    </li>
+
+                                    <li routerLink="/layout/payroll/sfsh" *ngIf="menu?.includes('9159') || usertype=='Admin' || usertype=='Super Admin'">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'sfsh' }" href="javascript:">Import Salary with Salaryhead</a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'payroll' }">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'payroll' }">Manage<span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li routerLink="/layout/payroll/employeeMasterEdit">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'employeeMasterEdit' }" href="javascript:">View & Revise Salary</a>
+                                    </li>
+                                    <!-- <li routerLink="/layout/payroll/employeeMasterEditForm">
+                               <a [ngClass]="{ 'active' : urlComplete.subUrl === 'employeeMasterEditForm' }"
+                                 href="javascript:">Define Salary</a>
+                             </li> -->
+                                    <li routerLink="/layout/payroll/salarySlipRemarks">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salarySlipRemarks' }" href="javascript:"> Salary Slip Remarks</a>
+                                    </li>
+                                    <li routerLink="/layout/payroll/salaryDueRemarks">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salaryDueRemarks' }" href="javascript:"> Salary Due Remarks</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'payroll' }" *ngIf="menu?.includes(12358) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'payroll' }">Reimbursement<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/payroll/ReimbExpenseMaster" *ngIf="menu?.includes(12359) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'ReimbExpenseMaster' }" href="javascript:">Expenses</a>
+                            </li>
+                            <li routerLink="/layout/payroll/advanceAmountExpenses" *ngIf="menu?.includes(12360) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'advanceAmountExpenses' }" href="javascript:">Advance Amount For Expenses</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="sub-menu" *ngIf="menu?.includes(12361) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:void(0);">Salary Processing<span class="menu-arrow"></span></a>
+                        <ul style="display: none;" class="ms-3">
+                            <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'payroll' }" *ngIf="menu?.includes(12362) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'payroll' }">Adjustments<span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+
+                                    <li routerLink="/layout/payroll/salaryAditionDeduction">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salaryAditionDeduction' }" href="javascript:">Salary Addition/Deduction</a>
+                                    </li>
+
+                                    <li routerLink="/layout/payroll/salaryAditionDeductionImport">
+                                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salaryAditionDeductionImport' }" href="javascript:">Salary Addition/Deduction Import</a>
+                                    </li>
+
+
+
+                                </ul>
+                            </li>
+                            <li routerLink="/layout/payroll/runPayroll">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'runPayroll' }" href="javascript:">Run Payroll</a>
+                            </li>
+
+                            <li routerLink="/layout/payroll/apf" *ngIf="menu?.includes(1016) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'apf' }" href="javascript:">Apply Bulk PF</a>
+                            </li>
+                            <li routerLink="/layout/payroll/AddOrDeductSalaryHeadComponent">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'AddOrDeductSalaryHeadComponent' }" href="javascript:">Add Or Deduct SalaryHead</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+            </div>
+
+
+
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'reports' }" class="tab-pane fade" id="v-pills-reports" role="tabpanel" aria-labelledby="v-pills-reports-tab">
+                <p>Reports</p>
+                <ul>
+
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'reports' }" *ngIf="menu?.includes(88813) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'reports' }">Payroll<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/reports/salarySlip" *ngIf="menu?.includes(1014) || usertype=='Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'salarySlip' }" href="javascript:">Salary Slip</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu" [ngClass]="{ 'active' : urlComplete.mainUrl === 'reports' }" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                        <a href="javascript:" [ngClass]="{ 'subdrop' : urlComplete.subUrl === 'reports' }">Reports<span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li routerLink="/layout/reports/punchdetailsComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Punch Details Report</a>
+                            </li>
+                            <li routerLink="/layout/reports/biometricAttendenceComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Biometric Attendance Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/dailyAttendenanceReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Daily Attendance Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/monthlyAttendanceSummeryReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Monthly Attendance Summery Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/employeePendingShiftAssignDetailsReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Pending Shift Assign Details Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/employeeLeaveApplicationReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Leave Application Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/EmployeeAttendaceDetailsReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Attendace Details Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/employeeInformationReport" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Information Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/EmployeeLeaveBalanceMonthWiseReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Leave Balance Month Wise Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/EmployeeLeaveBalanceReportByDateComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Leave Balance Report By Date</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/employeeMonthlyLeavesStatusReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Monthly Leaves Status Report </a>
+                            </li>
+
+                            <li routerLink="/layout/reports/bankPaymentDetailsReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Bank Payment Details Report </a>
+                            </li>
+
+                            <li routerLink="/layout/reports/pFRegisterReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">PF Register Report </a>
+                            </li>
+
+                            <li routerLink="/layout/reports/eSICStatementReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">ESIC Statement Report </a>
+                            </li>
+
+                            <li routerLink="/layout/reports/eSICMasterReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">ESIC Master Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/eSICRegisterReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">ESIC Register Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/employeeTypeWiseSalaryRegisterReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Type Wise Salary Register Report</a>
+                            </li>
+
+                            <li routerLink="/layout/reports/employeePFUANNoReportComponent" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee PF UAN No. Report</a>
+                            </li>
+
+                            <!-- <li routerLink="/layout/reports/getEmployeeDetailsReport" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">Employee Details Report</a>
+                            </li> -->
+                            
+
+                            <li routerLink="/layout/reports/Pfreport" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">PF Report</a>
+                            </li>
+                            <li routerLink="/layout/reports/Ptreport" *ngIf="usertype=='Admin' || usertype=='Super Admin' || usertype=='Super Admin'">
+                                <a [ngClass]="{ 'active' : urlComplete.subUrl === 'reports' }" href="javascript:">PT Report</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'recruitment' }" class="tab-pane fade" id="v-pills-recruitment" role="tabpanel" aria-labelledby="v-pills-recruitment-tab">
+                <p>Recruitment</p>
+                <ul>
+                    <li routerLink="/layout/recruitment/dashboard" *ngIf="menu?.includes(12367) || usertype=='Admin' || usertype=='Super Admin'">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'dashboard' }" href="javascript:">Dashboard</a>
+
+                    </li>
+                    <li routerLink="/layout/recruitment/agencyList" *ngIf="menu?.includes(88816) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'agencyList' }" href="javascript:">Agency List</a></li>
+
+
+                    <li routerLink="/layout/recruitment/managejobs" *ngIf="menu?.includes(12368) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'managejobs' }" href="javascript:">Manage Jobs</a></li>
+
+                    <li routerLink="/layout/recruitment/enterNewCandidate"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'enterNewCandidate' }" href="javascript:">Enter Candidate</a></li>
+
+                    <!-- <li routerLink="/layout/recruitment/assignAssets"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'assignAssets' }" href="javascript:">Assign Assets List</a></li> -->
+
+                    <li routerLink="/layout/recruitment/approversList" *ngIf="menu?.includes(12369) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'approversList' }" href="javascript:">Approval List</a></li>
+
+                    <!-- <li routerLink="/layout/humanResorces/allAssets"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'allAssets' }" href="javascript:"> Assets List</a></li> -->
+                    <li routerLink="/layout/recruitment/assetsList"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'assetsList' }" href="javascript:">Assets List</a></li>
+
+                    <li routerLink="/layout/recruitment/approved-list" *ngIf="menu?.includes(88817) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'approved-list' }" href="javascript:">Approved List</a></li>
+
+
+                    <!-- <li routerLink="/layout/recruitment/consultant-register" *ngIf="menu?.includes(12371) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'consultant-register' }" href="javascript:">Consultant Register</a></li> -->
+
+                    <li routerLink="/layout/recruitment/candidate" *ngIf="menu?.includes(12372) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'candidate' || urlComplete.subUrl === 'remarks'}" href="javascript:">Schedule Interview</a></li>
+                    <li routerLink="/layout/recruitment/scheduleInterview" *ngIf="menu?.includes(12367) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'scheduleInterview' }" href="javascript:">Schedule Interview Candidate</a></li>
+
+
+                    <li routerLink="/layout/recruitment/selected" *ngIf="menu?.includes(12373) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'selected' || urlComplete.subUrl === 'Offer' }" href="javascript:">Selected Candidates</a></li>
+
+                    <li routerLink="/layout/recruitment/offerHistoryComponent" *ngIf="menu?.includes(12370) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'offerHistoryComponent' }" href="javascript:">Offer History</a></li>
+
+                    <!-- <li routerLink="/layout/recruitment/evalutionform"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'evalutionform'}" href="javascript:"> Candidate Evolution Form <form action=""></form></a></li> -->
+
+                    <li routerLink="/layout/recruitment/compose" *ngIf="menu?.includes(12374) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'compose' }" href="javascript:">Compose Email</a></li>
+
+                    <li routerLink="/layout/recruitment/resignation" *ngIf="menu?.includes(12375) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'resignation' }" href="javascript:">Resignation</a></li>
+
+                    <li routerLink="/layout/recruitment/resignationList" *ngIf="menu?.includes(12376) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'resignationList' }" href="javascript:">Resignation Acceptance List </a></li>
+
+                    <!-- <li routerLink="/layout/recruitment/pendingDetails"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'pendingDetails' }" href="javascript:">After Resignation</a></li> -->
+                    <!-- <li routerLink="/layout/recruitment/assetsList" *ngIf="menu?.includes(12377) || usertype=='Admin' || usertype=='Super Admin'"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'assetsList' }" href="javascript:">Assets List</a></li> -->
+
+                    <li routerLink="/layout/recruitment/CreateTemplate"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'CreateTemplate' }" href="javascript:">Create Template</a></li>
+
+                    <li routerLink="/layout/recruitment/createLetterComponent"><a [ngClass]="{ 'active' : urlComplete.subUrl === 'createLetterComponent' }" href="javascript:">Create Letter</a></li>
+
+                    <!-- <li routerLink="/layout/recruitment/incomeTaxDeclarationFormComponent" *ngIf=" usertype=='Admin' || usertype=='Super Admin'">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'incomeTaxDeclarationFormComponent' }" href="javascript:">Income Tax Declaration Form</a>
+
+                    </li> -->
+                </ul>
+            </div>
+
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'tds' }" class="tab-pane fade" id="v-pills-tds" role="tabpanel" aria-labelledby="v-pills-tds-tab">
+                <p>TDS</p>
+                <ul>
+                    <li routerLink="/layout/tds/incomeTaxDeclarationForm">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'incomeTaxDeclarationForm' }" href="javascript:">Income Tax Declaration Form</a>
+
+                    </li>
+                    <li routerLink="/layout/tds/ApprovalList">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'ApprovalList' }" href="javascript:">Approval List</a>
+
+                    </li>
+                </ul>
+
+            </div>
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'meeting' }" class="tab-pane fade" id="v-pills-meeting" role="tabpanel" aria-labelledby="v-pills-meeting-tab">
+                <p>Meeting</p>
+                <ul>
+                    <li routerLink="/layout/meeting/createMeeting">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'createMeeting' }" href="javascript:">Create Meeting</a>
+
+                    </li>
+                    <li routerLink="/layout/meeting/updateMeeting">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'updateMeeting' }" href="javascript:">Add Meeting Feedback</a>
+
+                    </li>
+
+                    <li routerLink="/layout/meeting/assignedTask">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'assignedTask' }" href="javascript:">Assign Task</a>
+
+                    </li>
+                    <li routerLink="/layout/meeting/meetingReport">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'meetingReport' }" href="javascript:">Meeting Reports</a>
+
+                    </li>
+                    <!-- <li routerLink="/layout/meeting/addCertificate">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'addCertificate' }" href="javascript:">Add Certificate</a>
+
+                    </li> -->
+
+                </ul>
+            </div>
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'training' }" class="tab-pane fade" id="v-pills-training" role="tabpanel" aria-labelledby="v-pills-training-tab">
+                <p>Training</p>
+                <ul>
+                    <li routerLink="/layout/training/addcertification">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'addcertification' }" href="javascript:">Add Certification</a>
+
+                    </li>
+                    <li routerLink="/layout/training/trainings">
+                        <a [ngClass]="{ 'active' : urlComplete.subUrl === 'trainings' }" href="javascript:">Trainings</a>
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+
+            <!-- <div [ngClass]="{ 
+                'show active' : urlComplete.subUrl === 'user-dashboard' || urlComplete.subUrl === 'visited-jobs' || urlComplete.subUrl === 'offered-jobs' || urlComplete.subUrl === 'user-all-jobs' || urlComplete.subUrl === 'archived-jobs' || urlComplete.subUrl === 'applied-jobs' || urlComplete.subUrl === 'saved-jobs' || urlComplete.subUrl === 'interviewing'
+                || urlComplete.subUrl === 'jobs-dashboard' || urlComplete.subUrl === 'manage-jobs' || urlComplete.subUrl === 'job-details' || urlComplete.subUrl === 'job-applicants' || urlComplete.subUrl === 'replacement' || urlComplete.subUrl === 'manage-resumes'
+                || urlComplete.subUrl === 'shortlist-candidates'|| urlComplete.subUrl === 'approved'  ||  urlComplete.subUrl === 'interview-questions' || urlComplete.subUrl === 'offer-approvals' || urlComplete.subUrl === 'experience-level' || urlComplete.subUrl === 'experience-level'
+                || urlComplete.subUrl === 'candidates' || urlComplete.subUrl === 'schedule-timing' || urlComplete.subUrl === 'aptitute-result'}" class="tab-pane fade" id="v-pills-jobs" role="tabpanel" aria-labelledby="v-pills-jobs-tab">
+                <p>Recruitment</p>
+                <ul>
+                    <li routerLink="/layout/userdashboard/user-dashboard"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'user-dashboard' || urlComplete.subUrl === 'visited-jobs' || urlComplete.subUrl === 'offered-jobs' || urlComplete.subUrl === 'user-all-jobs' || urlComplete.subUrl === 'archived-jobs' || urlComplete.subUrl === 'applied-jobs' || urlComplete.subUrl === 'saved-jobs' || urlComplete.subUrl === 'interviewing'}"> Dashboard </a></li>
+                    <li routerLink="/layout/jobsdashboard/jobs-dashboard"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'jobs-dashboard'}"> Jobs Dasboard </a></li>
+                    <li routerLink="/layout/jobs/manage-jobs"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'manage-jobs' || urlComplete.subUrl === 'job-details'}">Manage Jobs </a></li>
+                    <li routerLink="/layout/jobs/approved"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'approved' || urlComplete.subUrl === 'approveds'}">Requirement Approved </a></li>  <li routerLink="/layout/jobs/replacement"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'replacement'}">Replacement </a></li>
+                     <li routerLink="/layout/studentcandidate/candidates"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'candidates'}"> Candidates List </a></li>
+                     <li routerLink="/layout/studentcandidate/schedule"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'schedule'}"> Scheduled List </a></li>
+                   
+                    <li routerLink="/layout/jobs/job-applicants"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'job-applicants'}">Applied Jobs </a></li>
+                    <li routerLink="/layout/manageresume/manage-resumes"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'manage-resumes'}"> Manage Resumes </a></li>
+                    <li routerLink="/layout/candidate/shortlist-candidates"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'shortlist-candidates'}"> Shortlist Candidates </a></li>
+                    <li routerLink="/layout/interview/interview-questions"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'interview-questions'}"> Interview Questions </a></li>
+                    <li routerLink="/layout/offer/offer-approvals"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'offer-approvals'}"> Offer Approvals </a></li>
+                    <li routerLink="/layout/experience/experience-level"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'experience-level'}"> Experience Level </a></li>
+                    <li routerLink="/layout/scheduletiming/schedule-timing"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'schedule-timing'}"> Scheduled Interview </a></li>
+                    <li routerLink="/layout/aptitute/aptitute-result"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'aptitute-result'}"> Aptitude Results </a></li>
+                </ul>
+            </div> -->
+
+            <div [ngClass]="{ 'show active' : urlComplete.mainUrl === 'error' }" class="tab-pane fade" id="v-pills-errorpages" role="tabpanel" aria-labelledby="v-pills-errorpages-tab">
+                <p>Error Pages</p>
+                <ul>
+                    <li routerLink="/error/error404"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'error404'}">404 Error </a></li>
+                    <li routerLink="/error/error500"><a href="javascript:" [ngClass]="{'active' : urlComplete.subUrl === 'error500'}">500 Error </a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Sidebar -->

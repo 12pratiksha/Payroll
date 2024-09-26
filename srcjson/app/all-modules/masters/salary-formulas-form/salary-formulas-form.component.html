@@ -1,0 +1,163 @@
+
+<div class="content container-fluid">
+
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Salary Formula Form</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Masters</li>
+                       <li class="breadcrumb-item">Payroll Setup</li>
+                       <li class="breadcrumb-item active" aria-current="page">Salary Formula </li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   
+   <div class="row filter-row">
+       <div class="col-md-8">
+         
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+              
+               <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+           </div>
+           
+       </div>
+   </div>
+
+
+       <div class="row" >
+           <div class="col-sm-12">
+               <div class="card" >
+                   <h1 class="card-title mb-0">Salary Formula Form</h1>
+               
+               <div class="card-body" >
+                   <div class="row">
+                       <div class="col-sm">
+                           <form class="needs-validation" novalidate  [formGroup]="salaryStructureForm">
+                               <div class="form-row row">
+                                   <div class="col-md-4 mb-3">
+                                       <label for="type">Formula Name <small>*</small></label>
+                                       <input type="text" class="form-control" formControlName="name">
+                                       <small *ngIf="salaryStructureForm.get('name').invalid && salaryStructureForm.get('name').touched">This Field is Required</small>
+                                   </div>
+                                   
+                                    <div class="col-md-4 mb-3">
+                                        <label >Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                    </div>
+                               </div>
+                               <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                               <ng-template #other_content>  <button class="btn btn-primary" (click)="update()" >Update</button></ng-template>
+                             
+                               <button class="btn" (click)="cancel()">Cancel</button>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+            </div>
+           </div>
+       </div>
+
+       <div class="row" *ngIf="show || display">
+        <div class="col-sm-12">
+            <div class="card" >
+               
+            
+            <div class="card-body" >
+                <div class="row">
+                    <div class="col-sm">
+                        <form class="needs-validation" novalidate  [formGroup]="salaryStructureMaster">
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Element Name <small>*</small></label>
+                                    <select class="form-select form-control"  formControlName="element">
+                                     <option value="">--Select--</option>
+                                     <option *ngFor="let item of element" [value]="item.name">{{item.name}}</option>
+                                    
+                                    </select>
+                                    <small *ngIf="salaryStructureMaster.get('element').invalid && salaryStructureMaster.get('element').touched">This Field is Required</small>
+                                </div> 
+                                <div class="col-md-4 mb-3">
+                                    <label>Calculate On<small>*</small></label>
+                                    <select class="form-select form-control"  formControlName="calculateOn">
+                                     <option value="">--Select--</option>
+                                     <option >CTC</option>
+                                     <option >Basic</option>
+                                     <option >Fixed</option>
+                                     <option >Gross</option>
+                                    
+                                    </select>
+                                    <small *ngIf="salaryStructureMaster.get('calculateOn').invalid && salaryStructureMaster.get('calculateOn').touched">This Field is Required</small>
+                                </div> 
+                                <div class="col-md-4 mb-3">
+                                    <label for="type">Amount/Percent<small>*</small></label>
+                                    <div class="form-row row">
+                                        <div class="col-md-8"> <input type="number" class="form-control" formControlName="amount" ></div>
+                                        <div class="col-md-4" style="    margin-top: auto;">
+                                            <ng-container class="col-md-2" *ngIf="salaryStructureMaster.value.calculateOn !=='Fixed'">%</ng-container>
+                                            <ng-container class="col-md-2" *ngIf="salaryStructureMaster.value.calculateOn =='Fixed'">Rs.</ng-container>
+                                        </div>
+                                   
+                                    </div>
+                                    <small *ngIf="salaryStructureMaster.get('amount').invalid && salaryStructureMaster.get('amount').touched">This Field is Required</small>
+                                    
+                                 
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Calculate Type<small>*</small></label>
+                                    <select class="form-select form-control"  formControlName="calculateType">
+                                     <option value="">--Select--</option>
+                                   <option>On Attendance</option>
+                                   <option>Non Attendance</option>
+                                    
+                                    </select>
+                                    <small *ngIf="salaryStructureMaster.get('calculateType').invalid && salaryStructureMaster.get('calculateType').touched">This Field is Required</small>
+                                </div> 
+                            </div>
+                            <button class="btn btn-primary" (click)="submitMaster()">Submit</button>
+                            
+                          
+                            <button class="btn" (click)="cancel()">Cancel</button>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <table  [dtOptions]="dtOptions" 
+                            class="table table-striped custom-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Element Name</th>
+                                    <th>Calculate On</th>
+                                    <th>Amount/Percent</th>
+                                    <th>Calculation Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of masterDetails ;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.elementName}}</td>
+                                    <td>{{item.calculateOn}}</td>
+                                    <td>{{item.percent}}</td>
+                                    <td>{{item.calculationType}}</td>
+                                   <td> 
+                                  
+                                    <a (click)="delete(item.formualElementId)"><i class="far fa-trash-alt"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>

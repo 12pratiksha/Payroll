@@ -1,0 +1,220 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Bank Payment Details Report</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Bank Payment Details Report</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title mb-0">Bank Payment Details Report</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="filterForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Year<small class="text-danger">*</small></label>
+                                        <select class="form-select form-control" formControlName="year">
+                                    <option value="">--Select--</option>
+                                   <option *ngFor="let item of year">{{item}}</option>
+                                </select>
+                                        <small *ngIf="filterForm.get('year').invalid && filterForm.get('year').touched" class="text-danger">Year is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Month<small class="text-danger">*</small></label>
+                                        <select class="form-select form-control" formControlName="month">
+                                    <option value="">--Select--</option>
+                                   <option *ngFor="let item of months">{{item.name}}</option>
+                                </select>
+                                        <small *ngIf="filterForm.get('month').invalid && filterForm.get('month').touched" class="text-danger">Month is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>State</label>
+                                        <select class="form-select form-control" formControlName="state">
+                                    <option value="">--Select--</option>
+                                   <option *ngFor="let item of state" [value]="item.stateId">{{item.stateName}}</option>
+                                </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch</label>
+                                        <select class="form-select form-control" formControlName="branch">
+                                        <option value="">--Select--</option>
+                                       <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Category</label>
+                                        <select class="form-select form-control" formControlName="category">
+                                            <option value="">--Select--</option>
+                                           <option *ngFor="let item of category" [value]="item.categoryId">{{item.categoryName}}</option>
+                                        </select>
+                                    </div>
+
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>subCategory</label>
+                                        <select class="form-select form-control" formControlName="subCategory">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of subCategory">{{item.name}}</option>
+                                    </select>
+                                    </div> -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label>Department</label>
+                                        <select class="form-select form-control" formControlName="department">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of department" [value]="item.departmentId">{{item.departmentName}}</option>
+                                    </select>
+                                    </div>
+
+
+
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>Grade</label>
+
+                                        <select class="form-select form-control" formControlName="grade">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of grade">{{item.name}}</option>
+                                        </select>
+                                    </div> -->
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Search By</label>
+                                        <ng-select class="form-select form-control" formControlName="employeeId">
+                                            <ng-option value="">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employees ; let i = index" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+                                        <!-- <div class="col-md-4 mb-3">ss
+                                        <label class="">Employee<small> *</small></label>
+                                    <ng-select class="form-select form-control"  formControlName="employee" >
+                                        <ng-option *ngFor="let item of employees; let i = index" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+                                    <small *ngIf="leaveApplicationForm.get('employee').invalid && leaveApplicationForm.get('employee').touched">Employee is required</small>
+                                    </div> -->
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                        <option value="">--Select--</option>
+                                        <option>Active</option>
+                                        <option>InActive</option>
+                                        <option>Delete</option>
+                                        <option>Block</option>
+                                        <option>Hold</option>
+                                        <option>FNF</option>
+                                    </select>
+                                    </div>
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>Salary</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of salary" value="item.value">{{item.key}}</option>
+                                       
+                                    </select>
+                                    </div> -->
+
+                                </div>
+                                <button class="btn btn-primary" (click)="search()">Search    </button>&nbsp;
+                                <!-- <button class="btn btn-primary" (click)="getReport()">Get Report</button> -->
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12" *ngIf="data">
+        <div class="card mb-0">
+            <div class="col-sm-4 col-md-3">
+                <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="data" id="sectionToPrint" #epltable>
+
+
+
+
+        <div class="col-md-12">
+            <div class="card mb-0">
+
+                <div class="table-responsive" *ngIf="data">
+                    <table datatable class="datatable table table-stripped mb-0" id="datatable">
+                        <thead>
+                            <tr height="100px" style="font-size:15px; font-weight:600;">
+                                <td style="width:100%" colspan="5">
+                                    <table style="width:100%;border-right: 1px solid white; text-align:center;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                        <tr>
+                                            <td style="width: 12% !important;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+
+                                                <div style="width: 205px;height:170px;background-repeat: no-repeat;background-size: cover;background-position: 0px 0px 0px 0px;" [ngStyle]="{backgroundImage: 'url(&quot;'+ imageName +'&quot;)'}">
+
+                                                </div>
+
+
+                                                <td style="width:70%;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                                    <div style="text-align: center;font-size: 25px !important;">{{companyName}}</div>
+                                                    <div style="text-align: center; font-size: 15px !important;">{{address}}</div>
+                                                    <div style="text-align: center; font-size: 15px !important;">PF Register Report</div>
+                                                    <div style="text-align: center; font-size: 15px !important;">{{month}}-{{year1}}</div>
+                                                </td>
+                                        </tr>
+                                    </table>
+
+
+                                    </td>
+
+                            </tr>
+                            <tr>
+                                <th>Srno.</th>
+                                <th>Bank Account No.</th>
+                                <th>IFSC Code</th>
+                                <th>Employee FullName</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.bankAccountNo}}</td>
+                                <td>{{item.ifsccode}}</td>
+                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                <td>{{item.total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

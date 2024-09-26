@@ -1,0 +1,262 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Run Payroll List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Payroll</li>
+                        <li class="breadcrumb-item active" aria-current="page">Salary Processing</li>
+                        <li class="breadcrumb-item active" aria-current="page">Run Payroll</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title mb-0">Run Payroll </h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="payrollForm">
+                                <div class="form-row row">
+
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>State</label>
+                                        <select class="form-select form-control" formControlName="state">
+                                    <option value="">--Select--</option>
+                                   <option *ngFor="let item of stateData" [value]="item.stateId">{{item.stateName}}</option>
+                                </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch</label>
+                                        <select class="form-select form-control" formControlName="branch">
+                                        <option value="">--Select--</option>
+                                       <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Category</label>
+                                        <select class="form-select form-control" formControlName="category">
+                                            <option value="">--Select--</option>
+                                           <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label>Department</label>
+                                        <select class="form-select form-control" formControlName="department">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Sub-Department</label>
+                                        <select class="form-select form-control" formControlName="subDepartment">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of subDepartments" [value]="item.subDepartmentId">{{item.subDepartmentName}}</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Designation</label>
+                                        <select class="form-select form-control" formControlName="designation">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of designations" [value]="item.designationMasterId">{{item.name}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Grade</label>
+
+                                        <select class="form-select form-control" formControlName="grade">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of grade" [value]="item.lookupMasterId">{{item.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Search By</label>
+                                        <ng-select class="form-select form-control" formControlName="searchBy">
+                                            <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+                                        <!-- <input type="text" class="form-control" *ngIf="!attendanceProcess.controls.searchBy.value == ''" formControlName="id" > -->
+                                        <!-- <input type="text" class="form-control" *ngIf="attendanceProcess.controls.searchBy.value == 'Name'" formControlName="name" placeholder="Enter Name"> -->
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Year <small>*</small></label>
+
+                                        <select class="form-select form-control" formControlName="year">
+                                            <option value="">--Select--</option>
+                                            <option  *ngFor="let item of year" >{{item}}</option>
+                                        </select>
+
+                                        <small *ngIf="payrollForm.get('year').invalid && payrollForm.get('year').touched">Year is required *</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Month <small>*</small></label>
+                                        <select class="form-select form-control" formControlName="month">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of months" [value]="item.name">{{item.name}}</option>
+                                </select>
+                                        <small *ngIf="payrollForm.get('month').invalid && payrollForm.get('month').touched">Month is required *</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                            <option value="1" selected>Active</option>
+                                            <option value="0"> InActive</option>
+                                            <option value="2">Delete</option>
+                                            <option value="3">Block</option>
+                                            <option value="4">Hold</option>
+                                            <option value="5">FNF</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Salary</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of salary" value="item.value">{{item.key}}</option>
+                                       
+                                    </select>
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-primary" (click)="search()">Search</button>
+                                <!-- <div *ngIf="showContainer">
+                            <img src="../../../../../src/assets/img/images/late.png" />
+                            </div> -->
+                                <!-- <button class="btn" (click)="reset()">Reset</button> -->
+                                <!-- <div class="col-md-12"> -->
+                                <!-- <div class="add-emp-section"> -->
+
+                                <a class="btn btn-primary " (click)="processSalary()" style="float: right;"> Process Salary</a>
+                                <!-- </div> -->
+                                <!-- </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card mb-0">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" style="width: 100%;">
+
+
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> Employee Code </th>
+                                <td mat-cell *matCellDef="let element"> {{element.employeeCode}} </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.firstName }}{{element.middleName }} {{element.lastName }}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="days">
+                                <th mat-header-cell *matHeaderCellDef> Days </th>
+                                <td mat-cell *matCellDef="let element"> {{element.day}}</td>
+                            </ng-container>
+
+                            <!-- <ng-container matColumnDef="attendance">
+                            <th mat-header-cell *matHeaderCellDef> Attendance </th>
+                            <td mat-cell *matCellDef="let element"> {{element.firstName }}{{element.middleName }} {{element.lastName }}</td>
+                          </ng-container> -->
+
+                            <ng-container matColumnDef="present">
+                                <th mat-header-cell *matHeaderCellDef> Present </th>
+                                <td mat-cell *matCellDef="let element">{{element.prsent }}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="leave">
+                                <th mat-header-cell *matHeaderCellDef> Leave </th>
+                                <td mat-cell *matCellDef="let element">{{element.leaves }}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="holiday">
+                                <th mat-header-cell *matHeaderCellDef>Holiday Off</th>
+                                <td mat-cell *matCellDef="let element"> {{element.holidayOff}} </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="absent">
+                                <th mat-header-cell *matHeaderCellDef> Absent-LWP </th>
+                                <td mat-cell *matCellDef="let element"> {{element.absent}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="processed">
+                                <th mat-header-cell *matHeaderCellDef> Processed </th>
+                                <td mat-cell *matCellDef="let element"> {{element.processed}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="addition">
+                                <th mat-header-cell *matHeaderCellDef> Addition </th>
+                                <td mat-cell *matCellDef="let element"> {{element.addition}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="deduction">
+                                <th mat-header-cell *matHeaderCellDef> Deduction </th>
+                                <td mat-cell *matCellDef="let element"> {{element.deduction}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="netSalary">
+                                <th mat-header-cell *matHeaderCellDef> Net Salary </th>
+                                <td mat-cell *matCellDef="let element"> {{element.netSalary}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let element"> {{(element.nonType==1)?'Active':'Inactive'}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <mat-paginator [length]="tableLen" [pageSizeOptions]="[ 10, 20]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

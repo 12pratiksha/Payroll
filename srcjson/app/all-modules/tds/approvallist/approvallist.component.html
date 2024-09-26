@@ -1,0 +1,56 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Income Tax Declaration List </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Tds</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tds</li>
+                            <li class="breadcrumb-item active" aria-current="page">Income Tax Declaration List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Income Tax Details</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+                                        <th>DetailsName</th>
+                                        <th>Declare Amount</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData; let i = index">
+                                        <td>{{item.year}}</td>
+                                        <td>{{item.companyName}}</td>
+                                        <td>{{item.employeeName}}</td>
+                                        <td>{{item.detailsName}}</td>
+                                        <td>{{item.declaredAmount}}</td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <button class="btn-primary" (click)="approve(item)">Approve</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

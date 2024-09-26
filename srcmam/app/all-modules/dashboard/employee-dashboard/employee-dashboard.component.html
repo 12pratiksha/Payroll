@@ -1,0 +1,210 @@
+<div class="row filter-row p-3 mb-4" style="border: 3px solid #ffc2ad;
+        background: #fff3ef;" *ngIf="birth=='true'">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <marquee class="blink">
+                    🎂The warmest wishes to a great member of our team. May your special day be full of happiness, fun and cheer!🎂🎉🎉
+                </marquee>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row mt-4">
+    <div class="col-md-12">
+
+
+        <div class="row">
+
+            <div class="col-md-4 text-center">
+                <div class="card">
+                    <div class="card-body" style="height: 110px;background: #fff0ea; border-radius: 10px;">
+                        <h3 class="card-title new">Punching Details</h3>
+
+
+                        <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div>  -->
+                        <div>Date :{{date| date}}</div>
+                        <div *ngFor="let item of punch1">PunchTime :{{item.punchTime }}</div>
+
+
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="height: 250px;background: #fff0ea; border-radius: 10px;">
+
+                        <h3 class="card-title new">Leave Structure</h3>
+                        <!-- <div mk-morris-js [options]="chartOptions" [data]="chartData" type="Bar">
+                            </div> -->
+                        <!-- <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12 mt-4 mb-3">
+                                        <div class="task-box color-one">
+                                            <div class="task-media">
+                                                <div class="task-icon">
+                                                    <span class="material-icons-outlined">
+                                                        person
+                                                    </span>
+                                                </div>
+                                                <div class="task-info">
+                                                    <h5>Male</h5>
+                                                    <h2>55</h2>
+                                                </div>
+                                            </div>
+                                            <div class="pr">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                         </div>
+                                         <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div class="task-media">
+                                                    <div class="task-icon">
+                                                        <i class="fas fa-male"></i>
+                                                    </div>
+                                                    <div class="task-info">
+                                                        <h5>Male</h5>
+                                                        <h2>{{maleEmployee}}</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 align-self-center">
+                                                <div >
+                                                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                                </div>
+                                            </div>
+                                            </div>
+
+
+                                    </div>
+        
+                                    <div class="col-md-12 mb-3" >
+                                        <div class="task-box color-two">
+                                            <div class="task-media">
+                                                <div class="task-icon">
+                                                    <i class="fas fa-female"></i>
+                                                </div>
+                                                <div class="task-info">
+                                                    <h5>Female</h5>
+                                                    <h2>{{femaleEmployee}}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 align-self-center">
+                                            <div >
+                                                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    <div class="currentYear mt-4">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <h3 style="color: #ff7849; font-weight: 700;">CURRENT YEARS</h3>
+                                                <h4 class="m-0 font-weight: 600;">Financial Year : 04/01/2022 TO 03/31/2023</h4>
+
+                                                <h4 class="m-0">Calendar Year : 01/01/2022 TO 12/31/2022</h4>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div> -->
+
+
+
+                        <div class="col-md-12">
+                            <div>
+                                <table class="table table-bordered" style="width: 100%;">
+                                    <thead class="center" style="background: #fff0ea;">
+                                        <br>
+                                        <br>
+                                        <tr>
+                                            <th>LeaveCode</th>
+                                            <!-- <th>Main Balance</th> -->
+                                            <th>Leave Balance</th>
+                                            <th>Description</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody *ngFor="let item of leaves">
+                                        <tr>
+                                            <ng-container *ngIf="item.floatbalance!=0">
+                                                <td>{{item.leaveCode}}</td>
+                                                <!-- <td>{{item.mainbalance}}</td> -->
+                                                <td>{{item.floatbalance}}</td>
+                                                <td>{{item.description}}</td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="card">
+                    <div class="card-body" style="height: 180px;background: #fff0ea; border-radius: 10px;">
+                        <h3 class="card-title new">Birthday Celebrations</h3>
+                        <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div> -->
+                        <div *ngIf="birthdate.length>0">
+                            <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="500" style="height: 90%;margin-top: 1.2rem;" *ngIf="birthdate">
+                                <div *ngFor="let item of birthdate"> {{item.firstName}} {{item.lastName}} </div>
+
+                            </marquee>
+                        </div>
+                        <div *ngIf="!birthdate?.length">No Birthdays in the following month</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="height: 180px; background: #fff0ea; border-radius: 10px;">
+                        <h3 class="card-title new">Holiday Celebrations</h3>
+                        <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div> -->
+                        <div *ngIf="!holiday.length"> No Holidays in the following month</div>
+                        <div *ngIf="holiday.length>0">
+                            <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="500" style="height: 90%;margin-top: 1.2rem;" *ngIf="holiday">
+                                <div *ngFor="let item of holiday">{{item.date | date}} - {{item.holidayName}}</div>
+                                <!-- <div>12 Jan 2023  - Anurag Jayanti</div>
+                               <div>22 Jan 2023  - Piyush Jayanti</div>
+                               <div>26 Jan 2023  - Indipendance Day</div> -->
+
+                            </marquee>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center" *ngFor="let item of data">
+                <div class="card">
+                    <div class="card-body" style="height: 400px;height: 405px; background: #fff0ea;border-radius: 10px;">
+                        <!-- <h3 class="card-title">Vision & Mission</h3> -->
+                        <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div> -->
+                        <div class="row text-center">
+                            <div class="col">
+                                <div style="width: 16rem;margin: 4rem auto;">
+                                    <img class="card-img-top img-circle rounded-circle" src="https://dummyimage.com/100x100/000/fff" alt="Card image cap">
+                                    <div class="card-block">
+                                        <h3 class="card-position" style="color: #ff7849; font-weight: 700;">Vision</h3>
+                                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                        <p>{{item.vision}}</p>
+                                        <h3 class="card-position" style="color: #ff7849;font-weight: 700;">Mission</h3>
+                                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                        <p>{{item.mission}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

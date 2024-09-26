@@ -1,0 +1,4 @@
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border-color: var(--ck-color-base-border)!important;
+    height: 20rem !important;
+}

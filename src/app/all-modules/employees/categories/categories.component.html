@@ -1,0 +1,151 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Categories</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">General Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+                
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add Category</a>
+                <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+                
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="categories">
+                            <thead>
+                                <tr>
+                                    <th >Category Name</th>
+                                    <th >Description</th>
+                                    <th >Status</th>
+                                    <th >Action</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of categories">
+                                   <td>{{item.categoryName}}</td>
+                                   <td>{{item.description}}</td>
+                                   <td>{{(item.status == true)?'Active':'Inactive'}}</td>
+                                   <td class="text-end ico-sec">
+                                        <a  (click)="edit(item.categoryId)"><i class="fas fa-pen"></i></a>
+                                        <a  (click)="delete(item.categoryId)"><i class="far fa-trash-alt"></i></a>
+                                   </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!categories">
+                            <thead>
+                                <tr>
+                                    <th >Category Name</th>
+                                    <th >Description</th>
+                                    <th >Status</th>
+                                    <th >Action</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of categories">
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+        </div>
+    </div>
+   
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+    
+            <!-- Custom Boostrap Validation -->
+            <div class="card" >
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Category Master Form</h4>
+                   
+                </div>
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation"   [formGroup]="categoryForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                        <!-- <div class="form-group form-focus select-focus mb-0"> -->
+                                            <label class="focus-label">Category Name <small>*</small></label>
+                                            <input type="text" class="form-control"  formControlName="categoryName"  placeholder="Category Name">
+                                            <small
+                                            *ngIf="categoryForm.get('categoryName').invalid && categoryForm.get('categoryName').touched"
+                                            class="text-danger"> *Category Name is required</small>
+                                        
+                                        </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Description <small>*</small></label>
+                                        <input type="text" class="form-control" 
+                                        placeholder="Description"  required formControlName="description">
+                                        <small
+                                        *ngIf="categoryForm.get('description').invalid && categoryForm.get('description').touched"
+                                        class="text-danger"> *Description is required</small>
+                                   
+                                    </div>
+
+                                 <div class="col-md-4 mb-3">
+                                    <label >Status</label>
+                                    <select class="form-select form-control" formControlName="status">
+                                      
+                                        <option value = "true">Active</option>
+                                        <option value = "false">Inactive</option>
+                                    </select>
+                                        <small
+                                        *ngIf="categoryForm.get('status').invalid && categoryForm.get('status').touched"
+                                        class="text-danger"> *Status is required</small>
+                                   
+                                    
+                                 </div>
+                                </div>
+                             
+                                
+                               
+                                <button class="btn btn-primary" [disabled]="submitLoader" (click)="addCategory()" *ngIf="!update">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn btn-primary" [disabled]="submitLoader" (click)="updateCategory()" *ngIf="update">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn" (click)="cancel()" >Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div>

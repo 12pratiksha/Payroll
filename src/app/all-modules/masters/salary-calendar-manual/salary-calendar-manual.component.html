@@ -1,0 +1,312 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Salary Calander Manual</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Payroll Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Policy Setting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Salary Calander Manual List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <!-- <a class="btn btn-success btn-add-emp" (click)="showMyContainer=!showMyContainer"><i class="fas fa-plus"></i>Create New</a> -->
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-plus"></i>Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="salaryCalender?.length!=0">
+                            <thead>
+                                <tr>
+
+                                    <th>State</th>
+                                    <th>Branch</th>
+                                    <th>Category</th>
+                                    <th>Grade</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th class="text-end no-sort">Action</th>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of salaryCalender; let i=index;">
+
+                                    <td>
+
+                                        <div *ngFor="let data of item.states">{{data.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.branchs">{{data.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.categories">{{data.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.grades">{{data.name}}</div>
+                                    </td>
+                                    <td>{{item.month}}</td>
+                                    <td>{{item.year}}</td>
+                                    <td>{{item.fromDate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item.toDate | date:'dd-MM-yyyy'}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a><i class="fas fa-pen" (click)="editShiftPolicy(item.salaryCalenderId)"></i></a>
+                                        <a (click)="delete(item.salaryCalenderId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!salaryCalender">
+                            <thead>
+                                <tr>
+
+                                    <th>State</th>
+                                    <th>Branch</th>
+                                    <th>Category</th>
+                                    <th>Grade</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th class="text-end no-sort">Action</th>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let item of salaryCalender  let i = index;">
+                                    <td>
+                                        <ng-container *ngFor="let data of item.states">{{data.name}}</ng-container>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.branchs">{{data.branchName}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.categories">{{data.category}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.grades">{{data.grades}}</div>
+                                    </td>
+                                    <td>{{item.month}}</td>
+                                    <td>{{item.year}}</td>
+                                    <td>{{item.fromDate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item.toDate | date:'dd-MM-yyyy'}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a><i class="fas fa-pen" (click)="editShiftPolicy(item.salaryCalenderId)"></i></a>
+                                        <a (click)="delete(item.salaryCalenderId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- end of data table  -->
+
+</div>
+
+<!-- Late Departure Plan Form -->
+
+
+
+<div *ngIf="showMyContainer">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-body pt-0">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Salary Calander Manual</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="salaryForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label>Year <small>*</small></label>
+
+                                            <select class="form-select form-control" formControlName="year">
+                                        <option value="">--Select--</option>
+                                        <option  *ngFor="let item of year" >{{item}}</option>
+                                    </select>
+
+                                            <small *ngIf="salaryForm.get('year').invalid && salaryForm.get('year').touched">Year is required *</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Month <small>*</small></label>
+                                            <select class="form-select form-control" formControlName="month">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let item of months">{{item}}</option>
+                            </select>
+                                            <small *ngIf="salaryForm.get('month').invalid && salaryForm.get('month').touched">Month is required *</small>
+                                        </div>
+
+                                        <!-- <div class="col-md-4 mb-3">
+                                <label class="focus-label">State</label>
+                                      <select class="form-select floating form-control" formControlName="state">
+                                          <option >--Select--</option>
+                                          <option  *ngFor="let item of stateList" [value]="item.stateName">{{item.stateName}}</option>
+                                      </select>
+                                     
+                                 
+                                  <small
+                                  *ngIf="salaryForm.get('state').invalid && salaryForm.get('state').touched"
+                                  class="text-danger"> *State is Required</small>
+                              </div>
+                               
+                              <div class="col-md-4 mb-3">
+                                <label class="focus-label">Branch</label>
+                                      <select class="form-select floating form-control" formControlName="branch">
+                                          <option value="">--Select--</option>
+                                          <option  *ngFor="let item of branch" [value]="item.branchName">{{item.branchName}}</option>
+                                      </select>
+                                     
+                                 
+                                  <small
+                                  *ngIf="salaryForm.get('branch').invalid && salaryForm.get('branch').touched"
+                                  class="text-danger"> *Branch is Required</small>
+                              </div> -->
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>State<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselct " [options]="state" [(ngModel)]="statehModel" [value]=state.id formControlName="state">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="salaryForm.get('state').invalid && salaryForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Branch<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselct " [options]="branch" [(ngModel)]="branchModel" [value]=branch.id formControlName="branch">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="salaryForm.get('branch').invalid && salaryForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Grade<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="grade" [(ngModel)]="gradeModel" [value]=grade.id formControlName="grade">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="salaryForm.get('grade').invalid && salaryForm.get('grade').touched" class="text-danger"> *Grade is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Category<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="categorie" [(ngModel)]="categoriehModel" [value]=categorie.id formControlName="category">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="salaryForm.get('category').invalid && salaryForm.get('category').touched" class="text-danger"> *Category is Required</small>
+                                        </div>
+
+
+                                        <!-- <div class="col-md-4 mb-3">
+                                <label for="validationCustom01">Category</label>
+                                <select class="form-select form-control" formControlName="category">
+                                    <option value="">--Select--</option>
+                                  
+                                    <option *ngFor="let item of categories" [value]="item.categoryName">{{item.categoryName}}</option>
+                             
+                                </select>
+                                    <small
+                                    *ngIf="salaryForm.get('category').invalid && salaryForm.get('category').touched"
+                                    class="text-danger"> *Category is Required</small>
+                            </div> -->
+
+
+                                        <!--                             
+                                     <div class="col-md-4 mb-3">
+                                             <label >Grade</label>
+                                               <select class="form-select form-control" formControlName="grade">
+                                               <option value="">--Select--</option>
+                                               <option *ngFor="let item of grade" [value]="item.name">{{item.name}}</option>
+                                               </select>
+                                    <small
+                                    *ngIf="salaryForm.get('grade').invalid && salaryForm.get('grade').touched"
+                                    class="text-danger"> *Grade is Required</small>
+                                  </div> -->
+                                        <div class="col-md-4 mb-2">
+                                            <label class="focus-label">From Date <small>*</small></label>
+                                            <div class="form-group form-focus mb-0">
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                                                </div>
+                                                <small *ngIf="salaryForm.get('fromDate').invalid && salaryForm.get('fromDate').touched" class="text-danger"> *FromDate is Required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="focus-label">To Date <small>*</small></label>
+                                            <div class="form-group form-focus mb-0">
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                                </div>
+                                                <small *ngIf="salaryForm.get('toDate').invalid && salaryForm.get('toDate').touched"> *ToDate is Required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label> Full Present Allowance Name <small>*</small></label>
+                                            <input class="form-control" formControlName="name">
+                                            <small *ngIf="salaryForm.get('name').invalid && salaryForm.get('name').touched"> *Allownace Name is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label>Allowance Amount <small>*</small></label>
+                                            <input type="number" class="form-control" formControlName="amount">
+                                            <small *ngIf="salaryForm.get('amount').invalid && salaryForm.get('amount').touched"> *Allowance Amount is Required</small>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="submit">
+                                        <button *ngIf="editPlanId==null" type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+                                        <button *ngIf="editPlanId" type="button" class="btn btn-primary" (click)="updateForm()">Update</button>
+                                        <button type="button" class="btn" (click)="cancelForm()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Late Departure Plan Form -->

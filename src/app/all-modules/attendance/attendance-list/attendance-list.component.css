@@ -1,0 +1,21 @@
+table th {
+    font-weight: 600;
+}
+.holiday{
+    color: green;
+}
+.offDay{
+    color: #868cd1;
+}
+.punchMissing{
+    color: #e39331
+}
+.tour{
+    color:blueviolet
+}
+.leave{
+    color:#4b8acb
+}
+.absent{
+    color:red
+}

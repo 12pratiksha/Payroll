@@ -1,0 +1,167 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Agency List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Agency List</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i> Add Agency</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="showMyContainer==false ">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Agency List</h4>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>Agency Name</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>ContactNo</th>
+                                        <th>Contact Person Name</th>
+                                        <!-- <th>type</th> -->
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let item of tableData_display; let i = index">
+                                        <td>{{item.agencyName}}</td>
+                                        <td>{{item.city}}</td>
+                                        <td>{{item.state}}</td>
+                                        <td>{{item.contactNo}}</td>
+                                        <td>{{item.contactperson}}</td>
+                                        <!-- <td>{{item.type}}</td> -->
+
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <a class="fas fa-pen" (click)="edit(item.agencyMasterId)"></a>
+                                            <a (click)="delete(item.agencyMasterId)"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="showMyContainer==true ">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">New Agency Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="agencyForm">
+                                    <div class="form-row row">
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Agency Name <small class="text-danger">*</small></label>
+                                            <input type="text" class="form-control" required formControlName="agencyName">
+                                            <!-- <small *ngIf="item.controls.agencyName.status.invalid && item.controls.agencyName.touched">This Field is Required *</small> -->
+                                            <small *ngIf="agencyForm.get('agencyName').invalid && agencyForm.get('agencyName').touched" class="text-danger"> *Agency Name is Required</small>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label>City<small class="text-danger">*</small></label>
+                                            <select class="form-select floating form-control" formControlName="city">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of city" [value]="item.id">{{item.cityName}}</option>
+                                            </select>
+                                            <small *ngIf="agencyForm.get('city').invalid && agencyForm.get('city').touched" class="text-danger"> *City is Required</small>
+                                        </div>
+
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>State<small class="text-danger">*</small></label>
+                                            <select class="form-select floating form-control" formControlName="state">
+                                                    <option value="">--Select--</option>
+                                                    <option *ngFor="let item of state" [value]="item.stateId">{{item.stateName}}</option>
+                                                    </select>
+                                            <small *ngIf="agencyForm.get('state').invalid && agencyForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Contact No<small class="text-danger">*</small></label>
+                                            <input type="number" class="form-control" required formControlName="contactNo">
+                                            <small *ngIf="agencyForm.get('contactNo').invalid && agencyForm.get('contactNo').touched" class="text-danger"> *Contact No is Required</small>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label>Contact Person<small class="text-danger">*</small></label>
+                                            <input type="text" class="form-control" required formControlName="contactperson">
+                                            <small *ngIf="agencyForm.get('contactperson').invalid && agencyForm.get('contactperson').touched" class="text-danger"> *Contact Person is Required</small>
+                                            <!-- <small *ngIf="item.controls.city.status.invalid && item.controls.city.touched">This Field is Required *</small> -->
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Contact Person MobileNo<small class="text-danger">*</small></label>
+                                            <input type="number" class="form-control" required formControlName="contactpersonMobileNo">
+                                            <small *ngIf="agencyForm.get('contactpersonMobileNo').invalid && agencyForm.get('contactpersonMobileNo').touched" class="text-danger"> *Contact Person MobileNo is Required</small>
+                                            <!-- <small *ngIf="item.controls.city.status.invalid && item.controls.city.touched">This Field is Required *</small> -->
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Status<small ></small></label>
+                                            <input type="checkbox" class="checkbox-all ms-5" required formControlName="status">
+                                            <!-- <small *ngIf="item.controls.city.status.invalid && item.controls.city.touched">This Field is Required *</small> -->
+                                        </div>
+
+                                        <!-- <div class="col-md-3 mb-3">
+                                                                    <label >type<small>*</small></label>
+                                                                    <input type="text" class="form-control" 
+                                                                          required formControlName="type">
+                                                                          <small *ngIf="item.controls.city.status.invalid && item.controls.city.touched">This Field is Required *</small>
+                                                                    </div>  -->
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Registration Number<small></small></label>
+                                            <input type="number" class="form-control" required formControlName="registrationNumber">
+                                            <!-- <small *ngIf="agencyForm.get('registrationNumber').invalid && agencyForm.get('registrationNumber').touched" class="text-danger"> *Registration Number is Required</small> -->
+                                            <!-- <small *ngIf="item.controls.city.status.invalid && item.controls.city.touched">This Field is Required *</small> -->
+                                        </div>
+
+                                    </div>
+
+                                    <button class="btn btn-primary" *ngIf="(agencyMasterId == undefined)" (click)="add()">Submit</button>&nbsp;
+                                    <button class="btn btn-primary" *ngIf="agencyMasterId" (click)="update(agencyMasterId)">Update</button>&nbsp;
+                                    <!-- <button class="btn btn-primary" *ngIf="editId != 'add'" (click)="update('update')">Update</button> -->
+
+                                    <button class="btn btn-primary " (click)="cancel()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

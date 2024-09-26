@@ -1,0 +1,29 @@
+ngx-bootstrap-multiselect .dropdown-toggle.btn.btn-primary{
+    background: transparent!important;
+    color: #000!important;
+    width: 100%!important;
+   height: 53px;
+   border: 1px solid #ffffff!important;
+}
+button.dropdown-toggle.btn.btn-primary {
+   background: transparent!important;
+   border: 1px solid #ffffff!important;
+}
+textarea{
+   resize: none !important;
+}
+span{
+   color: red;
+}
+.loader{
+   margin: 0 0 0% 25%;
+   width: 500px;
+   height: 350px;
+}
+.checkbox-container {
+   display: flex;
+   align-items: center;
+}
+.checkbox-container label {
+   margin-right: 20rem; /* Adjust spacing between label and checkbox */
+}

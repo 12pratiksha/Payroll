@@ -1,0 +1,33 @@
+.ubmit{
+    text-align: center;
+    margin: auto;
+}
+small{
+    color:red
+}
+th{
+    vertical-align: baseline;
+}
+ngx-bootstrap-multiselect .dropdown-toggle.btn.btn-primary{
+     background: transparent!important;
+     color: #000!important;
+     width: 100%!important;
+}
+button.dropdown-toggle.btn.btn-primary {
+    background: transparent!important;
+}
+textarea{
+	resize: none !important;
+}
+small{
+    color: red;
+}
+.loader{
+    margin: 0 0 0% 25%;
+    width: 500px;
+    height: 350px;
+}
+
+th, td {
+    border: 1px solid black;
+  }

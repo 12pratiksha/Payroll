@@ -1,0 +1,8 @@
+table{
+    width: 100% !important;
+}
+.loader{
+    margin: 0 0 0% 25%;
+    width: 500px;
+    height: 350px;
+}

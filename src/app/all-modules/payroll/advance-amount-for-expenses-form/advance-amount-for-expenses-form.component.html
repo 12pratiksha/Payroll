@@ -1,0 +1,143 @@
+
+<div class="content container-fluid">
+
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Advance Amount For Expenses Form</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Payroll  </li>
+                       <li class="breadcrumb-item">Reimbursement</li>
+                       <li class="breadcrumb-item active" aria-current="page">Advance Amount For Expenses  </li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   
+   <div class="row filter-row">
+       <div class="col-md-8">
+         
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+              
+               <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+           </div>
+           
+       </div>
+   </div>
+
+
+       <div class="row" >
+           <div class="col-sm-12">
+               <div class="card" >
+                   <h4 class="card-title mb-0">Advance Amount For Expenses Form</h4>
+                   <div class="card-body" >
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate  [formGroup]="advanceAmountForm">
+                                <div class="form-row row">
+                                 
+                                 <div class="col-md-4 mb-3">
+                                     <label>Employee Id <small>*</small></label>
+                                         <ng-select class="form-select form-control" formControlName="empId" >
+                                            <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>                                 
+                                         </ng-select>  
+                                         <small *ngIf="advanceAmountForm.get('empId').invalid && advanceAmountForm.get('empId').touched" >This Field is required *</small>
+                                 </div>
+                                   
+                                   <div class="col-md-4 mb-3">
+                                     <label class="focus-label">Travel Companions</label>
+                                           <select class="form-select floating form-control" formControlName="companions">
+                                               <option value=""> </option>
+                                               <option >1</option>
+                                               <option >2</option>
+                                               <option >3</option>
+                                               <option >4</option>
+                                               <option >5</option>
+                                               <option >6</option>
+                                               <option >7</option>
+                                               <option >8</option>
+                                               <option >9</option>
+                                               <option >10</option>
+                                           </select>
+                                   </div>
+                                   <div class="col-sm-4">  
+                                     <label class="focus-label">From Date <small>*</small></label>
+                                             <div class="form-group form-focus mb-0">
+                                                 <div class="cal-icon">
+                                                     <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                                                 </div>
+                                                <small *ngIf="advanceAmountForm.get('fromDate').invalid && advanceAmountForm.get('fromDate').touched">This field is required *</small>
+                                             </div>
+                                 </div>
+                                  
+                                 <div class="col-sm-4">  
+                                     <label class="focus-label">To Date <small>*</small></label>
+                                             <div class="form-group form-focus mb-0">
+                                                 <div class="cal-icon">
+                                                     <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                                 </div>
+                                                <small *ngIf="advanceAmountForm.get('toDate').invalid && advanceAmountForm.get('toDate').touched">This field is required *</small>
+                                             </div>
+                                 </div>
+                                 
+                                 <div class="col-md-4 mb-3">
+                                     <label for="type">Amount <small>*</small></label>
+                                     <input type="text" class="form-control" formControlName="amount">
+                                     <small
+                                     *ngIf="advanceAmountForm.get('amount').invalid && advanceAmountForm.get('amount').touched"
+                                     class="text-danger"> *Expense Name is Required</small>
+                                 </div>
+                                 <div class="col-md-4 mb-3">
+                                     <label for="type">Destination <small>*</small></label>
+                                     <input type="text" class="form-control" formControlName="destination">
+                                     <small
+                                     *ngIf="advanceAmountForm.get('destination').invalid && advanceAmountForm.get('destination').touched"
+                                     class="text-danger"> *Expense Name is Required</small>
+                                 </div>
+                                 <div class="col-md-4 mb-3">
+                                 <label for="type">Purpose of Visit </label>
+                                 <input type="text" class="form-control" formControlName="purposeOfVisit">
+                             </div>
+                             <div class="col-md-4 mb-3">
+                                 <label for="type">Description <small>*</small></label>
+                                 <input type="text" class="form-control" formControlName="description">
+                                 <small
+                                 *ngIf="advanceAmountForm.get('description').invalid && advanceAmountForm.get('description').touched"
+                                 class="text-danger"> *Description is Required</small>
+                             </div>
+                                 
+                              
+                                 <div class="col-md-4 mb-3">
+                                     <label >Status</label>
+                                     <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                 </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                                <ng-template #other_content>  <button class="btn btn-primary" (click)="update()" >Update</button></ng-template>
+                              
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+               </div>
+           
+           </div>
+       </div>
+
+    </div>
+   
+ 
+   
+   
+ 
+   
+   
+   
+   

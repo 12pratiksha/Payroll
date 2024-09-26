@@ -1,0 +1,96 @@
+
+ <div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Setup Configuration</h3>
+               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">Masters</li>
+                        <li class="breadcrumb-item">Others</li>
+                        <li class="breadcrumb-item active" aria-current="page">Setup Configuration</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    
+
+
+
+       <div class="row">
+           <div class="col-sm-12">
+               <div class="card mb-0">
+                   
+                   <div class="card-body">
+       
+                       <div class="table-responsive">
+                           <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="pageName">
+                               <thead>
+                                   <tr>
+                                      
+                                       <th>PageName</th>
+                                       <th>Method</th>
+                                       <th>Action</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <tr *ngFor="let item of pageName">
+                                 <td >
+                                <div>{{item.applicationName}}</div>
+                                    <!-- <input [value]="item.applicationName" disabled> -->
+                                </td>
+                                 <td>
+                                    <ng-container >
+                                    <select class="form-select form-control" #method [(ngModel)]="item.workFlowId">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let name of workflowConfig" [value]="name.workFlowConfigurationMasterId" >{{name.workFlowName}}</option>
+                                    </select>
+                                </ng-container>
+                                 </td>
+                                 <td>
+                                    <a  class="btn btn-success " (click)="update(item.setupid, method.value)">Update</a>
+                                 </td>
+                                   </tr>
+                                  
+                               </tbody>
+                           </table>
+                           <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="!pageName">
+                               <thead>
+                                   <tr>
+                                      
+                                       <th>PageName</th>
+                                       <th>Method</th>
+                                       <th>Action</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <tr *ngFor="let item of pageName">
+                                 <td >
+                                <div>{{item.applicationName}}</div>
+                                    <!-- <input [value]="item.applicationName" disabled> -->
+                                </td>
+                                 <td>
+                                    <ng-container >
+                                    <select class="form-select form-control" #method [(ngModel)]="item.workFlowId">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let name of workflowConfig" [value]="name.workFlowConfigurationMasterId" >{{name.workFlowName}}</option>
+                                    </select>
+                                </ng-container>
+                                 </td>
+                                 <td>
+                                    <a  class="btn btn-success " (click)="update(item.setupid, method.value)">Update</a>
+                                 </td>
+                                   </tr>
+                                  
+                               </tbody>
+                           </table>
+                       </div>
+                       <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+</div>  

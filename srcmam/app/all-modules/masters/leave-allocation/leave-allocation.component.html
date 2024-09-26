@@ -1,0 +1,563 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Leave Allocation Master </h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Leave Allocation </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="allocationTable">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Leave</th>
+                                    <!-- <th>Branch Name</th> -->
+                                    <!-- <th>Grade/Cadre</th> -->
+                                    <!-- <th>Leave Application Date</th> -->
+                                    <!-- <th>Monthly</th> -->
+                                    <!-- <th>Credit</th> -->
+                                    <!-- <th>Proibation</th> -->
+                                    <th>Carry Forward</th>
+                                    <th>Encash</th>
+                                    <th>Is Paid</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of allocationTable">
+                                    <td>{{item.state}}</td>
+                                    <td>{{item.leaveCode}}</td>
+                                    <!-- <td>{{item.grade}}</td> -->
+                                    <!-- <td><div *ngFor="let type of item.leaveAllocationCreditingType">{{type.creditingType}}</div></td> -->
+                                    <td>{{item.carryForwardable}}</td>
+                                    <td>{{item.leaveEncashable}}</td>
+                                    <td>{{item.paid}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(item.leaveAllocationMasterId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.leaveAllocationMasterId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!allocationTable">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Leave</th>
+                                    <!-- <th>Branch Name</th> -->
+                                    <!-- <th>Grade/Cadre</th> -->
+                                    <!-- <th>Leave Application Date</th> -->
+                                    <!-- <th>Monthly</th> -->
+                                    <!-- <th>Credit</th> -->
+                                    <!-- <th>Proibation</th> -->
+                                    <th>Carry Forward</th>
+                                    <th>Encash</th>
+                                    <th>Is Paid</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of allocationTable">
+                                    <td>{{item.state}}</td>
+                                    <td>{{item.leaveCode}}</td>
+                                    <!-- <td>{{item.grade}}</td> -->
+                                    <!-- <td><div *ngFor="let type of item.leaveAllocationCreditingType">{{type.creditingType}}</div></td> -->
+                                    <td>{{item.carryForwardable}}</td>
+                                    <td>{{item.leaveEncashable}}</td>
+                                    <td>{{item.paid}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(item.leaveAllocationMasterId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.leaveAllocationMasterId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+        </div>
+    </div>
+
+    <!-- end of data table  -->
+    <div *ngIf="showMyContainer">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <h1 class="card-title mb-0">Leave Allocation Master Form </h1>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="leaveAllocationForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label>State<span>*</span></label>
+                                            <select class="form-select form-control" formControlName="state">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of states" [value]="item.stateId">{{item.stateName}}</option>
+                                     </select>
+                                            <small *ngIf="leaveAllocationForm.get('state').invalid && leaveAllocationForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Branch<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselct " [options]="branch" [(ngModel)]="branchModel" [value]=branch.id formControlName="branch">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="leaveAllocationForm.get('branch').invalid && leaveAllocationForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Grade<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="grade" [(ngModel)]="gradeModel" [value]=grade.id formControlName="grade">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="leaveAllocationForm.get('grade').invalid && leaveAllocationForm.get('grade').touched" class="text-danger"> *Grade is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Category<span>*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="categorie" [(ngModel)]="categoriehModel" [value]=category.id formControlName="category">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="leaveAllocationForm.get('category').invalid && leaveAllocationForm.get('category').touched" class="text-danger"> *Category is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Leave<span>*</span></label>
+                                            <select class="form-select form-control" formControlName="leave">
+                            <option value="">--Select--</option>
+                            <option *ngFor="let item of leave">{{item.name}}</option>
+                          </select>
+                                            <small *ngIf="leaveAllocationForm.get('leave').invalid && leaveAllocationForm.get('leave').touched" class="text-danger"> *Leave is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Leave Description</label>
+                                            <input type="text" class="form-control" placeholder="Leave Description" formControlName="leaveDescription">
+                                            <small *ngIf="leaveAllocationForm.get('leaveDescription').invalid && leaveAllocationForm.get('leaveDescription').touched" class="text-danger"> *Leave Description is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Total Leave</label>
+                                            <input type="text" class="form-control" placeholder="Total Leave" formControlName="totalLeave">
+                                            <small *ngIf="leaveAllocationForm.get('totalLeave').invalid && leaveAllocationForm.get('totalLeave').touched" class="text-danger"> *Total Leave is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Crediting Type<span>*</span></label>
+                                            <select class="form-select form-control" formControlName="creditingType" [(ngModel)]="creditingType">
+                                <option value="">--Select--</option>
+                               <option>Start of Month</option>
+                               <option>End of Month</option>
+                               <option>Start of Year</option>
+                               <option>Monthly Attendance Prorata</option>
+                               <option>Yearly Attendance Prorata</option>
+                               <option>Start of Quarter</option>
+                               <option>End of Quarter</option>
+                               <option>One Time</option>
+                               <option>Half Yearly</option>
+                               <option>Monthly Attendance Prorata(yearly)</option>
+                             </select>
+                                            <small *ngIf="leaveAllocationForm.get('creditingType').invalid && leaveAllocationForm.get('creditingType').touched" class="text-danger"> *Crediting Type is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3" *ngIf="leaveAllocationForm.value.creditingType=='Monthly Attendance Prorata' || leaveAllocationForm.value.creditingType == 'Yearly Attendance Prorata'">
+                                            <label>Prorata % </label>
+                                            <input type="number" class="form-control" formControlName="percentage">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3" *ngIf="leaveAllocationForm.value.creditingType=='Start of Month' || leaveAllocationForm.value.creditingType=='End of Month'">
+                                            <table class="table">
+                                                <thead>
+                                                    <th style="font-weight: 600;" class="center">Month</th>
+                                                    <th style="font-weight: 600;" class="center">No. Of Leave</th>
+                                                    <th style="font-weight: 600;" class="center">Expite On</th>
+                                                </thead>
+                                                <tr>
+                                                    <td>January</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves1"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn1">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Feburary</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves2"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn2">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>March</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves3"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn3">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>April</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves4"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn4">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>May</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves5"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn5">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>June</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves6"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn6">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>July</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves7"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn7">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>August</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves8"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn8">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>September</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves9"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn9">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>October</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves10"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn10">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>November</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves11"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn11">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>December</td>
+                                                    <td><input type="number" class="form-control" formControlName="leaves12"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn12">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-4 mb-2" *ngIf="leaveAllocationForm.value.creditingType=='Start of Quarter' || leaveAllocationForm.value.creditingType=='End of Quarter'">
+                                            <table class="table">
+                                                <thead>
+                                                    <th style="font-weight: 600;" class="center">Month</th>
+                                                    <th style="font-weight: 600;" class="center">No. Of Leave</th>
+                                                    <th style="font-weight: 600;" class="center">Expite On</th>
+                                                </thead>
+                                                <tr>
+                                                    <td>January</td>
+                                                    <td><input type="number" class="form-control" formControlName="quarterLeaves1"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="quarterExpiteOn1">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>April</td>
+                                                    <td><input type="number" class="form-control" formControlName="quarterLeaves2"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="quarterExpiteOn2">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>July</td>
+                                                    <td><input type="number" class="form-control" formControlName="quarterLeaves3"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="quarterExpiteOn3">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>October</td>
+                                                    <td><input type="number" class="form-control" formControlName="quarterLeaves4"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="quarterExpiteOn4">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-4 mb-2" *ngIf="leaveAllocationForm.value.creditingType=='Half Yearly'">
+                                            <table class="table">
+                                                <thead>
+                                                    <th style="font-weight: 600;" class="center">Month</th>
+                                                    <th style="font-weight: 600;" class="center">No. Of Leave</th>
+                                                    <th style="font-weight: 600;" class="center">Expite On</th>
+                                                </thead>
+                                                <tr>
+                                                    <td>January</td>
+                                                    <td><input type="number" class="form-control" formControlName="yearlyLeaves1"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="yearlyExpiteOn1">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>July</td>
+                                                    <td><input type="number" class="form-control" formControlName="yearlyLeaves2"></td>
+                                                    <td>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="yearlyExpiteOn2">
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="focus-label">Effective Date <span>*</span></label>
+                                            <div class="form-group form-focus mb-0">
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="effectiveDate">
+                                                </div>
+                                                <small *ngIf="leaveAllocationForm.get('effectiveDate').invalid && leaveAllocationForm.get('effectiveDate').touched"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label> Carry Forwardable</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="carryForward">
+                                            <small *ngIf="leaveAllocationForm.get('carryForward').invalid && leaveAllocationForm.get('carryForward').touched"></small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Maximum Leave Days</label>
+                                            <input type="text" class="form-control" placeholder="Maximum Leave Days" formControlName="maxLeaves">
+                                            <small *ngIf="leaveAllocationForm.get('maxLeaves').invalid && leaveAllocationForm.get('maxLeaves').touched" class="text-danger"> *Maximum Leave Days is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Minimum Leave Days</label>
+                                            <input type="text" class="form-control" placeholder="Minimum Leave Days" formControlName="minLeaves">
+                                            <small *ngIf="leaveAllocationForm.get('minLeaves').invalid && leaveAllocationForm.get('minLeaves').touched" class="text-danger"> *Minimum Leave Days is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label> Applicable in Probation</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="probation">
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label> Leave Encashable </label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="encashable" (change)="onChange($event)">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Max Balance Encashable</label>
+                                            <input type="text" class="form-control" placeholder="Max Balance Encashable" formControlName="maxBalanceEncash">
+                                            <small *ngIf="leaveAllocationForm.get('maxBalanceEncash').invalid && leaveAllocationForm.get('maxBalanceEncash').touched" class="text-danger"> *Max Balance is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Max Balance Carry Forward</label>
+                                            <input type="text" class="form-control" placeholder="Max Balance Carry Forward" formControlName="maxBalCarryForward">
+                                            <small *ngIf="leaveAllocationForm.get('maxBalCarryForward').invalid && leaveAllocationForm.get('maxBalCarryForward').touched" class="text-danger"> *Max Balance Carry Forward is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label> Leave Credit after Joining in Months</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="leaveCredit">
+                                            <input type="number" class="form-control" formControlName="leaveCreditMonths" *ngIf="leaveAllocationForm.value.leaveCredit">
+                                            <input type="number" class="form-control" *ngIf="!leaveAllocationForm.value.leaveCredit" readonly>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label> Leave Laps duration in Month</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="leaveLaps">
+                                            <input type="number" class="form-control" formControlName="leaveLapsMonths" *ngIf="leaveAllocationForm.value.leaveLaps">
+                                            <input type="number" class="form-control" *ngIf="!leaveAllocationForm.value.leaveLaps" readonly>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label> Is Paid?</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="isPaid">
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Leave Encash on</label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselct " [options]="leaveEncash" [(ngModel)]="leaveEncashModel" value=l eaveEncash.name formControlName="leaveEncash">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="leaveAllocationForm.get('leaveEncash').invalid && leaveAllocationForm.get('leaveEncash').touched" class="text-danger"> *Leave Description is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label> Is LeaveEncashment Manual</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="manualLeaveEncash" *ngIf="leaveAllocationForm.value.encashable">
+                                            <input type="checkbox" class="checkbox-all ms-5" *ngIf="!leaveAllocationForm.value.encashable" disabled>
+
+                                            <select formControlName="selectMonth" class="form-select form-control" *ngIf="leaveAllocationForm.value.manualLeaveEncash">
+                        <option value="">--Select--</option>
+                    <option *ngFor="let item of months" [value]="item.name">{{item.name}}</option>
+                   </select>
+                                            <select class="form-select form-control" disabled *ngIf="!leaveAllocationForm.value.manualLeaveEncash">
+                        <option value="">--Select--</option>
+                   
+                   </select>
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Status</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+
+                                        </div>
+
+                                    </div>
+
+                                    <button type="button" *ngIf="!update" class="btn btn-primary" (click)="submit()" [disabled]="submitLoader">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                    <button type="button" class="btn btn-primary" *ngIf="update" (click)="updateLeaveAllocation()">Update</button>
+                                    <button type="button" class="btn " (click)="cancel()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Late Departure Plan Form -->

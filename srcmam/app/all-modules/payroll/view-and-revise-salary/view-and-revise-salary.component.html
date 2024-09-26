@@ -1,0 +1,52 @@
+<div class="content container-fluid">
+
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>View & Revise Salary</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item active" aria-current="page">View & Revise Salary</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   
+   <div class="card tab-box mt-3">
+    <div class="row user-tabs">
+        <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+            <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                <li class="nav-item"><a href="#defineSal" data-bs-toggle="tab" class="nav-link active">Define Salary</a></li>
+                <li class="nav-item"><a href="#currentSal" data-bs-toggle="tab" class="nav-link ">Current Salary</a></li>
+              
+                
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="tab-content">
+<div id="defineSal"  class="pro-overview tab-pane fade show active">
+   
+  
+        <div class="col-md-6 d-flex">
+                    <h3 class="card-title">Employee Master Edit </h3>
+        </div>
+        <app-employee-master-edit-form></app-employee-master-edit-form>
+    
+</div>
+
+<div id="currentSal" class="tab-pane fade">
+   
+
+        <div class="col-md-6 d-flex">
+           <h3 class="card-title"> Employee Master Edit </h3>
+            
+        </div>
+        <app-employee-master-edit></app-employee-master-edit>
+  
+</div>
+
+</div>
+</div>

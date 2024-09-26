@@ -1,0 +1,222 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Add Or Deduct SalaryHead</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Payroll</li>
+                        <li class="breadcrumb-item active" aria-current="page">Salary Processing</li>
+                        <li class="breadcrumb-item active" aria-current="page">Add Or Deduct SalaryHead</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i> Add New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showMyContainer==false">
+        <div class="col-md-12">
+            <div class="card card-table">
+                <div class="card-body" style="margin: 10px;">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="data?.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>Srno</th>
+                                    <th>Employee Code</th>
+                                    <th>Employee Name</th>
+                                    <th>Head Name</th>
+                                    <th>Head Amount</th>
+                                    <th>Addition/Deduction</th>
+                                    <th>Year</th>
+                                    <th>Month</th>
+                                    <!-- <th>type</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let item of data; let i = index">
+                                    <th>{{i+1}}</th>
+                                    <th>{{item.employeeCode}}</th>
+                                    <th>{{item.firstName}} {{item.middlename}} {{item.lastName}}</th>
+                                    <td>{{item.headName}}</td>
+                                    <td>{{item.headAmount}}</td>
+                                    <td>{{item.additionDeduction}}</td>
+                                    <td>{{item.year}}</td>
+                                    <td>{{item.month}}</td>
+                                    <!-- <td>{{item.type}}</td> -->
+
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a class="fas fa-pen" (click)="edit(item.manualAdditionDeductionSalaryHeadsId)"></a>
+                                        <a (click)="delete(item.manualAdditionDeductionSalaryHeadsId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showMyContainer==true">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Add Or Deduct SalaryHead{{editId}}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="addOrdeductForm">
+                                <div class="form-row row">
+
+
+
+                                    <div class="col-md-4 mb-3" *ngIf="editId==null">
+                                        <label>Employee Name<small class="text-danger">*</small></label>
+                                        <ng-select class="form-select form-control" multiple="true" formControlName="employee">
+                                            <ng-option value="0">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employee" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+                                        <!-- <div>
+                                            <ngx-bootstrap-multiselect class="multselect " [options]="employee" [(ngModel)]="employeeModel" [value]=employee.id+employee.name formControlName="employee">
+
+                                            </ngx-bootstrap-multiselect>
+                                        </div> -->
+                                        <!-- <ng-select class="form-select form-control" multiple="true" formControlName="employee">
+                                            <ng-option value="0">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employee" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select> -->
+                                        <small *ngIf="addOrdeductForm.get('employee').invalid && addOrdeductForm.get('employee').touched" class="text-danger">Employee is required *</small>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3" *ngIf="editId!=null">
+                                        <label>Employee Name<small class="text-danger">*</small></label>
+                                        <ng-select class="form-select form-control" formControlName="employee">
+                                            <ng-option value="0">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employee" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+                                        <!-- <div>
+                                            <ngx-bootstrap-multiselect class="multselect " [options]="employee" [(ngModel)]="employeeModel" [value]=employee.id+employee.name formControlName="employee">
+
+                                            </ngx-bootstrap-multiselect>
+                                        </div> -->
+                                        <!-- <ng-select class="form-select form-control" multiple="true" formControlName="employee">
+                                            <ng-option value="0">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employee" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                        </ng-select> -->
+                                        <small *ngIf="addOrdeductForm.get('employee').invalid && addOrdeductForm.get('employee').touched" class="text-danger">Employee is required *</small>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Addition/Deduction<small class="text-danger">*</small></label>
+                                        <select class="form-select form-control" formControlName="addOrDeduct">
+                                        <option value="">--Select--</option>
+                                       <option >Addition</option>
+                                       <option >Deduction</option>
+                                    </select>
+                                        <small *ngIf="addOrdeductForm.get('addOrDeduct').invalid && addOrdeductForm.get('addOrDeduct').touched" class="text-danger">Addition/Deduction is required *</small>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Element Name<small class="text-danger">*</small></label>
+                                        <select class="form-control form-select" formControlName="element">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of salaryHead" [value]="item.name">{{item.name}}</option>
+                                            </select>
+                                        <small *ngIf="addOrdeductForm.get('element').invalid && addOrdeductForm.get('element').touched" class="text-danger">Element is required *</small>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Amount<small class="text-danger">*</small></label>
+                                        <input type="number" class="form-control" formControlName="amount">
+
+                                        <small *ngIf="addOrdeductForm.get('amount').invalid && addOrdeductForm.get('amount').touched" class="text-danger">Amount is required *</small>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Year <small class="text-danger">*</small></label>
+
+                                        <select class="form-select form-control" formControlName="year">
+                                                <option value="">--Select--</option>
+                                                <option  *ngFor="let item of year" >{{item}}</option>
+                                            </select>
+
+                                        <small *ngIf="addOrdeductForm.get('year').invalid && addOrdeductForm.get('year').touched" class="text-danger">Year is required *</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Repeat Per Month</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="repeat" [checked]="true" (change)='check($event)'>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3" *ngIf="addOrdeductForm.value.repeat==false">
+                                        <label>Month <small class="text-danger">*</small></label>
+                                        <select class="form-select form-control" formControlName="month">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of months" [value]="item.name">{{item.name}}</option>
+                                    </select>
+                                        <small *ngIf="addOrdeductForm.get('month').invalid && addOrdeductForm.get('month').touched" class="text-danger" class="text-danger">Month is required *</small>
+                                    </div>
+
+
+
+                                    <div class="col-md-4 mb-3" *ngIf="addOrdeductForm.value.repeat">
+                                        <label class="focus-label">From Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="lockDate">
+                                            </div>
+                                            <small *ngIf="addOrdeductForm.get('lockDate').invalid && addOrdeductForm.get('lockDate').touched" class="text-danger" class="text-danger">Lock Date is Required</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3" *ngIf="addOrdeductForm.value.repeat">
+                                        <label class="focus-label">To Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiryDate">
+                                            </div>
+                                            <small *ngIf="addOrdeductForm.get('expiryDate').invalid && addOrdeductForm.get('expiryDate').touched" class="text-danger" class="text-danger">Lock Date is Required</small>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                   
+                                    <label >Department</label>
+                                    <select class="form-select form-control" formControlName="department">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of departments">{{item.departmentName}}</option>
+                                    </select>
+                                </div> -->
+                                </div>
+                                <button class="btn btn-primary" *ngIf="!editId" (click)="submit()">Submit</button>&nbsp;
+                                <button class="btn btn-primary" *ngIf="editId" (click)="update(editId)">Update</button>&nbsp;
+                                <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

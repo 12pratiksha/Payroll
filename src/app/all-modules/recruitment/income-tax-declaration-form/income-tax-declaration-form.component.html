@@ -1,0 +1,1044 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Income Tax Declaration Form</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                            <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                            <li class="breadcrumb-item active" aria-current="page">Income Tax Declaration Form</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title mb-0">Income Tax Declaration Form</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="incomeTax">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label>Company Name<small class="text-danger"></small></label>
+                                            <input class="form-control" formControlName="companyName">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee Id<small class="text-danger"></small></label>
+                                            <input class="form-control" formControlName="employeeId">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee Name<small class="text-danger"></small></label>
+                                            <input class="form-control" formControlName="employeeName">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee Pan Card<small class="text-danger"></small></label>
+                                            <input class="form-control" formControlName="panOfemployee">
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1>House Rent</h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="houseRentCheckbox">&nbsp;
+                                        <label>Is the employee staying in a rented house?</label>
+                                        <div class="col-md-3 mb-3">
+
+                                            <button let i=index; (click)="addRequest()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.houseRentCheckbox==true">Add Details</button>
+                                        </div>
+
+
+                                        <ng-container formArrayName="houseRent" *ngFor="let item of quantities().controls; let i = index;">
+                                            <div class="row" [formGroupName]="i">
+                                                <h3>House Rent Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>From Date</label>
+
+                                                    <input type="text" placeholder="From Date" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="fromDate">
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label>To Date</label>
+                                                    <input type="text" placeholder="To Date " class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="toDate">
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Amount /month</label>
+                                                    <input type="number" class="form-control" formControlName="amount">
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" formControlName="address">
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Metro/Non Metro</label>
+                                                    <select type="dropdown" class="form-select form-control" formControlName="metroOrNonMetro">
+                                                <option>Metro</option>
+                                                <option>Non-Metro</option>
+
+                                            </select>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>City</label>
+                                                    <input type="text" class="form-control" formControlName="cityName">
+                                                </div>
+
+
+
+                                                <div class="col-md-3 mb-3">
+                                                    <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                                </div>
+
+                                            </div>
+                                        </ng-container>
+
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h1>Home Loan</h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="homeLoanCheckbox">&nbsp;
+                                        <label>Is the employee repaying home loan for a self occupied house property?</label>
+
+
+
+                                        <ng-container *ngIf="incomeTax.value.homeLoanCheckbox==true">
+                                            <div class="row">
+                                                <h3>Home Loan Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Principle Paid on Home Loan</label>
+
+                                                    <input type="number" class="form-control" formControlName="principalPaid">
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Interest Paid on Home Loan</label>
+
+                                                    <input type="number" class="form-control" formControlName="interestPaid">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Name of the Lender</label>
+                                                    <input type="text" class="form-control" formControlName="lender">
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Lender PAN</label>
+                                                    <input type="text" class="form-control" formControlName="lenderPan">
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h1>Let Out Property Details </h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="propertyDetailsCheckbox">&nbsp;
+                                        <label>Is the employee receiving rental income from let out property?</label>
+                                        <div class="col-md-3 mb-3">
+
+                                            <button let i=index; (click)="addRequest1()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.propertyDetailsCheckbox==true">Add Details</button>
+                                        </div>
+
+
+                                        <ng-container formArrayName="propertyDetails" *ngFor="let item of quantities1().controls; let i = index;">
+                                            <div class="row" [formGroupName]="i">
+                                                <h3>Let Out Property Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Annual Rent Received</label>
+
+                                                    <input type="number" class="form-control" formControlName="annualRentRecive">
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Municipal Taxes Paid</label>
+                                                    <input type="number" class="form-control" formControlName="municipalTaxesPaid">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Net Annual Value</label>
+                                                    <input type="number" class="form-control" formControlName="netAnnualValue">
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Standard Deduction (@ 30% of Net Annual Value)</label>
+                                                    <input type="number" class="form-control" formControlName="standarDeduction30OnNetAnnualValue">
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label> Repaying Home Loan for This Property</label>
+                                                    <input type="checkbox" class="checkbox-all" formControlName="repayingHomeLoanForThisPorperty">
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>Net Income/Loss from House Property </label>
+                                                    <input type="number" class="form-control" formControlName="netIncomeORLossOnHouseProperty">
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <button class="btn btn-primary" (click)="remove1(i)">Remove Details</button>
+                                                </div>
+
+                                                <ng-container *ngIf="propertyDetails.value.repayingHomeLoan==true">
+
+                                                    <div class="col-sm-3 mb-3">
+                                                        <label>Principle Paid on Home Loan</label>
+
+                                                        <input type="number" class="form-control" formControlName="principalPaid">
+                                                    </div>
+
+                                                    <div class="col-sm-3 mb-3">
+                                                        <label>Interest Paid on Home Loan</label>
+
+                                                        <input type="number" class="form-control" formControlName="interestPaid">
+                                                    </div>
+
+                                                    <div class="col-md-3 mb-3">
+                                                        <label>Name of the Lender</label>
+                                                        <input type="text" class="form-control" formControlName="lender">
+
+                                                    </div>
+
+                                                    <div class="col-md-3 mb-3">
+                                                        <label>Lender PAN</label>
+                                                        <input type="text" class="form-control" formControlName="lenderPan">
+
+                                                    </div>
+                                                </ng-container>
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h1>80C and Other Investments </h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="c80investmentsCheckbox">&nbsp;
+                                        <label>80C and Other Investments</label>
+                                        <div class="col-md-3 mb-3">
+
+                                            <button let i=index; (click)="addRequest2()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.c80investmentsCheckbox==true">Add Details</button>
+                                        </div>
+
+
+                                        <ng-container formArrayName="c80investments" *ngFor="let item of quantities2().controls; let i = index;">
+                                            <div class="row" [formGroupName]="i">
+                                                <h3> 80C and Other Investments Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Particulars</label>
+
+                                                    <select type="number" class="form-control" formControlName="c80particulars">
+                                                    <option value="">--Select--</option>
+                                                    <option>Contribution to Pension Fund (Jeevan Suraksha)</option>
+                                                    <option>Life Insurance Premium on life of self/spouse/child only</option>
+                                                    <option>Deferred Annuity</option>
+                                                    <option>Public Provident Fund in own name/spouse/child only</option>
+                                                    <option>ULIP of UTI/LIC in own name or spouse and child only</option>
+                                                    <option>Contribution to Pension Fund or UTI or Notified Mutual Fund</option>
+                                                        <option>Investment in ELSS made in units of Notified Mutual Fund</option>
+                                                        <option>Children Tuition Fee: Restricted to a max of 2 Children</option>
+                                                        <option>Deposit in home loan account scheme of NHB/HDFC</option>
+                                                        <option>5 yrs. Term deposit in a Sch.Bank</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Declare Amount</label>
+                                                    <input type="number" class="form-control" formControlName="c80declaredAmount">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <button class="btn btn-primary" (click)="remove2(i)">Remove Details</button>
+                                                </div>
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+
+                                    <div class="card-body">
+                                        <h1> DEDUCTION UNDER CHAPTER - VI A </h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="d80investmentsCheckbox">&nbsp;
+                                        <label> DEDUCTION UNDER CHAPTER - VI A</label>
+                                        <div class="col-md-3 mb-3">
+
+                                            <button let i=index; (click)="addRequest3()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.d80investmentsCheckbox==true">Add Details</button>
+                                        </div>
+
+
+                                        <ng-container formArrayName="d80investments" *ngFor="let item of quantities3().controls; let i = index;">
+                                            <div class="row" [formGroupName]="i">
+                                                <h3> DEDUCTION UNDER CHAPTER - VI A Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Particulars</label>
+
+                                                    <select type="number" class="form-control" formControlName="d80particulars">
+                                                    <option value="">--Select--</option>
+                                                    <option>Sec 80D - Medical Insurance Premium (If the policy covers a senior citizen then exemption is Rs.50,000/-)</option>
+                                                    <option>Sec 80DD - Handicapped Dependent</option>
+                                                    <option>Sec 80E - Repayment of Loan for higher education (only Interest)</option>
+                                                    <option>Sec 80GG - Rent Paid</option>
+                                                    <option>Sec 80U - Handicapped</option>
+                                                    <option>Sec 80CCG - Rajeev Gandhi Equity Saving Scheme
+                                                        (Investment max upto Rs.50,000, would get a deduction of 50% on the amount invested)</option>
+                                                        <option>Sec 80TTA / 80TTB - Interest on saving a/c</option>
+                                                        <option>Any other Deduction (Please specify)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Declare Amount</label>
+                                                    <input type="number" class="form-control" formControlName="d80declaredAmount">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <div>
+
+                                                    </div>
+                                                    <button class="btn btn-primary" (click)="remove3(i)">Remove Details</button>
+                                                </div>
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+
+
+                                    <div class="card-body">
+                                        <h1>Other Sources of Income </h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="otherSourceCheckbox">&nbsp;
+                                        <label>Other Sources of Income</label>
+
+
+                                        <ng-container *ngIf="incomeTax.value.otherSourceCheckbox==true">
+                                            <div class="row">
+                                                <h3>Other Sources of Income Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Income from other sources:</label>
+                                                    <input type="number" class="form-control" formControlName="incomeFromOther">
+
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Interest earned from Savings deposit:</label>
+                                                    <input type="number" class="form-control" formControlName="interestEarnFromSaving">
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Interest earned from Fixed deposits:</label>
+                                                    <input type="number" class="form-control" formControlName="interestEarnFromFixed">
+                                                </div>
+
+
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h1>DEDUCTION U/S 80CCC</h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="deduction80CCCCCheckbox">&nbsp;
+                                        <label>DEDUCTION U/S 80CCC</label>
+
+
+                                        <ng-container *ngIf="incomeTax.value.deduction80CCCCCheckbox==true">
+                                            <div class="row">
+                                                <h3>DEDUCTION U/S 80CCC Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Annuity/Pension Plan</label>
+                                                    <input type="text" class="form-control" formControlName="annuityPensionPlan">
+
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Declare Amount</label>
+                                                    <input type="number" class="form-control" formControlName="appDeclareAmount">
+                                                </div>
+
+
+
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h1>DEDUCTION U/S 80CC (1b)</h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="deduction80CCCC1bCheckbox">&nbsp;
+                                        <label>DEDUCTION U/S 80CC (1b)</label>
+
+
+                                        <ng-container *ngIf="incomeTax.value.deduction80CCCC1bCheckbox==true">
+                                            <div class="row">
+                                                <h3>DEDUCTION U/S 80CC (1b) Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Employee Contribution</label>
+                                                    <input type="text" class="form-control" formControlName="employeeContribution">
+
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Declare Amount</label>
+                                                    <input type="number" class="form-control" formControlName="ecDeclareAmount">
+                                                </div>
+
+
+
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h1>DEDUCTION U/S 80CCD</h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="deduction80CCDCheckbox">&nbsp;
+                                        <label>DEDUCTION U/S 80CCD</label>
+
+
+                                        <ng-container *ngIf="incomeTax.value.deduction80CCDCheckbox==true">
+                                            <div class="row">
+                                                <h3>DEDUCTION U/S 80CCD Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Notified Pension Scheme</label>
+                                                    <input type="text" class="form-control" formControlName="notifiedPensionScheme">
+
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Declare Amount</label>
+                                                    <input type="number" class="form-control" formControlName="npsDeclareAmount">
+                                                </div>
+
+
+
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+
+
+                                    <div class="card-body">
+                                        <h1> DEDUCTION U/S 24</h1>
+                                        <input type="checkbox" class="checkbox-all" formControlName="deduction24Checkbox">&nbsp;
+                                        <label> DEDUCTION U/S 24</label>
+                                        <div class="col-md-3 mb-3">
+
+                                            <button let i=index; (click)="addRequest4()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.deduction24Checkbox==true">Add Details</button>
+                                        </div>
+
+
+                                        <ng-container formArrayName="deduction24" *ngFor="let item of quantities4().controls; let i = index;">
+                                            <div class="row" [formGroupName]="i">
+                                                <h3> DEDUCTION U/S 24 Details</h3>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Particulars</label>
+
+                                                    <select type="number" class="form-control" formControlName="d24particulars">
+                                                    <option value="">--Select--</option>
+                                                    <option>Interest on Housing Loan on fully constructed accomodation only</option>
+                                                    <option>Interest if the loan is taken before 01/04/99 on fully constructed accomodation only</option>
+                                                    
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-3 mb-3">
+                                                    <label>Declare Amount</label>
+                                                    <input type="number" class="form-control" formControlName="d24declaredAmount">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <div>
+
+                                                    </div>
+                                                    <button class="btn btn-primary" (click)="remove4(i)">Remove Details</button>
+                                                </div>
+
+
+
+                                            </div>
+                                        </ng-container>
+
+
+
+                                    </div>
+                                    <!-- <div class="form-row row">
+                                    <h1>ITEMS</h1>
+                                    <div class="col-md-4 mb-3">
+                                        <label>HOUSE RENT</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="houseRent">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label>DEDUCTION UNDER CHAPTER - VI A</label>
+                                        <input type="checkbox" checked="true" class="checkbox-all ms-5" formControlName="deduction1">
+
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>DEDUCTION U/S 80C</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="deduction2">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>DEDUCTION U/S 80CCC</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="deduction3">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>DEDUCTION U/S 80CC (1b)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="deduction4">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label> DEDUCTION U/S 80CCD</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="deduction5">
+
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-row row">
+                                    <h1>HOUSE RENT</h1>
+                                    <div class="col-md-6 mb-3">
+                                        <label>I am staying in a rented house and I agree to submit Leave & Licence A'ment when required.The Rent Paid is (Rs. _____________ X _______ months) & the house is located in a METRO / NON METRO (Tick whichever is applicable)</label>&nbsp;
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D11Check">
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label>Maximum Limit</label>
+                                                <input type="number" class="form-control" formControlName="D11MaxAmount">
+
+                                                <label>Declared Amount</label>
+                                                <input type="number" class="form-control" formControlName="D11DeclareAmount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row row">
+                                    <h1>DEDUCTION UNDER CHAPTER - VI A</h1>
+                                    <div class="col-md-12 mb-0">
+                                        <label> Sec 80D - Medical Insurance Premium (If the policy covers a senior citizen then exemption is Rs.50,000/-)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D21Check">
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label>Maximum Limit</label>
+                                                <input type="number" class="form-control" formControlName="D21MaxAmount">
+
+                                                <label>Declared Amount</label>
+                                                <input type="number" class="form-control" formControlName="D21DeclareAmount">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Sec 80DD - Handicapped Dependent</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D22Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D22MaxAmount">
+
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D22DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Sec 80E - Repayment of Loan for higher education (only Interest)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D23Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D23MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D23DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Sec 80GG - Rent Paid</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D24Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D24MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D24DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Sec 80U - Handicapped</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D25Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D25MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D25DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label>Sec 80CCG - Rajeev Gandhi Equity Saving Scheme
+                                            (Investment max upto Rs.50,000, would get a deduction of 50% on the amount invested)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D26Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D26MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D26DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label>Sec 80TTA / 80TTB - Interest on saving a/c</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D27Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D27MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D27DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label>Any other Deduction (Please specify)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D28Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D28MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D28DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+                                </div>
+
+
+                                <div class="form-row row">
+                                    <h1>DEDUCTION U/S 80C</h1>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Contribution to Pension Fund (Jeevan Suraksha)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D31Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D31MaxAmount">
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D31DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Life Insurance Premium on life of self/spouse/child only</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D32Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D32MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D32DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Deferred Annuity</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D33Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D33MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D33DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Public Provident Fund in own name/spouse/child only</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D34Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D34MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D34DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> ULIP of UTI/LIC in own name or spouse and child only</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D35Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D35MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D35DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Repayment of Housing Loan (Only principal)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D36Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D36MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D36DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Contribution to Pension Fund or UTI or Notified Mutual Fund</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D37Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D37MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D37DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Investment in ELSS made in units of Notified Mutual Fund</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D38Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D38MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D38DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Children Tuition Fee: Restricted to a max of 2 Children</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D39Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D39MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D39DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> Deposit in home loan account scheme of NHB/HDFC</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D310Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D310MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D310DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="col-md-12 mb-0">
+                                        <label>  5 yrs. Term deposit in a Sch.Bank</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D311Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D311MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D311DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-0">
+                                        <label>    Others (please specify)</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D312Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D312MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D312DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-row row">
+                                    <h1>DEDUCTION U/S 80CCC</h1>
+                                    <div class="col-md-12 mb-0">
+                                        <label> Annuity/Pension Plan</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D41Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D41MaxAmount">
+                                           
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D41DeclareAmount">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-row row">
+                                    <h1>DEDUCTION U/S 80CC (1b)</h1>
+                                    <div class="col-md-12 mb-0">
+                                        <label> Employee Contribution</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D51Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D51MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D51DeclareAmount">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-row row">
+                                    <h1>DEDUCTION U/S 80CCD</h1>
+                                    <div class="col-md-12 mb-0">
+                                        <label> Notified Pension Scheme</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D61Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D61MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D61DeclareAmount">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-row row">
+                                    <h1>DEDUCTION U/S 24</h1>
+                                    <div class="col-md-12 mb-0">
+                                        <label> Interest on Housing Loan on fully constructed accomodation only</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D71Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D71MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D71DeclareAmount">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 mb-0">
+                                        <label> nterest if the loan is taken before 01/04/99 on fully constructed accomodation only</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="D72Check">
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Maximum Limit</label>
+                                            <input type="number" class="form-control" formControlName="D72MaxAmount">
+                                            
+                                            <label>Declared Amount</label>
+                                            <input type="number" class="form-control" formControlName="D72DeclareAmount">
+                                        </div>
+
+
+                                    </div>
+                                </div> -->
+
+                                    <button class="btn btn-primary" (click)="search()">Search</button>&nbsp;
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

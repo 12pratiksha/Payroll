@@ -1,0 +1,212 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Connection To DB</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item">General SetUp</li>
+                            <li class="breadcrumb-item active" aria-current="page">Connection To DB </li>
+                        </ol>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+                
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="showMyContainer">
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="row">
+              
+
+        <div class="radio col-form-label col-md-3">
+            <label>
+                <input type="radio" name="radio" value="mysql" [formControl]="type" (click)="change()"> My SQL
+            </label>
+        </div>
+        <div class="radio col-form-label col-md-3">
+            <label>
+                <input type="radio" name="radio" value="sqlserver" [formControl]="type" (click)="change()"> SQL Server
+            </label>
+        </div>
+        <div class="radio col-form-label col-md-3">
+            <label>
+                <input type="radio" name="radio" value="excel" [formControl]="type" (click)="change()"> Excel
+            </label>
+        </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row filter-row" *ngIf="type.value == ''">
+        <div class="col-md-12" >
+      <small class="text-danger"> Select Connection Type</small>
+        </div>
+
+    </div>
+
+
+    <div class="row" *ngIf="type.value == 'sqlserver' || type.value == 'mysql' ">
+        <div class="col-sm-12">
+            <div class="card" >
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate  [formGroup]="sqlForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                            <label class="focus-label">User Name <small class="text-danger" > *</small></label>
+                                            <input type="text" class="form-control" formControlName="userName">   
+                                            <small class="text-danger"  *ngIf="sqlForm.get('userName').invalid && sqlForm.get('userName').touched">* This Field Is Required</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Password <small class="text-danger" > *</small></label>
+                                        <input type="password" class="form-control" formControlName="password">   
+                                        <small class="text-danger" *ngIf="sqlForm.get('password').invalid && sqlForm.get('password').touched">* This Field Is Required</small>
+                                     </div>
+                                     <!-- <div class="col-md-6 mb-3">
+                                        <label class="focus-label">API <small class="text-danger" > *</small></label>
+                                        <input type="text" class="form-control" formControlName="api"> 
+                                        <small class="text-danger"  *ngIf="sqlForm.get('api').invalid && sqlForm.get('api').touched">* This Field Is Required</small>  
+                                     </div> -->
+                                     <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Host Name <small class="text-danger" > *</small></label>
+                                        <input type="text" class="form-control" formControlName="hostName"> 
+                                        <small class="text-danger"  *ngIf="sqlForm.get('hostName').invalid && sqlForm.get('hostName').touched">* This Field Is Required</small>  
+                                     </div>
+                                     <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Port Number <small class="text-danger" >*</small></label>
+                                        <input type="text" onlyNumber class="form-control" formControlName="portNumber">   
+                                        <small class="text-danger"  *ngIf="sqlForm.get('portNumber').invalid && sqlForm.get('portNumber').touched">* This Field Is Required</small>
+                                     </div>
+                                     <div class="col-md-6 mb-3">
+                                        <label class="focus-label">DB Name <small class="text-danger" >*</small></label>
+                                        <input type="text" class="form-control" formControlName="dbName">   
+                                        <small class="text-danger"  *ngIf="sqlForm.get('dbName').invalid && sqlForm.get('dbName').touched">* This Field Is Required</small>
+                                     </div>
+                                     <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Table Name <small class="text-danger" >*</small></label>
+                                        <input type="text" class="form-control" formControlName="tableName">   
+                                        <small class="text-danger"  *ngIf="sqlForm.get('tableName').invalid && sqlForm.get('tableName').touched">* This Field Is Required</small>
+                                     </div>
+                                     <div class="col-md-6 mb-3">
+                                        <label class="focus-label">Status<small class="text-danger" >*</small></label>
+                                        <input type="checkbox" class="checkbox-all ms-5"  formControlName="status">   
+                                     </div>
+                                </div>
+    
+
+                               
+                                <button [disabled]="submitLoader" *ngIf="!editId" class="btn btn-primary" (click)="submit('add')" > <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;">Submit</button>
+                                <button [disabled]="submitLoader"  *ngIf="editId" class="btn btn-primary" (click)="submit('update')" > <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;">Update</button>
+                                <button class="btn "   (click)="cancel()" >Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div>  
+
+     <div class="row" *ngIf="type.value == 'excel' ">
+        <div class="col-sm-12">
+            <div class="card" >
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate  [formGroup]="excelForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                            <label class="focus-label">Browse </label>
+                                            <input type="file" class="form-control" formControlName="browse">   
+                                    </div>
+                                  
+                                </div>
+    
+                               
+                                
+                               
+                                <button [disabled]="submitLoader" class="btn btn-primary" (click)="submit()" >Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn "   (click)="cancel()" >Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div>  
+    </ng-container>
+
+<ng-container *ngIf="!showMyContainer">
+    <div class="row" >
+        <div class="col-sm-12">
+            <div class="card mb-0">
+                
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" id="datatable" class="datatable table table-stripped mb-0" *ngIf="tableData">
+                           
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Host name</th>
+                                    <th>Port Number </th>
+                                    <th>DB Name</th>
+                                    <th>Table Name</th>
+                                    <th>Action</th>
+                                   
+                                </tr>
+                            </thead>
+                        
+                            <tbody >
+                                <tr *ngFor="let item of tableData; let i = index" >
+                                    <td>{{item.username}}</td>
+                                    <td>{{item.hostName}}</td>
+                                    <td>{{item.portNo}}</td>
+                                    <td>{{item.databaseName}}</td>
+                                    <td>{{item.tableName}}</td>
+                                    
+                                    <td class="text-end ico-sec justify-content-end">
+
+                                        <a (click)="edit(item.inOutPuchDBDetialId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.inOutPuchDBDetialId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                           
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="cityList">  -->
+    </div>
+</ng-container>
+
+
+
+</div>
+

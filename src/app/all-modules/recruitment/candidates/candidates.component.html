@@ -1,0 +1,321 @@
+
+            <div class="page-wrapper">	
+				<!-- Page Content -->
+                <div class="content container-fluid">
+					
+					<!-- Page Header -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-head-box">
+								<h3>Candidates List</h3>
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Candidates List</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<!-- /Page Header -->
+
+					<!-- Search Filter -->
+					<!-- <div class="row filter-row">
+						<div class="col-md-8"></div>
+						<div class="col-md-4">
+							<div class="add-emp-section">
+								<a class="btn btn-success btn-add-emp" *ngIf="!container" (click)="showContainer()"><i class="fas fa-plus" ></i> Add New	</a>
+								<a class="btn btn-success btn-add-emp" *ngIf="container" (click)="hideContainer()"><i class="fas fa-bars"></i> Show Table</a>
+							</div>
+						</div>
+					</div> -->
+					<!-- /Search Filter -->
+
+					<div class="row" *ngIf="!container">
+						<div class="col-md-12">
+							<div class="card card-table">
+								<div class="card-header">
+									<h4 class="card-title mb-0">Candidates List</h4>
+								</div>
+							<div class="table-responsive">
+								<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                                          class="table table-striped custom-table datatable mb-0">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Name</th>
+											<th>Mobile Number</th>
+											<th>Email</th>
+											<th>Created Date</th>
+											<th>View Resume</th>
+											<th >Action</th>
+											<th>Delete</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr >
+											<td>1</td>
+											<td>
+												<h2 class="table-avatar">
+													<!-- <a routerLink="/layout/profile/profilelist" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a> -->
+													<a >ACP Pradhyumna</a>
+												</h2>
+											</td>
+											<td>9989787544</td>
+											<td>test@gmail.com</td>
+											<td>02-01-2023</td>
+											<td class=" ico-sec justify-content-center">
+												<a data-bs-toggle="modal" data-bs-target="#resume"><i class="fas fa-bars"></i></a>
+												<a ><i class="fas fa-download"></i></a>
+											</td>
+											<td>
+												<div class="submit">
+													<a class="btn btn-primary" (click)="schedule()">Schedule</a>
+													</div>
+											</td>
+											<td class=" ico-sec justify-content-center">
+												<a ><i class="fas fa-trash-alt"></i></a>
+											</td>
+										</tr>
+										<tr >
+											<td>2</td>
+											<td>
+												<h2 class="table-avatar">
+													<!-- <a  class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a> -->
+													<a >Piyush Ghonge</a>
+												</h2>
+											</td>
+											<td>9989787544</td>
+											<td>test@gmail.com</td>
+											<td>01-01-2023</td>
+											<td class=" ico-sec justify-content-center">
+												<a data-bs-toggle="modal" data-bs-target="#resume"><i class="fas fa-bars"></i></a>
+												<a ><i class="fas fa-download"></i></a>
+											</td>
+											<td>
+												<div class="submit">
+													<!-- <a class="btn btn btn-outline-danger me-2" (click)="cancel()">Cancel</a> -->
+													<a class="btn btn-primary" (click)="schedule()">Schedule</a>
+																	
+													</div>
+											</td>
+											<td class=" ico-sec justify-content-center">
+												<!-- <a ><i class="fas fa-check"></i></a> -->
+												<a ><i class="fas fa-trash-alt"></i></a>
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					</div>
+
+					<!-- <div class="row" *ngIf="container">
+						<div class="col-sm-12">
+    
+							
+							<div class="card" >
+								<div class="card-header">
+									<h1 class="card-title mb-0">New Requirement Form</h1>
+								   
+								</div>
+								<div class="card-body" > 
+									<div class="row">
+										<div class="col-sm">
+											<form class="needs-validation" novalidate  [formGroup]="candidatesForm">
+												<div class="form-row row">
+													<div class="col-md-3 mb-3">
+														<label >Full Name <small>*</small></label>
+														<input type="text" class="form-control" 
+															  required formControlName="name">
+														</div>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">City<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="city" >
+															  <option value="">--Select--</option>
+															  <option value="1">Department 1</option>
+															  <option value="2">Department 2</option>
+															</select>
+														</div>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">State<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="state" >
+															  <option value="">--Select--</option>
+															  <option value="1">Department 1</option>
+															  <option value="2">Department 2</option>
+															</select>
+														</div>
+														
+													<div class="col-md-3 mb-3">
+													   
+														<div class="form-group">
+															<label> Date of Birth</label>
+															<input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" 
+															formControlName="dob">
+														</div>
+													</div>
+													
+													<div class="col-md-3 mb-3">
+														<label >Email Address<small>*</small></label>
+														<input type="email" class="form-control" 
+															  required formControlName="email">
+														</div>
+													<div class="col-md-3 mb-3">
+														<label >Phone Number<small>*</small></label>
+														<input type="number" class="form-control" 
+															  required formControlName="phone">
+														</div>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">Required Gender<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="gender" >
+															  <option value="">--Select--</option>
+															  <option >Male</option>
+															  <option >Female</option>
+															 
+														   </select>
+														   </div>
+												
+													<div class="col-md-3 mb-3">
+														<label >Experience<small>*</small></label>
+														<input type="number" class="form-control" 
+															  required formControlName="requiredExp">
+														</div>
+													<div class="col-md-3 mb-3">
+														<label >CV <small>*</small></label>
+														<input type="file" class="form-control" 
+															  required >
+														</div>
+														<div class="col-md-3 mb-3">
+															<label >Skills</label>
+															<select class="form-select floating form-control" formControlName="skills" >
+																<option value="">--Select--</option>
+																<option >Tech</option>
+																<option >Non Tech</option>
+															   
+															 </select>
+															</div>
+														<div class="col-md-3 mb-3">
+															<label >Position Applied</label>
+															<select class="form-select floating form-control" formControlName="position" >
+																<option value="">--Select--</option>
+																<option >Tech</option>
+																<option >Non Tech</option>
+															   
+															 </select>
+															</div>				
+													</div>
+					 
+											
+												<button class="btn btn-primary"  (click)="add()" >Submit</button>
+												<button class="btn "   (click)="hideContainer()" >Cancel</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+					
+						 </div>
+					</div> -->
+
+					<div class="modal custom-modal fade" id="resume" role="dialog">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">Candidates Details</h4>
+									<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://writing.engr.psu.edu/workbooks/formal_report_template.doc' width='100%' height='300px' frameborder='0'></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+			 <div class="row" *ngIf="container"> 
+						<div class="col-sm-12">
+    
+							
+							<div class="card" >
+								<div class="card-header">
+									<h3 class="card-title mb-0"> Schedule Interview For Round #1</h3>
+								   
+								</div>
+								<div class="card-body" > 
+									<div class="row">
+										<div class="col-sm">
+											<form class="needs-validation" novalidate  [formGroup]="scheduleForm">
+												<div class="form-row row">
+													<div class="col-md-3 mb-3">
+														<label class="focus-label">Interviewer<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="rounds" (change)="addItem($event.target.value)">
+															  <option value="">--Select--</option>
+															  <option value="1">1</option>
+															  <option value="2">2</option>
+															  <option value="3">3</option>
+															  <option value="4">4</option>
+															</select>
+													</div>
+													
+												
+													
+													<ng-container formArrayName="details" *ngFor="let item of scheduleForm.get('details').controls; let i = index;">
+														<ng-container [formGroupName]="i">
+														<h4 class="focus-label" style="background-color: aliceblue; font-weight: 700;">Round # {{i + 1}}.</h4>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">Interviewer</label>
+															    <select class="form-select floating form-control" formControlName="interviewer" >
+																<option value="">--Select--</option>
+																<option >1</option>
+																<option >2</option>
+																<option >3</option>
+																<option >4</option>
+															    </select>  
+														</div>
+														<div class="col-md-3 mb-3">
+															<label> On </label>
+															<input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" 
+															formControlName="date">
+														</div>
+														<div class="col-md-3 mb-3">
+															<label >At</label>
+															<input type="time" class="form-control" 
+																  required formControlName="time">
+														</div>
+														
+														<div class="col-md-3 mb-3" style="	margin-top: auto;">
+															<button class="btn btn-primary"  (click)="remove(i)" >Remove</button>
+														</div>
+														<div class="col-md-3 mb-3">
+															<label> Remark </label>
+															<textarea type="text" class="form-control" formControlName="remark"> </textarea>
+														</div>
+													    </ng-container>
+													</ng-container>
+															
+												</div>
+					 
+												<button class="btn btn-primary"  (click)="submit()" >Schedule</button>
+												<button class="btn "   (click)="hideContainer()" >Cancel</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+					
+						 </div>
+					</div>
+
+
+                </div>
+			
+				
+			
+
+			
+            </div>
+			

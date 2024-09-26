@@ -1,0 +1,493 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Employee Information Report</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee Information Report</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Employee Information Report</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="filterForm">
+                                <div class="form-row row">
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>From Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                                            </div>
+                                            <small *ngIf="filterForm.get('fromDate').invalid && filterForm.get('fromDate').touched" style="color:red">*This field is required</small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>To Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                            </div>
+                                            <small *ngIf="filterForm.get('toDate').invalid && filterForm.get('toDate').touched" style="color:red">*This field is required</small>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-4 mb-3">
+                                        <label>State</label>
+                                        <select class="form-select form-control" formControlName="state">
+                                    <option value="">--Select--</option>
+                                   <option *ngFor="let item of state" [value]="item.stateId">{{item.stateName}}</option>
+                                </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch</label>
+                                        <select class="form-select form-control" formControlName="branch" (change)="onChange($event)">
+                                        <option value="">--Select--</option>
+                                       <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Category</label>
+                                        <select class="form-select form-control" formControlName="category">
+                                            <option value="">--Select--</option>
+                                           <option *ngFor="let item of category" [value]="item.categoryId">{{item.categoryName}}</option>
+                                        </select>
+                                    </div>
+
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>subCategory</label>
+                                        <select class="form-select form-control" formControlName="subCategory">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of subCategory">{{item.name}}</option>
+                                    </select>
+                                    </div> -->
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <label>Department</label>
+                                        <select class="form-select form-control" formControlName="department">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of department" [value]="item.departmentId">{{item.departmentName}}</option>
+                                    </select>
+                                    </div>
+
+
+
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>Grade</label>
+
+                                        <select class="form-select form-control" formControlName="grade">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of grade">{{item.name}}</option>
+                                        </select>
+                                    </div> -->
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Search By</label>
+                                        <br>
+                                        <!-- <ng-select class="form-select form-control" formControlName="employeeId">
+                                            <ng-option value="">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employees ; let i = index" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                        </ng-select> -->
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                            <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="employeeId">
+                                            <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                                <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                                    <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                        <!-- <div class="col-md-4 mb-3">ss
+                                        <label class="">Employee<small> *</small></label>
+                                    <ng-select class="form-select form-control"  formControlName="employee" >
+                                        <ng-option *ngFor="let item of employees; let i = index" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.lastName}}</ng-option>
+                                    </ng-select>
+                                    <small *ngIf="leaveApplicationForm.get('employee').invalid && leaveApplicationForm.get('employee').touched">Employee is required</small>
+                                    </div> -->
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                        <option value="">--Select--</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">InActive</option>
+                                        <option value="2">Delete</option>
+                                        <option value="3">Block</option>
+                                        <option value="4">Hold</option>
+                                        <option value="5">FNF</option>
+                                    </select>
+                                    </div>
+
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>Salary</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of salary" value="item.value">{{item.key}}</option>
+                                       
+                                    </select>
+                                    </div> -->
+
+                                </div>
+                                <button class="btn btn-primary" (click)="search()">Search    </button>&nbsp;
+                                <!-- <button class="btn btn-primary" (click)="getReport()">Get Report</button> -->
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12" *ngIf="data">
+        <div class="card mb-0">
+            <div class="col-sm-4 col-md-3">
+                <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="data" id="sectionToPrint" #epltable>
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="table-responsive" *ngIf="data">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Columns</mat-label>
+                        <mat-select multiple [(value)]="displayedColumns" (selectionChange)="changeColumns($event)">
+                          <mat-option *ngFor="let column of displayColumns" [value]="column" >{{ column }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <!-- <table datatable class="datatable table table-stripped mb-0" id="datatable"> -->
+                        
+                            
+                                    <table style="width:100%;border-right: 1px solid white; text-align:center;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                        <tr>
+                                            <td style="width: 12% !important;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                                <div style="width: 205px;height:170px;background-repeat: no-repeat;background-size: cover;background-position: 0px 0px 0px 0px;" [ngStyle]="{backgroundImage: 'url(&quot;'+ imageName +'&quot;)'}">
+                                                </div>
+                                                <td >
+                                                    <div style="text-align: center;font-size: 25px !important;" *ngIf="branchName==null">{{companyName}}</div>
+                                                    <div style="text-align: center;font-size: 18px !important;" *ngIf="branchName">{{branchName}}</div>
+                                                    <div style="text-align: center; font-size: 15px !important;">{{address}}</div>
+                                                    <div style="text-align: center; font-size: 15px !important;">Employee Information Report</div>
+                                                </td>
+                                        </tr>
+                                    </table>
+                                   
+                           
+                            <table  mat-table [dataSource]="data" style="width: 100%" >
+                            <ng-container matColumnDef="Employee Code">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Employee Code</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center"> {{element.employee_code}} </td>
+                              </ng-container>
+                              
+                              <ng-container matColumnDef="Employee FullName">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Employee FullName</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.first_name}} {{element.middle_name}} {{element.last_name}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Religion">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Religion</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.religion}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Gender">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Gender</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.gender}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Type">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Type</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.name}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Department">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Department</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.department_name}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Sub Department">
+                                <th mat-header-cell *matHeaderCellDef style="margin-left:10px ;" class="fixed-width">Sub Department</th>
+                                <td mat-cell *matCellDef="let element"  class="fixed-width">{{element.sub_department_name}} </td>
+                              </ng-container>
+
+
+                              <ng-container matColumnDef="DOB">
+                                <th mat-header-cell *matHeaderCellDef class="text-center">DOB</th>
+                                <td mat-cell *matCellDef="let element" class="text-center"><div *ngIf="element.dateOfBirth">{{element.date_of_birth|date:"dd-MM-yyyy"}}</div><div *ngIf="!element.dateOfBirth"></div> {{element.date_of_birth|date:"dd-MM-yyyy"}}</td>
+                              </ng-container>
+
+
+                              <ng-container matColumnDef="Employement Date">
+                                <th mat-header-cell *matHeaderCellDef class="text-center">Employement Date</th>
+                                <td mat-cell *matCellDef="let element" class="text-center">{{element.date_of_joining|date:"dd-MM-yyyy"}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Email">
+                                <th mat-header-cell *matHeaderCellDef class="text-center">Email</th>
+                                <td mat-cell *matCellDef="let element" class="text-center">{{element.company_email_id}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="PAN No">
+                                <th mat-header-cell *matHeaderCellDef class="text-center">PAN No</th>
+                                <td mat-cell *matCellDef="let element" class="text-center">{{element.pan_no}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Mobile">
+                                <th mat-header-cell *matHeaderCellDef class="text-center">Mobile</th>
+                                <td mat-cell *matCellDef="let element" class="text-center">{{element.mobile_number}}</td>
+                              </ng-container>
+                              
+                              <ng-container matColumnDef="Pf No">
+                                <th mat-header-cell *matHeaderCellDef class="text-center">Pf No</th>
+                                <td mat-cell *matCellDef="let element" class="text-center">{{element.pfno}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Uan No">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Uan No</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.uan}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Adhaar Card No">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Adhaar Card No</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.aadhaar_card_no}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Account No">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Account No</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.account_no}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Account Type">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Account Type</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.account_type}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Bank Name">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Bank Name</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.bank_name}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="IFSC Code">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">IFSC Code</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.ifsc_code}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Payment Method">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Payment Method</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.payment_method}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Category">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Category</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.category_name}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Blood Group">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Blood Group</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.bloodGroup}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Age">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Age</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.Age}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="Experience">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">Experience</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.Experience}}</td>
+                              </ng-container>
+
+
+                              <ng-container matColumnDef="PL">
+                                <th mat-header-cell *matHeaderCellDef  class="text-center">PL</th>
+                                <td mat-cell *matCellDef="let element"  class="text-center">{{element.PL}}</td>
+                              </ng-container>
+
+  
+
+                              
+
+                            <!-- <tr>
+                                <th>Srno.</th>
+                                <th>Employee Code</th>
+                                <th>Employee FullName</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Experience</th>
+                                <th>DOB</th>
+                                <th>Employement Date</th>
+                                <th>Email</th>
+                                <th>State</th>
+                                <th>Branch</th>
+                                <th>Category</th>
+                                <th>Department</th>
+                                <th>SubDepartment</th>
+                                <th>SubDepartment 1</th>
+                                <th>SubDepartment 2</th>
+                                <th>Designation</th>
+                                <th>Paycader Name</th>
+                                <th>Religion Name</th>
+                                <th>Reporting Manager 1</th>
+                                <th>Reporting Manager 2</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.employeeCode}}</td>
+                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                <td>{{item.firstName}}</td>
+                                <td>{{item.middleName}}</td>
+                                <td>{{item.lastName}}</td>
+                                <td>{{item.gender}}</td>
+                                <td>{{item.experience}}</td>
+                                <td>{{item.dateOfBirth|date:"dd-MM-yyyy"}}</td>
+                                <td>{{item.dateOfJoining|date:"dd-MM-yyyy"}}</td>
+                                <td>{{item.personalEmailId}}</td>
+                                <td>{{item.stateName}}</td>
+                                <td>{{item.branchName}}</td>
+                                <td>{{item.categoryName}}</td>
+                                <td>{{item.departmentName}}</td>
+                                <td>{{item.subDepartmentName}}</td>
+                                <td>{{item.subDepartment2}}</td>
+                                <td>{{item.subDepartment3}}</td>
+                                <td>{{item.designation}}</td>
+                                <th>{{item.grade}}</th>
+                                <td>{{religionName}}</td>
+                                <td>{{item.reportingManager1}}</td>
+                                <td>{{item.reportingManager2}}</td>
+                                <td>{{item.status}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Srno.</th>
+                                <th>Employee Code</th>
+                                <th>Employee FullName</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Experience</th>
+                                <th>DOB</th>
+                                <th>Employement Date</th>
+                                <th>Email</th>
+                                <th>State</th>
+                                <th>Branch</th>
+                                <th>Category</th>
+                                <th>Department</th>
+                                <th>SubDepartment</th>
+                                <th>SubDepartment 1</th>
+                                <th>SubDepartment 2</th>
+                                <th>Designation</th>
+                                <th>Paycader Name</th>
+                                <th>Religion Name</th>
+                                <th>Reporting Manager 1</th>
+                                <th>Reporting Manager 2</th>
+                                <th>Status</th>
+                            </tr>
+                        </tfoot> -->
+                        <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: allColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row" *ngIf="data">
+
+
+
+        <div class="col-md-12">
+            <div class="card mb-0">
+
+                <div class="table-responsive" *ngIf="data">
+                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Srno.</th>
+                                <th>Employee Code</th>
+                                <th>Employee FullName</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Experience</th>
+                                <th>DOB</th>
+                                <th>Employement Date</th>
+                                <th>Email</th>
+                                <th>State</th>
+                                <th>Branch</th>
+                                <th>Category</th>
+                                <th>SubCategory</th>
+                                <th>Department</th>
+                                <th>SubDepartment</th>
+                                <th>SubDepartment 1</th>
+                                <th>SubDepartment 2</th>
+                                <th>Designation</th>
+                                <th>Paycader Name</th>
+                                <th>Reporting Manager 1</th>
+                                <th>Reporting Manager 2</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data; let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.employeeCode}}</td>
+                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                <td>{{item.firstName}}</td>
+                                <td>{{item.middleName}}</td>
+                                <td>{{item.lastName}}</td>
+                                <td>{{item.gender}}</td>
+                                <td>{{item.experience}}</td>
+                                <td>{{item.dateOfBirth|date:"dd-MM-yyyy"}}</td>
+                                <td>{{item.dateOfJoining|date:"dd-MM-yyyy"}}</td>
+                                <td>{{item.personalEmailId}}</td>
+                                <td>{{item.state}}</td>
+                                <td>{{item.branch}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.subCategory}}</td>
+                                <td>{{item.department}}</td>
+                                <td>{{item.subDepartment}}</td>
+                                <td>{{item.subDepartment2}}</td>
+                                <td>{{item.subDepartment3}}</td>
+                                <td>{{item.designation}}</td>
+                                <th>{{item.grade}}</th>
+                                <td>{{item.reportingManager1}}</td>
+                                <td>{{item.reportingManager2}}</td>
+                                <td>{{item.status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>

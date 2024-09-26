@@ -1,0 +1,1185 @@
+<!-- Page Content -->
+<div class="content container-fluid pb-0">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <div></div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Job Dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /Page Header -->
+
+    <form [formGroup]="searchForm">
+        <div class="row filter-row p-3 mb-4" style="border: 3px solid #ffc2ad;
+        background: #fff3ef;">
+            <div class="col-md-12">
+                <div class="row ">
+                    <div class="col-sm-4">
+
+                        <label class="focus-label">Branch</label>
+                        <select class="form-select form-control" formControlName="branch">
+                               <option value="">--Select--</option>
+                               <option *ngFor="let item of branch">{{item.branchName}}</option>
+                           </select>
+
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">Department</label>
+                        <select class="form-select form-control" formControlName="department">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let item of department">{{item.departmentName}}</option>
+                                     </select>
+
+                    </div>
+
+                    <div class="col-sm-4 text-end">
+                        <div class="submit">
+                            <a class="btn btn btn-outline-danger me-2" (click)="cancel()">Cancel</a>
+                            <a class="btn btn-primary" (click)="dashboardDataBranchWise()">Search</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header one click" (click)="route('1')">
+                    <div class="text-center w-100 p-3">
+                        <h3 class="bl-text mb-1 click" (click)="route('1')">{{active?active:0}} </h3>
+                        <h2>Active</h2>
+                        <mat-progress-bar mode="determinate" [value]='activePer'></mat-progress-bar>
+                        <div class="circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                              </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header two click" (click)="route('0')">
+                    <div class="text-center w-100 p-3">
+
+                        <h3 class="bl-text mb-1 click" (click)="route('0')">{{inactive?inactive:0}}</h3>
+                        <h2>Inactive</h2>
+
+                        <mat-progress-bar mode="determinate" [value]='inactivePer'></mat-progress-bar>
+                        <div class="circle two">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill-x" viewBox="0 0 16 16">
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708Z"/>
+                              </svg>
+                        </div>
+                        <!-- <ng-template *ngIf="!dashboardData">
+                            <h3 class="bl-text mb-1">0</h3>
+                            <h2>Inactive</h2>
+                           
+                            <mat-progress-bar mode="determinate" value='0' ></mat-progress-bar>
+                            </ng-template> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header three click" (click)="route('4')">
+                    <div class="text-center w-100 p-3">
+
+                        <h3 class="bl-text mb-1 click" (click)="route('onhold')">{{onhold?onhold:0}}</h3>
+                        <h2>On Hold</h2>
+                        <mat-progress-bar mode="determinate" [value]="onholdPer"></mat-progress-bar>
+                        <div class="circle three">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill-slash" viewBox="0 0 16 16">
+                            <path d="M13.879 10.414a2.501 2.501 0 0 0-3.465 3.465l3.465-3.465Zm.707.707-3.465 3.465a2.501 2.501 0 0 0 3.465-3.465Zm-4.56-1.096a3.5 3.5 0 1 1 4.949 4.95 3.5 3.5 0 0 1-4.95-4.95ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                          </svg>
+                        </div>
+
+                        <!-- <ng-template *ngIf="!dashboardData">
+                        <h3 class="bl-text mb-1">0</h3>
+                        <h2>On Hold</h2>
+                        <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
+                       </ng-template> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card ">
+                <div class="card-header four click" (click)="route('total')">
+                    <div class="text-center w-100 p-3">
+
+                        <h3 class="bl-text mb-1 click" (click)="route('total')">{{total?total:0}}</h3>
+                        <h2>Total</h2>
+                        <mat-progress-bar mode="determinate" [value]="100"></mat-progress-bar>
+
+                        <div class="circle four">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                              </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header five click" (click)="route('5')">
+                    <div class="text-center w-100 p-3">
+                        
+                        <h3 class="bl-text mb-1 click" (click)="route('5')">{{fnf?fnf:0}}</h3>
+                        <h2>FNF</h2>
+                        <mat-progress-bar mode="determinate" [value]="fnfPer"></mat-progress-bar>
+                        <div class="circle five">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                              </svg>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header six click" (click)="route('2')">
+                    <div class="text-center w-100 p-3">
+                        
+                            <h3 class="bl-text mb-1 click" (click)="route('2')">{{deleted?deleted:0}}</h3>
+                        <h2>Deleted</h2>
+                        <mat-progress-bar mode="determinate" [value]="deletedPer"></mat-progress-bar>
+                        <div class="circle six">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                          </svg>
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header seven click" (click)="route('3')">
+                    <div class="text-center w-100 p-3">
+                        
+                        <h3 class="bl-text mb-1 click" (click)="route('3')">{{block?block:0}}</h3>
+                        <h2>Block</h2>
+                        <mat-progress-bar mode="determinate" [value]="blockPer" ></mat-progress-bar>
+                        <div class="circle seven">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5v-1a1.9 1.9 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z"/>
+                              </svg>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3"> 
+            <div class="card flex-fill tickets-card">
+                <div class="card-header eight click" (click)="route('weekoff')">
+                    <div class="text-center w-100 p-3">
+                         
+                        <h3 class="bl-text mb-1 click" (click)="route('weekoff')">{{weekoff?weekoff:0}}</h3>   
+                        <h2>Weekoff</h2>
+                        <mat-progress-bar mode="determinate" [value]="weekoffPer"></mat-progress-bar>
+                        <div class="circle eight">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
+                                <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2ZM1 3a1 1 0 0 1 1-1h2v2H1V3Zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3H5Zm-4-2h3v2H2a1 1 0 0 1-1-1v-1Zm3-1H1V8h3v2Zm0-3H1V5h3v2Z"/>
+                              </svg>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header nine click" (click)="route('leave')">
+                    <div class="text-center w-100 p-3">
+                        
+                        <h3 class="bl-text mb-1 click" (click)="route('leave')">{{leave?leave:0}}</h3>
+                        <h2>Leave Employee</h2>
+                        <mat-progress-bar mode="determinate" [value]="leavePer"></mat-progress-bar>
+                        <div class="circle nine">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header ten click" (click)="route('present')">
+                    <div class="text-center w-100 p-3">
+                        
+                        <h3 class="bl-text mb-1 click" (click)="route('present')">{{present?present:0}}</h3>
+                        <h2>Present</h2>
+                        <mat-progress-bar mode="determinate" [value]="presentPer"></mat-progress-bar>
+                        <div class="circle ten">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                              </svg>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header eleven click" (click)="route('absent')">
+                    <div class="text-center w-100 p-3">
+                        
+                        <h3 class="bl-text mb-1 click" (click)="route('absent')">{{absent?absent:0}}</h3>
+                        <h2>Absent</h2>
+                        <mat-progress-bar mode="determinate" [value]="absentPer"></mat-progress-bar>
+                        <div class="circle eleven">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill-x" viewBox="0 0 16 16">
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708Z"/>
+                              </svg>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header twell click" (click)="route('late')">
+                    <div class="text-center w-100 p-3">
+                        
+                        <h3 class="bl-text mb-1 click" (click)="route('late')">{{late?late:0}} </h3>
+                        <h2>Late</h2>
+                        <mat-progress-bar mode="determinate" [value]="latePer"></mat-progress-bar>
+                        <div class="circle twell">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill-exclamation" viewBox="0 0 16 16">
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                                <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V11a.5.5 0 0 0-.5-.5Zm0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Z"/>
+                              </svg>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>-->
+
+
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div class="card">
+                        <div class="card-body" style="height: 405px;height: 405px; background: #fff0ea; border-radius: 10px;">
+                            <h3 class="card-title new">Employee Structure</h3>
+                            <!-- <div mk-morris-js [options]="chartOptions" [data]="chartData" type="Bar">
+                            </div> -->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12 mt-4 mb-3">
+                                        <!-- <div class="task-box color-one">
+                                            <div class="task-media">
+                                                <div class="task-icon">
+                                                    <span class="material-icons-outlined">
+                                                        person
+                                                    </span>
+                                                </div>
+                                                <div class="task-info">
+                                                    <h5>Male</h5>
+                                                    <h2>55</h2>
+                                                </div>
+                                            </div>
+                                            <div class="pr">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                         </div> -->
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div class="task-media">
+                                                    <div class="task-icon">
+                                                        <i class="fas fa-male"></i>
+                                                    </div>
+                                                    <div class="task-info">
+                                                        <h5>Male</h5>
+                                                        <h2>{{maleEmployee}}</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 align-self-center">
+                                                <div>
+                                                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="task-box color-two">
+                                            <div class="task-media">
+                                                <div class="task-icon">
+                                                    <i class="fas fa-female"></i>
+                                                </div>
+                                                <div class="task-info">
+                                                    <h5>Female</h5>
+                                                    <h2>{{femaleEmployee}}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 align-self-center">
+                                                <div>
+                                                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="currentYear mt-4">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h3 style="color: #ff7849; font-weight: 700;">CURRENT YEARS</h3>
+                                            <h4 class="m-0 font-weight: 600;">Financial Year : 04/01/2022 TO 03/31/2023</h4>
+
+                                            <h4 class="m-0">Calendar Year : 01/01/2022 TO 12/31/2022</h4>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="card">
+                        <div class="card-body" style="height: 180px;background: #fff0ea; border-radius: 10px;">
+                            <h3 class="card-title new">Birthday Celebrations</h3>
+                            <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div> -->
+                            <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="500" style="height: 90%;margin-top: 1.2rem;" *ngIf="birthdate">
+                                <div *ngFor="let item of birthdate">{{item.firstName}} {{item.lastName}} </div>
+                                <div *ngIf="!birthdate.length">No Birthdays in the following month</div>
+                            </marquee>
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body" style="height: 180px; background: #fff0ea; border-radius: 10px;">
+                            <h3 class="card-title new">Holiday Celebrations</h3>
+                            <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div> -->
+                            <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="500" style="height: 90%;margin-top: 1.2rem;" *ngIf="holiday">
+                                <div *ngFor="let item of holiday">{{item.date | date}} - {{item.holidayName}}</div>
+                                <!-- <div>12 Jan 2023  - Anurag Jayanti</div>
+                               <div>22 Jan 2023  - Piyush Jayanti</div>
+                               <div>26 Jan 2023  - Indipendance Day</div> -->
+                                <div *ngIf="!holiday.length"> No Holidays in the following month</div>
+                            </marquee>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center" *ngFor="let item of data">
+                    <div class="card">
+                        <div class="card-body" style="height: 400px;height: 405px; background: #fff0ea;border-radius: 10px;">
+                            <!-- <h3 class="card-title">Vision & Mission</h3> -->
+                            <!-- <div mk-morris-js [options]="lineOption" [data]="lineData" type="Line"></div> -->
+                            <div class="row text-center">
+                                <div class="col">
+                                    <div style="width: 16rem;margin: 4rem auto;">
+                                        <img class="card-img-top img-circle rounded-circle" src="https://dummyimage.com/100x100/000/fff" alt="Card image cap">
+                                        <div class="card-block">
+                                            <h3 class="card-position" style="color: #ff7849; font-weight: 700;">Vision</h3>
+                                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                            <p>{{item.vision}}</p>
+                                            <h3 class="card-position" style="color: #ff7849;font-weight: 700;">Mission</h3>
+                                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                            <p>{{item.mission}}</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header">
+                    <div class="">
+                        <h2>New</h2>
+                        <h3 class="bl-text">112</h3>
+                    </div>
+                    <h6>+10%</h6>
+                </div>
+                <div class="" id="newTicketChart">
+                    <apx-chart
+                        [series]="newTicketChartOptions.series"
+                        [chart]="newTicketChartOptions.chart"
+                        [xaxis]="newTicketChartOptions.xaxis"
+                        [stroke]="newTicketChartOptions.stroke"
+                        [dataLabels]="newTicketChartOptions.dataLabels"
+                        [yaxis]="newTicketChartOptions.yaxis"
+                        [labels]="newTicketChartOptions.labels"
+                        [legend]="newTicketChartOptions.legend"
+                        [title]="newTicketChartOptions.title"
+                        [subtitle]="newTicketChartOptions.subtitle"
+                    ></apx-chart> 
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header">
+                    <div class="">
+                        <h2>Earnings</h2>
+                        <h3 class="org-text">$1,42,300</h3>
+                    </div>
+                    <h6>+10%</h6>
+                </div>
+                <div class="" id="solvedTicketChart">
+                    <apx-chart
+                        [series]="solvedTicketChartOptions.series"
+                        [chart]="solvedTicketChartOptions.chart"
+                        [xaxis]="solvedTicketChartOptions.xaxis"
+                        [stroke]="solvedTicketChartOptions.stroke"
+                        [dataLabels]="solvedTicketChartOptions.dataLabels"
+                        [yaxis]="solvedTicketChartOptions.yaxis"
+                        [labels]="solvedTicketChartOptions.labels"
+                        [legend]="solvedTicketChartOptions.legend"
+                        [title]="solvedTicketChartOptions.title"
+                        [subtitle]="solvedTicketChartOptions.subtitle"
+                    ></apx-chart>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header">
+                    <div class="">
+                        <h2>Expenses</h2>
+                        <h3 class="red-text">$8,500</h3>
+                    </div>
+                    <h6>+10%</h6>
+                </div>
+                <div class="" id="openTicketChart">
+                    <apx-chart
+                        [series]="openTicketChartOptions.series"
+                        [chart]="openTicketChartOptions.chart"
+                        [xaxis]="openTicketChartOptions.xaxis"
+                        [stroke]="openTicketChartOptions.stroke"
+                        [dataLabels]="openTicketChartOptions.dataLabels"
+                        [yaxis]="openTicketChartOptions.yaxis"
+                        [labels]="openTicketChartOptions.labels"
+                        [legend]="openTicketChartOptions.legend"
+                        [title]="openTicketChartOptions.title"
+                        [subtitle]="openTicketChartOptions.subtitle"
+                    ></apx-chart>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex">
+            <div class="card flex-fill tickets-card">
+                <div class="card-header">
+                    <div class="">
+                        <h2>Profit</h2>
+                        <h3 class="grn-text">$1,12,000</h3>
+                    </div>
+                    <h6 class="red-text">-10%</h6>
+                </div>
+                <div class="" id="pendingTicketChart">
+                    <apx-chart
+                        [series]="pendingTicketChartOptions.series"
+                        [chart]="pendingTicketChartOptions.chart"
+                        [xaxis]="pendingTicketChartOptions.xaxis"
+                        [stroke]="pendingTicketChartOptions.stroke"
+                        [dataLabels]="pendingTicketChartOptions.dataLabels"
+                        [yaxis]="pendingTicketChartOptions.yaxis"
+                        [labels]="pendingTicketChartOptions.labels"
+                        [legend]="pendingTicketChartOptions.legend"
+                        [title]="pendingTicketChartOptions.title"
+                        [subtitle]="pendingTicketChartOptions.subtitle"
+                    ></apx-chart>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Statistics Widget -->
+    <!-- <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-5 d-flex">
+            <div class="card project-card flex-fill">
+                <h4>Statistics</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card st-card st-c1">
+                            <div class="stats-info">
+                                <div class="text-start">
+                                    <p>Today</p>
+                                    <h5>3.45 / 8 hrs</h5>
+                                </div>
+                                
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card st-card st-c2">
+                            <div class="stats-info">
+                                <div class="text-start">
+                                    <p>This Week</p>
+                                    <h5>3.45 / 8 hrs</h5>
+                                </div>
+                                
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card st-card st-c3">
+                            <div class="stats-info">
+                                <div class="text-start">
+                                    <p>This Month</p>
+                                    <h5>3.45 / 8 hrs</h5>
+                                </div>
+                                
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card st-card st-c4">
+                            <div class="stats-info">
+                                <div class="text-start">
+                                    <p>Remaining</p>
+                                    <h5>3.45 / 8 hrs</h5>
+                                </div>
+                                
+                                <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12 col-xl-7 d-flex">
+            <div class="card project-card flex-fill">
+                <h4>Projects</h4>
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                        <div id="radialBarChart">
+                            <apx-chart
+                                [series]="radialBarChartOptions.series"
+                                [chart]="radialBarChartOptions.chart"
+                                [plotOptions]="radialBarChartOptions.plotOptions"
+                                [labels]="radialBarChartOptions.labels"
+                                [fill]="radialBarChartOptions.fill"
+                            ></apx-chart>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <div class="task-box color-one">
+                                    <div class="task-media">
+                                        <div class="task-icon">
+                                            <img src="assets/img/icons/icon-01.png" alt="Icons">
+                                        </div>
+                                        <div class="task-info">
+                                            <h5>Pending Tasks</h5>
+                                            <h2>55</h2>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="task-redirect">
+                                        <div class="redirect-icon">
+                                            <i class="fas fa-long-arrow-alt-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="task-box color-two">
+                                    <div class="task-media">
+                                        <div class="task-icon">
+                                            <img src="assets/img/icons/icon-02.png" alt="Icons">
+                                        </div>
+                                        <div class="task-info">
+                                            <h5>Completed Tasks</h5>
+                                            <h2>55</h2>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="task-redirect">
+                                        <div class="redirect-icon">
+                                            <i class="fas fa-long-arrow-alt-right"></i>
+                                        </div>									
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="task-box color-three">
+                                    <div class="task-media">
+                                        <div class="task-icon">
+                                            <img src="assets/img/icons/icon-03.png" alt="Icons">
+                                        </div>
+                                        <div class="task-info">
+                                            <h5>Total Projects</h5>
+                                            <h2>55</h2>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="task-redirect">
+                                        <div class="redirect-icon">
+                                            <i class="fas fa-long-arrow-alt-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- /Statistics Widget -->
+
+    <!-- <div class="row">
+        <div class="col-md-6 d-flex">
+            <div class="card card-table flex-fill">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Invoices</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-nowrap custom-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Invoice ID</th>
+                                    <th>Client</th>
+                                    <th>Due Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a routerLink="/layout/accounts/invoice-view">#INV-0001</a></td>
+                                    <td>
+                                        <h2><a>Global Technologies</a></h2>
+                                    </td>
+                                    <td>11 Mar 2019</td>
+                                    <td>$380</td>
+                                    <td>
+                                        <span class="badge bg-inverse-warning">Partially Paid</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a routerLink="/layout/accounts/invoice-view">#INV-0002</a></td>
+                                    <td>
+                                        <h2><a>Delta Infotech</a></h2>
+                                    </td>
+                                    <td>8 Feb 2019</td>
+                                    <td>$500</td>
+                                    <td>
+                                        <span class="badge bg-inverse-success">Paid</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a routerLink="/layout/accounts/invoice-view">#INV-0003</a></td>
+                                    <td>
+                                        <h2><a>Cream Inc</a></h2>
+                                    </td>
+                                    <td>23 Jan 2019</td>
+                                    <td>$60</td>
+                                    <td>
+                                        <span class="badge bg-inverse-danger">Unpaid</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a routerLink="/layout/invoice/invoicelist">View all invoices</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex">
+            <div class="card card-table flex-fill">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Payments</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table custom-table table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Invoice ID</th>
+                                    <th>Client</th>
+                                    <th>Payment Type</th>
+                                    <th>Paid Date</th>
+                                    <th>Paid Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a routerLink="/layout/accounts/invoice-view">#INV-0001</a></td>
+                                    <td>
+                                        <h2><a>Global Technologies</a></h2>
+                                    </td>
+                                    <td>Paypal</td>
+                                    <td>11 Mar 2019</td>
+                                    <td>$380</td>
+                                </tr>
+                                <tr>
+                                    <td><a routerLink="/layout/accounts/invoice-view">#INV-0002</a></td>
+                                    <td>
+                                        <h2><a>Delta Infotech</a></h2>
+                                    </td>
+                                    <td>Paypal</td>
+                                    <td>8 Feb 2019</td>
+                                    <td>$500</td>
+                                </tr>
+                                <tr>
+                                    <td><a routerLink="/layout/accounts/invoice-view">#INV-0003</a></td>
+                                    <td>
+                                        <h2><a>Cream Inc</a></h2>
+                                    </td>
+                                    <td>Paypal</td>
+                                    <td>23 Jan 2019</td>
+                                    <td>$60</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a routerLink="/layout/payment/paymentllist">View all payments</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div class="row">
+        <div class="col-md-6 d-flex">
+            <div class="card card-table flex-fill">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Clients</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table custom-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                                    src="assets/img/profiles/avatar-19.jpg"></a>
+                                            <a routerLink="/layout/employees/employeeprofile">Barry Cuda <span>CEO</span></a>
+                                        </h2>
+                                    </td>
+                                    <td>barrycuda@example.com</td>
+                                    <td>
+                                        <div class="dropdown action-label">
+                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-dot-circle-o text-success"></i> Active
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                                    src="assets/img/profiles/avatar-19.jpg"></a>
+                                            <a routerLink="/layout/employees/employeeprofile">Tressa Wexler
+                                                <span>Manager</span></a>
+                                        </h2>
+                                    </td>
+                                    <td>tressawexler@example.com</td>
+                                    <td>
+                                        <div class="dropdown action-label">
+                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                                    src="assets/img/profiles/avatar-07.jpg"></a>
+                                            <a routerLink="/layout/employees/employeeprofile">Ruby Bartlett
+                                                <span>CEO</span></a>
+                                        </h2>
+                                    </td>
+                                    <td>rubybartlett@example.com</td>
+                                    <td>
+                                        <div class="dropdown action-label">
+                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                                    src="assets/img/profiles/avatar-06.jpg"></a>
+                                            <a routerLink="/layout/employees/employeeprofile"> Misty Tison <span>CEO</span></a>
+                                        </h2>
+                                    </td>
+                                    <td>mistytison@example.com</td>
+                                    <td>
+                                        <div class="dropdown action-label">
+                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-dot-circle-o text-success"></i> Active
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                                    src="assets/img/profiles/avatar-14.jpg"></a>
+                                            <a routerLink="/layout/employees/employeeprofile"> Daniel Deacon
+                                                <span>CEO</span></a>
+                                        </h2>
+                                    </td>
+                                    <td>danieldeacon@example.com</td>
+                                    <td>
+                                        <div class="dropdown action-label">
+                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a routerLink="/layout/clients/clientspage">View all clients</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex">
+            <div class="card card-table flex-fill">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Recent Projects</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table custom-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Project Name </th>
+                                    <th>Progress</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h2><a routerLink="/layout/projects/projectview">Office Management</a></h2>
+                                        <small class="block text-ellipsis">
+                                            <span>1</span> <span class="text-muted">open tasks, </span>
+                                            <span>9</span> <span class="text-muted">tasks completed</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped">
+                                            <div class="progress-bar" role="progressbar" tooltip="65%" style="width: 65%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2><a routerLink="/layout/projects/projectview">Project Management</a></h2>
+                                        <small class="block text-ellipsis">
+                                            <span>2</span> <span class="text-muted">open tasks, </span>
+                                            <span>5</span> <span class="text-muted">tasks completed</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped">
+                                            <div class="progress-bar" role="progressbar" tooltip="15%" style="width: 15%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2><a routerLink="/layout/projects/projectview">Video Calling App</a></h2>
+                                        <small class="block text-ellipsis">
+                                            <span>3</span> <span class="text-muted">open tasks, </span>
+                                            <span>3</span> <span class="text-muted">tasks completed</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped">
+                                            <div class="progress-bar" role="progressbar" tooltip="49%" style="width: 49%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2><a routerLink="/layout/projects/projectview">Hospital Administration</a></h2>
+                                        <small class="block text-ellipsis">
+                                            <span>12</span> <span class="text-muted">open tasks, </span>
+                                            <span>4</span> <span class="text-muted">tasks completed</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped">
+                                            <div class="progress-bar" role="progressbar" tooltip="88%" style="width: 88%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h2><a routerLink="/layout/projects/projectview">Digital Marketplace</a></h2>
+                                        <small class="block text-ellipsis">
+                                            <span>7</span> <span class="text-muted">open tasks, </span>
+                                            <span>14</span> <span class="text-muted">tasks completed</span>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped">
+                                            <div class="progress-bar" role="progressbar" tooltip="100%" style="width: 100%"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                                        class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a routerLink="/layout/projects/projectpage">View all projects</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>
+<!-- /Page Content -->

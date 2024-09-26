@@ -1,0 +1,128 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Branch Setting</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item">General SetUp</li>
+                            <li class="breadcrumb-item active" aria-current="page">Branch Setting</li>
+                        </ol>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Branch Setting</a>
+                    <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="data">
+                            <thead>
+                                <tr>
+                                    <th>Setting Parameter</th>
+                                    <th>Expiry Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of data">
+                                    <td>{{item.paramaterName}}</td>
+                                    <td>{{item.softExpiryDate | date:'dd-MM-YYYY'}}</td>
+                                    <td>{{item.paramaterStatus}}</td>
+                                    <td class="text-end ico-sec justify-content-start">
+                                        <a (click)="edit(item.settingId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.settingId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!data">
+                            <thead>
+                                <tr>
+                                    <th>Setting Parameter</th>
+                                    <th>Expiry Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of data">
+                                    <td>{{item.paramaterName}}</td>
+                                    <td>{{item.softExpiryDate}}</td>
+                                    <td>{{item.paramaterStatus}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(item.settingId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.settingId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Branch Setting</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="insertSetting">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Expiry Date <small class="text-danger">*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch Setting</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="branchSetting">
+                                    </div>
+                                </div>
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="!editId" (click)="submit()">Submit<img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="editId" (click)="update(editId)">Update<img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button type="button" class="btn btn-inverse" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

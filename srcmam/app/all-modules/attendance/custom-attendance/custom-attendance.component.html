@@ -1,0 +1,135 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Custom Daily Attendance</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+                        <li class="breadcrumb-item active" aria-current="page">Custom Attendance</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12" style="height: 75px;">
+            <form [formGroup]="filterForm">
+            <div class="row">
+                <div class="col-sm-3 col-md-3">  
+                    <div class="form-group form-focus mb-0">
+                        <label>Employee <small *ngIf="filterForm.get('employee').invalid && filterForm.get('employee').touched" style="color:red">*</small></label>
+                        <ng-select class="form-select form-control" formControlName="employee" >
+                            <!-- <option value="">--Select--</option> -->
+                            <ng-option  [value]="item.employeeId" *ngFor="let item of employees">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+                        
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">  
+                    <div class="form-group form-focus mb-0">
+                        <label>From Date <small *ngIf="filterForm.get('fromDate').invalid && filterForm.get('fromDate').touched" style="color:red">*</small></label>
+                        <div class="form-group form-focus mb-0">
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                            </div>
+                           <!-- <small *ngIf="addEmployeeForm.get('fromDate').invalid && addEmployeeForm.get('fromDate').touched"></small> -->
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">  
+                    <div class="form-group form-focus mb-0">
+                        <label>To Date <small *ngIf="filterForm.get('toDate').invalid && filterForm.get('toDate').touched" style="color:red">*</small></label>
+                        <div class="form-group form-focus mb-0">
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                            </div>
+                           <!-- <small *ngIf="addEmployeeForm.get('toDate').invalid && addEmployeeForm.get('toDate').touched"></small> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3" style="margin: auto; margin-top: 12px;">   
+                    <a class="btn btn-success btn-search" (click)="getAttendance()"><i class="fas fa-search me-2"></i> Search </a>
+                </div>
+            </div>
+        </form>
+        </div>
+     
+    </div>
+    <!-- /Search Filter -->
+    <div class="col-sm-12">
+        <div class="card mb-0">
+            <div class="col-sm-4 col-md-3"> 
+      <button class="ml-2"  (click)="exportToExcel()">Excel</button>
+      <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+      </div>
+      </div>
+      </div>
+
+    <div class="row" id="sectionToPrint" #epltable> 
+        <div class="col-md-12">
+            <div class="card mb-0">
+                
+                    <div class="table-responsive">
+                 <table style="width:100%; background-color: white;" class="table table-bordered datatable"  id="datatable" *ngIf="attendanceTable"
+                   >
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Date</th>
+                            <th colspan="3">Attendance</th>
+                            <th colspan="3">Shift</th>
+                            <th colspan="2">Non-Working</th>
+                            <th rowspan="2">Present (Day/Half)</th>
+                            <th rowspan="2">Attendance</th>
+                            <th rowspan="2">Late</th>
+                            <th rowspan="2">Early</th>
+                            <th rowspan="2">Presence</th>
+                            <th rowspan="2">OT</th>
+                            <th rowspan="2">Remarks</th>
+                            </tr>
+                            <tr>
+                                <th>In Time	</th>
+                                <th>Out Time</th>
+                                <th>Worked HRS</th>
+                                <th>HRS</th>
+                                <th>In Time</th>
+                                <th>Out Time</th>
+                                <th>Type</th>
+                                <th>Day/Half</th>
+                            </tr>
+                       
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of attendanceTable">
+                            <td>{{item.date | date:'dd-MM-yyyy'}}</td>
+                            <td>{{item.ainTime?item.ainTime[0]:'0'}}:{{item.ainTime?item.ainTime[1]:'0'}}</td>
+                            <td>{{item.aoutTime?item.aoutTime[0]:'0'}}:{{item.aoutTime?item.aoutTime[1]:'0'}}</td>
+                            <td>{{item.workedhours?item.workedhours:''}}</td>
+                            <td>{{item.shrs}}</td>
+                            <td>{{item.sinTime?item.sinTime[0]:'0'}}:{{item.sinTime?item.sinTime[1]:'0'}}</td>
+                            <td>{{item.soutTime?item.soutTime[0]:'0'}}:{{item.soutTime?item.soutTime[1]:'0'}}</td>
+                            <td>{{item.type?item.type:''}}</td>
+                            <td>{{item.nonDayOrHalf?item.nonDayOrHalf:''}}</td>
+                            <td>{{item.present?item.present:''}}</td>
+                            <td>{{item.attendance?item.attendance:''}}</td>
+                            <td>{{item.late?item.late[0] :'0'}} : {{item.late?item.late[1] :'0'}}</td>
+                            <td>{{item.early?item.early[0]:'0'}} : {{item.early?item.early[1]:'0'}}</td>
+                            <td>{{item.presence?item.presence:''}}</td>
+                            <td>{{item.ot?item.ot[0]:'0'}} : {{item.ot?item.ot[1]:'0'}}</td>
+                            <td>{{item.remarks?item.remarks:''}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

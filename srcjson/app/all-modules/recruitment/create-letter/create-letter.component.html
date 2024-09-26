@@ -1,0 +1,150 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Create Letter</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Create Letter</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i>Create New</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="showMyContainer==false ">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Template assign to employee list</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Date of Creation</th>
+                                        <th>Template Name</th>
+                                        <!-- <th>ContactNo</th>
+                                        <th>Contact Person Name</th> -->
+                                        <!-- <th>type</th> -->
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let item of tableData; let i = index">
+                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                        <td>{{item.city}}</td>
+                                        <td>{{item.state}}</td>
+                                        <!-- <td>{{item.contactNo}}</td>
+                                        <td>{{item.contactperson}}</td> -->
+                                        <!-- <td>{{item.type}}</td> -->
+
+                                        <td class="text-centre ico-sec justify-content-end">
+                                            <a class="fas fa-pen" (click)="edit(item)"></a>
+                                            <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="showMyContainer==true">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title mb-0">Create New Letter</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="searchForm">
+                                    <div class="form-row row">
+
+
+
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="form-group form-focus mb-0">
+                                                <label>Template Name<small class="text-danger">*</small></label>
+                                                <ng-select class="form-select form-control" formControlName="templateName">
+                                                    <ng-option value="">--Select--</ng-option>
+                                                    <ng-option *ngFor="let item of template" [value]="item.templateId">[{{item.templateId}}] {{item.templateName}}</ng-option>
+                                                </ng-select>
+
+                                                <small *ngIf="searchForm.get('templateName').invalid && searchForm.get('templateName').touched" class="text-danger"> *Template Name is Required</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-3" style=" margin-top: 20px;">
+                                            <a class="btn btn-success btn-search" (click)="serach()"><i class="fas fa-search me-2"></i> Search </a>
+                                        </div>
+
+
+                                    </div>
+                                    <div *ngIf="searchData?.length!=0 || editData?.length!=0 ">
+
+                                        <div class="col-sm-6 col-md-3">
+                                            <div class="form-group form-focus mb-0">
+                                                <label>Employee Name <small class="text-danger">*</small></label>
+                                                <ng-select class="form-select  form-control" formControlName="employeeName">
+                                                    <ng-option value="">--Select--</ng-option>
+                                                    <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                                </ng-select>
+                                                <small *ngIf="searchForm.get('employeeName').invalid && searchForm.get('employeeName').touched" class="text-danger"> *Employee Name is Required</small>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <label>Body  <small>*</small></label>
+                                        <ckeditor style="height: 20rem;" #editor [editor]="Editor" formControlName="template" (change)="onChange($event)"></ckeditor>
+                                        <br>
+                                        <div>
+                                            <ng-container formArrayName="newRequest" *ngFor="let item of quantities().controls; let i = index;">
+
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-md-3">
+                                                            <div [formGroupName]="i" class="col-sm-12">
+                                                                <lable>Variable{{i+1}}:</lable>
+                                                                <input type="text" class="form-control" formControlName="variable"><br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <button *ngIf="editId==null" [disabled]="disabled" class="btn btn-primary" (click)="assign()">Assign</button>
+                                        <button *ngIf="editId!=null" [disabled]="disabled" class="btn btn-primary" (click)="update(editId)">Update</button>&nbsp;
+                                        <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

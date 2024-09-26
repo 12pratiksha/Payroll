@@ -1,0 +1,15 @@
+.card {
+    margin-bottom: 11px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgb(209 209 209 / 25%);
+    border-radius: 10px;
+    /* padding: 6px; */
+    border: none;
+}
+
+.personal-info li .text {
+    color: #8e8e8e;
+    display: block;
+    overflow: hidden;
+    margin-left: 291px;
+}

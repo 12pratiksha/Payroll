@@ -1,0 +1,135 @@
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Salary Policy Form</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">Masters</li>
+                        <li class="breadcrumb-item">Payroll Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Policy Setting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Salary Policy Form </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+
+                <a class="btn btn-success btn-add-emp" routerLink="/layout/masters/salaryPolicy"><i class="fas fa-bars"></i>Show Table</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Salary Policy Form</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="salaryPolicyForm">
+                                <div class="form-row row">
+                                    <div class="col-sm-4">
+                                        <label class="focus-label">Effective Date</label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker formControlName="effectiveDate">
+                                            </div>
+                                            <small *ngIf="salaryPolicyForm.get('effectiveDate').invalid && salaryPolicyForm.get('effectiveDate').touched">This field is required *</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">State</label>
+                                        <select class="form-select floating form-control" formControlName="state">
+                                       <option ></option>
+                                       <option  *ngFor="let item of stateList" [value]="item.stateId">{{item.stateName}}</option>
+                                   </select>
+
+
+                                        <small *ngIf="salaryPolicyForm.get('state').invalid && salaryPolicyForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Branch</label>
+                                        <select class="form-select floating form-control" formControlName="branch">
+                                       <option value=""> </option>
+                                       <option  *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                   </select>
+
+
+                                        <small *ngIf="salaryPolicyForm.get('branch').invalid && salaryPolicyForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom01">Category</label>
+                                        <select class="form-select form-control" formControlName="Category">
+                                 <option value="">--Select--</option>
+                               
+                                 <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>
+                          
+                             </select>
+                                        <small *ngIf="salaryPolicyForm.get('Category').invalid && salaryPolicyForm.get('Category').touched" class="text-danger"> *Category is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Grade</label>
+
+                                        <select class="form-select form-control" formControlName="grade">
+                                     <option value="">--Select--</option>
+                                     <option *ngFor="let item of grade" [value]="item.lookupMasterId">{{item.name}}</option>
+                                 </select>
+                                        <small *ngIf="salaryPolicyForm.get('grade').invalid && salaryPolicyForm.get('grade').touched" class="text-danger"> *Grade is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Days </label>
+                                        <input type="number" class="form-control" formControlName="days">
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Medical Max Amount</label>
+                                        <input type="text" class="form-control" formControlName="medMmount">
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Education  Max Amount </label>
+                                        <input type="text" class="form-control" formControlName="eduAmount">
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Transport  Max Amount</label>
+                                        <input type="text" class="form-control" formControlName="tranAmount">
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Salary on Calender </label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="salaryOnCal">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                                <ng-template #other_content> <button class="btn btn-primary" (click)="update()">Update</button></ng-template>
+
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

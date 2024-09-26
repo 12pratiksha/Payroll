@@ -1,0 +1,225 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Daily Attendance</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <form [formGroup]="filterForm">
+                <div class="row" style="height: 120px;margin-top: 4px;">
+                    <div class="col-sm-1 col-md-1" *ngIf="usertype=='Admin' || usertype=='Super Admin'">
+                        <div class="form-group ">
+                            <label> Inactive Employees</label><br>
+                            <input style="margin-left: -10px;" type="checkbox" formControlName="inactive" class="checkbox-all ms-5" (change)="getEmployees1($event.target.value)">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <label>Employee <small *ngIf="filterForm.get('employee').invalid && filterForm.get('employee').touched" style="color:red">*</small></label>
+                            <ng-select class="form-select form-control" formControlName="employee">
+                                <option value=" ">--Select--</option>
+                                <ng-option [value]="item.employeeId" *ngFor="let item of employees">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <label>Year </label>
+                            <ng-select class="form-select form-control" formControlName="year">
+
+                                <ng-option *ngFor="let item of years" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <label>Month </label>
+                            <ng-select class="form-select form-control" formControlName="month">
+
+                                <ng-option *ngFor="let item of month" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 mb-3" style=" margin-top: 10px;">
+                        <a class="btn btn-success btn-search" (click)="getAttendance()"><i class="fas fa-search me-2"></i> Search <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- /Search Filter -->
+
+
+
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="row" style="height: 50px;
+            margin-top: 4px;">
+                <div class="col-md-2 holiday">
+                    <i class="fa fa-calendar-check"></i> Holiday
+                </div>
+                <div class="col-md-2 offDay">
+                    <i class="fa fa-calendar " aria-hidden="true"></i> Off Days
+                </div>
+                <div class="col-md-2 punchMissing">
+                    <i class="fa fa-exclamation-triangle "></i> Punch Missing
+                </div>
+                <div class="col-md-2 tour">
+                    <i class="fa fa-users " aria-hidden="true"></i> Tour
+                </div>
+                <!-- <div class="col-md-2">
+            <i class="fas fa-search me-2"></i> Col
+          </div> -->
+                <div class="col-md-2 leave">
+                    <i class="fa fa-calendar-plus "></i> Leave
+                </div>
+                <div class="col-md-2 absent">
+                    <i class="fa fa-calendar-minus "></i> Absent
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12">
+        <div class="card mb-0">
+            <div class="col-sm-4 col-md-3">
+                <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="attendanceTable" id="sectionToPrint" #epltable>
+
+
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table style="width:100%; background-color: white;" class="table table-bordered datatable" id="datatable">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Date</th>
+                            <th colspan="3">Attendance</th>
+                            <th colspan="3">Shift</th>
+                            <th colspan="2">Non-Working</th>
+                            <th rowspan="2">Present (Day/Half)</th>
+                            <th rowspan="2">Attendance</th>
+                            <th rowspan="2">Late</th>
+                            <th rowspan="2">Early</th>
+                            <th rowspan="2">Present</th>
+                            <th rowspan="2">OT</th>
+                            <th rowspan="2">Remarks</th>
+                        </tr>
+                        <tr>
+                            <th>In Time </th>
+                            <th>Out Time</th>
+                            <th>Worked HRS</th>
+                            <th>HRS</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>Type</th>
+                            <th>Day/Half</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of attendanceTable" [ngClass]="{'absent': (item.attendance == 'Absent')}">
+                            <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
+                            <td>
+                                <ng-container *ngIf="item.ainTime">
+                                    {{item.ainTime[0]
+                                    < 10? '0' + item.ainTime[0]: item.ainTime[0]}}:{{item.ainTime[1] < 10? '0' + item.ainTime[1]: item.ainTime[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.ainTime">00:00</ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="item.aoutTime">
+                                    {{item.aoutTime[0]
+                                    < 10? '0' + item.aoutTime[0]: item.aoutTime[0]}}:{{item.aoutTime[1] < 10? '0' + item.aoutTime[1]: item.aoutTime[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.aoutTime">00:00</ng-container>
+                                        <!-- {{item.aoutTime?item.aoutTime[0]:'00'}}:{{item.aoutTime?item.aoutTime[1]:'00'}} -->
+                            </td>
+                            <td>
+                                <ng-container *ngIf="item.workedhours">
+                                    {{item.workedhours[0]
+                                    < 10? '0' + item.workedhours[0]: item.workedhours[0]}}:{{item.workedhours[1] < 10? '0' + item.workedhours[1]: item.workedhours[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.workedhours">00:00</ng-container>
+                                        <!-- {{item.workedhours?item.workedhours[0]:'00'}}:{{item.workedhours?item.workedhours[1]:'00'}} -->
+                            </td>
+                            <td>
+                                <ng-container *ngIf="item.shrs">
+                                    {{item.shrs[0]
+                                    < 10? '0' + item.shrs[0]: item.shrs[0]}}:{{item.shrs[1] < 10? '0' + item.shrs[1]: item.shrs[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.shrs">00:00</ng-container>
+                                        <!-- {{item.shrs?item.shrs[0]:'00'}}:{{item.shrs?item.shrs[1]:'00'}} -->
+                            </td>
+                            <td>
+                                <ng-container *ngIf="item.sinTime">
+                                    {{item.sinTime[0]
+                                    < 10? '0' + item.sinTime[0]: item.sinTime[0]}}:{{item.sinTime[1] < 10? '0' + item.sinTime[1]: item.sinTime[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.sinTime">00:00</ng-container>
+                                        <!-- {{item.sinTime?item.sinTime[0]:'00'}}:{{item.sinTime?item.sinTime[1]:'00'}} -->
+                            </td>
+                            <td>
+                                <ng-container *ngIf="item.soutTime">
+                                    {{item.soutTime[0]
+                                    < 10? '0' + item.soutTime[0]: item.soutTime[0]}}:{{item.soutTime[1] < 10? '0' + item.soutTime[1]: item.soutTime[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.soutTime">00:00</ng-container>
+                                        <!-- {{item.soutTime?item.soutTime[0]:'00'}}:{{item.soutTime?item.soutTime[1]:'00'}} -->
+                            </td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.nonDayOrHalf}}</td>
+                            <td>{{item.present}}</td>
+                            <td>{{item.attendance}}</td>
+                            <td>
+                                <ng-container *ngIf="item.late">
+                                    {{item.late[0]
+                                    < 10? '0' + item.late[0]: item.late[0]}}:{{item.late[1] < 10? '0' + item.late[1]: item.late[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.late">00:00</ng-container>
+                                        <!-- {{item.late?item.late[0]:'00'}}:{{item.late?item.late[1]:'00'}} -->
+                            </td>
+                            <td>
+                                <ng-container *ngIf="item.early">
+                                    {{item.early[0]
+                                    < 10? '0' + item.early[0]: item.early[0]}}:{{item.early[1] < 10? '0' + item.early[1]: item.early[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.early">00:00</ng-container>
+                                        <!-- {{item.early?item.early[0]:'00'}}:{{item.early?item.early[1]:'00'}} -->
+                            </td>
+                            <td>{{item.presence}}</td>
+                            <td>
+                                <ng-container *ngIf="item.ot">
+                                    {{item.ot[0]
+                                    < 10? '0' + item.ot[0]: item.ot[0]}}:{{item.ot[1] < 10? '0' + item.ot[1]: item.ot[1]}} </ng-container>
+                                        <ng-container *ngIf="!item.ot">00:00</ng-container>
+                                        <!-- {{item.ot?item.ot[0]:'00'}}:{{item.ot?item.ot[1]:'00'}} -->
+                            </td>
+                            <td>{{item.remarks}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

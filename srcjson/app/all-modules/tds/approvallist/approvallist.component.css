@@ -1,0 +1,8 @@
+.page-wrapper {
+    left: 0;
+    margin-left: 5px;
+    padding-top: 8px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    background-color: #f3f4f6;
+}

@@ -1,0 +1,101 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Approval List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Approval List</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Approval List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Department</th>
+                                        <th>Joining Date</th>
+                                        <th>Designation</th>
+                                        <th>Vacancy</th>
+                                        <th *ngIf="mytype=='Admin'">Approver</th>
+                                        <th>Actions</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData_display; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.request_date | date}}</td>
+                                            <td>{{item.department}}</td>
+                                            <td>{{item.expected_joining_date | date}}</td>
+                                            <td>{{item.designation}}</td>
+                                            <td>{{item.no_of_vacancy}}</td>
+                                            <td *ngIf="mytype=='Admin'">{{item.approver}}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary" (click)="approve(item.requirement_id)">Approve</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary" (click)="reject(item.requirement_id)">Reject</a>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length==0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Request Date</th>
+                                        <th>Department</th>
+                                        <th>Joining Date</th>
+                                        <th>Designation</th>
+                                        <th>Vacancy</th>
+                                        <th *ngIf="mytype=='Admin'">Approver</th>
+                                        <th>Actions</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData_display; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.request_date | date}}</td>
+                                            <td>{{item.department}}</td>
+                                            <td>{{item.expected_joining_date | date}}</td>
+                                            <td>{{item.designation}}</td>
+                                            <td>{{item.no_of_vacancy}}</td>
+                                            <td *ngIf="mytype=='Admin'">{{item.approver}}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary" (click)="approve(item.requirement_id)">Approve</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary" (click)="reject(item.requirement_id)">Reject</a>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

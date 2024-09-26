@@ -1,0 +1,98 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Employee Compliance Setup</h3>
+               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee</li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee Compliance</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    
+
+        <div class="row " style="width: 98%; margin: 0 0 0 0;">
+<div class="filter-row">
+            <div class="col-md-12 action">
+                <!-- <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-plan"><i class="fas fa-plus"></i>Apply TDS</a>
+                    <a class="btn btn-danger btn-add-emp"><i class="fas fa-minus"></i>Cancel TDS</a>
+                    <a class="btn btn-success btn-add-plan"><i class="fas fa-plus"></i>Apply PF</a>
+                    <a class="btn btn-danger btn-add-emp"><i class="fas fa-minus"></i>Cancel PF</a>
+                    <a class="btn btn-success btn-add-plan"><i class="fas fa-plus"></i>Apply ESI</a>
+                    <a class="btn btn-danger btn-add-emp"><i class="fas fa-minus"></i>Cancel ESI</a>
+                    <a class="btn btn-success btn-add-plan"><i class="fas fa-plus"></i>Apply PT</a>
+                    <a class="btn btn-danger btn-add-emp"><i class="fas fa-minus"></i>Cancel PT</a>
+                </div> -->
+ 
+                <button class="btn-primary"><i class="fas fa-plus"></i> Apply TDS</button>
+                <button class="btn-secondary"><i class="fas fa-minus"></i> Cancel TDS</button>
+                <button class="btn-primary"><i class="fas fa-plus"></i> Apply PF</button>
+                <button class="btn-secondary"><i class="fas fa-minus"></i> Cancel PF</button>
+                <button class="btn-primary"><i class="fas fa-plus"></i> Apply ESI</button>
+                <button class="btn-secondary"><i class="fas fa-minus"></i> Cancel ESI</button>
+                <button class="btn-primary"><i class="fas fa-plus"></i> Apply PT</button>
+                <button class="btn-secondary"><i class="fas fa-minus"></i> Cancel PT</button>
+                
+            </div>
+        </div>
+    </div>
+       <div class="row"  >
+           <div class="col-sm-12">
+               <div class="card mb-0">
+                <div class="card card-table">
+                    <div>
+                        <h4 class="card-title mb-0">Employee List</h4>
+                    </div>
+                       <div class="table-responsive">
+                        
+                          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0" >
+                           
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Branch</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th><input class="form-control" type="text" placeholder="Search Id" name="search-Id"/></th>
+                                  <th><input class="form-control" type="text" placeholder="Search Name" name="search-name"/></th>
+                                  <th><input class="form-control" type="text" placeholder="Search Branch" name="search-region"/></th>
+                                  <th><input class="form-control" type="text" placeholder="Search Department" name="search-country"/></th>
+                                  <th><input class="form-control" type="text" placeholder="Status" name="search-status"></th>
+                                </tr>
+                              </tfoot>
+                            <tbody>
+                                <tr *ngFor="let row of employee ; let i = index" (click)="selectRow(i, row)">
+                                    <td>{{row.employeeCode}}</td>
+                                    <td>{{row.firstName}} {{row.lastName}}</td>
+                                    <td>{{row.branch}}</td>
+                                    <td>{{row.department}}</td>
+                                    <td class="text-center">
+                                        <div class="action-label"><a class="role-info role-bg-two" [ngStyle]="{'color': row.status == 0 ? '#839613' : row.status == 1 ? '#1fb81f' : row.status == 2 ? 'red' : row.status == 3 ? '#34b4eb' : '#a383bf'}">{{row.status == 0?'Inactive': row.status == 1 ? "Active": row.status == 2? "Deleted": row.status == 3? "Block": row.status == 4? "Onhold": "FNF"}}</a>
+                                        </div></td>
+                                </tr>
+                                
+                            </tbody>
+                           
+                        </table>
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+    </div>
+    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">

@@ -1,0 +1,111 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Approval List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Offer History List</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <div class="col-md-12">
+                <form [formGroup]="filterForm">
+                    <div class="row" style="height: 70px;margin-top: 4px;">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group form-focus mb-0">
+                                <label>Candidate Name <small class="text-danger">*</small></label>
+                                <ng-select class="form-select form-control" required formControlName="candidate">
+                                    <option value="">--Select--</option>
+                                    <ng-option [value]="item.applicant_candiate_id" *ngFor="let item of candidate">{{item.first_name}} {{item.last_name}}</ng-option>
+                                </ng-select>
+                                <small *ngIf="filterForm.get('candidate').invalid && filterForm.get('candidate').touched" class="text-danger">* This field is required</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3" style=" margin-top: 6px;">
+                            <a class="btn btn-success btn-search" (click)="search()"><i class="fas fa-search me-2"></i> Search <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Offer History List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Offer Date</th>
+                                        <th>offersalary</th>
+                                        <th>Number of offers</th>
+                                        <th>View Offer Letter</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                            <td>{{item.offer_date}}</td>
+                                            <td>{{item.offer_salary}}</td>
+                                            <td>{{item.number_of_offers}}</td>
+                                            <td>
+                                                <a href="{{baseurl}}/empdoc/{{item.offerlattername}}" target="_blank " class="fas fa-bars "></a>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions " class="table custom-table datatable " *ngIf="!tableData ">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Offer Date</th>
+                                        <th>offersalary</th>
+                                        <th>Number of offers</th>
+                                        <th>View Offer Letter</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let item of tableData; let i=i ndex ">
+                                        <tr>
+                                            <td>{{i+1}}.</td>
+                                            <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                            <td>{{item.offer_date}}</td>
+                                            <td>{{item.offer_salary}}</td>
+                                            <td>{{item.number_of_offers}}</td>
+                                            <td>
+                                                <a href="{{item.offerlatter_location}}{{item.offerlattername}} " target="_blank " class="fas fa-bars "></a>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

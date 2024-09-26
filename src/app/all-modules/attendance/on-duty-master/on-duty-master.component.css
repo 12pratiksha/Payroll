@@ -1,0 +1,57 @@
+small{
+    color: red;
+}
+.loader{
+  margin: 0 0 0% 25%;
+  width: 500px;
+  height: 350px;
+}
+.mat-body, .mat-body-1, .mat-typography {
+  font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+.mat-form-field-appearance-outline {
+  width: 100%;
+  padding: 2px;
+  .mat-form-field-flex {
+      padding: 0 .75em 0 .75em;
+      margin-top: -0.35em;
+      position: relative;
+      width: 100%;
+    }
+  .mat-form-field-wrapper {
+      margin: 0px;
+  }
+}
+
+.example-full-width {
+  height: 60px;
+  padding-bottom: 60px;
+}
+
+.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
+  height: 25px;
+  padding: 1.5px;
+  font-size: 15px;
+}
+
+ /* #datalistOptions{
+    position: absolute!important;
+    z-index: 999!important;
+    left: 0!important;
+    color: red!important;
+ }
+ 
+ #datalistOptions option {
+    font-size: 0.8em;
+    padding: 0.3em 1em;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+  
+  #datalistOptions option:hover, #datalistOptions option:focus {
+    color: #fff;
+    background-color: #036;
+    outline: 0 none;
+  } */

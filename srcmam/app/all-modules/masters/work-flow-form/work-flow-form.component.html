@@ -1,0 +1,136 @@
+
+<div class="content container-fluid">
+
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Work Flow Configuration List</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Masters</li>
+                       <li class="breadcrumb-item">Others</li>
+                       <li class="breadcrumb-item active" aria-current="page">Work Flow Configuration</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   
+   <div class="row filter-row">
+       <div class="col-md-8">
+         
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+              
+               <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+           </div>
+           
+       </div>
+   </div>
+
+   <div class="row" >
+    <div class="col-sm-12">
+        <div class="card" >
+            <h1 class="card-title mb-0">Work Flow Configuration Master Form</h1>
+
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" [formGroup]="workFlowForm">
+                        <div class="form-row row">
+                            <div class="col-md-4 mb-3">
+                                <label for="type">WorkFlow Name <small>*</small></label>
+                                <input type="text" class="form-control" formControlName="name">
+                                <small *ngIf="workFlowForm.get('name').invalid && workFlowForm.get('name').touched">This Field is Required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>No. of Approvars <small>*</small></label>
+                                <select class="form-select form-control"  formControlName="approvars" (change)="onChange($event.target.value)">
+                                 <option *ngFor="let item of options" [value]="item.value">{{item.value}}</option>
+                                </select>
+                                <small *ngIf="workFlowForm.get('approvars').invalid && workFlowForm.get('approvars').touched">This Field is Required</small>
+                            </div> 
+                            <div class="col-md-4 mb-3" *ngIf="selection == '2' || selection == '1' || selection == '3' ">
+                             <label>First Contact <small>*</small></label>
+                                <select class="form-select form-control"  formControlName="firstContact" (change)="onChange1($event.target.value)">
+                                
+                                     <option value="">--Select--</option>
+                                     <option>Reporting Person 1</option>
+                                     <option>Reporting Person 2</option>
+                                     <option>Admin</option>
+                                </select>
+                                <small *ngIf="workFlowForm.get('firstContact').invalid && workFlowForm.get('firstContact').touched">This Field is Required</small>
+                             </div>
+                             <div class="col-md-4 mb-3" *ngIf="selection == '2' || selection == '3' ">
+                                 <label>Operator <small>*</small></label>
+                                    <select class="form-select form-control"  formControlName="firstOperator" >
+                                     <option value="">--Select--</option>
+                                         <option>AND</option>
+                                         <option>OR</option>
+                                         <option>THEN</option>
+                                    </select>
+                                    <small *ngIf="workFlowForm.get('firstOperator').invalid && workFlowForm.get('firstOperator').touched">This Field is Required</small>
+                             </div>
+                             <div class="col-md-4 mb-3" *ngIf="(selection == '2' || selection == '3' ) ">
+                             <label>Second Contact <small>*</small></label>
+                             <select class="form-select form-control"  formControlName="secondContact" >
+                                <!-- <option *ngFor="let item of options1" [value]="item.value">{{item.value}}</option> -->
+                                  <option value="">--Select--</option>
+                                  <option *ngIf="this.workFlowForm.value.firstContact!='Reporting Person 1'" >Reporting Person 1</option>
+                                  <option *ngIf="this.workFlowForm.value.firstContact!='Reporting Person 2'">Reporting Person 2</option>
+                                  <option *ngIf="this.workFlowForm.value.firstContact!='Admin'">Admin</option>
+                             </select>
+                             <small *ngIf="workFlowForm.get('secondContact').invalid && workFlowForm.get('secondContact').touched ">This Field is Required</small>
+                          </div>
+                          
+
+
+                          <div class="col-md-4 mb-3" *ngIf=" selection == 3">
+                              <label>Operator <small>*</small></label>
+                                 <select class="form-select form-control"  formControlName="secondOperator" >
+                                      <option value="">--Select--</option>
+                                      <option>AND</option>
+                                      <option>OR</option>
+                                      <option>THEN</option>
+                                 </select>
+                                 <small *ngIf="workFlowForm.get('secondOperator').invalid && workFlowForm.get('secondOperator').touched">This Field is Required</small>
+                          </div>
+                          <div class="col-md-4 mb-3" *ngIf=" selection == 3">
+                             <label>Third Contact <small>*</small></label>
+                             <select class="form-select form-control"  formControlName="thirdContact" >
+                                  <option value="">--Select--</option>
+                                  <option *ngIf="this.workFlowForm.value.secondContact!='Reporting Person 1' && this.workFlowForm.value.firstContact!='Reporting Person 1'" >Reporting Person 1</option>
+                                  <option *ngIf="this.workFlowForm.value.secondContact!='Reporting Person 2' && this.workFlowForm.value.firstContact!='Reporting Person 2'">Reporting Person 2</option>
+                                  <option *ngIf="this.workFlowForm.value.secondContact!='Admin' && this.workFlowForm.value.firstContact!='Admin'">Admin</option>
+                             </select>
+                             <small *ngIf="workFlowForm.get('thirdContact').invalid && workFlowForm.get('thirdContact').touched ">This Field is Required</small>
+                          </div>
+                        </div>
+                        <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                        <ng-template #other_content>  <button class="btn btn-primary" (click)="update()" >Update</button></ng-template>
+                      
+                        <button class="btn" (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ </div>
+
+       
+
+   
+   
+ 
+   
+   
+ 
+   
+   
+   
+   

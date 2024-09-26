@@ -1,0 +1,379 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Policy Setting List</h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Policy Setting List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-plus"></i>Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0" *ngIf="tableData">
+
+                            <thead>
+                                <tr>
+                                    <th>General Policy Name</th>
+                                    <th>State Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Grade Name</th>
+                                    <th>Category Name</th>
+                                    <th>Probation Period</th>
+                                    <th>COff on Non-Working</th>
+                                    <th>Over Time As Coff</th>
+                                    <th>Off Day Working Hours</th>
+                                    <th>Off Day Working Hours Full Day</th>
+                                    <th>Off Day Working Hours Half Day</th>
+                                    <th>Overtime Working Hours For Working Days</th>
+                                    <th>OvertimeWorkingHoursFullDay</th>
+                                    <th>OvertimeWorkingHoursHalfDay</th>
+                                    <th>Holiday Working Hours</th>
+                                    <th>HolidayWorkingHoursFullDay</th>
+                                    <th>HolidayWorkingHoursHalfDay</th>
+                                    <th>Coff Approval</th>
+                                    <th>Overtime Approval</th>
+                                    <th>Coff Valid Month</th>
+                                    <th>CoffValidMonthDay</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData">
+                                    <td>{{item.generalPolicyName}}</td>
+                                    <td>{{item.state}}</td>
+                                    <td>
+                                        <div *ngFor="let data of item.branchs">{{data.branch}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.grades">{{data.grade}}</div>
+
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.categorys">{{data.category}}</div>
+                                    </td>
+                                    <td>{{item.probationPeriod}}</td>
+                                    <td>{{item.coffOnNonWorkingDay}}</td>
+                                    <td>{{item.overTimeAsCoff}}</td>
+                                    <td>{{item.offDayWorkingHours}}</td>
+                                    <td>{{item.offDayWorkingHoursFullDay?item.offDayWorkingHoursFullDay:'00:00'}}</td>
+                                    <td>{{item.offDayWorkingHoursHalfDay?item.offDayWorkingHoursHalfDay:'00:00'}}</td>
+                                    <td>{{item.overtimeWorkingHoursForWorkingDays}}</td>
+                                    <td>{{item.overtimeWorkingHoursForWorkingDaysFullDay?item.overtimeWorkingHoursForWorkingDaysFullDay:'00:00'}}</td>
+                                    <td>{{item.overtimeWorkingHoursForWorkingDaysHalfDay?item.overtimeWorkingHoursForWorkingDaysHalfDay:'00:00'}}</td>
+                                    <td>{{item.holidayWorkingHours}}</td>
+                                    <td>{{item.holidayWorkingHoursFullDay?item.holidayWorkingHoursFullDay:'00:00'}} </td>
+                                    <td>{{item.holidayWorkingHoursHalfDay?item.holidayWorkingHoursHalfDay:'00:00'}} </td>
+                                    <td>{{item.coffApproval}}</td>
+                                    <td>{{item.overtimeApproval}}</td>
+                                    <td>{{item.coffValidMonth}}</td>
+                                    <td>{{item.coffValidMonthValue}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td class="text-end ico-sec justify-content-start">
+                                        <a (click)="edit(item.generalPolicyId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.generalPolicyId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- end of data table  -->
+    <div *ngIf="showMyContainer">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <h4 class="card-title mb-0">Policy Setting Form</h4>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="policyForm">
+                                    <div class="form-row row">
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>General Policy Name <span class="text-danger">*</span></label>
+
+                                            <input type="text" formControlName="generalPolicy" class="form-control">
+                                            <small *ngIf="policyForm.get('generalPolicy').invalid && policyForm.get('generalPolicy').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>State <span class="text-danger">*</span></label>
+                                            <select class="form-select form-control" formControlName="state">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of state" [value]="item.stateId">{{item.stateName}}</option>
+                                  </select>
+                                            <small *ngIf="policyForm.get('state').invalid && policyForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Branch <span class="text-danger">*</span></label>
+                                            <ng-select [items]="branch" [multiple]="true" bindLabel="name" [closeOnSelect]="false" bindValue="name" class="form-select form-control" formControlName="branch">
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                    <div>
+                                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item['name']}}
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template ng-multi-label-tmp let-items="items">
+                                                    <div style="margin-right: 2px;" *ngFor="let item of items | slice: 0:3">
+                                                        <span *ngIf="items.length < 4">{{ item['name'] }} </span>
+                                                    </div>
+                                                    <div *ngIf="items.length > 3">
+                                                        <span>{{ items.length }} Selected</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <small *ngIf="policyForm.get('branch').invalid && policyForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Grade <span class="text-danger">*</span></label>
+                                            <ng-select [items]="grade" [multiple]="true" bindLabel="name" [closeOnSelect]="false" bindValue="name" class="form-select form-control" formControlName="grade">
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                    <div>
+                                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item['name']}}
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template ng-multi-label-tmp let-items="items">
+                                                    <div style="margin-right: 2px;" *ngFor="let item of items | slice: 0:3">
+                                                        <span *ngIf="items.length < 4">{{ item['name'] }} </span>
+                                                    </div>
+                                                    <div *ngIf="items.length > 3">
+                                                        <span>{{ items.length }} Selected</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <small *ngIf="policyForm.get('branch').invalid && policyForm.get('branch').touched" class="text-danger"> *Grade is Required</small>
+                                        </div>
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Category <span class="text-danger">*</span></label>
+                                            <ng-select [items]="category" [multiple]="true" bindLabel="name" [closeOnSelect]="false" bindValue="name" class="form-select form-control" formControlName="category">
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                    <div>
+                                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item['name']}}
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template ng-multi-label-tmp let-items="items">
+                                                    <div style="margin-right: 2px;" *ngFor="let item of items | slice: 0:3">
+                                                        <span *ngIf="items.length < 4">{{ item['name'] }} </span>
+                                                    </div>
+                                                    <div *ngIf="items.length > 3">
+                                                        <span>{{ items.length }} Selected</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <small *ngIf="policyForm.get('branch').invalid && policyForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <label>Probation Period</label>
+
+                                            <input type="text" formControlName="probation" class="form-control">
+                                            <small *ngIf="policyForm.get('probation').invalid && policyForm.get('probation').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mar">
+                                            <label>Short Leave Maxmium Applicate</label>
+
+                                            <input type="text" formControlName="shortleavemaxmiumeApplicate" class="form-control">
+
+                                        </div>
+                                        <div class="col-md-4 mar">
+                                            <label>How Many Time To Apply Short Leave (In Hourse)</label>
+
+                                            <input type="number" formControlName="howManyTimeToApplyshortleave" class="form-control">
+                                            <small class="text-danger"></small>
+
+                                        </div>
+
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Short Leave Days <span class="text-danger"></span></label>
+                                            <ng-select [items]="shortLeavesDays" [multiple]="true" bindLabel="name" [closeOnSelect]="false" bindValue="name" class="form-select form-control" formControlName="shortLeavesDays">
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                    <div>
+                                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item['name']}}
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template ng-multi-label-tmp let-items="items">
+                                                    <div style="margin-right: 2px;" *ngFor="let item of items | slice: 0:3">
+                                                        <span *ngIf="items.length < 4">{{ item['name'] }} </span>
+                                                    </div>
+                                                    <div *ngIf="items.length > 3">
+                                                        <span>{{ items.length }} Selected</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <small *ngIf="policyForm.get('shortLeavesDays').invalid && policyForm.get('shortLeavesDays').touched" class="text-danger"> *This field is Required</small>
+
+                                            <!-- <select class="form-select form-control"  formControlName="shortLeavesDays"  [multiple]="true">
+               <option *ngFor="let item of Option1" [value]="item.value">{{item.value}}</option>
+               <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+               <div >
+                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"[ngModelOptions]="{standalone: true}"/>
+                {{item['name']}}
+                </div>
+               </ng-template>
+            </select>   -->
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Coff On NonWorking Day1</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="cOffNonWorking" (click)="nonworking('main')">
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Off Day Working Hours </label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="offDayWorkingHours" *ngIf="policyForm.value.cOffNonWorking" (click)="nonworking('sub')">
+                                            <input type="checkbox" class="checkbox-all ms-5" disabled *ngIf="!policyForm.value.cOffNonWorking">
+
+                                        </div>
+                                        <div class="col-md-4 mb-3 row">
+                                            <ng-container *ngIf="policyForm.value.offDayWorkingHours && policyForm.value.cOffNonWorking">
+                                                <div class="col-md-6">
+                                                    <label>Full Day</label>
+                                                    <input type="time" class="form-control " formControlName="offDayWorkingHoursFd">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Half Day</label>
+                                                    <input type="time" class="form-control " formControlName="offDayWorkingHoursHd">
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Over Time As Coff</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="otAsCoff" (click)="cOff('main')">
+
+                                        </div>
+                                        <div class="col-md-3 mar  "></div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Holiday Working Hours   </label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="holidayWorkingHours" *ngIf="policyForm.value.cOffNonWorking" (click)="nonworking('sub1')">
+                                            <input type="checkbox" class="checkbox-all ms-5" disabled *ngIf="!policyForm.value.cOffNonWorking">
+                                        </div>
+                                        <div class="col-md-3 mar  row">
+                                            <ng-container *ngIf="policyForm.value.holidayWorkingHours && policyForm.value.cOffNonWorking ">
+                                                <div class="col-md-6">
+                                                    <label>Full Day</label>
+                                                    <input type="time" class="form-control " formControlName="holidayWorkingHoursFd">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Half Day</label>
+                                                    <input type="time" class="form-control " formControlName="holidayWorkingHoursHd">
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="col-md-3 mar ">
+                                            <label>OT Working Hrs For WorkingDays</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="otWorkingHours" *ngIf="policyForm.value.otAsCoff " (click)="cOff('sub')">
+                                            <input type="checkbox" class="checkbox-all ms-5" disabled *ngIf="!policyForm.value.otAsCoff">
+
+                                        </div>
+
+                                        <div class="col-md-3 mar  row">
+                                            <ng-container *ngIf="policyForm.value.otWorkingHours && policyForm.value.otAsCoff">
+                                                <div class="col-md-6">
+                                                    <label>Full Day</label>
+                                                    <input type="time" class="form-control " formControlName="otWorkingHoursFd">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Half Day</label>
+                                                    <input type="time" class="form-control " formControlName="otWorkingHoursHd">
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Coff Approval </label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="coffApproval">
+
+                                        </div>
+                                        <div class="col-md-3 mar  "></div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Overtime Approval </label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="otApproval" *ngIf="!policyForm.value.otAsCoff">
+                                            <input type="checkbox" class="checkbox-all ms-5" disabled *ngIf="policyForm.value.otAsCoff">
+                                        </div>
+                                        <div class="col-md-3 mar  "></div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Coff Valid Month</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="coffValidMonth" (click)="months()">
+
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Encashable</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="encashable">
+
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+
+
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Amount per coff</label>
+
+                                            <input type="text" formControlName="coffAmount" class="form-control" *ngIf="policyForm.value.encashable">
+                                            <input type="text" class="form-control" disabled *ngIf="!policyForm.value.encashable">
+                                        </div>
+
+                                        <div class="col-md-3 mar  ">
+                                            <input type="number" formControlName="coffValidMonths" class="form-control" *ngIf="policyForm.value.coffValidMonth" formControlName="coffValidMonths">
+                                        </div>
+                                        <div class="col-md-3 mar  ">
+                                            <label>Status</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                        </div>
+                                        <div class="col-md-3 mar  "></div>
+
+                                    </div>
+
+
+                                    <button type="button" class="btn btn-primary" (click)="submit('add')" *ngIf="!update">Submit</button>
+                                    <button type="button" class="btn btn-primary" *ngIf="update" (click)="submit('update')">Update</button>
+                                    <button type="button" class="btn " (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

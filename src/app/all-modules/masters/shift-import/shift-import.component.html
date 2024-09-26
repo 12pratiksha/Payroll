@@ -1,0 +1,122 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Import Shift</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Import Shift</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <a class="btn btn-success btn-add-emp"  style="width: auto;"  routerLink="/layout/masters/shift"><i class="fas fa-bars"></i> Shift List</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12">
+    
+            <!-- Custom Boostrap Validation -->
+            <div class="card" >
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Import Shift</h4>
+                </div>
+                <div class="card-body" > 
+                    <div class="row"> 
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="shiftImport">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                      <label class="focus-label">Choose File</label>
+                                      <input class="form-control"  #myInput type="file" (change)="onChange($event)" class="form-control"> 
+                                        <!-- <small
+                                        *ngIf="subDepartmentForm.get('state').invalid && subDepartmentForm.get('state').touched"
+                                        class="text-danger"> *State is Required</small> -->
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                   <button class="btn btn-primary" (click)="getSheet()" [disabled]="disabled">Get Sheet</button>
+
+                                   <button class="download btn btn-success ;"  (click)="exportexcel()" style="margin-left: 10px;"><i class="fas fa-download"></i></button>
+                                    </div>
+                                    <div class="col-md-4 mb-3" *ngIf="sheet">
+                                        <label  >Given For</label>
+                                        <select class="form-select form-control" formControlName="givenFor">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let item of sheet" [value]="item.shiftId+'~' +item.shiftType">{{item.shiftType}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+    
+                             
+                                
+                                <!-- <button class="btn btn-primary" *ngIf="update" (click)="updateSubDepartment()">Update</button> -->
+                                <button class="btn btn-primary"   (click)="submit()" [disabled]="disabled">Submit</button>
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div> 
+     </div>
+     <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0" style="color: red;">{{errorMessage}}</h5>
+        </div>
+    </div>
+     <div style=" margin: auto; width: 50%;" style="display: none;">
+        
+        <table id="excel-table">
+          <tr>
+   
+            <th>shiftType</th>
+              <th>shiftName</th>
+              <th>nightSift</th>
+              <th>shiftStartTime</th>
+              <th>shiftEndTime</th>
+              <th>afterShiftTime</th>
+              <th>beforeShiftTime</th>
+              <th>absentAfterLate</th>
+              <th>halfDayLate</th>
+              <th>stPunchRTC</th>
+              <th>shiftHours</th>
+              <th>breakHourse</th>
+              <th>satShiftHours</th>
+              <th>saturdayBreakHours</th>
+              <th>halfMarkingDuration</th>
+              <th>presentMarkingDuration</th>
+              <th>otStartAfterShiftEnd</th>
+              <th>etPunchRTC</th>
+              <th>otStartAfterShift</th>
+              <th>otStartBeforeShift</th>
+              <th>presentMarking</th>
+              <th>breakEndTime</th>
+              <th>breakStartTime</th>
+              <th>roundOverTime</th>
+              <th>satBreakHoursDeduct</th>
+              <th>breakHoursDeduct</th>
+              <th>active</th>
+              <th>breakHourseDeduct</th>
+              <th>otCalculationType</th>
+
+           
+          </tr>
+         
+        </table>
+      </div>

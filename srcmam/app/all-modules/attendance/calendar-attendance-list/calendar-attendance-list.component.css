@@ -1,0 +1,79 @@
+.calendar {
+  width: 1200px;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 14px 70px;
+
+  }
+.day {
+	width: 151px;
+    display: inline-block;
+    /* height: 90px; */
+    height: 110px;
+    border: 1px solid #ddd1d1;
+    background: #ffffff;
+  }
+ .selectDiv{
+	text-align: center;
+    margin-top: 16px;
+  }
+  .selectDiv select{
+    padding: 7px 0px;
+    border-radius: 4px;
+    background: #bbbbbb;
+    width: 141px;
+    font-size: 12px;
+  }
+  .csthead{
+	height: 50px!important;
+	text-align: center;
+    padding: 13px 2px;
+    background: cadetblue;
+    color: #fff;
+    font-weight: 400;
+  }
+  .dateControl{
+	border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    width: 1200px;
+    text-align: center;
+    padding: 17px;
+    background: #ff7849;
+  }
+  .dateControl button{
+	border-radius: 50px;
+    padding: 4px 7px;
+    border-color: transparent;
+  }
+  .monthName{
+	color: rgb(255, 255, 255);
+    font-size: 16px;
+    margin: 0pc 10px;
+  }
+  .emp select{
+	width: 300px;
+  }
+  .emp {
+    padding-bottom: 10px;
+  }
+  small{
+    color: red;
+  }
+  .csthead[_ngcontent-eyo-c245] {
+    height: 50px!important;
+    text-align: center;
+    padding: 13px 2px;
+    background: #29a6a9;
+    color: #fff;
+    font-weight: 400;
+}
+.success{
+  color:green;
+}
+.danger{
+  color:#ff2e2e;
+}
+.time{
+  font-weight: 600;
+    color: #66babd;
+}

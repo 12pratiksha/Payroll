@@ -1,0 +1,89 @@
+
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Leave Approval List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Leaves</li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Leave Approval List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+      <div class="row filter-row">
+    <div class="col-md-12" style="margin-top: 10px;">
+        <div style="height: 50px;">
+            <a class="btn btn-primary" (click)="approveSeleted('1')" style="margin-right: 5px; min-height: 0">Approve Selected</a>
+            <a class="btn btn-danger" (click)="approveSeleted('2')" style="min-height: 0">Reject  Selected</a>
+        </div>
+    </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+    
+                <div class="card-body">
+
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0">
+                           
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Applicable Date</th>
+                                <th>Leave Code</th>
+                                <th>Leave Date</th>
+                                <!-- <th>From Date</th>
+                                <th>To Date</th> -->
+                                <!-- <th>Total Days</th> -->
+                                <th class="text-center">Status</th>
+                               
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                              <th><input class="form-control" type="text" placeholder="Search Id" name="search-Id"/></th>
+                              <th><input class="form-control" type="text" placeholder="Search Name" name="search-name"/></th>
+                              <th><input class="form-control" type="text" placeholder="Search Date" name="search-Date"/></th>
+                              <th><input class="form-control" type="text" placeholder="Search Leave Code" name="search-Leave"/></th>
+                              <th><input class="form-control" type="text" placeholder="Search Leave Date" name="search-Date"/></th>
+                              <!-- <th><input class="form-control" type="text" placeholder="fromDate" name="search-fromDate"></th>
+                              <th><input class="form-control" type="text" placeholder="toDate" name="search-toDate"></th> -->
+                              <!-- <th><input class="form-control" type="text" placeholder="totalDays" name="search-totalDays"></th> -->
+                              <th><input class="form-control" type="text" placeholder="Status" name="search-status"></th>
+                            </tr>
+                          </tfoot>
+                        <tbody>
+                            <tr *ngFor="let item of employee ; let i = index" (click)="selectRow( item)">
+                                <td>{{item.employee_code}}</td>
+                                <td>{{item.firstName}} {{item.lastName}}</td>
+                                <td>{{item.applicable_date | date : 'dd-MM-yyyy'}}</td>
+                                <td>{{item.leave_type}}</td>
+                                <td>{{item.lv_date | date : 'dd-MM-yyyy'}}</td>
+                                <!-- <td>{{item.from_date | date : 'dd-MM-yyyy'}}</td>
+                                <td>{{item.to_date | date : 'dd-MM-yyyy'}}</td> -->
+                                <!-- <td>{{item.total_days}}</td> -->
+                                <!-- <td>{{item.status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}</td> -->
+                                <td class="text-center">
+                                    <div class="action-label"><a class="role-info role-bg-two" >
+                                        {{item.status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}</a>
+                                    </div></td>
+                            </tr>
+                            
+                        </tbody>
+                       
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="!employees"> -->

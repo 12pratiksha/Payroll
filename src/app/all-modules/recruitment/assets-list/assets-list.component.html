@@ -1,0 +1,221 @@
+<!-- assets table -->
+<div class="page-wrapper"> 
+    <div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>All Assets List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Human Resorces</li>
+                        <li class="breadcrumb-item active" aria-current="page">All Assets List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <!--a routerLink="/layout/employees/employeepage" class="grid-icon"><i class="fas fa-th"></i></a-->
+                <!-- <a routerLink="/layout/employees/employeelist" class="list-icon active"><i class="fas fa-bars"></i></a> -->
+                <!-- <a class="btn btn-success btn-add-emp" (click)="showMyContainer=!showMyContainer"><i class="fas fa-plus"></i>Assign New</a> -->
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add Assets</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+                <!-- <div class="card-header">
+                    <h4 class="card-title mb-0">Default Datatable</h4>
+                    <p class="card-text">
+                        This is the most basic example of the datatables with zero configuration. Use the
+                        <code>.datatable</code> class to initialize datatables.
+                    </p>
+                </div> -->
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="assignedAssets">
+                            <thead>
+                                <tr>
+
+                                    <th>Employee Code</th>
+                                    <th>Issue Date</th>
+                                    <th>Asset Name</th>
+                                    <th>Description</th>
+                                    <th>Given For</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of assignedAssets">
+
+                                    <td>{{item.employeeCode}}</td>
+                                    <td>{{item.issueDate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item.assetName}}</td>
+                                    <td>{{item.description}}</td>
+                                    <td>{{item.officeUse}}</td>
+                                    <td>{{item.status==true?'Active':'Inactive'}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(item.assetAssignId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.assetAssignId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!assignedAssets">
+                            <thead>
+                                <tr>
+
+                                    <th>Employee Id</th>
+                                    <th>Issue Date</th>
+                                    <th>Asset Name</th>
+                                    <th>Description</th>
+                                    <th>Given For</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of assignedAssets">
+
+                                    <td>{{item.employeeId}}</td>
+                                    <td>{{item.issueDate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item.assetName}}</td>
+                                    <td>{{item.description}}</td>
+                                    <td>{{item.officeUse}}</td>
+                                    <td>{{item.status==true?'Active':'Inactive'}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(item.assetAssignId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.assetAssignId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- assets table -->
+
+    <!-- add assets Form -->
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Employee Assets Assigned Form</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="assetsAssignedForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Employee Id <span>*</span></label>
+                                        <ng-select class="form-select form-control" formControlName="employeeId">
+                                            <ng-option value="">--Select--</ng-option>
+                                            <ng-option *ngFor="let item of employeeList" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}} </ng-option>
+                                        </ng-select>
+                                        <small *ngIf="assetsAssignedForm.get('employeeId').invalid && assetsAssignedForm.get('employeeId').touched" class="text-danger"> *Employee is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Body <span>*</span></label>
+                                        <select class="form-select form-control" formControlName="assetName">
+                                        <option value="">--Select--</option>    
+                                        <option>Laptop</option>
+                                        <option>Mobile</option>
+                                    </select>
+                                        <small *ngIf="assetsAssignedForm.get('assetName').invalid && assetsAssignedForm.get('assetName').touched" class="text-danger"> *Asset Name is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Asset Value</label>
+                                        <input type="number" class="form-control" placeholder="Asset Value" formControlName="assetValue">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Issue Date <span>*</span></label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="issueDate">
+                                        </div>
+                                        <small *ngIf="assetsAssignedForm.get('issueDate').invalid && assetsAssignedForm.get('issueDate').touched" class="text-danger"> *Issue Date is required </small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="formFile" class="form-label">Attachment</label>
+                                        <input class="form-control" formControlName="attachment" type="file" id="formFile" (change)="uploadAssetsFile($event)">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Given For</label>
+                                        <select class="form-select form-control" formControlName="givenFor">
+                                        <option>Office use</option>
+                                        <option>Personal Use</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>T&C</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="tandc">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Repeat Asset</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="repeatAsset">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="addAssetsList()" *ngIf="!update">Submit</button>
+                                <button class="btn btn-primary" (click)="updateForm()" *ngIf="update">Update</button>
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- /add assets Form -->
+
+<!-- Delete assets Modal -->
+<div class="modal custom-modal fade" id="delete_assets" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Asset</h3>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="btn btn-primary continue-btn" (click)="deleteAsset()">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>

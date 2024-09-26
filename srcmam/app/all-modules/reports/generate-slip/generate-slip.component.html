@@ -1,0 +1,272 @@
+<html>
+
+<head>
+    <style>
+        table {
+            width: 98%;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        
+        table td {
+            line-height: 25px;
+            padding-left: 15px;
+        }
+        /* table th{background-color:#fbc403; color:#363636;} */
+        
+        table td {
+            border: 1px solid;
+        }
+        
+        table th {
+            border: 1px solid;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div style="margin-bottom: 20px;">
+        <div id="sectionToPrint">
+            <table style='border-bottom:solid 1px; background-color: white;' id="print" *ngFor="let item of dataSource2 ">
+                <tr height="100px" style="text-align:center;font-size:15px; font-weight:600;">
+                    <td style="width:100%" colspan="6">
+                        <table style="width:100%;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                            <tr>
+                                <td style="width: 12% !important;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+
+                                    <div style="width: 205px;height:130px;background-repeat: no-repeat;background-size: cover;background-position: 0px 0px 0px 0px;">
+                                        <img id="dashboardImage" [src]='backgroundImg' height='120' width='120' />
+                                    </div>
+
+
+
+                                    <td style="width:70%;border-right: 1px solid white;border-left: 1px solid white;border-top: 1px solid white;border-bottom: 1px solid white;">
+                                        <div style="font-size: 25px !important;">{{companyName}}</div>
+                                        <small style="font-size: 15px !important;">{{address}}</small>
+                                    </td>
+                            </tr>
+                        </table>
+
+
+                        </td>
+
+                </tr>
+                <tr>
+                    <th>Employee Code:</th>
+                    <td style="border-right: 1px solid;border-right: 1px solid;">{{item.employeeCode}}</td>
+                    <th>Name</th>
+                    <td style="border-right: 1px solid;" colspan="2">{{item.firstName }} {{item.middleName }} {{item.lastName }} </td>
+                </tr>
+                <!-----2 row--->
+                <tr>
+                    <!-- <th>Bank</th>
+        <td style="border-right: 1px solid;"></td> -->
+                    <th>Bank A/c No.</th>
+                    <td style="border-right: 1px solid;">{{item.eaccountNo}}</td>
+                    <th>Working Days</th>
+                    <td style="border-right: 1px solid;" colspan="2">{{item.prsent}}</td>
+                </tr>
+                <!------3 row---->
+                <tr>
+                    <th>DOJ</th>
+                    <td style="border-right: 1px solid;">{{item.dateOfJoining | date}}</td>
+                    <th>Lop Days</th>
+                    <td style="border-right: 1px solid;" colspan="2">{{item.days-item.prsent}}</td>
+                </tr>
+                <!------4 row---->
+                <tr>
+                    <th>PF No.</th>
+                    <td style="border-right: 1px solid;">{{item.epfno}}</td>
+                    <th>Month days</th>
+                    <td style="border-right: 1px solid;" colspan="2">{{item.days}}</td>
+                </tr>
+                <!------5 row---->
+                <!-- <tr >
+        <th>Location</th>
+        <td style="border-right: 1px solid;">India</td>
+        <th>Working Days</th>
+        <td style="border-right: 1px solid;"colspan="2">{{item.paidDays}}</td>
+        </tr> -->
+                <!------6 row---->
+                <tr>
+                    <th>Department</th>
+                    <td style="border-right: 1px solid;">{{item.department}}</td>
+                    <th>Designation</th>
+                    <td style="border-right: 1px solid;" colspan="2">{{item.designation}}</td>
+                </tr>
+
+
+                <tr>
+                    <th>UAN No.</th>
+                    <td style="border-right: 1px solid;">{{item.uan}}</td>
+                    <th>Month</th>
+                    <td style="border-right: 1px solid;" colspan="2">{{item.month}}-{{item.year}}</td>
+                </tr>
+                <br>
+                <!-- 
+        <tr style="border:1px solid;text-align:left;" >
+            
+          
+            </tr> -->
+                <tr>
+
+                    <td style="width: 50%;padding-left: 0px !important;" colspan="3">
+                        <table style="width:100% !important">
+                            <tr>
+                                <th>Earnings</th>
+                                <th>Actual</th>
+                                <th>Payable</th>
+
+                            </tr>
+
+
+                            <tr *ngFor="let item1 of item.allowances; let i = index;" style="text-align:left;">
+                                <ng-container *ngIf="item1.additionDeduction.indexOf('Addition')!=-1 && item1.actualelementAmount!=0">
+                                    <td>{{item1.elementName}}</td>
+                                    <td>{{item1.elementAmount}}</td>
+                                    <td>{{item1.actualelementAmount }}</td>
+                                </ng-container>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td valign="top" style="width: 50%;padding-left: 0px !important;" colspan="3">
+                        <table style="width:100% !important">
+                            <tr>
+                                <th>Deductions</th>
+                                <th>Amount</th>
+                            </tr>
+                            <tr>
+                                <td>Professional Tax</td>
+                                <td>{{item.pt | number}}</td>
+                            </tr>
+                            <tr>
+                                <td>Provident Fund</td>
+                                <td>{{item.pf | number}}</td>
+                            </tr>
+                            <tr *ngIf="item.esic!=0">
+                                <td>ESIC</td>
+                                <td>{{item.esic | number}}</td>
+                            </tr>
+                            <tr *ngFor="let item1 of item.allowances; let i = index;" style="text-align:left;">
+                                <ng-container *ngIf="item1.additionDeduction.indexOf('Deduction')!=-1 && item1.actualelementAmount!=0">
+                                    <td>{{item1.elementName}}</td>
+                                    <td>{{item1.actualelementAmount }}</td>
+                                </ng-container>
+                            </tr>
+                        </table>
+
+                    </td>
+
+
+
+
+                </tr>
+
+                <tr>
+
+
+                    <th><strong>Total Payments</strong></th>
+                    <td><strong>{{item.addition}}</strong></td>
+                    <td>&nbsp;</td>
+                    <th>Total Deduction</th>
+                    <td>{{item.deduction}}</td>
+                </tr>
+                <tr>
+
+
+                    <th>Amount In Words</th>
+                    <td style="border-right: 1px solid;" colspan="3"> {{transform(netsalary)}}</td>
+
+
+                </tr>
+                <tr>
+
+
+                    <th>&nbsp;</th>
+                    <td style="border-right: 1px solid;">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <th><strong>NET PAY</strong></th>
+                    <td>{{netsalary}}</td>
+                </tr>
+                <tr>
+
+
+
+                    <td style="font-size: 11px!important;text-align:center;" colspan="4"> This is computer generated slip. </td>
+
+
+                </tr>
+            </table>
+            <tr></tr>
+            <br/>
+            <!-- <table style="border:1px solid; background-color: white;" >
+        <tr style="border:1px solid;">
+        <th >Earnings</th>
+        <th >Actual</th>
+        <th>Amount</th>
+        <th >Deductions</th>
+        <th>Amount</th>
+        </tr>
+        <tr>
+        <td>Basic</td>
+        <td>30000</td>
+        <td>29000</td>
+        <td>provident fund</td>
+        <td>1900</td>
+        </tr>
+        <tr>
+        <td>House Rent Allowance</td>
+        <td>2000</td>
+        <td>1000</td>
+        <td>professional tax</td>
+        <td>600</td>
+        </tr>
+        <tr>
+        <td>special Allowance</td>
+        <td>400</td>
+        <td>400</td>
+        <td>Income tax</td>
+        <td>500</td>
+        </tr>
+        <tr>
+        <td>conveyance</td>
+        <td>3000</td>
+        </tr>
+        <tr>
+        <td>ADD Special allowance</td>
+        <td>2000</td>
+        </tr>
+        <tr>
+        <td>shift Allowance</td>
+        <td>1000</td>
+        </tr>
+        <tr>
+        <td>bonus</td>
+        <td>500</td>
+        </tr>
+        <tr>
+        <td>medical Allowance</td>
+        <td>600</td>
+        </tr>
+        <tr style="border:1px solid">
+        <th>Gross Earnings</th>
+        <td>Rs.38500</td>
+        <th >Gross Deductions</th>
+        <td>Rs.3000</td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><strong>NET PAY</strong></td>
+        <td>Rs.35500</td>
+        <td></td>
+        </tr>
+        </table> -->
+
+        </div>
+        <button (click)="downloadAsPDF('sectionToPrint')">Export To PDF</button>
+    </div>
+</body>
+
+</html>

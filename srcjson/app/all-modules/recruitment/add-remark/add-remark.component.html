@@ -1,0 +1,206 @@
+<div class="page-wrapper">
+  
+    <div class="content container-fluid">
+        
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Interviewee List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Interviewee List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>   
+
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" ><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" >
+            <div class="col-sm-12">
+        
+                
+                <div class="card" >
+                    <!-- <div class="card-header">
+                        <h3 class="card-title mb-0">  Candidate Information  </h3>
+                       
+                    </div> -->
+                    <div class="card-body" > 
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+                                                <li>
+                                                    <div class="title">Name:</div>
+                                                    <div class="text" >Suraj Behra</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Qualification:</div>
+                                                    <div class="text" >BSc</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">DOB</div>
+                                                    <div class="text" >27 Aug 1999</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Experience</div>
+                                                    <div class="text" >2 Years 3 Months</div>
+                                                </li>
+                                                
+                                                </ul>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                               
+                                                <li>
+                                                    <div class="title">Email:</div>
+                                                   
+                                                    <div class="text" >test@gmail.com</div>
+                                                    
+                                                </li>
+                                                <li>
+                                                    <div class="title">Previous Org.</div>
+                                                    <div class="text"> XYZ pvt. ltd.</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Address:</div>
+                                                    <div class="text">Pune Maharashtra</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Skill:</div>
+                                                    <div class="text">Technical</div>
+                                                </li>
+                                               
+                                            </ul>
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+             </div>
+         </div>  
+    
+
+        <div class="row" >
+            <div class="col-sm-12">
+        
+                
+                <div class="card" >
+                  
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">  Remarks Form  </h3>
+                       
+                    </div>
+                    <div class="card-body" > 
+                        <div class="row">
+                            <form  [formGroup]="remarkForm"   class="needs-validation" novalidate    >
+                                    <div class="form-row row">
+                                        <div class="col-md-4 ">
+                                            <label  >Interviewer</label>
+                                            <select class="form-select form-control" >
+                                                <option >--Select--</option>
+                                                <option >E 1</option>
+                                                <option >E 2</option>
+                                            </select>
+                                            
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label  >Round #</label>
+                                            <select class="form-select form-control" >
+                                                <option >--Select--</option>
+                                                <option >E 1</option>
+                                                <option >E 2</option>
+                                            </select>
+                                        </div>
+                                            <div class="col-md-4">
+                                                <label>Strength</label>
+                                                <textarea type="text" class="form-control" > </textarea>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <label>Weakness</label>
+                                                <textarea type="text" class="form-control" > </textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Overview</label>
+                                                <textarea type="text" class="form-control" > </textarea>
+                                            </div>
+                                            <!-- <div class="col-md-4" style="    margin-top: auto;">
+                                                <label>Approve</label>
+                                                <select class="form-select form-control" >
+                                                    <option >--Select--</option>
+                                                    <option >Selected</option>
+                                                    <option >Rejected</option>
+                                                </select>
+                                            </div> -->
+                                            <div class="col-md-4" style=" margin-top: 15px;">
+                                            <div class="leave-row">
+                                                <div class="leave-left">
+                                                    <div class="input-box">
+                                                        <label class="d-block">Selected?</label>
+                                                        <div class="leave-inline-form">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                    id="carry_no" value="option1" >
+                                                                <label class="form-check-label" for="carry_no">No</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                    id="carry_yes" value="option2" >
+                                                                <label class="form-check-label" for="carry_yes">Yes</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                           </div>
+                                           <div class="form-group col-md-6" style="margin-top: 20px;">
+                                           <button class="btn btn-primary"  >Submit</button>
+                                         <button class="btn" (click)="hideContainer()">Cancel</button>
+                                        </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                   
+                                        
+                              
+                           
+                            </div>
+        
+             </div>
+         </div>  
+    
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+

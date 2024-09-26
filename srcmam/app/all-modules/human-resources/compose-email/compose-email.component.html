@@ -1,0 +1,53 @@
+<!-- <ckeditor #editor [data]= data [editor]="Editor"  (blur)="onBlur($event)" (ready)="onReady($event)"></ckeditor>
+<button (click)="getTemplate()">Test</button> -->
+
+
+
+
+<div class="content container-fluid page-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Compose Email Master </h3>
+               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Human Resorces</li>
+                        <li class="breadcrumb-item active" aria-current="page">Compose Email </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    
+
+
+
+       <div class="row">
+           <div class="col-sm-12">
+               <div class="card mb-0">
+                   
+                   <div class="card-body">
+                    <div class="col-md-6">
+                        <label >Subject <small>*</small></label>
+                        <input type="text" class="form-control" 
+                        [formControl]="subject" >
+                        <small  *ngIf="subject.invalid && subject.touched" >This field is Required</small>
+                        </div>
+
+                    <label>Body Messege <small>*</small></label>
+                    <ckeditor #editor [data]= data [editor]="Editor"  (blur)="onBlur($event)" (ready)="onReady($event)" [formControl]="template"></ckeditor>
+                       
+                   </div>
+                   <div class="col-md-4">
+                   <button class="btn btn-primary"  (click)="getTemplate()">Submit</button>
+                   <button class="btn" >Cancel</button>
+                   </div>
+               </div>
+           
+           </div>
+       </div>
+    </div>
+</div>  
+  <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="!earlyHistory"> -->
+  

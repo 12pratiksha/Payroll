@@ -1,0 +1,225 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Off Day </h3>
+               
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                       <li class="breadcrumb-item active" aria-current="page">Non working Days</li>
+                       <li class="breadcrumb-item active" aria-current="page">OffDay</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-12">
+        <div class="add-emp-section">
+            <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+            <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-plus"></i>Show Table</a>
+        </div>
+       </div>
+   </div>
+
+   <div class="row"  *ngIf="!showMyContainer">
+    <div class="col-sm-12">
+        <div class="card mb-0">
+            
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="offDayTable; else other_content">
+                        <thead>
+                          <tr>
+                          <th>Off Day</th>
+                          <th>Weekly Off</th>
+                          <th>Weekly No</th>
+                          <th>Applicable Date </th>
+                          <th>Status</th>
+                          <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let item of offDayTable">
+                           <td>{{item.offDay}}</td>
+                           <td>{{item.offDay}}</td>
+                           <td>{{item.weekNo}}</td>
+                           <td>{{item.applicableDate | date:'dd-MM-yyyy'}}</td>
+                           <td>{{(item.status == true)?'Active':'Inactive'}}</td>
+                            <td class="text-end ico-sec justify-content-start" >
+                                <!-- <a (click)="edit(item.leaveAllocationMasterId)"><i class="fas fa-pen"></i></a> -->
+                                <a (click)="delete(item.offDayId)"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                           </tr>
+                        </tbody>
+                    </table>
+                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!offDayTable; else other_content">
+                        <thead>
+                          <tr>
+                          <th>Off Day</th>
+                          <th>Weekly Off</th>
+                          <th>Weekly No</th>
+                          <th>Applicable Date </th>
+                          <th>Status</th>
+                          <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let item of offDayTable">
+                           <td>{{item.offDay}}</td>
+                           <td>{{item.offDay}}</td>
+                           <td>{{item.weekNo}}</td>
+                           <td>{{item.applicableDate | date:'dd-MM-yyyy'}}</td>
+                           <td>{{(item.status == true)?'Active':'Inactive'}}</td>
+                            <td class="text-end ico-sec justify-content-start" >
+                                <!-- <a (click)="edit(item.leaveAllocationMasterId)"><i class="fas fa-pen"></i></a> -->
+                                <a (click)="delete(item.offDayId)"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                           </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+   
+<!-- end of data table  -->
+<div *ngIf="showMyContainer">
+    <div class="row" >
+        <div class="col-sm-12">
+            <div class="card" >
+                <h1 class="card-title mb-0">Off Day </h1>
+          
+            <div class="card-body" >
+                <div class="row">
+                    <div class="col-sm">
+                        <form [formGroup]="offDayForm">
+                        <div class="form-row row">
+                            <div class="col-md-4 mb-3">
+                                <label>State<span>*</span></label>
+                                   <select class="form-select form-control" formControlName="state">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of states">{{item.stateName}}</option>
+                                     </select>  
+                                     <small
+                                     *ngIf="offDayForm.get('state').invalid && offDayForm.get('state').touched"
+                                     class="text-danger"> *State is Required</small>
+                            </div>
+                           
+                            <div class="col-md-4 mb-3">
+                                <label>Branch<span>*</span></label>
+                                <div>
+                                 <ngx-bootstrap-multiselect 
+                                 class="multselct "
+                                 [options]="branch" 
+                                 [(ngModel)]="branchModel" 
+                                 value = branch.name
+                                 formControlName="branch">
+
+                                 </ngx-bootstrap-multiselect>
+                            </div>
+                            <small
+                            *ngIf="offDayForm.get('branch').invalid && offDayForm.get('branch').touched"
+                            class="text-danger"> *Branch is Required</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Grade<span>*</span></label>
+                            <div>
+                             <ngx-bootstrap-multiselect 
+                             class="multselect "
+                             [options]="grade" 
+                             [(ngModel)]="optionsModel" 
+                             [value] = grade.name
+                             formControlName="grade">
+
+                             </ngx-bootstrap-multiselect>
+                        </div>
+                        <!-- <small
+                        *ngIf="workingDayForm.get('grade').invalid && workingDayForm.get('grade').touched"
+                        class="text-danger"> *Grade is Required</small> -->
+                         </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Off Day<span>*</span></label>
+                               <select class="form-select form-control" formControlName="day">
+                                   <option value="">--Select--</option>
+                                    <option value="sunday">Sunday</option>
+                                    <option value="monday">monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                 </select>  
+                                 <small
+                                 *ngIf="offDayForm.get('day').invalid && offDayForm.get('day').touched"
+                                 class="text-danger"> *This Field is Required</small>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Full Day/ First Half<span>*</span></label>
+                               <select class="form-select form-control" formControlName="fullday">
+                                   <option value="">--Select--</option>
+                                    <option value="Full Day">Full Day</option>
+                                    <option value="First Half">First Half</option>
+                                    <option value="Second Half">Second Half</option>
+                                    
+                                 </select>  
+                                 <small
+                                 *ngIf="offDayForm.get('fullday').invalid && offDayForm.get('fullday').touched"
+                                 class="text-danger"> *This Field is Required</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Week No<span>*</span></label>
+                               <select class="form-select form-control" formControlName="weekNo">
+                                   <option value="">--Select--</option>
+                                    <option value="week1">Week 1</option>
+                                    <option value="week2">Week 2</option>
+                                    <option value="week3">Week 3</option>
+                                    <option value="week4">Week 4</option>
+                                    <option value="week5">Week 5</option>
+                                    <option value="week6">Week 6</option>
+                                    <option value="all">All</option>
+                                    
+                                 </select>  
+                                 <small
+                                 *ngIf="offDayForm.get('weekNo').invalid && offDayForm.get('weekNo').touched"
+                                 class="text-danger"> *This Field is Required</small>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label class="focus-label">Effective Date <span>*</span></label>
+                            <div class="form-group form-focus mb-0">
+                                <div class="cal-icon">
+                                    <input class="form-control floating datetimepicker" bsDatepicker   [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="effectiveDate">
+                                </div>
+                               <small *ngIf="offDayForm.get('effectiveDate').invalid && offDayForm.get('effectiveDate').touched"></small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label >Status</label>
+                            <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                           
+                        </div>
+                      </div> 
+                       
+                      <button type="button" class="btn btn-primary" (click)="submit()" *ngIf="!update">Submit</button>
+                      <button  type="button" class="btn btn-primary" *ngIf="update" (click)="updateLeaveAllocation()">Update</button>
+                      <button  type="button" class="btn " (click)="cancel()">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,1230 @@
+<div class="content container-fluid">
+    <class class="mat-typography">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Leave Application Master</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                            <li class="breadcrumb-item active" aria-current="page">Leaves</li>
+                            <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                            <li class="breadcrumb-item active" aria-current="page">Leave Application Master{{p1}}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="card tab-box mt-3">
+            <div class="row user-tabs">
+                <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                    <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                        <li class="nav-item"><a href="#lA" data-bs-toggle="tab" class="nav-link active">Leave Applications</a></li>
+                        <!-- <li class="nav-item"><a href="#personalInfo" data-bs-toggle="tab" class="nav-link">Personal</a></li> -->
+                        <li class="nav-item" *ngIf="usertype=='Admin' || usertype=='Super Admin' || rpStatus=='true'"><a href="#lAA" data-bs-toggle="tab" class="nav-link">Leave Approve Applications</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="tab-content">
+                <div id="lA" class="pro-overview tab-pane fade show active">
+                    <div class="row filter-row">
+                        <div class="col-md-12">
+
+                            <div class="add-emp-section">
+                                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i>Show Table</a>
+                                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i>Create New</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="showMyContainer==false ">
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <div class="table-responsive" *ngIf="Data2.length!=0">
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                            <thead>
+                                                <caption><b>Approved Leaves</b></caption>
+                                                <tr>
+                                                    <!-- <th>Reason</th> -->
+                                                    <th>Leave ID</th>
+                                                    <!-- <th >Employee Name</th> -->
+                                                   
+                                                    <th>Leave Code</th>
+                                                     <th >Applicable Date</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let item of approveLeaves; let i=index ">
+                                                    <tr ng-show=" item!= null">
+                                                        <!-- <td (click)="item.isExpanded = !item.isExpanded">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                    </td> -->
+                                                        <td>{{item.leaveTypeId}}
+                                                            <div *ngIf="item.isExpanded">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForLeave}}</span></div>
+                                                        </td>
+                                                        <!-- <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td> -->
+                                                       
+
+                                                        <td>{{item.leaveType}}</td>
+                                                        <td>{{Data2[i].applicableDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.fromDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.toDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.totalDays}}</td>
+                                                        <!-- <td>{{Data1[i].status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}</td> -->
+                                                        <td>{{Data2[0].status}}</td>
+
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+
+
+
+
+
+
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!approveLeaves ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Reason</th>
+                                                    <th>Leave ID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Applicable Date</th>
+                                                    <th>Leave Code</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let item of leaveData1; let i = index">
+                                                    <tr>
+                                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                        </td>
+                                                        <td>{{item.leave_application_id}}
+                                                            <div *ngIf="item.isExpanded">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reason_for_leave}}</span></div>
+                                                        </td>
+                                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                        <td>{{item.applicable_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.leave_type}}</td>
+                                                        <td>{{item.from_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.to_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.total_days}}</td>
+                                                        <td>{{item.status == true? 'Active':'Inactive'}}</td>
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="showMyContainer==false">
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <div class="table-responsive" *ngIf="pendingLeaves.length>0">
+
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                            <thead>
+                                                <caption><b>Pending Leaves</b></caption>
+                                                <tr>
+                                                    <!-- <th>Reason</th> -->
+                                                    <th>Leave ID</th>
+                                                    <!-- <th >Employee Name</th> -->
+                                                   
+                                                    <th>Leave Code</th>
+                                                    <th >Applicable Date</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+                                                    <th>Pending From</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let item of pendingLeaves; let i = index">
+                                                    <tr>
+                                                        <!-- <td (click)="item.isExpanded = !item.isExpanded">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                    </td> -->
+                                                        <td>{{item.leaveApplicationId}}
+                                                            <div *ngIf="item.isExpanded">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForLeave}}</span></div>
+                                                        </td>
+                                                        <!-- <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td> -->
+                                                       
+
+                                                        <td>{{item.pend.leaveType}}</td>
+                                                         <td>{{item.applicableDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.pend.fromDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.pend.toDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.pend.totalDays}}</td>
+                                                        <td>{{item.firstName}}</td>
+                                                        <!-- <td>{{Data1[i].status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}</td> -->
+                                                        <td>{{item.status}}</td>
+                                                        <td class="text-mid ico-sec justify-content-mid">
+                                                            <button (click)="delete(item.leaveApplicationId)">Cancel</button>
+                                                        </td>
+
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+
+
+
+
+
+
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!pendingLeaves">
+                                            <thead>
+                                                <tr>
+                                                    <th>Reason</th>
+                                                    <th>Leave ID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Applicable Date</th>
+                                                    <th>Leave Code</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let item of leaveData1; let i = index">
+                                                    <tr>
+                                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                        </td>
+                                                        <td>{{item.leave_application_id}}
+                                                            <div *ngIf="item.isExpanded">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reason_for_leave}}</span></div>
+                                                        </td>
+                                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                        <td>{{item.applicable_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.leave_type}}</td>
+                                                        <td>{{item.from_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.to_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.total_days}}</td>
+                                                        <td>{{item.status == true? 'Active':'Inactive'}}</td>
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                        </div>
+                    </div>
+
+
+                    <div class="row" *ngIf="showMyContainer==false">
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <div class="table-responsive" *ngIf="Data3.length!=0">
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                            <thead>
+                                                <caption><b>Rejected Leaves</b></caption>
+                                                <tr>
+                                                    <!-- <th>Reason</th> -->
+                                                    <th>Leave ID</th>
+                                                    <!-- <th >Employee Name</th> -->
+                                                    
+                                                    <th>Leave Code</th>
+                                                    <th >Applicable Date</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container>
+                                                    <tr *ngFor="let item of rejectLeaves; let i=index">
+
+
+                                                        <!-- <td (click)="item.isExpanded = !item.isExpanded">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                    </td> -->
+                                                        <td>{{item.leaveTypeId}}
+                                                            <div *ngIf="item.isExpanded">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForLeave}}</span></div>
+                                                        </td>
+                                                        <!-- <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td> -->
+                                                       
+
+                                                        <td>{{item.leaveType}}</td>
+                                                        <td>{{Data3[i].applicableDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.fromDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.toDate | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.totalDays}}</td>
+                                                        <!-- <td>{{Data1[i].status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}</td> -->
+                                                        <td>{{Data3[0].status}}</td>
+
+
+
+                                                    </tr>
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+
+
+
+
+
+
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!rejectLeaves">
+                                            <thead>
+                                                <tr>
+                                                    <th>Reason</th>
+                                                    <th>Leave ID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Applicable Date</th>
+                                                    <th>Leave Code</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let item of leaveData1; let i = index">
+                                                    <tr>
+                                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                        </td>
+                                                        <td>{{item.leave_application_id}}
+                                                            <div *ngIf="item.isExpanded">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reason_for_leave}}</span></div>
+                                                        </td>
+                                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                        <td>{{item.applicable_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.leave_type}}</td>
+                                                        <td>{{item.from_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.to_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.total_days}}</td>
+                                                        <td>{{item.status == true? 'Active':'Inactive'}}</td>
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                        </div>
+                    </div>
+
+
+                    <div class="row" *ngIf="showMyContainer==true">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h1 class="card-title mb-0">Leave Application Master Form</h1>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form [formGroup]="leaveApplicationForm">
+                                                <div class="form-row row">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label class="">Employee<small> *</small></label>
+                                                        <ng-select class="form-select form-control" formControlName="employee">
+                                                            <ng-option *ngFor="let item of employees; let i = index" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.lastName}}</ng-option>
+                                                        </ng-select>
+                                                        <small *ngIf="leaveApplicationForm.get('employee').invalid && leaveApplicationForm.get('employee').touched">Employee is required</small>
+                                                    </div>
+                                                    <div class="col-md-2" style="margin-top: 17px;">
+                                                        <button class="btn btn-primary" (click)="details()">Details</button>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <table class="table table-bordered" *ngIf="leaveBalance" style="width: 100%;">
+                                                                <thead class="center" style="background-color: aliceblue;">
+                                                                    <tr>
+                                                                        <th>LeaveCode</th>
+                                                                        <!-- <th>Main Balance</th> -->
+                                                                        <th>Leave Balance</th>
+                                                                        <th>Description</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody *ngFor="let item of leaveBalance">
+                                                                    <tr>
+                                                                        <ng-container *ngIf="item.floatbalance!=0">
+                                                                            <td>{{item.leaveCode}}</td>
+                                                                            <!-- <td>{{item.mainbalance}}</td> -->
+                                                                            <td>{{item.floatbalance}}</td>
+                                                                            <td>{{item.description}}</td>
+                                                                        </ng-container>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <label class="">Leave<small> *</small></label>
+                                                        <!-- <ng-select class="form-select form-control"  formControlName="leave" [multiple]="true" (change)="addFarray($event)">
+                                        <ng-option *ngFor="let item of leaveBalance" [value]="item.leaveCode">{{item.leaveCode}}</ng-option>
+                                    </ng-select> -->
+
+                                                        <ng-select [items]="leaveBalance" [multiple]="true" bindLabel="leaveCode" [closeOnSelect]="false" bindValue="leaveCode" formControlName="leave" class="form-select form-control" (change)="addFarray($event)">
+                                                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                                                <div *ngIf="item.floatbalance!=0 ">
+                                                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item['leaveCode']}}
+                                                                </div>
+                                                            </ng-template>
+                                                            <ng-template ng-multi-label-tmp let-items="items">
+                                                                <div style="margin-right: 2px;" *ngFor="let item of items | slice: 0:3">
+                                                                    <ng-container *ngIf="item.floatbalance!=0">
+                                                                        <span *ngIf="items.length < 4 ">{{ item['leaveCode'] }} </span>
+                                                                    </ng-container>
+                                                                </div>
+                                                                <div *ngIf="items.length > 3">
+                                                                    <span>{{ items.length }} Selected</span>
+                                                                </div>
+                                                            </ng-template>
+                                                        </ng-select>
+
+
+                                                        <small *ngIf="leaveApplicationForm.get('leave').invalid && leaveApplicationForm.get('leave').touched">This field is required</small>
+                                                    </div>
+                                                    <div class="col-md-4 mb-2">
+                                                        <label> Reason </label>
+                                                        <textarea class="form-control" formControlName="reason"></textarea>
+                                                    </div>
+                                                    <ng-container formArrayName="fArray">
+
+                                                        <ng-container *ngFor="let quantity of fArray().controls; let i=index" [formGroupName]="i">
+                                                            <div class="form-row row">
+                                                                <div>{{leaveApplicationForm.value.leave[i]}}</div>
+                                                                <div class="col-md-3 mb-2">
+                                                                    <label class="focus-label">Start Date</label>
+                                                                    <div class="form-group form-focus mb-0">
+                                                                        <div class="cal-icon">
+                                                                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate" (ngModelChange)="dateVal($event)">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3 mb-2">
+                                                                    <label class="focus-label">End Date {{quantity.value.fromDate > quantity.value.toDate}}</label>
+                                                                    <div class="form-group form-focus mb-0">
+                                                                        <div class="cal-icon">
+                                                                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate" (ngModelChange)="onPlChange(i)">
+                                                                        </div>
+                                                                        <small *ngIf="quantity.value.fromDate > quantity.value.toDate && quantity.get('toDate').touched">* Start Date Cannot be less than ToDate</small>
+                                                                    </div>
+                                                                </div>
+
+                                                                <table class="table table-bordered" formArrayName="days">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>LvDate</th>
+                                                                            <th>LvDuration</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let item of arrayDays(i).controls; let j=index" [formGroupName]="j">
+                                                                            <td>
+                                                                                <input formControlName="lvDate" disabled>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="form-select form-control" formControlName="lvDuration">
+                                                                <option value="Full day" id="1">Full Day</option>
+                                                                <option value="First half" id="0.5">First Half</option>
+                                                                <option value="Second half" id="0.5">Second Half</option>
+                                                            </select>
+                                                                            </td>
+                                                                            <!-- <td>
+                                                            <button (click)="removeFhArray(i)" class="btn btn-danger" style="background-color: red;">Remove</button>    
+                                                        </td> -->
+                                                                        </tr>
+                                                                    </tbody>
+                                                                    <!-- <button (click)="addNewArrayDays(i)" class="btn btn-danger" style="background-color: red;">Add Duration</button>     -->
+                                                                </table>
+
+                                                            </div>
+
+                                                        </ng-container>
+                                                        <div class="col-md-3 mb-2">
+                                                            <!-- <button (click)="addFarray()" class="btn btn-danger" style="background-color: red;">Get Dates</button>  -->
+                                                        </div>
+                                                    </ng-container>
+
+
+                                                </div>
+                                                <!-- <div>
+                                    <a class="btn btn-primary" (click)="addLeaves()">Submit</a>
+                                    <a class="btn btn-primary" style="margin-left: 2px;" (click)="test()">Test</a>
+                                    <a class="btn " (click)="Cancel()">Cancel</a>
+                                </div> -->
+                                                <div class="col-md-3 mb-2 submit">
+                                                    <button (click)="submit()" class="btn btn-danger" style="background-color: red;">Submit </button>
+                                                    <button (click)="cancel()" class="btn ">Cancel </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lAA" class="pro-overview tab-pane fade">
+                    <!-- <div class="col-sm-12" *ngIf="leaveData2?.length!=0">
+                        <div class="card mb-0">
+                            <div class="col-sm-4 col-md-3">
+                                <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                                <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- Search Filter -->
+                    <div class="row filter-row">
+                        <div class="col-md-12">
+                            <form [formGroup]="filterForm">
+                                <div class="row">
+
+                                    <div class="col-sm-6 col-md-3">
+
+                                        <label>Employee <small class="text-danger">*</small></label>
+                                        <ng-select class="form-select form-control" formControlName="employee">
+                                            <option value="">--Select--</option>
+                                            <ng-option [value]="item.employeeId" *ngFor="let item of leaveData2">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+
+                                        </ng-select>
+                                        <small *ngIf="filterForm.get('employee').invalid && filterForm.get('employee').touched" class="text-danger"> *Employee Name is Required</small>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+
+                                        <label>FromDate <small class="text-danger">*</small></label>
+                                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                                        <small *ngIf="filterForm.get('fromDate').invalid && filterForm.get('fromDate').touched" class="text-danger"> *From Date is Required</small>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+
+                                        <label>ToDate<small class="text-danger">*</small> </label>
+                                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                        <small *ngIf="filterForm.get('toDate').invalid && filterForm.get('toDate').touched" class="text-danger"> *To Date is Required</small>
+
+                                    </div>
+
+
+                                    <div class="col-sm-6 col-md-3">
+                                        <label>State</label>
+                                        <select class="form-select form-control" formControlName="state">
+                                            <option value="">--Select--</option>
+                                           <option *ngFor="let item of stateData" [value]="item.stateId">{{item.stateName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <label>Branch</label>
+                                        <select class="form-select form-control" formControlName="branch">
+                                                <option value="">--Select--</option>
+                                               <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                            </select>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-3">
+                                        <label>Category</label>
+                                        <select class="form-select form-control" formControlName="category">
+                                                    <option value="">--Select--</option>
+                                                   <option *ngFor="let item of categories" [value]="item.categoryId">{{item.categoryName}}</option>
+                                                </select>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-3">
+
+                                        <label>Department</label>
+                                        <select class="form-select form-control" formControlName="department">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>
+                                            </select>
+                                    </div>
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>Search By</label>
+                                        <ng-select class="form-select form-control" formControlName="id">
+                                            <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                        </ng-select>
+                                    </div> -->
+                                    <div class="col-sm-6 col-md-3">
+                                        <label>Status</label>
+                                        <select class="form-select form-control" formControlName="status">
+                                                <option value="0">Pending</option>
+                                                <option value="1">Approved</option>
+                                                <option value="2">Rejected</option>
+                                                <!-- <option>Block</option>
+                                                <option>Hold</option>
+                                                <option>FNF</option> -->
+                                            </select>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="col-sm-6 col-md-3" style=" height: 25px; width: 10px;">
+                                        <a class="btn btn-primary" (click)="search()"> Search </a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <div class="table-responsive" *ngIf="filterId?.length!=0">
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                            <thead>
+                                                <caption><b>Normal Leaves</b></caption>
+                                                <tr>
+
+                                                    <th>Reason</th>
+                                                    <th>Employee Code</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Applicable Date</th>
+                                                    <th>Leave Type</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container>
+
+                                                    <tr *ngFor="let item of filterId|slice:0:20;">
+                                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                        </td>
+                                                        <td>
+                                                            {{item.employee_code}}
+                                                            <div *ngIf="item.isExpanded;">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reason_for_leave}}</span></div>
+                                                        </td>
+                                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                        <td>{{item.applicable_date | date:'dd-MM-yyyy'}}</td>
+                                                        <!-- <td colspan="4"> -->
+                                                        <!-- <table style="border: 1px solid grey;">
+
+                                                                <tr>
+                                                                    <td>Leave Type</td>
+                                                                    <td>From Date</td>
+                                                                    <td>To Date</td>
+                                                                    <td>Total Days</td>
+
+                                                                </tr> -->
+
+                                                        <!-- <tr *ngFor="let item_leave of item.leaves"> -->
+                                                        <td>{{item.leave_type}}</td>
+                                                        <td>{{item.from_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.to_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.total_days}}</td>
+
+                                                        <!-- </tr> -->
+                                                        <!-- </table> -->
+                                                        <!-- </td> -->
+
+                                                        <td>
+                                                            <select style="border: none;" [(ngModel)]="item.status" (change)="approve1($event.target.value, item)">
+                                        <!-- <option value="">{{item.status}}</option> -->
+                                        <!-- <option *ngFor="let item of options" [value]="item.value">{{item.value}}</option> -->
+                                        
+                                        <option value="1">Approve</option>
+                                        <option value="2">Rejected</option>
+                                        <option value="0">Pending</option>
+                                    </select></td>
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                        </div>
+                    </div>
+                    <div class="col-sm-12" *ngIf="leaveData2?.length!=0 && filterId?.length==0">
+                        <div class="card mb-0">
+                            <div class="col-sm-4 col-md-3">
+                                <button class="ml-2" (click)="exportToExcel()">Excel</button>
+                                <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <div class="table-responsive" *ngIf="leaveData2?.length!=0 && filterId?.length==0">
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                            <thead>
+
+                                                <tr>
+
+                                                    <th>Reason</th>
+                                                    <th>Employee Code</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Applicable Date</th>
+                                                    <th colspan="4">&nbsp;
+                                                    </th>
+                                                    <th>Status</th>
+                                                    <!-- <th></th> -->
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+
+
+                                                <tr *ngFor="let item of leaveData2">
+                                                    <td (click)="item.isExpanded = !item.isExpanded">
+                                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                    </td>
+                                                    <td>
+                                                        {{item.employeeCode}}
+                                                        <div *ngIf="item.isExpanded">
+                                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForLeave}}</span></div>
+                                                    </td>
+                                                    <td>{{item.employeeName}} {{item.middleName}} {{item.lastName}}</td>
+                                                    <td>{{item.applicableDate | date:'dd-MM-yyyy'}}</td>
+                                                    <td colspan="4">
+                                                        <table style="border: 1px solid grey;">
+
+                                                            <tr>
+                                                                <td>Leave Type</td>
+                                                                <td>From Date</td>
+                                                                <td>To Date</td>
+                                                                <td>Total Days</td>
+
+                                                            </tr>
+
+                                                            <tr *ngFor="let item_leave of item.leaves">
+                                                                <td>{{item_leave.leaveType}}</td>
+                                                                <td>{{item_leave.fromDate | date:'dd-MM-yyyy'}}</td>
+                                                                <td>{{item_leave.toDate | date:'dd-MM-yyyy'}}</td>
+                                                                <td>{{item_leave.totalDays}}</td>
+
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td>
+                                                        <select style="border: none;" [(ngModel)]="item.status" (change)="approve($event.target.value, item)">
+                                        <!-- <option value="">{{item.status}}</option> -->
+                                        <!-- <option *ngFor="let item of options" [value]="item.value">{{item.value}}</option> -->
+                                        
+                                        <option value="1">Approve</option>
+                                        <option value="2">Rejected</option>
+                                        <option value="0">Pending</option>
+                                    </select></td>
+
+                                                    <!-- <td>
+                                    <tr *ngIf="item.status==2">
+                                        <input type="text">
+                                    </tr>
+                                      </td> -->
+
+                                                </tr>
+
+
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                        </div>
+                    </div>
+
+
+
+                    <div class="row" id="sectionToPrint" #epltable>
+                        <div class="col-sm-12">
+                            <div class="card mb-0">
+                                <div class="card-body">
+
+                                    <div class="table-responsive" *ngIf="normalLeavesHistory?.length!=0">
+                                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                            <thead>
+                                                <caption><b>Approved Normal Leaves</b></caption>
+                                                <tr>
+
+                                                    <th>Reason</th>
+                                                    <th>Employee ID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Applicable Date</th>
+                                                    <th>Leave Type</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Total Days</th>
+
+                                                    <!-- <th colspan="4">&nbsp;
+                                        </th> -->
+                                                    <th>Status</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <ng-container>
+
+                                                    <tr *ngFor="let item of normalLeavesHistory">
+                                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                        </td>
+                                                        <td>
+                                                            {{item.employee_id}}
+                                                            <div *ngIf="item.isExpanded;">
+                                                                <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForLeave}}</span></div>
+                                                        </td>
+                                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                        <td>{{item.applicable_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.leave_type }}</td>
+                                                        <td>{{item.from_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.to_date | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{item.total_days}}</td>
+
+                                                        <td>{{item.status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}</td>
+                                                        <!-- <td colspan="4"><table  style="border: 1px solid grey;">
+                                   
+                                        <tr >
+                                            <td>Leave Type</td>
+                                            <td>From Date</td>
+                                            <td>To Date</td>
+                                            <td>Total Days</td>
+
+                                        </tr>
+                                        
+                                        <tr *ngFor="let item_leave of item.leaves">
+                                            <td>{{item_leave.leave_type}}</td>
+                                            <td>{{item_leave.from_date | date:'dd-MM-yyyy'}}</td>
+                                            <td>{{item_leave.toDate | date:'dd-MM-yyyy'}}</td>
+                                            <td>{{item_leave.totalDays}}</td>
+
+                                        </tr>
+                                   </table></td>
+                                
+                                   <td> -->
+
+                                                        <!-- <select style="border: none;" [(ngModel)]="item.status"  > -->
+                                                        <!-- <option value="">{{item.status}}</option> -->
+                                                        <!-- <option *ngFor="let item of options" [value]="item.value">{{item.value}}</option> -->
+
+                                                        <!-- <option value="1">Approve</option>
+                                        <option value="2">Rejected</option>
+                                        <option value="0">Pending</option> -->
+                                                        <!-- </select> -->
+                                                        <!-- </td>    -->
+                                                    </tr>
+
+                                                </ng-container>
+
+                                            </tbody>
+
+                                        </table>
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                        </div>
+                    </div>
+                    <!-- <div class="row"  >
+            <div class="col-sm-12">
+                <div class="card mb-0">
+                    <div class="card-body">
+        
+                        <div class="table-responsive"  *ngIf="shortLeaves?.length!=0">
+                            <table datatable [dtOptions]="dtOptions"   
+                            class="datatable table table-stripped mb-0"  >
+                                <thead>
+                                    <caption><b>Short Leaves</b></caption>
+                                    <tr>
+                                       
+                                        <th>Reason</th>
+                                        <th >Employee ID</th>
+                                        <th >Employee Name</th>
+                                        <th >Applicable Date</th>
+                                      
+                                        <th >From Time</th>
+                                        <th >To Time</th>
+                                       
+                                        <th >Status</th>
+                                    </tr>
+                                     
+                                </thead>
+                                    <tbody>
+                                        <ng-container 
+                                        >
+                                       <tr  *ngFor="let item of shortLeaves" >
+                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                        </td>
+                                       <td>
+                                        {{item.employeeId}}
+                                        <div  *ngIf="item.isExpanded" > 
+                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                       </td>
+                                       <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                       <td>{{item.date  | date:'dd-MM-yyyy' }}</td>
+                                  
+                                       <td>{{item.fromTime }}</td>
+                                       <td>{{item.toTime }}</td>
+                                   
+                                       <td>
+                                        <select style="border: none;" [(ngModel)]="item.status" (change)="approveShortLeaves($event.target.value, item)" >
+                                            
+                                            <option value="1">Approve</option>
+                                            <option value="2">Rejected</option>
+                                            <option value="0">Pending</option>
+                                        </select></td>   
+                                    </tr>
+                                      
+                                       </ng-container>
+                                     
+                                    </tbody>
+                                    
+                            </table>
+                            
+    
+                         
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+           
+            </div>
+        </div>
+
+
+        <div class="row"  >
+            <div class="col-sm-12">
+                <div class="card mb-0">
+                    <div class="card-body">
+        
+                        <div class="table-responsive"  *ngIf="shortLeavesForAdmin?.length!=0">
+                            <table datatable [dtOptions]="dtOptions"   
+                            class="datatable table table-stripped mb-0"  >
+                                <thead>
+                                    <caption><b>Short Leaves</b></caption>
+                                    <tr>
+                                       
+                                        <th>Reason</th>
+                                        <th >Employee ID</th>
+                                        <th >Employee Name</th>
+                                        <th >Applicable Date</th>
+                                      
+                                        <th >From Time</th>
+                                        <th >To Time</th>
+                                   
+                                        <th >Status</th>
+                                    </tr>
+                                     
+                                </thead>
+                                    <tbody>
+                                        <ng-container 
+                                        >
+                                       <tr  *ngFor="let item of shortLeavesForAdmin" >
+                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                        </td>
+                                       <td>
+                                        {{item.employeeId}}
+                                        <div  *ngIf="item.isExpanded" > 
+                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                       </td>
+                                       <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                       <td>{{item.date  | date:'dd-MM-yyyy' }}</td>
+                                     
+                                       <td>{{item.fromTime }}</td>
+                                       <td>{{item.toTime }}</td>
+                                 
+                                       <td>
+                                        <select style="border: none;" [(ngModel)]="item.status" (change)="approveShortLeaves($event.target.value, item)" >
+                                            
+                                            <option value="1">Approve</option>
+                                            <option value="2">Rejected</option>
+                                            <option value="0">Pending</option>
+                                        </select></td>   
+                                    </tr>
+                                      
+                                       </ng-container>
+                                     
+                                    </tbody>
+                                    
+                            </table>
+                           
+    
+                         
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+           
+            </div>
+        </div>
+
+
+        <div class="row" >
+            <div class="col-sm-12">
+                <div class="card mb-0">
+                    <div class="card-body">
+        
+                        <div class="table-responsive" *ngIf="outDutyLeaves?.length!=0">
+                            <table datatable [dtOptions]="dtOptions"   
+                            class="datatable table table-stripped mb-0"  >
+                                <thead>
+                                    <caption><b>Out Duty Leaves</b></caption>
+                                    <tr>
+                                       
+                                        <th>Reason</th>
+                                        <th >Employee ID</th>
+                                        <th >Employee Name</th>
+                                        <th >Applicable Date</th>
+                                      
+                                        <th >From Time</th>
+                                        <th >To Time</th>
+                                      
+                                        <th >Status</th>
+                                    </tr>
+                                     
+                                </thead>
+                                    <tbody>
+                                        <ng-container 
+                                        >
+                                       <tr  *ngFor="let item of outDutyLeaves" >
+                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                        </td>
+                                       <td>
+                                        {{item.employeeId}}
+                                        <div  *ngIf="item.isExpanded" > 
+                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                       </td>
+                                       <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                       <td>{{item.date  | date:'dd-MM-yyyy' }}</td>
+                                       
+                                       <td>{{item.fromTime }}</td>
+                                       <td>{{item.toTime }}</td>
+                                      
+                                       <td>
+                                        <select style="border: none;" [(ngModel)]="item.status" (change)="approveOutDutyLeaves($event.target.value, item)" >
+                                           
+                                            <option value="1">Approve</option>
+                                            <option value="2">Rejected</option>
+                                            <option value="0">Pending</option>
+                                        </select></td>   
+                                    </tr>
+                                      
+                                       </ng-container>
+                                     
+                                    </tbody>
+                                    
+                            </table>
+                            
+    
+                         
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+             
+            </div>
+        </div>
+
+
+        <div class="row" >
+            <div class="col-sm-12">
+                <div class="card mb-0">
+                    <div class="card-body">
+        
+                        <div class="table-responsive" *ngIf="outDutyForAdmin?.length!=0"  >
+                            <table datatable [dtOptions]="dtOptions"   
+                            class="datatable table table-stripped mb-0" >
+                                <thead>
+                                    <caption><b>Out Duty Leaves</b></caption>
+                                    <tr>
+                                       
+                                        <th>Reason</th>
+                                        <th >Employee ID</th>
+                                        <th >Employee Name</th>
+                                        <th >Applicable Date</th>
+                                       
+                                        <th >From Time</th>
+                                        <th >To Time</th>
+                                      
+                                        <th >Status</th>
+                                    </tr>
+                                     
+                                </thead>
+                                    <tbody>
+                                        <ng-container 
+                                        >
+                                       <tr  *ngFor="let item of outDutyForAdmin" >
+                                        <td (click)="item.isExpanded = !item.isExpanded">
+                                            <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                            <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                        </td>
+                                       <td>
+                                        {{item.employeeId}}
+                                        <div  *ngIf="item.isExpanded" > 
+                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                       </td>
+                                       <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                       <td>{{item.date  | date:'dd-MM-yyyy' }}</td>
+                                      
+                                       <td>{{item.fromTime }}</td>
+                                       <td>{{item.toTime }}</td>
+                                      
+                                       <td>
+                                        <select style="border: none;" [(ngModel)]="item.status" (change)="approveOutDutyLeaves($event.target.value, item)" >
+                                            
+                                            <option value="1">Approve</option>
+                                            <option value="2">Rejected</option>
+                                            <option value="0">Pending</option>
+                                        </select></td>   
+                                    </tr>
+                                      
+                                       </ng-container>
+                                     
+                                    </tbody>
+                                    
+                            </table>
+                            
+    
+                         
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+               
+            </div>
+        </div> 
+
+
+    </div>-->
+
+
+
+                </div>

@@ -1,0 +1,207 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Add Certification</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Training</li>
+                        <li class="breadcrumb-item active" aria-current="page">Training</li>
+                        <li class="breadcrumb-item active" aria-current="page">Add Certification</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="row filter-row">
+            <div class="col-md-12">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i>Add New</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="showMyContainer==false">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th *ngIf="usertype=='Admin' || usertype=='Super Admin'">Meeting Created By</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.createdate | date}}</td>
+                                    <td>{{item.createtime}}</td>
+                                    <td>{{item.startdate| date}}</td>
+                                    <td>{{item.enddate |date}}</td>
+                                    <td *ngIf="usertype=='Admin' || usertype=='Super Admin'">{{item.cfirstName}} {{item.cmiddleName}} {{item.clastName}}</td>
+                                    <td class="text-end ico-sec justify-content-end" style="padding-right:80px;">
+                                        <a class="fas fa-pen" (click)="edit(item)"></a>
+                                        <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                    <td>
+                                        <button class="btn-primary" (click)="close(item)" style="width: 90px;">Stop</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn-primary" (click)="start(item)" style="width: 90px;">Start</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="showMyContainer==true">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="needs-validation" [formGroup]="addCertification">
+                        <div class="form-row row">
+
+                            <div class="col-md-4 mb-3">
+                                <label>Title<small class="text-danger">*</small></label>
+                                <input type="text" class="form-control" formControlName="title">
+                                <small *ngIf="addCertification.get('title').invalid && addCertification.get('title').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="focus-label">Type<small class="text-danger">*</small></label>
+                                <input type='text' class="form-control" formControlName="type">
+                                <small *ngIf="addCertification.get('type').invalid && addCertification.get('type').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Date<small class="text-danger">*</small></label>
+                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                <small *ngIf="addCertification.get('date').invalid && addCertification.get('date').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Time<small class="text-danger">*</small></label>
+                                <input type="time" step="1" class="form-control" formControlName="time">
+                                <small *ngIf="addCertification.get('time').invalid && addCertification.get('time').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Start Date<small class="text-danger">*</small></label>
+                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="startDate">
+                                <small *ngIf="addCertification.get('startDate').invalid && addCertification.get('startDate').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>End Date<small class="text-danger">*</small></label>
+                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="endDate">
+                                <small *ngIf="addCertification.get('endDate').invalid && addCertification.get('endDate').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Upload Video</label>
+                                <input type="file" class="form-control" (change)="onChange($event)" >
+                            </div>
+
+
+
+
+
+                            <div class="card" style="margin: 5px;">
+                                <h1>Add Questions</h1>
+                                <div class="col-md-3 mb-3">
+                                    <button let i=index; class="fa fa-plus add" (click)="addRequest()">New Question</button>
+                                </div>
+
+                                <ng-container formArrayName="quizArray" *ngFor="let item of quantities().controls; let i = index;">
+
+                                    <div [formGroupName]="i">
+                                        <div class="row">
+                                            <div class="col-md-8 mb-3">
+                                                <label style="font-weight: bold; font-size: 20px;">{{i+1}}. Question<small class="text-danger">*</small></label>
+                                                <textarea type="text" class="form-control" formControlName="question"></textarea>
+                                                <small *ngIf="quantities().controls[i].get('question').invalid && quantities().controls[i].get('question').touched" class="text-danger">*This field is required</small>
+                                            </div>
+                                            <div class="col-md-3 mb-3" style="margin-top: 20px;">
+                                                <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label>Option A<small class="text-danger">*</small></label>
+                                                    <textarea type="text" class="form-control" formControlName="optionA"></textarea>
+                                                    <small *ngIf="quantities().controls[i].get('optionA').invalid && quantities().controls[i].get('optionA').touched" class="text-danger">*This field is required</small>
+                                                </div>
+                                                <!-- </div>
+                                            <div class="row"> -->
+                                                <div class="col-md-2">
+                                                    <label>Option B<small class="text-danger">*</small></label>
+                                                    <textarea type="text" class="form-control" formControlName="optionB"></textarea>
+                                                    <small *ngIf="quantities().controls[i].get('optionB').invalid && quantities().controls[i].get('optionB').touched" class="text-danger">*This field is required</small>
+                                                </div>
+                                                <!-- </div>
+                                            <div class="row"> -->
+                                                <div class="col-md-2">
+                                                    <label>Option C<small class="text-danger">*</small></label>
+                                                    <textarea type="text" class="form-control" formControlName="optionC"></textarea>
+                                                    <small *ngIf="quantities().controls[i].get('optionC').invalid && quantities().controls[i].get('optionC').touched" class="text-danger">*This field is required</small>
+                                                </div>
+                                                <!-- </div>
+                                            <div class="row">-->
+                                                <div class="col-md-2">
+                                                    <label>Option D<small class="text-danger">*</small></label>
+                                                    <textarea type="text" class="form-control" formControlName="optionD"></textarea>
+                                                    <small *ngIf="quantities().controls[i].get('optionD').invalid && quantities().controls[i].get('optionD').touched" class="text-danger">*This field is required</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label>Correction Option<small class="text-danger">*</small></label>
+                                                    <textarea type="text" class="form-control" formControlName="correctoption"></textarea>
+                                                    <small *ngIf="quantities().controls[i].get('correctoption').invalid && quantities().controls[i].get('correctoption').touched" class="text-danger">*This field is required</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+
+
+
+                                    </div>
+
+                                </ng-container>
+                            </div>
+
+                        </div>
+
+                    </form>
+                    <a class="btn btn-primary" (click)="submit()" *ngIf="!editId">Submit<img  src="/assets/img/loader/button.gif" *ngIf="submitLoader" style="width: 15px; height:15px;"> </a>
+                    <button class="btn btn-primary" (click)="updateForm(editId)" *ngIf="editId">Update</button>
+                    <button class="btn" (click)="cancel()">Cancel</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

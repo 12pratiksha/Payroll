@@ -1,0 +1,472 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Approved List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Approve</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i> Add Candidate</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+                    <!-- <a class="btn btn-success btn-add-emp" (click)="hideContainer()"><i class="fas fa-bars"></i> Show Table</a> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!showMyContainer">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="filterForm">
+                                    <div class="form-row row">
+
+                                        <div class="col-sm-12 col-md-4">
+
+                                            <label>Designation <small class="text-danger">*</small></label>
+                                            <ng-select class="form-select form-control" formControlName="designation">
+                                                <ng-option value=" ">--Select--</ng-option>
+                                                <ng-option [value]="item.designId" *ngFor="let item of dropdownValue">{{item.name}}</ng-option>
+                                            </ng-select>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-4">
+                                            <label>Status <small class="text-danger">*</small></label>
+                                            <ng-select class="form-select floating form-control" formControlName="status">
+                                                <ng-option value=" ">--Select--</ng-option>
+                                                <ng-option value="1">Dropped In</ng-option>
+                                                <ng-option value="0">Rejected</ng-option>
+                                                <ng-option value="2">Hold</ng-option>
+                                            </ng-select>
+                                        </div>
+                                        <div class="col-md-4 col-mb-4" style=" margin-top: 17px;">
+                                            <a class="btn btn-success btn-search" (click)="search()"><i class="fas fa-search me-2"></i> Search <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="!showMyContainer ">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card card-table">
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData_display?.length!=0 && !filterData">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Apply Date</th>
+                                            <th>Candidate Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Gender</th>
+                                            <th>Skills</th>
+                                            <!-- <th>Designation</th> -->
+                                            <th>Resume</th>
+                                            <th>Actions</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of tableData_display; let i = index">
+                                            <tr>
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.applicationDate|date}}</td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+
+                                                <td>{{item.phone}}</td>
+                                                <td>{{item.email}} </td>
+                                                <td>{{item.gender}}</td>
+                                                <td>{{item.skills}}</td>
+                                                <!-- <td>{{item.against}}</td> -->
+                                                <td>
+                                                    <a href="{{this.baseurl}}/empdoc/{{item.cvName}}" target="_blank" class="fas fa-bars"></a>
+                                                </td>
+                                                <td class="text-end ico-sec justify-content-end">
+                                                    <a class="fas fa-pen" (click)="edit(item.applicantCandiateListId)"></a>
+                                                    <a (click)="delete(item.applicantCandiateListId)"><i class="far fa-trash-alt"></i></a>
+                                                </td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.status" (change)="approve1($event.target.value, item)">
+                                                        <option value="0">Rejected</option>
+                                                        <option value="1">Dropped In</option>
+                                                        <option value="2">Hold</option>
+                                                    </select>
+                                                </td>
+
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!showMyContainer && filterData">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card card-table">
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="filterData">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Apply Date</th>
+                                            <th>Candidate Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Gender</th>
+                                            <th>Skills</th>
+                                            <th>Designation</th>
+                                            <th>Resume</th>
+                                            <th>Actions</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of filterData; let i = index">
+                                            <tr>
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.applicationDate|date}}</td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+
+                                                <td>{{item.phone}}</td>
+                                                <td>{{item.email}} </td>
+                                                <td>{{item.gender}}</td>
+                                                <td>{{item.skills}}</td>
+                                                <td>{{item.against}}</td>
+                                                <td>
+                                                    <a href="{{this.baseurl}}/empdoc/{{item.cvName}}" target="_blank" class="fas fa-bars"></a>
+                                                </td>
+                                                <td class="text-end ico-sec justify-content-end">
+                                                    <a class="fas fa-pen" (click)="edit(item.applicantCandiateListId)"></a>
+                                                    <a (click)="delete(item.applicantCandiateListId)"><i class="far fa-trash-alt"></i></a>
+                                                </td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.status" (change)="approve1($event.target.value, item)">
+                                                        <option value="0">Rejected</option>
+                                                        <option value="1">Dropped In</option>
+                                                        <option value="2">Hold</option>
+                                                    </select>
+                                                </td>
+
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row" *ngIf="showMyContainer==true">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="candidatesForm">
+                                    <div class="form-row row">
+                                        <!-- <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Select Candidate <small class="text-danger">*</small></label>
+                                            <select class="form-select floating form-control" formControlName="candidate">
+                                           <option value="">--Select--</option>
+                                           <option >New</option>
+                                           <option >Existing</option>
+                                        </select>
+                                            <small *ngIf="candidatesForm.get('candidate').invalid && candidatesForm.get('candidate').touched" class="text-danger"> *Select Candidate  is Required</small>
+
+                                        </div> -->
+
+                                        <!-- <ng-container *ngIf="candidatesForm.value.candidate == 'Existing'">
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Candidate<small class="text-danger">*</small></label>
+                                                <select class="form-select floating form-control" formControlName="existing">
+                                               <option value="">--Select--</option>
+                                               <option *ngFor="let item of candName" value="{{item.applicant_candiate_list_id}}"  >{{item.first_name}} {{item.last_name}}</option>
+                                            </select>
+                                                <small *ngIf="candidatesForm.get('existing').invalid && candidatesForm.get('existing').touched" class="text-danger"> *Candidate  is Required</small>
+
+                                            </div>
+
+
+                                        </ng-container>
+
+                                        <div class="col-md-3 mb-3" *ngIf=" candidatesForm.value.candidate == 'Existing'">
+                                            <label>Replacement<small class="text-danger">*</small></label>
+                                            <input type="checkbox" class="checkbox-all ms-5" required formControlName="replacement">
+                                            <small *ngIf="candidatesForm.get('replacement').invalid && candidatesForm.get('replacement').touched" class="text-danger"> *Select Checkbox is Required</small>
+
+                                        </div> -->
+
+                                        <!-- <div class="col-md-3 mb-3" *ngIf=" candidatesForm.value.replacement == true && candidatesForm.value.candidate == 'Existing'">
+                                        <label class="focus-label">Department</label>
+                                        <select class="form-select floating form-control" formControlName="department" >
+                                           <option value="">--Select--</option>
+                                           <option *ngFor="let item of department">{{item.departmentName}}</option>
+                                          
+                                        </select>
+                                      
+                                    </div> -->
+
+                                        <div class="col-md-3 mb-3">
+
+                                            <label class="focus-label">Date Of Application <small class="text-danger">*</small></label>
+                                            <div class="form-group form-focus mb-0">
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="applicationDate">
+                                                </div>
+                                                <small *ngIf="candidatesForm.get('dob').invalid && candidatesForm.get('dob').touched" class="text-danger"> *Date of Birth  is Required</small>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Against<small class="text-danger">*</small></label>
+                                            <ng-select class="form-select form-control" formControlName="against">
+                                                <ng-option value="">--Select--</ng-option>
+                                                <ng-option *ngFor="let item of Desingation" [value]="item.designationMasterId">{{item.name}}</ng-option>
+                                            </ng-select>
+                                            <small *ngIf="candidatesForm.get('against').invalid && candidatesForm.get('against').touched" class="text-danger"> *Against is Required</small>
+
+                                        </div>
+
+                                        <ng-container>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Agency Name</label>
+                                                <select class="form-select floating form-control" formControlName="agency">
+                                               <option value="">--Select--</option>
+                                               <option *ngFor="let item of agencyList" [value]="item.agencyMasterId">{{item.agencyName}}</option>
+                                               <!-- <option >Existing</option> -->
+                                            </select>
+                                                <!-- <small *ngIf="candidatesForm.get('agency').invalid && candidatesForm.get('agency').touched"
+                                        class="text-danger"> *Agency Name is Required</small> -->
+
+                                            </div>
+                                            <!-- <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Agency Type</label>
+                                            <select class="form-select floating form-control" formControlName="agencyType" >
+                                               <option value="">--Select--</option>
+                                               <option >New</option>
+                                               <option >Existing</option>
+                                            </select>
+                                          
+                                        </div> -->
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Apply From</label>
+                                                <select class="form-select floating form-control" formControlName="applyFrom">
+                                           <option value="">--Select--</option>
+                                           <option value="Walking">Walking</option>
+                                           <option value="By Agency">By Agency</option>
+                                           <option value="Email">Email</option>
+                                           <option value="Whatsapp">Whatsapp</option>
+                                        </select>
+                                                <!-- <small *ngIf="candidatesForm.get('agency').invalid && candidatesForm.get('agency').touched"
+                                    class="text-danger"> *Agency Name is Required</small> -->
+
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">State<small class="text-danger">*</small></label>
+                                                <select class="form-select floating form-control" formControlName="state">
+                                               <option value="">--Select--</option>
+                                              <option *ngFor="let item of state" [value]="item.stateId">{{item.stateName}}</option>
+                                            </select>
+                                                <small *ngIf="candidatesForm.get('state').invalid && candidatesForm.get('state').touched" class="text-danger"> *State is Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">City<small class="text-danger">*</small></label>
+                                                <select class="form-select floating form-control" formControlName="city">
+                                               <option value="">--Select--</option>
+                                               <option *ngFor="let item of city" [value]="item.id">{{item.cityName}}</option>
+                                            </select>
+                                                <small *ngIf="candidatesForm.get('city').invalid && candidatesForm.get('city').touched" class="text-danger"> *City is Required</small>
+
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label>First Name<small class="text-danger">*</small></label>
+                                                <input type="text" class="form-control" formControlName="firstName">
+                                                <small *ngIf="candidatesForm.get('firstName').invalid && candidatesForm.get('firstName').touched" class="text-danger"> *Full Name is Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Middle Name<small class="text-danger">*</small></label>
+                                                <input type="text" class="form-control" formControlName="middleName">
+                                                <small *ngIf="candidatesForm.get('middleName').invalid && candidatesForm.get('middleName').touched" class="text-danger"> *Full Name is Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Last Name<small class="text-danger">*</small></label>
+                                                <input type="text" class="form-control" formControlName="lastName">
+                                                <small *ngIf="candidatesForm.get('lastName').invalid && candidatesForm.get('lastName').touched" class="text-danger"> *Full Name is Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Qualification<small class="text-danger">*</small></label>
+                                                <select class="form-select floating form-control" formControlName="qualification">
+                                               <option value="">--Select--</option>
+                                               <option *ngFor="let item of qualification" [value]="item.lookupMasterId" >{{item.name}}</option>
+                                               <!-- <option >Existing</option> -->
+                                            </select>
+                                                <small *ngIf="candidatesForm.get('qualification').invalid && candidatesForm.get('qualification').touched" class="text-danger"> *Qualification is Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+
+                                                <label class="focus-label">Date of Birth <small class="text-danger">*</small></label>
+                                                <div class="form-group form-focus mb-0">
+                                                    <div class="cal-icon">
+                                                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="dob">
+                                                    </div>
+                                                    <small *ngIf="candidatesForm.get('dob').invalid && candidatesForm.get('dob').touched" class="text-danger"> *Date of Birth  is Required</small>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Email<small class="text-danger">*</small></label>
+                                                <input type="text" class="form-control" formControlName="email">
+                                                <small *ngIf="candidatesForm.get('email').invalid && candidatesForm.get('email').touched" class="text-danger"> *Email is Required</small>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label>Phone<small class="text-danger">*</small></label>
+                                                <input type="number" class="form-control" formControlName="phone" maxlength="10">
+                                                <small *ngIf="candidatesForm.get('phone').invalid && candidatesForm.get('phone').touched" class="text-danger"> *Phone No. is Required</small>
+                                            </div>
+
+
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Age <small class="text-danger">*</small></label>
+
+                                                <input type="text" class="form-control" formControlName="from" maxlength="2">
+                                                <!-- <small  style="color:black; margin-left: 8px;"></small> -->
+                                                <small *ngIf="candidatesForm.get('from').invalid && candidatesForm.get('from').touched" class="text-danger"> *Age  is Required</small>
+
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Gender<small class="text-danger">*</small></label>
+                                                <select class="form-select floating form-control" formControlName="gender">
+                                               <option value="">--Select--</option>
+                                               <option >Male</option>
+                                               <option >Female</option>
+                                            </select>
+                                                <small *ngIf="candidatesForm.get('gender').invalid && candidatesForm.get('gender').touched" class="text-danger"> *Gender  is Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="focus-label">Attach CV<small class="text-danger">*</small></label>
+                                                <input type="file" class="form-control" #docUpload (change)="uploadFile($event)">
+
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Skills<small class="text-danger">*</small></label>
+                                                <select class="form-select floating form-control" formControlName="skill">
+                                               <option value="">--Select--</option>
+                                               <option >Technical</option>
+                                               <option >Non Technical</option>
+                                            </select>
+                                                <small *ngIf="candidatesForm.get('skill').invalid && candidatesForm.get('skill').touched" class="text-danger"> *Skills  are Required</small>
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Experience<small class="text-danger">*</small></label>
+                                                <input type="number" class="form-control" formControlName="experience" maxlength="2">
+                                                <small *ngIf="candidatesForm.get('experience').invalid && candidatesForm.get('experience').touched" class="text-danger"> *Experience  is Required</small>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label>Availability<small class="text-danger">*</small></label>
+                                                <div class="form-group form-focus mb-0">
+                                                    <div class="cal-icon">
+                                                        <input class="form-control floating datetimepicker" [minDate]="todayDate" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="availability">
+                                                        <!-- <small *ngIf="candidatesForm.get('availability')<14-08-2023">*Availability should be less than joiningDate</small> -->
+                                                        <small *ngIf="candidatesForm.get('availability').invalid && candidatesForm.get('availability').touched" class="text-danger"> *Availability  is Required</small>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Status</label>
+                                                <select class="form-select floating form-control" formControlName="status">
+                                               <option value=" ">--Select--</option>
+                                               <option value="1">Dropped In</option>
+                                               <option value="0">Rejected</option>
+                                               <option value="2">Hold</option>
+
+                                            </select>
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+
+
+
+                                    <button class="btn btn-primary" *ngIf="!editId" (click)="add()">Submit</button>
+                                    <button class="btn btn-primary" *ngIf="editId" (click)="update()">Update</button>
+                                    <button class="btn" (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

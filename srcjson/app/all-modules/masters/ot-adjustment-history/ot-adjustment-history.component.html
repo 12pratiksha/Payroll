@@ -1,0 +1,87 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>OT Plan History</h3>
+               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">OT Adjustment Policy</li>
+                        <li class="breadcrumb-item active" aria-current="page">OT Plan History</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    
+
+
+
+       <div class="row">
+           <div class="col-sm-12">
+               <div class="card mb-0">
+                   
+                   <div class="card-body">
+       
+                       <div class="table-responsive">
+                           <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="tableData">
+                               <thead>
+                                   <tr>
+                                      
+                                       <th>Employee Code</th>
+                                       <th>Name</th>
+                                       <th>Plan Name </th>
+                                       <th>From Date </th>
+                                       <th>Assign Date</th>
+                                       <th>Status</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <tr *ngFor="let item of tableData">
+                                       
+                                       <td>{{item.employeeCode}}</td>
+                                       <td>{{item.firstName}} {{item.lastName}}</td>
+                                       <td>{{item.planName}}</td>
+                                       <td>{{item.fromDate | date:'dd-MM-yyyy'}}</td>
+                                       <td>{{item.toDate | date:'dd-MM-yyyy'}}</td>
+                                       <td>{{item.isStatus}}</td>
+                                       
+                                   </tr>
+                                  
+                               </tbody>
+                           </table>
+                           <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!tableData">
+                               <thead>
+                                   <tr>
+                                      
+                                       <th>Employee Code</th>
+                                       <th>Name</th>
+                                       <th>Plan Name </th>
+                                       <th>From Date </th>
+                                       <th>Assign Date</th>
+                                       <th>Status</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   <tr *ngFor="let item of tableData">
+                                       
+                                       <td>{{item.employeeCode}}</td>
+                                       <td>{{item.firstName}} {{item.lastName}}</td>
+                                       <td>{{item.planName}}</td>
+                                       <td>{{item.fromDate | date:'dd-MM-yyyy'}}</td>
+                                       <td>{{item.toDate | date:'dd-MM-yyyy'}}</td>
+                                       <td>{{item.isStatus}}</td>
+                                       
+                                   </tr>
+                                  
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+</div>
+<img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">

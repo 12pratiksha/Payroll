@@ -1,0 +1,293 @@
+ <div class="content container-fluid">
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Leave Allocation Master </h3>
+               
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                       <li class="breadcrumb-item active" aria-current="page">Leave Allocation fdfdf</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+
+   <div class="row filter-row">
+       <div class="col-md-12">
+        <div class="add-emp-section">
+            <a class="btn btn-success btn-add-emp"  style="width: auto;" href="/layout/masters/leaveAllocation"><i class="fas fa-plus"></i>Create New</a>
+        </div>
+       </div>
+   </div>
+
+<div >
+    <div class="row" >
+        <div class="col-sm-12">
+            <div class="card" >
+                <h1 class="card-title mb-0">Leave Allocation Master Form </h1>
+          
+            <div class="card-body" >
+                <div class="row">
+                    <div class="col-sm">
+                        <form [formGroup]="leaveAllocationForm">
+                        <div class="form-row row">
+                            <div class="col-md-4 mb-3">
+                                <label>State<span>*</span></label>
+                                   <select class="form-select form-control" formControlName="state">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of states" [value]="item.stateName">{{item.stateName}}</option>
+                                     </select>  
+                                     <small
+                                     *ngIf="leaveAllocationForm.get('state').invalid && leaveAllocationForm.get('state').touched"
+                                     class="text-danger"> *State is Required</small>
+                            </div>
+                           
+                            <div class="col-md-4 mb-3">
+                                <label>Branch<span>*</span></label>
+                                
+
+                                 <select class="form-select form-control" formControlName="branch">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of branch" [value]="item.branchName">{{item.branchName}}</option>
+                                     </select>  
+
+                           
+                            <small
+                            *ngIf="leaveAllocationForm.get('branch').invalid && leaveAllocationForm.get('branch').touched"
+                            class="text-danger"> *Branch is Required</small>
+                        </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Grade<span>*</span></label>
+                                <div>
+                                
+
+                                 <select class="form-select form-control" formControlName="grade">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of grade" [value]="item.name">{{item.name}}</option>
+                                  </select>  
+
+                            </div>
+                            <small
+                            *ngIf="leaveAllocationForm.get('grade').invalid && leaveAllocationForm.get('grade').touched"
+                            class="text-danger"> *Grade is Required</small>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Category<span>*</span></label>
+                         <div>
+
+                             <select class="form-select form-control" formControlName="category">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let item of categorie" [value]="item.categoryName">{{item.categoryName}}</option>
+                              </select>  
+
+                         </div>
+                         <small
+                         *ngIf="leaveAllocationForm.get('category').invalid && leaveAllocationForm.get('category').touched"
+                         class="text-danger"> *Category is Required</small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Leave<span>*</span></label>
+                           <select class="form-select form-control" formControlName="leave">
+                               <option value="">--Select--</option>
+                               <option *ngFor="let item of leave">{{item.name}}</option>
+                             </select> 
+                             <small
+                             *ngIf="leaveAllocationForm.get('leave').invalid && leaveAllocationForm.get('leave').touched"
+                             class="text-danger"> *Leave is Required</small> 
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Leave Description</label>
+                        <input type="text" class="form-control" 
+                            placeholder="Leave Description"   formControlName="leaveDescription">
+                            <small
+                            *ngIf="leaveAllocationForm.get('leaveDescription').invalid && leaveAllocationForm.get('leaveDescription').touched"
+                            class="text-danger"> *Leave Description is Required</small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Total Leave</label>
+                        <input type="text" class="form-control" 
+                            placeholder="Total Leave"   formControlName="totalLeave">
+                            <small
+                            *ngIf="leaveAllocationForm.get('totalLeave').invalid && leaveAllocationForm.get('totalLeave').touched"
+                            class="text-danger"> *Total Leave is Required</small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Crediting Type<span>*</span></label>
+                           <select class="form-select form-control" [(ngModel)]="creditingType" formControlName="creditingType" (change)="creditChange($event)">
+                                <option value="">--Select--</option>
+                               <option>Start of Month</option>
+                               <option>End of Month</option>
+                               <option>Start of Year</option>
+                               <option>Monthly Attendance Prorata</option>
+                               <option>Yearly Attendance Prorata</option>
+                               <option>Start of Quarter</option>
+                               <option>End of Quarter</option>
+                               <option>One Time</option>
+                               <option>Half Yearly</option>
+                               <option>Monthly Attendance Prorata(yearly)</option>
+                             </select>  
+                             <small
+                             *ngIf="leaveAllocationForm.get('creditingType').invalid && leaveAllocationForm.get('creditingType').touched"
+                             class="text-danger"> *Crediting Type is Required</small>
+                    </div>
+                   <div class="col-md-4 mb-3" *ngIf="leaveAllocationForm.value.creditingType=='Monthly Attendance Prorata' || leaveAllocationForm.value.creditingType == 'Yearly Attendance Prorata'">
+                    <label >Prorata % </label>
+                    <input type="number" class="form-control"  formControlName="percentage" >
+                   </div>
+
+                    <div class="col-md-4 mb-3" *ngIf="creditingType=='Start of Month' || creditingType=='End of Month' ||    creditingType=='Start of Quarter' || creditingType=='End of Quarter' || creditingType=='Half Yearly'" >
+                    <table class="table">
+                        <thead >
+                        <th style="font-weight: 600;" class="center">Month</th>
+                        <th style="font-weight: 600;" class="center">No. Of Leave</th>
+                        <th style="font-weight: 600;" class="center">Expite On</th>
+                       </thead>
+                        <tr>
+                            <td>{{months[response.month  - 1].name}} </td>
+                                <td><input type="number" class="form-control" formControlName="leaves"></td>
+                                <td>
+                                 <div class="form-group form-focus mb-0">
+                                        <div class="cal-icon">
+                                            <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="expiteOn">
+                                        </div>
+                                        
+                                </div>
+                               </td>
+                            </tr>
+
+                    </table>
+                    </div>
+                   
+
+
+                    <div class="col-md-4 mb-2">
+                        <label class="focus-label">Effective Date <span>*</span></label>
+                        <div class="form-group form-focus mb-0">
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" bsDatepicker   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="effectiveDate">
+                            </div>
+                           <small *ngIf="leaveAllocationForm.get('effectiveDate').invalid && leaveAllocationForm.get('effectiveDate').touched"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label > Carry Forwardable</label>
+                        <input type="checkbox" class="checkbox-all ms-5" formControlName="carryForward">
+                        <small *ngIf="leaveAllocationForm.get('carryForward').invalid && leaveAllocationForm.get('carryForward').touched"></small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Maximum Leave Days</label>
+                    <input type="text" class="form-control" 
+                        placeholder="Maximum Leave Days"   formControlName="maxLeaves">
+                        <small
+                        *ngIf="leaveAllocationForm.get('maxLeaves').invalid && leaveAllocationForm.get('maxLeaves').touched"
+                        class="text-danger"> *Maximum Leave Days is Required</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Minimum Leave Days</label>
+                    <input type="text" class="form-control" 
+                        placeholder="Minimum Leave Days"   formControlName="minLeaves">
+                        <small
+                        *ngIf="leaveAllocationForm.get('minLeaves').invalid && leaveAllocationForm.get('minLeaves').touched"
+                        class="text-danger"> *Minimum Leave Days is Required</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label > Applicable in Probation</label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="probation">
+                   
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label > Leave Encashable </label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="encashable" (change)="onChange($event)">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Max Balance Encashable</label>
+                    <input type="text" class="form-control" 
+                        placeholder="Max Balance Encashable"   formControlName="maxBalanceEncash">
+                        <small
+                        *ngIf="leaveAllocationForm.get('maxBalanceEncash').invalid && leaveAllocationForm.get('maxBalanceEncash').touched"
+                        class="text-danger"> *Max Balance is Required</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Max Balance Carry Forward</label>
+                    <input type="text" class="form-control" 
+                        placeholder="Max Balance Carry Forward"   formControlName="maxBalCarryForward">
+                        <small
+                        *ngIf="leaveAllocationForm.get('maxBalCarryForward').invalid && leaveAllocationForm.get('maxBalCarryForward').touched"
+                        class="text-danger"> *Max Balance Carry Forward is Required</small>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label > Leave Credit after Joining in Months</label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="leaveCredit">
+                    <input type="number" class="form-control" formControlName="leaveCreditMonths" *ngIf="leaveAllocationForm.value.leaveCredit">
+                    <input type="number" class="form-control"  *ngIf="!leaveAllocationForm.value.leaveCredit" readonly>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label > Leave Laps duration in Month</label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="leaveLaps">
+                    <input type="number" class="form-control"  formControlName="leaveLapsMonths" *ngIf="leaveAllocationForm.value.leaveLaps">
+                    <input type="number" class="form-control"  formControlName="leaveLapsMonths" *ngIf="!leaveAllocationForm.value.leaveLaps" readonly>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label > Is Paid?</label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="isPaid">
+                   
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Leave Encash on</label>
+                    <div>
+
+                     <select class="form-select form-control" formControlName="leaveEncash">
+                        <option value="">--Select--</option>
+                        <option *ngFor="let item of leaveEncash" [value]="item.name">{{item.name}}</option>
+                      </select>  
+
+                    </div>
+                    <small
+                    *ngIf="leaveAllocationForm.get('leaveEncash').invalid && leaveAllocationForm.get('leaveEncash').touched"
+                    class="text-danger"> *Leave Description is Required</small>
+                </div>
+                <div class="col-md-4 mb-3" >
+                    <label > Is LeaveEncashment Manual</label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="manualLeaveEncash" *ngIf="leaveAllocationForm.value.encashable">
+                    <input type="checkbox" class="checkbox-all ms-5"  *ngIf="!leaveAllocationForm.value.encashable" disabled>
+                  
+                    <select formControlName="selectMonth" class="form-select form-control" *ngIf="leaveAllocationForm.value.manualLeaveEncash">
+                        <option value="">--Select--</option>
+                    <option *ngFor="let item of months" [value]="item.name">{{item.name}}</option>
+                   </select>
+                    <select  class="form-select form-control" disabled *ngIf="!leaveAllocationForm.value.manualLeaveEncash">
+                        <option value="">--Select--</option>
+                   
+                   </select>
+               
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label >Status</label>
+                    <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                   
+                </div>
+
+                      </div>
+                       
+
+                      <button  type="button" class="btn btn-primary" (click)="updateLeaveAllocation()" [disabled]="submitLoader">Update <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                      <button  type="button" class="btn " routerLink="/layout/masters/leaveAllocation">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</div>
+</div> 

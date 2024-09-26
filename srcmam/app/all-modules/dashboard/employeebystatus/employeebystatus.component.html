@@ -1,0 +1,132 @@
+<div class="content container-fluid">
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Employee</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+ 
+
+
+
+    <div class="row" > 
+        <div class="col-sm-12">
+            <div class="card mb-0">
+                
+                <div class="card-body">
+                  
+                   <div class="table-responsive">
+                    <!-- <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="lstEmployee"> 
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Employee Code</th>
+                                <th>Department</th>
+                                <th>Designation</th>
+                                 <th class="text-nowrap">Status</th>                          
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tbody>
+                                <tr *ngFor="let row of lstEmployee; let i = index">
+                                    <td>
+                                        <h2 class="table-avatar">                                   
+                                            <a  *ngIf="row.imageName" class="avatar"><img  [src]="path +'empimages/'+row.imageName" ></a>
+                                            <a  *ngIf="!row.imageName" class="avatar"><img  src="/assets/img/user.jpg" ></a>
+                                            <a >{{row.firstName}} {{row.middleName}} {{row.lastName}}
+                                                <span>{{row.designation}} </span></a>
+                                        </h2>
+                                    </td>
+                                    <td>{{row.employeeCode}}</td>
+                                    <td>{{row.department}}</td>
+                                    <td>{{row.designation}}</td>
+                                    <td class="text-center">
+                                    <div class="action-label"><a class="role-info role-bg-two" [ngStyle]="{'color': row.status == 0 ? '#839613' : row.status == 1 ? '#1fb81f' : row.status == 2 ? 'red' : row.status == 3 ? '#34b4eb' : '#a383bf'}">{{row.status == 0?'Inactive': row.status == 1 ? "Active": row.status == 2? "Deleted": row.status == 3? "Block": row.status == 4? "Onhold": "FNF"}}</a>
+                                    </div></td>
+                                   
+                                </tr>
+                            </tbody>
+                    </table>
+                -->
+                <div class="row" > 
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <div class="card mb-0">
+                                <div class="card-body">
+                            <table class="table table-striped custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="lstEmployee">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>User Name</th>
+                                        <th>Role Name </th>
+                                        <th>Role Type Name </th>
+                                        <th>Status</th>
+                                        <!-- <th class="text-end no-sort">Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of lstEmployee">
+                                       <td><h2 class="table-avatar">                                   
+                                            <a  *ngIf="row.imageName" class="avatar"><img  [src]="path +'empimages/'+row.imageName" ></a>
+                                            <a  *ngIf="!row.imageName" class="avatar"><img  src="/assets/img/user.jpg" ></a>
+                                            <a >{{row.firstName}} {{row.middleName}} {{row.lastName}}
+                                                <span>{{row.designation}} </span></a>
+                                        </h2></td>
+                                        <td>{{row.employeeCode}}</td>
+                                        <td>{{row.department}}</td>
+                                        <td>{{row.designation}}</td>
+                                        <td class="text-center">
+                                        <div class="action-label"><a class="role-info role-bg-two" [ngStyle]="{'color': row.status == 0 ? '#839613' : row.status == 1 ? '#1fb81f' : row.status == 2 ? 'red' : row.status == 3 ? '#34b4eb' : '#a383bf'}">{{row.status == 0?'Inactive': row.status == 1 ? "Active": row.status == 2? "Deleted": row.status == 3? "Block": row.status == 4? "Onhold": "FNF"}}</a>
+                                    </div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-striped custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="!lstEmployee">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>User Name</th>
+                                        <th>Role Name </th>
+                                        <th>Role Type Name </th>
+                                        <th>Status</th>
+                                        <th class="text-end no-sort">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData">
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">  -->
+                    </div>
+                </div>
+                   
+                   </div>
+                </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,78 @@
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Import Monthly Total Attendance </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Import Monthly Total Attendance </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" >
+        <div class="col-sm-12">
+            <div class="card" >
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Import Monthly Total Attendance </h5>
+                </div>
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="importLeaves">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                      <label class="focus-label">Choose File</label>
+                                      <input class="form-control"  #myInput type="file" (change)="onChange($event)" class="form-control"> 
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                   <button class="btn btn-primary" (click)="getSheet()" [disabled]="disabled">Get Sheet</button>
+
+                                   <button class="download btn btn-success ;"  (click)="exportexcel()" style="margin-left: 10px;"><i class="fas fa-download"></i></button>
+                                    </div>
+                                    <div class="col-md-4 mb-3" *ngIf="sheet">
+                                        <label  >Given For</label>
+                                        <select class="form-select form-control" formControlName="givenFor">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let item of sheet" [value]="item.manualAttendanceMasterId+'~' +item.reasonInDetail">{{item.reasonInDetail}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary"   (click)="submit()" [disabled]="disabled">Submit</button>
+                                <button class="btn " (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div> 
+     </div>
+
+     <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0" style="color: red;">{{errorMessage}}</h5>
+        </div>
+    </div>
+
+     <div style=" margin: auto; width: 50%;" style="display: none;">
+        
+        <table id="excel-table">
+          <tr>
+   
+            <td>employeeId</td>
+            <td>leaveCode</td>	
+            <td>balance</td>
+            <td>description</td>
+            <td>fromDate</td>
+            <td>toDate</td>
+          </tr>
+         
+        </table>
+      </div>

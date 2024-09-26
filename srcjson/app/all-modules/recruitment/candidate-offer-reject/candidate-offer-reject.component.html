@@ -1,0 +1,417 @@
+<div class="page-wrapper">
+
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Selected List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Selected List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()"><i class="fas fa-bars"></i> Show
+                        Table</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <div class="card" style="background: #f7f6f5;">
+                    <div class="card-header" style="background: #f4baa7;height: 40px;">
+                        <h3>
+                            <div style="margin-left: 630px;width: 100%;">CANDIDATE DETAILS</div>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profile-basic" *ngIf="details.length>0">
+                                    <div class="row" *ngFor="let item of details">
+                                        <div class="col-md-6">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <div class="title">Name:</div>
+                                                        <div class="text">{{item.first_name}} {{item.middle_name}} {{item.last_name}}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Qualification:</div>
+                                                        <div class="text">{{item.description}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">DOB</div>
+                                                        <div class="text">{{item.date_of_birth | date}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Experience</div>
+                                                        <div class="text">{{item.experience}}</div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="personal-info">
+
+                                                <li>
+                                                    <div class="title">Email:</div>
+
+                                                    <div class="text">{{item.email}}</div>
+
+                                                </li>
+                                                <li>
+                                                    <div class="title">Position Applied</div>
+                                                    <div class="text"> {{item.designation}} </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Address:</div>
+                                                    <div class="text">{{item.city}} {{item.state}}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Skill:</div>
+                                                    <div class="text">{{item.skills}}</div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card" style="background: #f7f6f5;" *ngIf="pTechRDetails.length>0">
+            <div class="card-header" style="background: #f4baa7;height: 40px;">
+                <h3>
+                    <div style="margin-left: 630px;width: 100%;">PREVIOUS TECHNICAL ROUND</div>
+                </h3>
+            </div>
+            <!-- <div class="card" >
+            <div class="card-header">
+                <h3 class="card-title mb-0"> Previous Technical Round Details </h3>
+
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="profile-basic">
+                            <div class="row" *ngFor="let item of pTechRDetails; let i = index">
+                                <div>
+                                    <h3>#Technical Round {{i+1}}</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Round Name:</div>
+                                                <div class="text">{{item.round}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Evaluation Date:</div>
+                                                <div class="text">{{item.date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Interview Date:</div>
+                                                <div class="text">{{item.on_date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Job Knowledge:</div>
+                                                <div class="text">{{item.job_knowledge}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Personal Appearance:</div>
+                                                <div class="text">{{item.personal_appearance}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Candidate Enthusiasm:</div>
+                                                <div class="text">{{item.candidate_enthusiasm}}&nbsp;</div>
+                                            </li>
+
+
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Round Type:</div>
+                                            <div class="text">{{item.type}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interviewee:</div>
+                                            <div class="text">{{item.fname}} {{item.lname}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interview Time:</div>
+                                            <div class="text">{{item.at_time }}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Comments:</div>
+                                            <div class="text">{{item.comments}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Decision Making:</div>
+                                            <div class="text">{{item.decision_making}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title"> Overall Evaluation And Recommendation:</div>
+
+                                            <div class="text">{{item.overall_evaluation_and_recommendation}}&nbsp;</div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="background: #f7f6f5;" *ngIf="pHrRDetails.length>0">
+            <div class="card-header" style="background: #f4baa7;height: 40px;">
+                <h3>
+                    <div style="margin-left: 630px;width: 100%;">PREVIOUS HR ROUND</div>
+                </h3>
+            </div>
+            <!-- <div class="card" *ngIf="pHrRDetails.length>0">
+            <div class="card-header">
+                <h3 class="card-title mb-0"> Previous HR Round Details </h3>
+
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="profile-basic">
+                            <div class="row" *ngFor="let item of pHrRDetails; let i = index">
+                                <div>
+                                    <h3>#HR Round {{i+1}}</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Round Name:</div>
+                                                <div class="text">{{item.round}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Evaluation Date:</div>
+                                                <div class="text">{{item.date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Interview Date:</div>
+                                                <div class="text">{{item.on_date | date}}&nbsp;</div>
+                                            </li>
+
+
+                                            <li>
+                                                <div class="title">last_employer:</div>
+                                                <div class="text">{{item.last_employer}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Comments:</div>
+                                                <div class="text">{{item.additional_remarks}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Present Salary:</div>
+                                                <div class="text">{{item.present_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Expected Salary:</div>
+                                                <div class="text">{{item.expected_salary}}&nbsp;</div>
+                                            </li>
+
+
+                                            <li>
+                                                <div class="title">Expected Salary:</div>
+                                                <div class="text">{{item.expected_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Has Applied Before</div>
+                                                <div class="text">{{item.has_candidate_applied_before}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Professional Presentation:</div>
+                                                <div class="text">{{item.professional_presentation}}&nbsp;</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="personal-info">
+
+                                        <li>
+                                            <div class="title">Round Type:</div>
+                                            <div class="text">{{item.type}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interviewee:</div>
+                                            <div class="text">{{item.fname}} {{item.lname}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interview Time:</div>
+                                            <div class="text">{{item.at_time }}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title"> Hiring Comments:</div>
+                                            <div class="text">{{item.hiring_comments}}&nbsp;</div>
+                                        </li>
+
+
+
+                                        <li>
+                                            <div class="title"> Other Benifits:</div>
+                                            <div class="text">{{item.other_benefits}}&nbsp;</div>
+                                        </li>
+
+
+                                        <li>
+                                            <div class="title">Reason For Leaving:</div>
+                                            <div class="text">{{item.reasonfor_leaving}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Additional Remarks:</div>
+                                            <div class="text">{{item.additional_remarks}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Present Salary:</div>
+                                            <div class="text">{{item.present_salary}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Salary Offered</div>
+                                            <div class="text">{{item.salary_offered}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Communication Skills:</div>
+                                            <div class="text">{{item.communication_skills}}&nbsp;</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Candidate Rejection Form </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <form class="needs-validation" novalidate [formGroup]="offerForm">
+                                <div class="form-row row">
+
+
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Reason For Rejection<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="reasonforrejection" class="form-control">
+                                            <small *ngIf="offerForm.get('reasonforrejection').invalid && offerForm.get('reasonforrejection').touched " class="text-danger">*This field is required</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="form-group">
+                                            <label>Remark</label>
+                                            <input type="text" formControlName="remark" class="form-control">
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+                                <div class="form-group col-md-6" style="margin-top: 20px;">
+                                    <button class="btn btn-primary" (click)="submit()">Submit</button>
+                                    <button class="btn" (click)="hideContainer()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>

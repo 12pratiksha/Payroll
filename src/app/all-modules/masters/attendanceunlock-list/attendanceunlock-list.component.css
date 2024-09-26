@@ -1,0 +1,47 @@
+small{
+    color: red;
+}
+.input-group-text {
+    background-color: #f7f7f7;
+    border-color: #e3e3e3;
+    height: 36px !important;
+}
+
+
+.mat-form-field-appearance-outline {
+    width: 480px;
+    padding: 2px;
+    .mat-form-field-flex {
+        padding: 0 .75em 0 .75em;
+        margin-top: -0.35em;
+        position: relative;
+        width: 515px;
+      }
+    .mat-form-field-wrapper {
+        margin: 0px;
+    }
+}
+
+.example-full-width {
+    height: 60px;
+    padding-bottom: 60px;
+}
+
+.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
+    height: 25px;
+    padding: 1.5px;
+    font-size: 15px;
+}
+
+
+/* .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0 important!;
+} */
+
+
+/* .mat-form-field-appearance-outline {
+   
+} */
+
+
+/* .mat-form-field-appearance-outline .mat-form-field-infix {} */

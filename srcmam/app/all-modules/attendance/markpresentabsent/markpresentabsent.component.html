@@ -1,0 +1,153 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Mark Present/Absent</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Mark Present/Absent</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12" style="height: 75px;">
+        <div class="card">
+
+            <form [formGroup]="markForm">
+
+
+                <div class="row">
+
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <!-- <div class="col-sm-6 col-md-3">
+                                <div class="form-group form-focus mb-0"> -->
+                            <label>FromDate <small class="text-danger">*</small></label>
+                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                            <small *ngIf="markForm.get('fromDate').invalid && markForm.get('fromDate').touched" class="text-danger"> *From Date is Required</small>
+                            <!-- </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group form-focus mb-0">
+                            <label>To Date <small style="color:red">*</small></label>
+                            <div class="form-group form-focus mb-0">
+                                <div class="cal-icon">
+                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: false }" formControlName="toDate">
+                                </div>
+                                <small *ngIf="markForm.get('toDate').invalid && markForm.get('toDate').touched">This Field is required</small>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-3 col-md-3" style="margin: auto; margin-top: 12px;">   
+                    <a class="btn btn-success btn-search" (click)="getAttendance()"><i class="fas fa-search me-2"></i> Search </a>
+                </div> -->
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0">
+
+                            <!-- <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="Data"> -->
+                            <thead>
+                                <tr>
+
+
+
+                                    <th>Employee code</th>
+                                    <th>Employee Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Department Name</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of Data; let i = index" (click)="selectRow(i, item)">
+
+
+
+                                    <td>{{item.employeeCode}}</td>
+                                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                    <td>{{item.branch}}</td>
+                                    <td>{{item.department}}</td>
+                                    <td>{{item.status}}</td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="present" id="btn1" class="btn btn-primary" style="font-size: small;" [disabled]="dbtn" (click)="present(item,1)">Mark Present</button>&nbsp;&nbsp;
+        <button type="absent" id="btn2" class="btn btn-primary" style="font-size: small;" [disabled]="dbtn1" (click)="absent(item,2)">Mark Absent</button>&nbsp;&nbsp;
+        <button type="halfday" class="btn btn-primary" style="font-size: small;" [disabled]="dbtn2" (click)="halfDay(item,3)">Mark HalfDay</button>
+
+
+    </div>
+    <!-- /Search Filter -->
+
+
+
+
+    <!-- <div class="row"> 
+    <div class="col-md-12">
+        <div class="card mb-0">
+                <div class="table-responsive">
+            <table class="table table-striped custom-table datatable mb-0" datatable [dtOptions]="dtOptions">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Employee Code</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of Data; let i = index">
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.employeeCode}}</td>
+                        <td>{{item.department}}</td>
+                        <td>{{item.designation}}</td>
+                         <td></td> 
+                      
+                    </tr>
+                </tbody>
+            </table>
+           
+        </div>
+      
+    </div>
+    </div>
+    </div> 
+
+</div>-->

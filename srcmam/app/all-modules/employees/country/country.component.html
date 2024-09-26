@@ -1,0 +1,164 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Country</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">General SetUp</li>
+                        <li class="breadcrumb-item active" aria-current="page">Country </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Header -->
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add Country</a>
+                    <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="lstCountry">
+                            <thead>
+                                <tr>
+                                    <th>Country Code</th>
+                                    <th>Country name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of lstCountry">
+                                    <td>{{company.countryCode}}</td>
+                                    <td>{{company.countryName}}</td>
+
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a (click)="edit(company.countryId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(company.countryId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!lstCountry">
+                            <thead>
+                                <tr>
+                                    <th>Country Code</th>
+                                    <th>Country name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of lstCountry">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title mb-0">Country Master Form</h1>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="addCountryForm">
+                                <div class="form-row row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationCustom01">Country Code</label>
+                                        <input type="text" class="form-control" id="validationCustom01" placeholder="Country Code" value="" required formControlName="countryCode">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <small *ngIf="addCountryForm.get('countryCode').invalid && addCountryForm.get('countryCode').touched" class="text-danger"> *Country Code is Required</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationCustom02">Country Name</label>
+                                        <input type="text" class="form-control" id="validationCustom02" placeholder="Country Name" value="" required formControlName="countryName">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <small *ngIf="addCountryForm.get('countryName').invalid && addCountryForm.get('countryName').touched" class="text-danger"> *Country Name is Required</small>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+                                <button [disabled]="submitLoader" class="btn btn-primary" (click)="addCountry()" *ngIf="!update">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" (click)="updateCountry()" *ngIf="update">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+<div class="modal custom-modal fade" id="delete_company" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Designation</h3>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a class="btn btn-primary continue-btn" (click)="delete(deleteId)">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

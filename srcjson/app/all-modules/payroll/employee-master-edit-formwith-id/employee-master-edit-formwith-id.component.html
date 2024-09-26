@@ -1,0 +1,106 @@
+
+    <div class="content container-fluid">
+
+        <div class="row">
+           <div class="col-md-12">
+               <div class="page-head-box">
+                   <h3>View & Revise Salary</h3>
+                   <nav aria-label="breadcrumb">
+                       <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                           <li class="breadcrumb-item active" aria-current="page">View & Revise Salary</li>
+                       </ol>
+                   </nav>
+               </div>
+           </div>
+       </div>
+
+    <div class="col-sm-12">
+        <div class="card" >
+            <h1 class="card-title mb-0">Employee Master Edit</h1>
+        </div>
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" novalidate  [formGroup]="masterEditForm">
+                        <div class="form-row row">
+                      
+                            <div class="col-md-4 mb-3">
+                                <label>Employee Id <small>*</small></label>
+                                    <ng-select class="form-select form-control" formControlName="empId" >
+                                       <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>                                 
+                                    </ng-select>  
+                                    <small *ngIf="masterEditForm.get('empId').invalid && masterEditForm.get('empId').touched" >This Field is required *</small>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Effective Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="effectiveDate">
+                                            </div>
+                                           <small *ngIf="masterEditForm.get('effectiveDate').invalid && masterEditForm.get('effectiveDate').touched" style="color: red;">This Field is required *</small>
+                                        </div>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">CTC Amount (per Month) <small>*</small></label>
+                                <input type="number" class="form-control" formControlName="ctcAmount">
+                                <small *ngIf="masterEditForm.get('ctcAmount').invalid && masterEditForm.get('ctcAmount').touched" >This Field is required *</small>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Based On <small>*</small></label>
+                                    <select class="form-select form-control" formControlName="basedOn" (change)="onChange($event.target.value)">
+                                        <option>Formula</option>
+                                        <option>Manual Element</option>
+                                    </select>
+                                <small *ngIf="masterEditForm.get('basedOn').invalid && masterEditForm.get('basedOn').touched" >This Field is required *</small>
+                            </div>
+                           <ng-container  *ngIf="masterEditForm.get('basedOn').value == 'Manual Element'">
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Computation Type <small>*</small></label>
+                                    <select class="form-select form-control" formControlName="computationType">
+                                        <option>On Attendance</option>
+                                        <option>Non Attendance</option>
+                                    </select>
+                                <small *ngIf="masterEditForm.get('computationType').invalid && masterEditForm.get('computationType').touched" >This Field is required *</small>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Pay Element Code <small>*</small></label>
+                                    <select class="form-select form-control" formControlName="payElement">
+                                        <option value=""></option>
+                                        <option *ngFor="let item of payElement" [value]="item.pelementId">{{item.name}}</option>
+                                    </select>
+                                <small *ngIf="masterEditForm.get('payElement').invalid && masterEditForm.get('payElement').touched" >This Field is required *</small>
+                            </div>
+                           <div class="col-sm-4 ">  
+                                <label class="focus-label">Amount <small>*</small></label>
+                                <input type="number" class="form-control" formControlName="amount">
+                                <small *ngIf="masterEditForm.get('amount').invalid && masterEditForm.get('amount').touched" >This Field is required *</small>
+                            </div>
+                           </ng-container>
+                           <div class="col-sm-4 " *ngIf="masterEditForm.get('basedOn').value == 'Formula'">  
+                            <label class="focus-label">Formula <small>*</small></label>
+                                <select class="form-select form-control" formControlName="formula">
+                                    <option>Formula1</option>
+                                    <option>Formula2</option>
+                                </select>
+                            <small *ngIf="masterEditForm.get('formula').invalid && masterEditForm.get('formula').touched" >This Field is required *</small>
+                        </div>
+                            
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Actual Effective Start Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="actualEffectiveDate">
+                                            </div>
+                                        </div>
+                                        <small *ngIf="masterEditForm.get('actualEffectiveDate').invalid && masterEditForm.get('actualEffectiveDate').touched" >This Field is required *</small>
+                             </div>
+                       </div>  
+                         <button class="btn btn-primary" (click)="submit()">Update</button>
+                          <button class="btn " (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

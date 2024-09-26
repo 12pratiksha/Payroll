@@ -1,0 +1,153 @@
+
+    <div class="content container-fluid" #childComponent>
+
+        <!-- <div class="row">
+           <div class="col-md-12">
+               <div class="page-head-box">
+                   <h3>View & Revise Salary</h3>
+                   <nav aria-label="breadcrumb">
+                       <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                           <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Payroll</a></li>
+                           <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Manage</a></li>
+                           <li class="breadcrumb-item active" aria-current="page">Define Salary</li>
+                       </ol>
+                   </nav>
+               </div>
+           </div>
+       </div> -->
+
+    <div class="col-sm-12">
+        <div class="card" >
+            <h4 class="card-title mb-0">Define Salary</h4>
+        
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" novalidate  [formGroup]="masterEditForm">
+                        <div class="form-row row">
+                      
+                            <div class="col-md-4 mb-3">
+                                <label>Employee Id <small>*</small></label>
+                                    <!-- <ng-select class="form-select form-control" formControlName="empId" >
+                                       <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>                                 
+                                    </ng-select>   -->
+                                    <br>
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="empId" >
+                                        <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                            <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                                <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                    <small *ngIf="masterEditForm.get('empId').invalid && masterEditForm.get('empId').touched" >This Field is required *</small>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Effective Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="effectiveDate">
+                                            </div>
+                                           <small *ngIf="masterEditForm.get('effectiveDate').invalid && masterEditForm.get('effectiveDate').touched" style="color: red;">This Field is required *</small>
+                                        </div>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">CTC Amount (per Month) <small>*</small></label>
+                                <input type="number" class="form-control" formControlName="ctcAmount">
+                                <small *ngIf="masterEditForm.get('ctcAmount').invalid && masterEditForm.get('ctcAmount').touched" >This Field is required *</small>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Based On <small>*</small></label>
+                                    <select class="form-select form-control" formControlName="basedOn" (change)="onChange($event.target.value)">
+                                        <option>Formula</option>
+                                        <option>Manual Element</option>
+                                    </select>
+                                <small *ngIf="masterEditForm.get('basedOn').invalid && masterEditForm.get('basedOn').touched" >This Field is required *</small>
+                            </div>
+                           <ng-container  *ngIf="masterEditForm.get('basedOn').value == 'Manual Element'">
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Computation Type <small>*</small></label>
+                                    <select class="form-select form-control" formControlName="computationType">
+                                        <option>On Attendance</option>
+                                        <option>Non Attendance</option>
+                                    </select>
+                                <small *ngIf="masterEditForm.get('computationType').invalid && masterEditForm.get('computationType').touched" >This Field is required *</small>
+                            </div>
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Pay Element Code <small>*</small></label>
+                                <select class="form-select form-control" formControlName="payElement">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of payElement" [value]="item.name">{{item.name}}</option>
+                                </select>
+                                <small *ngIf="masterEditForm.get('payElement').invalid && masterEditForm.get('payElement').touched" >This Field is required *</small>
+                            </div>
+                           <div class="col-sm-4 ">  
+                                <label class="focus-label">Amount <small>*</small></label>
+                                <input type="number" class="form-control" formControlName="amount">
+                                <small *ngIf="masterEditForm.get('amount').invalid && masterEditForm.get('amount').touched" >This Field is required *</small>
+                            </div>
+                           </ng-container>
+                           <div class="col-sm-4 " *ngIf="masterEditForm.get('basedOn').value == 'Formula'">  
+                            <label class="focus-label">Formula <small>*</small></label>
+                                <select class="form-select form-control" formControlName="formula" (change)="get($event.target.value)">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of formula" [value]="item.salaryStructureId">{{item.formulaName}}</option>
+                                </select>
+                            <small *ngIf="masterEditForm.get('formula').invalid && masterEditForm.get('formula').touched" >This Field is required *</small>
+                        </div>
+                            
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Actual Effective Start Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="actualEffectiveDate">
+                                            </div>
+                                        </div>
+                                        <small *ngIf="masterEditForm.get('actualEffectiveDate').invalid && masterEditForm.get('actualEffectiveDate').touched" >This Field is required *</small>
+                             </div>
+                             <div class="col-sm-4 ">  
+                                <label class="focus-label">Remark</label>
+                                <input type="text" class="form-control" formControlName="remark">
+                                <!-- <small *ngIf="masterEditForm.get('ctcAmount').invalid && masterEditForm.get('ctcAmount').touched" >This Field is required *</small> -->
+                            </div>
+                            <div class="col-sm-12">  
+                            </div>
+                       </div>  
+                       <div class="col-sm-4 " style="margin-top: 10px;">  
+                         <button class="btn btn-primary" (click)="submit(masterEditForm.get('basedOn').value)">Submit</button>
+                          <button class="btn " (click)="cancel()">Cancel</button>
+                       </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="salData && masterEditForm.get('basedOn').value !== 'Manual Element'"> 
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title mb-0">Salary Formula Structure</h2>
+            </div>
+        <div class="table-responsive">
+            <table class="table  " datatable  [dtOptions]="dtOptions" >
+                <thead>
+                    <tr>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of salData">
+                       <td>{{item.elementName}}</td>
+                       <td>{{item.percent}} %</td>
+                       <td>{{item.calculateOn}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>

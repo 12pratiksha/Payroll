@@ -1,0 +1,174 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Attendance Lock List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Lock List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
+    </div>
+    <!-- /Page Header -->
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+                
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add New </a>
+                    <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+                
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="tableData"> 
+                            <thead >
+                                <tr>
+                                   <th>From Date</th>
+                                   <th>To Date</th>
+                                   <th>Lock Date</th>
+                                   <!-- <th>Created By</th> -->
+                                   <th>Created Date</th>
+                                   <th>Status</th>
+                                   <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData">
+                                    <td>{{item.fromDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.toDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.lockDate | date: 'dd-MM-yyyy'}}</td>
+                                    <!-- <td>{{item.createdBy}}</td> -->
+                                    <td>{{item.createdDate | date: 'dd-MM-yyyy'}}</td>
+                                    <td>{{item.status == true?'Active' : 'Inactive'}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a  (click)="edit(item.attendancLockMasterId)"><i class="fas fa-pen"></i></a>
+                                        <a  (click)="delete(item.attendancLockMasterId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!tableData"> 
+                            <thead >
+                                <tr>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                   <th>Lock Date</th>
+                                   <th>Created By</th>
+                                   <th>Created Date</th>
+                                   <th>Status</th>
+                                   <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let company of tableData">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                 </tr>
+                                
+                            </tbody>
+                        </table>
+                      
+                    </div>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> 
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+    
+            <!-- Custom Boostrap Validation -->
+            <div class="card" >
+                <div class="card-header">
+                    <h1 class="card-title mb-0">Attendance Lock List</h1>
+                   
+                </div>
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="lockListForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-2">
+                                        <label class="focus-label">From Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="fromDate">
+                                            </div>
+                                           <small *ngIf="lockListForm.get('fromDate').invalid && lockListForm.get('fromDate').touched">This Field is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="focus-label">To Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="toDate">
+                                            </div>
+                                           <small *ngIf="lockListForm.get('toDate').invalid && lockListForm.get('toDate').touched">This Field is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="focus-label">Lock Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="lockDate">
+                                            </div>
+                                           <small *ngIf="lockListForm.get('lockDate').invalid && lockListForm.get('lockDate').touched">This Field is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label >Repeat Per Month</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="repeat">
+                                       
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label >Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                       
+                                    </div>
+                                   
+                                 
+                                </div>
+    
+                                
+                                
+                                <button class="btn btn-primary" (click)="submit()" *ngIf="!update">Submit</button>
+                                <button class="btn btn-primary"  (click)="updateForm()" *ngIf="update">Update</button>
+                                <button class="btn" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div>  
+
+
+
+</div>

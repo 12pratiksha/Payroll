@@ -1,0 +1,247 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Holiday Master</h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Non Working Days</li>
+                        <li class="breadcrumb-item active" aria-current="page">Holidays</li>
+                        <li class="breadcrumb-item active" aria-current="page">Holidays</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i>Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="holiday_display?.length!=0">
+                            <thead>
+                                <tr>
+
+                                    <th>State Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Department Name </th>
+                                    <th>Category Name</th>
+                                    <!-- <th>Sub Category Name</th> -->
+                                    <th>Holiday Name</th>
+                                    <th>Holiday Date </th>
+                                    <th>Holiday Type</th>
+                                    <th>Every Year</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- {{tableData|json}} -->
+                                <tr *ngFor="let item of tableData">
+                                    <td>{{item.state}}</td>
+                                    <td>{{item.branch}}</td>
+                                    <td>
+                                        <div *ngFor="let data of item.departments">{{data.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let data of item.categorys"> {{data.name}}</div>
+                                    </td>
+                                    <!-- <td>{{item.subCategory}}</td> -->
+                                    <td>{{item.holidayName}}</td>
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.date | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{item.continueEveryYear}}</td>
+                                    <td>{{(item.status == true)?'Active':'Inactive'}}</td>
+                                    <td class="text-end ico-sec justify-content-start">
+                                        <a (click)="edit(item.holidayId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.holidayId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!holiday_display; ">
+                            <thead>
+                                <tr>
+
+                                    <th>State Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Department Name </th>
+                                    <th>Category Name</th>
+                                    <!-- <th>Sub Category Name</th> -->
+                                    <th>Holiday Name</th>
+                                    <th>Holiday Date </th>
+                                    <th>Holiday Type</th>
+                                    <th>Every Year</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- end of data table  -->
+    <div *ngIf="showMyContainer">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Holiday Master </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="holidayForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label>Holiday Name <small>*</small></label>
+                                            <input type="text" class="form-control" formControlName="holidayName">
+                                            <small *ngIf="holidayForm.get('holidayName').invalid && holidayForm.get('holidayName').touched" class="text-danger"> *Holiday Name is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>State <small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" formControlName="state">
+                                       <option value="">--Select--</option>
+                                       <option *ngFor="let item of states" [value]="item.stateId">{{item.stateName}}</option>
+                                     </select>
+                                            <small *ngIf="holidayForm.get('state').invalid && holidayForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+
+
+                                        <!-- <div class="col-md-4 mb-3">
+                                <label>State <span class="text-danger">*</span></label>
+                                <select class="form-select form-control" formControlName="state">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of state">{{item.stateName}}</option>
+                                  </select>  
+                            <small
+                            *ngIf="policyForm.get('state').invalid && policyForm.get('state').touched"
+                            class="text-danger"> *State is Required</small>
+                        </div> -->
+
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Branch<small>*</small></label>
+                                            <select class="form-select form-control" formControlName="branch">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                  </select>
+                                            <small *ngIf="holidayForm.get('branch').invalid && holidayForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Category<small>*</small></label>
+
+                                            <ngx-bootstrap-multiselect class="multselect " [options]="category" [(ngModel)]="categoryModel" [value]=category.id formControlName="category">
+
+                                            </ngx-bootstrap-multiselect>
+                                            <small *ngIf="holidayForm.get('category').invalid && holidayForm.get('category').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Department<small>*</small></label>
+                                            <ngx-bootstrap-multiselect class="multselect" [options]="department" [(ngModel)]="departmentModel" [value]=department.id formControlName="department">
+
+                                            </ngx-bootstrap-multiselect>
+                                            <small *ngIf="holidayForm.get('department').invalid && holidayForm.get('department').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <!-- <div class="col-md-4 mb-3">
+                            <label>Full Day/ First Half <small>*</small></label>
+                            <select class="form-select form-control" formControlName="subCategory">
+                                <option value="">--Select--</option>
+                                <option *ngFor="let item of states">{{item.stateName}}</option>
+                              </select> 
+                                 <small
+                                 *ngIf="holidayForm.get('subCategory').invalid && holidayForm.get('subCategory').touched"
+                                 class="text-danger"> *This Field is Required</small>
+                        </div> -->
+                                        <!-- <div class="col-md-4 mb-3">
+                            <label >Holiday Name <small>*</small></label>
+                            <input type="text" class="form-control" formControlName="holidayName"> 
+                            <small
+                            *ngIf="holidayForm.get('holidayName').invalid && holidayForm.get('holidayName').touched"
+                            class="text-danger"> *Plan Name is Required</small>
+                        </div> -->
+
+                                        <div class="col-md-4 mb-2">
+                                            <label class="focus-label">Effective Date <small>*</small></label>
+                                            <div class="form-group form-focus mb-0">
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="effectiveDate">
+                                                </div>
+                                                <small *ngIf="holidayForm.get('effectiveDate').invalid && holidayForm.get('effectiveDate').touched"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Type<small>*</small></label>
+                                            <select class="form-select form-control" formControlName="type">
+                                   <option value="">--Select--</option>
+                                    <option value="Full Day">Full Day</option>
+                                    <option value="First Half">First Half</option>
+                                    <option value="Second Half">Second Half</option>
+                                    
+                                 </select>
+                                            <small *ngIf="holidayForm.get('type').invalid && holidayForm.get('type').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Continue(every Year)</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="continue">
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Status</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" (click)="submit()" *ngIf="!update">Submit</button>
+                                    <button type="button" class="btn btn-primary" *ngIf="update" (click)="updateForm()">Update</button>
+                                    <button type="button" class="btn " (click)="cancel()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

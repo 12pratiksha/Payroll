@@ -1,0 +1,92 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Time Office Policy List </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Time Office Policy List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Page Header -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+         <div class="add-emp-section">
+             <!-- <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i>Show Table</a> -->
+             <a class="btn btn-success btn-add-emp" routerLink="/layout/masters/specialWorkingDayy"><i class="fas fa-plus"></i>Add New</a>
+         </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+    <div class="row"> 
+        <div class="col-md-12">
+            <div class="table-responsive">
+               <table class="datatable table table-stripped mb-0" datatable [dtOptions]="dtOptions" *ngIf="!tableData"
+                >
+                  <thead>
+                      <tr>
+                       <th>State Name</th>
+                       <th>Branch Name</th>
+                       <th>Working Date</th>
+                       <th>Description</th>
+                       <th>Status</th>
+                       <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of tableData">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-end ico-sec justify-content-end">
+
+                            <a (click)="edit(city.id)"><i class="fas fa-pen"></i></a>
+                            <a (click)="delete(city.id)"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+                <table class="datatable table table-stripped mb-0" datatable [dtOptions]="dtOptions" *ngIf="tableData"
+                >
+                  <thead>
+                      <tr>
+                       <th>State Name</th>
+                       <th>Branch Name</th>
+                       <th>Working Date</th>
+                       <th>Description</th>
+                       <th>Status</th>
+                       <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of tableData">
+                        <td></td>
+                        <td></td>
+                        <td>{{item.workingDate}}</td>
+                        <td>{{item.description}}</td>
+                        <td>{{(item.status == true?"Active":"Inactive")}}</td>
+                        <td class="text-end ico-sec ">
+
+                            <a (click)="edit(item.specialWorkDayId)"><i class="fas fa-pen"></i></a>
+                            <a (click)="delete(item.specialWorkDayId)"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

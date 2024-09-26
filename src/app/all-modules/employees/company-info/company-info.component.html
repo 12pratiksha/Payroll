@@ -1,0 +1,236 @@
+<!--Page Content-->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Company-Info</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/employees/employeepage">Employees</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Company Info</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Header -->
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-bars" ></i> Show Table</a>
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i> Create New</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="tableData">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Company Name</th>
+                                    <th>User Name</th>
+                                    <th>Address</th>
+                                    <th>GST No.</th>
+                                    <!-- <th>softExpiryDate</th> -->
+                                    <th>Footer</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{item.companyName}}</td>
+                                    <td>{{item.adminUsename}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>{{item.gstNo}}</td>
+                                    <!-- <td>{{item.softExpiryDate | date: 'dd-MM-yyyy'}}</td> -->
+                                    <td>{{item.footer}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a data-bs-toggle="modal" data-bs-target="#edit_company" (click)="edit(item.companyInformationId)"><i class="fas fa-pen"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#delete_company" (click)="delete(item.companyInformationId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!tableData">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>User Name</th>
+                                    <th>GST No.</th>
+                                    <!-- <th>softExpiryDate</th> -->
+                                    <th>Footer</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{item.adminUsename}}</td>
+                                    <td>{{item.gstNo}}</td>
+                                    <!-- <td>{{item.softExpiryDate}}</td> -->
+                                    <td>{{item.footer}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+                                        <a data-bs-toggle="modal" data-bs-target="#edit_company" (click)="edit(item.companyInformationId)"><i class="fas fa-pen"></i></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#delete_company" (click)="delete(item.companyInformationId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!-- <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!result">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr >
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table> -->
+                    </div>
+                    <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">  -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Company-Info Master Form</h4>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="companyinfoForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom01">Company Name <small>*</small></label>
+                                        <input type="text" class="form-control" required formControlName="companyName">
+                                        <small *ngIf="companyinfoForm.get('companyName').invalid && companyinfoForm.get('companyName').touched" class="text-danger"> *Company Name is required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label> Address <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="address">
+                                        <small *ngIf="companyinfoForm.get('address').invalid && companyinfoForm.get('address').touched" class="text-danger"> *Address is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Logo </label>
+                                        <input type="file" accept=".png, .jpg, .jpeg" class="form-control" (change)="onChange($event, 'logo')">
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm> GST Number <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="gst">
+                                        <small *ngIf="companyinfoForm.get('gst').invalid && companyinfoForm.get('gst').touched" class="text-danger"> *GST number is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Back Image</label>
+                                        <input type="file" accept=".png, .jpg, .jpeg" class="form-control" (change)="onChange($event, 'back')">
+
+                                    </div>
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Software Expiry Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-4">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="softwareExpiryDate">
+                                            </div>
+                                            <small *ngIf="companyinfoForm.get('softwareExpiryDate').invalid && companyinfoForm.get('softwareExpiryDate').touched" class="text-danger"> *Expiry Date is required</small>
+                                        </div>
+                                    </div> -->
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Admin UserName <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="adminUserName">
+                                        <small *ngIf="companyinfoForm.get('adminUserName').invalid && companyinfoForm.get('adminUserName').touched" class="text-danger"> *User Name is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label>Password <small>*</small></label>
+                                            </div>
+                                        </div>
+                                        <div class="position-relative">
+
+                                            <input class="form-control" [type]="Toggledata ? 'password' : 'text'" formControlName="password" id="password" />
+                                            <span [ngClass]="Toggledata == true ? 'fa toggle-password fa-eye' : 'fa toggle-password fa-eye-slash'" (click)="iconLogle()"></span>
+                                            <small *ngIf="companyinfoForm.get('password').invalid && companyinfoForm.get('password').touched" class="text-danger"> *Password is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Powered By </label>
+                                        <input type="text" class="form-control" formControlName="poweredBy">
+                                    </div>
+                                    <!-- formControlName="footer" -->
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Footer <small>*</small></label>
+                                        <textarea type="text" rows="2" class="form-control" formControlName="footer"></textarea>
+                                        <small *ngIf="companyinfoForm.get('footer').invalid && companyinfoForm.get('footer').touched" class="text-danger"> *Footer is required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Mission <small>*</small></label>
+                                        <textarea type="text" rows="2" class="form-control" formControlName="mission"> </textarea>
+                                        <small *ngIf="companyinfoForm.get('mission').invalid && companyinfoForm.get('mission').touched" class="text-danger"> *Mission is required</small>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label companyinfoForm>Vission <small>*</small></label>
+                                        <textarea type="text" rows="2" class="form-control" formControlName="vission"> </textarea>
+
+                                    </div>
+
+                                </div>
+                                <button [disabled]="submitLoader" class="btn btn-primary" type="submit" (click)="addCompany()" *ngIf="!btnUpdate" [disabled]="!companyinfoForm.valid">Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" type="submit" (click)="update()" *ngIf="btnUpdate" [disabled]="!companyinfoForm.valid">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn" type="submit" (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!--/Page Content-->

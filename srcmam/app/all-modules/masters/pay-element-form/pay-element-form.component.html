@@ -1,0 +1,76 @@
+
+<div class="content container-fluid">
+
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Pay Element Master</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Masters</li>
+                       <li class="breadcrumb-item">Payroll Setup</li>
+                       <li class="breadcrumb-item active" aria-current="page">Pay Element Master</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   
+   <div class="row filter-row">
+       <div class="col-md-8">
+         
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+              
+               <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+           </div>
+           
+       </div>
+   </div>
+   <div class="row" >
+    <div class="col-sm-12">
+        <div class="card" >
+            <h1 class="card-title mb-0">Pay Element Master Form</h1>
+       
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" novalidate  [formGroup]="payElementForm">
+                        <div class="form-row row">
+                            <div class="col-md-4 mb-3">
+                                <label for="type">Name <small>*</small></label>
+                                <input type="text" class="form-control" formControlName="name">
+                                <small *ngIf="payElementForm.get('name').invalid && payElementForm.get('name').touched">This Field is Required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Condition </label>
+                                <select formControlName="condition" class="form-select form-control" >
+                                 <option >Addition</option>
+                                 <option >Deduction</option>
+                                </select>
+                             </div> 
+                             <div class="col-md-4 mb-3">
+                                 <label for="type">Description </label>
+                                 <input type="text" class="form-control" formControlName="description">
+                             </div>
+                             <div class="col-md-4 mb-3">
+                                 <label for="type">Status </label>
+                                 <input type="checkbox" class="checkbox-all ms-5 ng-untouched ng-pristine ng-valid" formControlName="status">
+                             </div>
+                        </div>
+                        <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                        <ng-template #other_content>  <button class="btn btn-primary" (click)="update()" >Update</button></ng-template>
+                      
+                        <button class="btn" (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ </div>
+

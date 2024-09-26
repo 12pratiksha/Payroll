@@ -1,0 +1,143 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3 *ngIf="!showMyContainer">OT Assignment Plan Setup</h3>
+                <h3 *ngIf="showMyContainer">OT Assignment Plan Form</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">OT Adjustment Policy</li>
+                        <li class="breadcrumb-item active" aria-current="page">OT Adj Setup</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="tableData">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Plan Name</th>
+                                    <th colspan="3">Deduction Scale</th>
+                                    <th rowspan="2" class="text-center no-sort">Action</th>
+                                </tr>
+                                <tr>
+                                    <th>Minutes From</th>
+                                    <th>Minutes To</th>
+                                    <th>Minutes Becomes</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableData">
+                                    <td>{{item.planName}}</td>
+                                    <td>
+                                        <div *ngFor="let details of item.otdepartureDetails">{{details.otMinutesFrom}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let details of item.otdepartureDetails">{{details.otMinutesTo}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let details of item.otdepartureDetails">{{details.otBecomes}}</div>
+                                    </td>
+                                    <td class="text-center ico-sec justify-content-ceter">
+                                        <a><i class="fas fa-pen" (click)="editPlan(item.otDeparturePlanMasterId)" [disabled]="disabled"></i></a>
+                                        <a (click)="delete(item.otDeparturePlanMasterId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+    </div>
+
+    <!-- end of data table  -->
+    <div *ngIf="showMyContainer">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="card">
+                    <div class="card-header" >
+                        <h4 class="card-title mb-0">OT Assignment Plan Form </h4>
+                    </div>
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form [formGroup]="otPlanForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Plan Name <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="planName">
+                                        <small *ngIf="otPlanForm.get('planName').invalid && otPlanForm.get('planName').touched">Plan Name is Required</small>
+                                    </div>
+
+                                </div>
+                                <button (click)="addQuantity()" class="btn btn-primary">Add More</button>
+                                <!-- <button class="btn btn-primary">Add line</button> -->
+                                <table class="col-sm-12" formArrayName="quantities">
+
+                                    <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                                        <td>
+                                            <label>Ot MinutesFrom</label>
+                                            <input type="number" class="form-control" formControlName="otMinutesFrom">
+                                        </td>
+                                        <td>
+                                            <label>Ot MinutesTo</label>
+                                            <input type="number" class="form-control" formControlName="otMinutesTo">
+                                        </td>
+                                        <td>
+                                            <label>OTBecomes</label>
+                                            <input type="number" class="form-control" formControlName="otBecomes">
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger" (click)="removeQuantity(i)" style="background-color: red;">Remove</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="display: flex; justify-content: center;">
+                                    <button *ngIf="editId==null" type="button" class="btn btn-primary" (click)="submitOtForm()" [disabled]="disabled">Submit</button>
+                                    <button *ngIf="editId!=null" type="button" class="btn btn-primary" (click)="updateOtForm()" [disabled]="disabled">Update</button>
+                                    <button type="button" class="btn " (click)="cancel()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Late Departure Plan Form -->
+
+
+
+
+
+    <!-- Late Departure Plan Form -->

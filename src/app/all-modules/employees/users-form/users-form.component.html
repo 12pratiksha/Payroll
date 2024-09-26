@@ -1,0 +1,215 @@
+
+<div class="content container-fluid">
+
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>User Form</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">General SetUp</li>
+                       <li class="breadcrumb-item">Users</li>
+                       <li class="breadcrumb-item active" aria-current="page">User Form </li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   
+   <div class="row filter-row">
+       <div class="col-md-8">
+         
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+              
+               <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+           </div>
+           
+       </div>
+   </div>
+   <div class="row" >
+    <div class="col-sm-12">
+        <div class="card" >
+            <h4 class="card-title">User Form</h4>
+       
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" novalidate  [formGroup]="userForm">
+                        <div class="form-row row">
+                         
+                         <div class="col-md-4 mb-3">
+                             <label for="type">First Name <small>*</small></label>
+                             <input type="text" class="form-control" formControlName="firstName">
+                             <small
+                             *ngIf="userForm.get('firstName').invalid && userForm.get('firstName').touched"
+                             class="text-danger"> *This Field is Required</small>
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Middle Name </label>
+                             <input type="text" class="form-control" formControlName="middelName">
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Last Name <small>*</small></label>
+                             <input type="text" class="form-control" formControlName="lastName">
+                             <small
+                             *ngIf="userForm.get('lastName').invalid && userForm.get('lastName').touched"
+                             class="text-danger"> *This Field is Required</small>
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Address <small>*</small></label>
+                             <input type="text" class="form-control" formControlName="address">
+                             <small
+                             *ngIf="userForm.get('address').invalid && userForm.get('address').touched"
+                             class="text-danger"> *This Field is Required</small>
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Mobile Number <small>*</small></label>
+                             <input type="text" class="form-control" formControlName="mobileNumber" mask="000-000-0000">
+                             <small
+                             *ngIf="userForm.get('mobileNumber').invalid && userForm.get('mobileNumber').touched"
+                             class="text-danger"> *This Field is Required</small>
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Email Id <small>*</small></label>
+                             <input type="text" class="form-control" formControlName="emailId">
+                             <small
+                             *ngIf="userForm.get('emailId').invalid && userForm.get('emailId').touched"
+                             class="text-danger"> * Invalid Email</small>
+                             <small *ngIf="userForm.value.emailId == '' && userForm.get('emailId').touched"> *This Field is Required</small>
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">User Name <small>*</small></label>
+                             <input type="text" class="form-control" formControlName="userName">
+                             <small
+                             *ngIf="userForm.get('userName').invalid && userForm.get('userName').touched"
+                             class="text-danger"> *This Field is Required</small>
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Password<small>*</small></label>
+                             <input type="password" class="form-control" formControlName="password">
+                             <small
+                             *ngIf="userForm.get('password').invalid && userForm.get('password').touched"
+                             class="text-danger"> *This Field is Required</small>
+                             
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label for="type">Confirm Password <small>*</small></label>
+                             <input type="password" class="form-control" formControlName="confirmPassword">
+                             <small
+                             *ngIf="userForm.controls.confirmPassword.hasError('required') && userForm.get('confirmPassword').touched " 
+                             class="text-danger"> *This Field is Required</small>
+                             <small
+                             *ngIf="userForm.controls.confirmPassword.hasError('confirmedValidator')"
+                             class="text-danger"> Password Does Not match</small>
+                             
+                         </div>
+                         <div class="col-md-4 mb-3">
+                             <label class="focus-label">State <small>*</small></label>
+                                   <select class="form-select floating form-control" formControlName="state">
+                                       <option value="">--Select--</option>
+                                       <option  *ngFor="let item of stateList" [value]="item.stateId">{{item.stateName}}</option>
+                                   </select>
+                                  
+                              
+                               <small
+                               *ngIf="userForm.get('state').invalid && userForm.get('state').touched"
+                               class="text-danger"> *State is Required</small>
+                           </div>
+                           
+                           <div class="col-md-4 mb-3">
+                             <label class="focus-label">Branch <small>*</small></label>
+                                   <select class="form-select floating form-control" formControlName="branch">
+                                       <option value="">--Select--</option>
+                                       <option  *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                   </select>
+                                  
+                              
+                               <small
+                               *ngIf="userForm.get('branch').invalid && userForm.get('branch').touched"
+                               class="text-danger"> *Branch is Required </small>
+                           </div>
+                           <div class="col-md-4 mb-3">
+                             <label >User type <small>*</small></label>
+                            
+                                 <select class="form-select form-control" formControlName="userType">
+                                     <option value="">--Select--</option>
+                                     <option >Super Admin</option>
+                                     <option >Admin</option>
+                                     <option >User</option>
+                                     <option >Employee</option>
+                                     <option >Client</option>
+                                     <option >Other</option>
+                                 </select>
+                                 <small
+                                 *ngIf="userForm.get('userType').invalid && userForm.get('userType').touched"
+                                 class="text-danger"> *Grade is Required</small>
+                         </div>
+                     <div class="col-md-4 mb-3">
+                     <label class="focus-label">Role Type</label>
+                    <select class="form-select form-control" formControlName="role" (change)="onChange($event.target.value)">
+                      <option value="">--Select--</option>
+                      <option >Administrator</option>
+                      <option >Employee</option>
+                    </select>
+                    <small *ngIf="userForm.get('role').invalid && userForm.get('role').touched">This field is required *</small>
+               
+                         </div>
+                           <div class="col-md-4 mb-3">
+                             <label class="focus-label">Role Name</label>
+                             <select class="form-select form-control" formControlName="type">
+                             <option value="">--Select--</option>
+                             <option [value]="item.roleName" *ngFor="let item of role">{{item.roleName}}</option>
+                             </select>
+                           
+                    <small *ngIf="userForm.get('type').invalid && userForm.get('type').touched">This field is required *</small>
+               
+                         </div>
+                          
+                        
+                        
+                         <div class="col-md-4 mb-3">
+                            <label >Status</label>
+                             <!--  <input type="checkbox" class="checkbox-all ms-5" formControlName="status"> -->
+
+                             <select class="form-select form-control" formControlName="status" aria-placeholder="--select Status--">
+                                            
+                                <option value = "0">Inactive</option>
+                                <option value = "1">Active</option>
+                                <option value = "2">Deleted</option>
+                                <option value = "3">Block</option>
+                                <option value = "4">On Hold</option>
+                                <option value = "5">FNF</option>
+                              
+                            </select>
+                         </div>
+                        
+                        </div>
+                        <button [disabled]="submitLoader" class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                        <ng-template #other_content>  <button [disabled]="submitLoader" class="btn btn-primary" (click)="update()" >Update <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button></ng-template>
+                      
+                        <button class="btn" (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ </div>
+
+      
+
+   
+   
+ 
+   
+   
+ 
+   
+   
+   
+   

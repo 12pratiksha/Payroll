@@ -1,0 +1,185 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Special Working Day</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Non Working Days</li>
+                        <li class="breadcrumb-item active" aria-current="page">Off Day</li>
+                        <li class="breadcrumb-item active" aria-current="page">Special Working Day</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Add New</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table datatable id="datatable" [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="tableData">
+                            <thead>
+                                <tr>
+                                    <!-- <th>State Name</th>
+                                    <th>Branch name</th> -->
+                                    <!-- <th>Day Half</th> -->
+                                    <th>Non WorkingDay Date</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let city of tableData">
+                                    <!-- <td>{{city.nonworkingDate}}</td>
+                                    <td>{{city.nonworkingDate}}</td> -->
+                                    <!-- <td>{{city.dayHalf}}</td> -->
+                                    <td>{{city.workingDate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{city.description}}</td>
+                                    <td>{{(city.status == true?"Active":"Inactive")}}</td>
+                                    <td class="text-end ico-sec justify-content-end">
+
+                                        <a (click)="edit(city.specialWorkDayId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(city.specialWorkDayId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <table datatable id="datatable" [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!tableData">
+                            <thead>
+                                <tr>
+                                    <th>City Name</th>
+                                    <th>State name</th>
+                                    <th>Region name</th>
+                                    <th>Country name</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let city of cityList">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="cityList">
+    </div>
+
+    <div class="row" *ngIf="showMyContainer">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title mb-0">Special Working Day</h1>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="workingDayForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Working Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="workingDate">
+                                            </div>
+                                            <small *ngIf="workingDayForm.get('workingDate').invalid && workingDayForm.get('workingDate').touched">Working Date is Required</small>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-4 mb-3">
+                                        <label>DayFull <small>*</small></label>
+                                           <select class="form-select form-control" formControlName="dayFull">
+                                              
+                                               <option value="FullDay">Full Day</option>
+                                               <option value="FirstHalf">First Half</option>
+                                               <option value="SecondHalf">Second Half</option>
+                                             </select>  
+                                             <small
+                                             *ngIf="workingDayForm.get('state').invalid && workingDayForm.get('state').touched"
+                                             class="text-danger"> *State is Required</small>
+                                    </div> -->
+                                    <div class="col-md-4 mb-3">
+                                        <label>State <small>*</small></label>
+                                        <select class="form-select form-control" formControlName="state">
+                                               <option value="">--Select--</option>
+                                               <option *ngFor="let state of states" [value]="state.stateId">{{state.stateName}}</option>
+                                             </select>
+                                        <small *ngIf="workingDayForm.get('state').invalid && workingDayForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Branch <small>*</small></label>
+                                        <div>
+                                            <ngx-bootstrap-multiselect class="multselct " [options]="branch" [(ngModel)]="branchModel" value=branch.id formControlName="branch">
+
+                                            </ngx-bootstrap-multiselect>
+                                        </div>
+                                        <small *ngIf="workingDayForm.get('branch').invalid && workingDayForm.get('branch').touched" class="text-danger"> *Branch is Required </small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Description</label>
+                                        <textarea class="form-control" rows="4" formControlName="description"></textarea>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-3" formControlName="status">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-12" style="text-align: center;">
+                                        <button type="button" class="btn btn-primary" (click)="submit()" *ngIf="!update">Submit</button>
+                                        <button type="button" class="btn btn-primary" (click)="updateForm()" *ngIf="update">Update</button>
+                                        <button type="button" class="btn btn-inverse" (click)="cancel()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-12">
+
+
+
+
+        </div>
+
+
+    </div>
+</div>

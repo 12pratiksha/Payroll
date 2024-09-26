@@ -1,0 +1,102 @@
+
+    <div class="content container-fluid">
+
+        <div class="row">
+           <div class="col-md-12">
+               <div class="page-head-box">
+                   <h3>View & Revise Salary</h3>
+                   <nav aria-label="breadcrumb">
+                       <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                           <li class="breadcrumb-item">Payroll</li>
+                           <li class="breadcrumb-item">Salary Processing </li>
+                           <li class="breadcrumb-item">Adjustments </li>
+                           <li class="breadcrumb-item active" aria-current="page">Salary Addition/Deduction List </li>
+                       </ol>
+                   </nav>
+               </div>
+           </div>
+       </div>
+
+       <div class="row filter-row">
+        <div class="col-md-8">
+ 
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <a  class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+                
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card" >
+            <h4 class="card-title mb-0">Salary Addition/Deduction</h4>
+       
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" novalidate  [formGroup]="additionDeductionForm">
+                        <div class="form-row row">
+                      
+                            <div class="col-md-4 mb-3">
+                                <label>Employee Id <small>*</small></label>
+                                    <ng-select class="form-select form-control" formControlName="empId" >
+                                       <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>                                 
+                                    </ng-select>  
+                                    <small *ngIf="additionDeductionForm.get('empId').invalid && additionDeductionForm.get('empId').touched" >This Field is required *</small>
+                            </div>
+                            
+                          
+                          
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label">Computation Type <small>*</small></label>
+                                    <select class="form-select form-control" formControlName="computationType">
+                                        <option value="">--Select--</option>
+                                        <option >On Attendance</option>
+                                        <option >Non Attendance</option>
+                                    </select>
+                                <small *ngIf="additionDeductionForm.get('computationType').invalid && additionDeductionForm.get('computationType').touched" >This Field is required *</small>
+                            </div>
+                             
+                           <div class="col-sm-4 ">  
+                                <label class="focus-label">Amount <small>*</small></label>
+                                <input type="number" class="form-control" formControlName="amount">
+                                <small *ngIf="additionDeductionForm.get('amount').invalid && additionDeductionForm.get('amount').touched" >This Field is required *</small>
+                            </div>
+                           
+                           <div class="col-sm-4 " >  
+                            <label class="focus-label"> Type <small>*</small></label>
+                                <select class="form-select form-control" formControlName="type">
+                                    <option value="">--Select--</option>
+                                    <option >Type1</option>
+                                    <option >Type2</option>
+                                </select>
+                            <small *ngIf="additionDeductionForm.get('type').invalid && additionDeductionForm.get('type').touched" >This Field is required *</small>
+                        </div>
+                            
+                            <div class="col-sm-4 ">  
+                                <label class="focus-label"> Date <small>*</small></label>
+                                        <div class="form-group form-focus mb-0">
+                                            <div class="cal-icon">
+                                                <input class="form-control floating datetimepicker" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                            </div>
+                                        </div>
+                                        <small *ngIf="additionDeductionForm.get('date').invalid && additionDeductionForm.get('date').touched" >This Field is required *</small>
+                             </div>
+                            
+                       </div>  
+                       <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                       <ng-template #other_content>  <button class="btn btn-primary" (click)="update()" >Update</button></ng-template>
+                     
+                          <button class="btn " (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

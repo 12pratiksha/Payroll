@@ -1,0 +1,7 @@
+small{
+    color:red
+}
+.ng-option .ng-option-child .ng-option-selected{
+    color: #333;
+    background-color: #ebf5ff !important;
+}

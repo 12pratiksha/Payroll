@@ -1,0 +1,280 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Schedule Interview Candidate</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Schedule Interview Candidate</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="type!='Admin' && container">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Schedule Interview Candidate List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Round Name</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Interviewer Name</th>
+                                        <th>For Department</th>
+                                        <th>For Designation</th>
+                                        <th>Status</th>
+                                        <th>Resume</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.firstName}} {{item.lastName}}</td>
+                                        <td>{{item.round}}</td>
+                                        <td>{{item.type}}</td>
+                                        <td>{{item.onDate | date}}</td>
+                                        <td> {{item.atTime}}</td>
+                                        <td>{{item.interviewname}}</td>
+                                        <td>{{item.department_name}}</td>
+                                        <td>{{item.desg}}</td>
+                                        <td>{{item.status}}</td>
+                                        <td>
+                                            <a href="{{this.baseurl}}/empdoc/{{item.cv_name}}" target="_blank" class="fas fa-bars"></a>
+                                        </td>
+                                        <td>
+                                            <button class="btn-primary" (click)="evalutionform(item)">Evaluation</button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="type=='Admin' && container">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Schedule Interview Candidate List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData1?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Round Name</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Interviewer Name</th>
+                                        <th>For Department</th>
+                                        <th>For Designation</th>
+                                        <th>Status</th>
+                                        <th>Resume</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData1; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.firstName}} {{item.lastName}}</td>
+                                        <td>{{item.round}}</td>
+                                        <td>{{item.type}}</td>
+                                        <td>{{item.onDate | date}}</td>
+                                        <td>{{item.atTime}}</td>
+                                        <td>{{item.interviewname}}</td>
+                                        <td>{{item.department_name}}</td>
+                                        <td>{{item.desg}}</td>
+                                        <td>{{item.status}}</td>
+                                        <td>
+                                            <a href="{{this.baseurl}}/empdoc/{{item.cv_name}}" target="_blank" class="fas fa-bars"></a>
+                                        </td>
+                                        <td>
+                                            <a>
+                                                <i class="role-info role-bg-two" (click)="evalutionform1(item,scheduleId)" style="width: 20px;">Evaluation</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!container">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Schedule Interview
+
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="scheduleForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Rounds <small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" (change)="addItem($event.target.value)" formControlName="rounds">
+															<option value = "">--Select Rounds--</option>
+															<option value = "1">1</option>
+															<option value = "2">2</option>
+															<option value = "3">3</option>
+															<option value = "4">4</option>
+															<option value = "5">5</option>
+														    </select>
+                                            <small *ngIf="scheduleForm.get('rounds').invalid && scheduleForm.get('rounds').touched" class="text-danger">*These field is required</small>
+                                        </div>
+
+                                        <ng-container formArrayName="fArray" *ngFor="let item of fArray().controls; let i=index">
+                                            <ng-container [formGroupName]="i">
+                                                <h4 class="focus-label" style="background-color: aliceblue; font-weight: 700;">Round # {{i + 1}}.</h4>
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Round Name<small class="text-danger">*</small></label>
+                                                    <select class="form-select form-control" required formControlName="round" required>
+														<option value="">--Select--</option>
+														<option value="Technical Round 1">Technical Round 1</option>
+														<option value="Technical Round 2">Technical Round 2</option>
+														<option value="HR Round">HR Round</option>
+														<option value="Management Round">Management Round</option>
+														</select>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Interviewer<small class="text-danger">*</small></label>
+                                                    <ng-select class="form-select form-control" multiple="true" formControlName="interview">
+                                                        <ng-option value="">--Select--</ng-option>
+                                                        <ng-option *ngFor="let item of approver" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label> On<small class="text-danger">*</small> </label>
+                                                    <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="onDate">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label>At</label>
+                                                    <input type="time" class="form-control" required formControlName="atTime">
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Mode of Interview<small class="text-danger">*</small></label>
+                                                    <select class="form-select floating form-control" formControlName="type">
+													<option value="">--Select--</option>
+													<option value="Telephonic Interview">Telephonic Interview</option>
+													<option value="Offline Interview">Offline Interview</option>
+													<option value="Onlone Interview">Onlone Interview</option>
+												    </select>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <button class="btn btn-primary" (click)="update(editId,applicantCandiateId)">Update</button>&nbsp;
+                                    <button class="btn-primary" (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- <div class="row" *ngIf="showContainer">
+            <div class="col-sm-12">
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0"> Candidate Details </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+
+                                                    <li>
+                                                        <div class="title">Position Name:</div>
+                                                        <div class="text">{{data.designation}}</div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="title">Department</div>
+                                                        <div class="text">{{data.department}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Experience</div>
+                                                        <div class="text">{{data.required_exp}} Year</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">expected Joining Date</div>
+                                                        <div class="text">{{data.expected_joining_date | date}}</div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+
+                                                <li>
+                                                    <div class="title">Required Candidates:</div>
+
+                                                    <div class="text">{{data.no_of_vacancy}}</div>
+
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Loction</div>
+                                                    <div class="text"> {{data.location}} </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Skill:</div>
+                                                    <div class="text">{{data.skills}}</div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> -->
+
+    </div>
+</div>

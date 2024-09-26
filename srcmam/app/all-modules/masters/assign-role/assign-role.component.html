@@ -1,0 +1,103 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Role Assign</h3>
+               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">Masters</li>
+                        <li class="breadcrumb-item">Role Center</li>
+                        <li class="breadcrumb-item active" aria-current="page">Assign Role</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    
+<form [formGroup]="roleForm">
+        <div class="row filter-row">
+           <div class="col-md-8">
+               <div class="row">
+                  <div class="col-sm-6"> 
+                      
+                           <label class="focus-label">Role Type</label>
+                           <select class="form-select form-control" formControlName="role" (change)="onChange($event.target.value)">
+                             <option value="">--Select--</option>
+                             <option >Administrator</option>
+                             <option >Employee</option>
+                           </select>
+                           <small *ngIf="roleForm.get('role').invalid && roleForm.get('role').touched">This field is required *</small>
+                      
+                   </div>
+                   <div class="col-sm-6"> 
+                      
+                    <label class="focus-label"></label>
+                    <select class="form-select form-control" formControlName="type">
+                    <option value="">--Select--</option>
+                    <option [value]="item.roleMasterId" *ngFor="let item of roleData">{{item.roleName}}</option>
+                    </select>
+                    <small *ngIf="roleForm.get('type').invalid && roleForm.get('type').touched">This field is required *</small>
+               
+            </div>
+               </div>
+           </div>
+           <div class="col-md-4">
+               <div class="add-emp-section">
+                   <a class="btn btn-success btn-add-emp" (click)="applyPlan()"><i class="fas fa-plus"></i>Apply Plan</a>
+               </div>
+           </div>
+       </div>
+    </form>
+       <div class="row" >
+           <div class="col-sm-12">
+               <div class="card mb-0">
+                   
+                   <div class="card-body">
+       
+                       <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0" >
+                           
+                          <thead>
+                              <tr>
+                                  <th>Id</th>
+                                  <th>Name</th>
+                                  <th>Branch</th>
+                                  <th>Department</th>
+                                  <th>Status</th>
+                                 
+                              </tr>
+                          </thead>
+                          <tfoot>
+                              <tr>
+                                <th><input class="form-control" type="text" placeholder="Search Id" name="search-Id"/></th>
+                                <th><input class="form-control" type="text" placeholder="Search Name" name="search-name"/></th>
+                                <th><input class="form-control" type="text" placeholder="Search Branch" name="search-region"/></th>
+                                <th><input class="form-control" type="text" placeholder="Search Department" name="search-country"/></th>
+                                <th><input class="form-control" type="text" placeholder="Status" name="search-status"></th>
+                              </tr>
+                            </tfoot>
+                          <tbody>
+                              <tr *ngFor="let item of employee; let i = index" (click)="selectRow(i, item)">
+                                  <td>{{item.employeeCode}}</td>
+                                  <td>{{item.firstName}} {{item.lastName}}</td>
+                                  <td>{{item.branch}}</td>
+                                  <td>{{item.department}}</td>
+                                  <td>{{item.status == 0?'Active':'Inactive'}}</td>
+                                  <!-- <td class="text-end ico-sec justify-content-end">
+
+                                      <a (click)="editCity(city.id)"><i class="fas fa-pen"></i></a>
+                                      <a (click)="deleteCity(city.id)"><i class="far fa-trash-alt"></i></a>
+                                  </td> -->
+                              </tr>
+                              
+                          </tbody>
+                         
+                      </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+  

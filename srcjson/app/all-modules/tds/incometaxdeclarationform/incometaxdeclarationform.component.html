@@ -1,0 +1,927 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Income Tax Declaration Form</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                            <li class="breadcrumb-item active" aria-current="page">Reports</li>
+                            <li class="breadcrumb-item active" aria-current="page">Income Tax Declaration Form</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i>Add Income Tax Details</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="showMyContainer==false ">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Income Tax Details</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Year</th>
+                                        <th>Company Name</th>
+                                        <th>Employee Name</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.year}}</td>
+                                        <td>{{item.companyName}}</td>
+                                        <td>{{item.employeeName}}</td>
+
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <div *ngIf="item.c80InvestmentsAdded==2 && item.deductionUS24Added==2 && item.deductionUS80CC1bAdded==2 && item.deductionUS80CCCAdded==2 && item.deductionUS80CCDAdded==2 && item.deductionUnderchapterAdded==2 && item.homeLoanDetails1Added==2 && item.houseRentDetailsAdded==2 && item.letOutPropertyDetailsAdded==2 && item.otherSourcesofIncomeAdded==2">
+                                                <a class="role-info role-bg-two" style="width: 18px; align-items: center;" (click)="edit(item)">Upload Document</a>
+                                                <a (click)="delete(item.incomeTaxdeclarationform3Id)"><i class="far fa-trash-alt"></i></a>
+                                            </div>
+                                            <div *ngIf="item.c80InvestmentsAdded!=2 && item.deductionUS24Added!=2 && item.deductionUS80CC1bAdded!=2 && item.deductionUS80CCCAdded!=2 && item.deductionUS80CCDAdded!=2 && item.deductionUnderchapterAdded!=2 && item.homeLoanDetails1Added!=2 && item.houseRentDetailsAdded!=2 && item.letOutPropertyDetailsAdded!=2 && item.otherSourcesofIncomeAdded!=2">
+                                                <a class="fas fa-pen" (click)="edit(item)"></a>
+                                                <a (click)="delete(item.incomeTaxdeclarationform3Id)"><i class="far fa-trash-alt"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" *ngIf="showMyContainer==true">
+            <div class="col-sm-12">
+
+                <!-- Custom Boostrap Validation -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Income Tax Declaration Form</h5>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="incomeTax">
+                                    <div class="form-row row" *ngIf="usertype=='Admin' || usertype=='Super Admin'">
+
+                                        <div class="col-md-4 mb-4">
+                                            <label>Year:<small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" formControlName="year">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of year" >{{item}}</option>
+                                                </select>
+                                        </div>
+
+                                        <div class="col-md-4 mb-4">
+                                            <label>Company Name:<small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" formControlName="companyName">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of company" [value]="item.companyName">{{item.companyName}}</option>
+                                            </select>
+                                        </div>
+
+
+
+                                        <div class="col-md-4 mb-4">
+                                            <label>Employee Name:<small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" formControlName="employeeName">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of employees" [value]="item.firstName+''+item.middleName+''+item.lastName">{{item.firstName}} {{item.middleName}} {{item.lastName}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-4 mb-4">
+                                            <label>Employee Pan Card No:<small class="text-danger">*</small></label>
+                                            <input class="form-control" formControlName="panOfemployee">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row row" *ngIf="userType!='Admin'">
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Year:<small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" formControlName="year">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of year" >{{item}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Company Name:<small class="text-danger">*</small></label>
+                                            <input class="form-control" formControlName="companyName">
+
+                                        </div>
+
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee Name:<small class="text-danger">*</small></label>
+                                            <input class="form-control" formControlName="employeeName">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee Pan Card No:<small class="text-danger">*</small></label>
+                                            <input class="form-control" formControlName="panOfemployee">
+                                        </div>
+                                    </div>
+                                    <br>
+
+
+                                    <div class="row" style="margin: 14px;">
+                                        <label>Tax Calculation <small>(please tick one option)</small></label>
+                                        <div class="radio col-form-label col-md-3">
+                                            <label>
+                                            <input type="radio" name="radio" [formControl]="type" value="true"> Old Tax Regime
+                                        </label>
+                                        </div>
+                                        <div class="radio col-form-label col-md-3">
+                                            <label>
+                                            <input type="radio" name="radio" [formControl]="type" value="false"> New Tax Regime
+                                        </label>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="type.value =='true'">
+                                        <div class="card">
+                                            <div class="card-header" style="background:#FF7849;width:100%; border-radius: 10px;">
+
+                                                <label>As per section 206AA, in case PAN is not submitted, TDS will be deducted at flat rate of 20%</label>
+                                            </div>
+
+                                            <div class="card">
+
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;font: bold; ">
+                                                    <input type="checkbox" class="checkbox-all" value="1" formControlName="houseRentCheckbox">&nbsp;
+                                                    <label>HOME RENT</label>
+                                                </div>
+                                                <h3 style="margin: 16px;"><label> Note:</label> Is the employee staying in a rented house?</h3>
+
+
+
+
+                                                <ng-container formArrayName="houseRent" *ngFor="let item of quantities().controls; let i = index;">
+                                                    <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                        <!-- <h3>{{i+1}}</h3> -->
+
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>From Date:</label>
+
+                                                            <input type="text" placeholder="From Date" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="formDate">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>To Date:</label>
+                                                            <input type="text" placeholder="To Date " class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Amount /month:</label>
+                                                            <input type="number" class="form-control" formControlName="amount">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Pan No.:</label>
+                                                            <input type="text" class="form-control" formControlName="pancard">
+
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Address:</label>
+                                                            <input type="text" class="form-control" formControlName="address">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Metro/Non Metro:</label>
+                                                            <select type="dropdown" class="form-select form-control" formControlName="metroOrNonMetro">
+                                                        <option>Metro</option>
+                                                        <option>Non-Metro</option>
+                                                        </select>
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>City:</label>
+                                                            <input type="text" class="form-control" formControlName="cityName">
+                                                        </div>
+
+
+                                                        <div class="row" *ngIf="status==1">
+                                                            <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                            <input type="file" [multiple]="true" (change)="uploadMultipleDocuments($event,i)" id="multipleDoc" #multipleDoc>
+                                                            <br>
+                                                            <br>
+
+                                                            <div class="row" *ngIf="docName[i]">
+                                                                <div class="col-md-8 mb-4" *ngFor="let item of docName[i]; let i=index;">
+                                                                    <!-- {{documents|json}} -->
+                                                                    <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                    <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                    <a (click)="removedocuments(i)"><i class="far fa-trash-alt"></i></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-8 mb-4" *ngFor="let item of docNameForhR1[i]; let i=index;">
+
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocNameForhR(i)"><i class="far fa-trash-alt"></i></a>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="col-md-8 mb-4">
+                                                            <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                                        </div>
+
+                                                    </div>
+                                                </ng-container>
+                                                <div class="col-md-3 mb-3" *ngIf="incomeTax.value.houseRentCheckbox==true">
+
+                                                    <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addRequest()">Add Details</button>
+                                                </div>
+
+
+
+
+                                            </div>
+
+
+                                            <!-- LETOUT -->
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="propertyDetailsCheckbox">&nbsp;
+                                                    <label> LET OUT PROPERTY DETAILS</label> </div>
+                                                <h3 style="margin: 16px;"><label>Note:</label> Is the employee receiving rental income from let out property?</h3>
+
+
+
+                                                <ng-container formArrayName="propertyDetails" *ngFor="let item of quantities1().controls; let i = index;">
+                                                    <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                        <!-- <h3>{{i+1}}</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Annual Rent Received:</label>
+
+                                                            <input type="number" class="form-control" formControlName="annualRentRecive">
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Municipal Taxes Paid:</label>
+                                                            <input type="number" class="form-control" formControlName="municipalTaxesPaid">
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Net Annual Value:</label>
+                                                            <input type="number" class="form-control" formControlName="netAnnualValue">
+
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Standard Deduction (@ 30% of Net Annual Value):</label>
+                                                            <input type="number" class="form-control" formControlName="standarDeduction30OnNetAnnualValue">
+
+                                                        </div>
+
+
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <label>Net Income/Loss from House Property:</label>
+                                                            <input type="number" class="form-control" formControlName="netIncomeORLossOnHouseProperty">
+
+                                                        </div>
+
+                                                        <div class="col-md-3 mb-3">
+                                                            <label> Repaying Home Loan for This Property:</label><br>
+                                                            <input type="checkbox" class="checkbox-all" formControlName="repayingHomeLoanForThisPorperty">
+
+
+                                                        </div>
+
+
+
+                                                        <ng-container *ngIf="quantities1().controls.repayingHomeLoanForThisPorperty==true">
+
+                                                            <div class="col-sm-3 mb-3">
+                                                                <label>Principle Paid on Home Loan:</label>
+
+                                                                <input type="number" class="form-control" formControlName="repayingprinciplePaidOnHomeLoan">
+                                                            </div>
+
+                                                            <div class="col-sm-3 mb-3">
+                                                                <label>Interest Paid on Home Loan:</label>
+
+                                                                <input type="number" class="form-control" formControlName="repayinginterestPaidOnHomeLoan">
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Name of the Lender:</label>
+                                                                <input type="text" class="form-control" formControlName="repayingnameOfTheLander">
+
+                                                            </div>
+
+                                                            <div class="col-md-3 mb-3">
+                                                                <label>Lender PAN:</label>
+                                                                <input type="text" class="form-control" formControlName="repayinglanderPAN">
+
+                                                            </div>
+                                                        </ng-container>
+
+                                                    </div>
+                                                    <div class="row" style="margin:6px" *ngIf="status==1">
+                                                        <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                        <input type="file" [multiple]="true" (change)="uploadMultipleDocumentsForPD($event,i)" id="multipleDoc" #multipleDoc>
+                                                        <br>
+                                                        <br>
+
+                                                        <div class="col-md-8 mb-4" *ngIf="docNameForPD[i]">
+                                                            <div *ngFor="let item of docNameForPD[i]; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocumentsForPD(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-8 mb-4" *ngFor="let item of docNameForlOPD1[i]; let i=index;">
+                                                            <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                            <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                            <a (click)="removedocNameForlOPD(i)"><i class="far fa-trash-alt"></i></a>
+
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    <div class="col-md-8 mb-4">
+                                                        <button class="btn btn-primary" style="margin: 16px;" (click)="remove1(i)">Remove Details</button>
+                                                    </div>
+
+                                                </ng-container>
+
+                                                <div class="col-md-3 mb-3" *ngIf="incomeTax.value.propertyDetailsCheckbox==true">
+                                                    <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addRequest1()">Add Details</button>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="c80investmentsCheckbox">&nbsp;
+
+                                                    <label>80C AND OTHER INVESTMENTS (Maximum Limit 1,50,000.00 each) </label>
+                                                </div>
+                                                <br>
+
+
+
+                                                <ng-container formArrayName="c80investments" *ngFor="let item of quantities2().controls; let i = index;">
+                                                    <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                        <!-- <h3> {{i+1}}</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Particulars:</label>
+
+                                                            <select type="number" class="form-control" formControlName="c80particulars">
+                                                    <option value="">--Select--</option>
+                                                    <option>Contribution to Pension Fund (Jeevan Suraksha)</option>
+                                                    <option>Life Insurance Premium on life of self/spouse/child only</option>
+                                                    <option>Deferred Annuity</option>
+                                                    <option>Public Provident Fund in own name/spouse/child only</option>
+                                                    <option>ULIP of UTI/LIC in own name or spouse and child only</option>
+                                                    <option>Contribution to Pension Fund or UTI or Notified Mutual Fund</option>
+                                                        <option>Investment in ELSS made in units of Notified Mutual Fund</option>
+                                                        <option>Children Tuition Fee: Restricted to a max of 2 Children</option>
+                                                        <option>Deposit in home loan account scheme of NHB/HDFC</option>
+                                                        <option>5 yrs. Term deposit in a Sch.Bank</option>
+                                                    </select>
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Declare Amount:</label>
+                                                            <input type="number" class="form-control" formControlName="c80declaredAmount">
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="row" style="margin: 6px;" *ngIf="status==1">
+                                                        <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                        <input type="file" formControlName="tdsc80doc" [multiple]="true" (change)="uploadMultipleDocumentsFor80c($event,i)" id="multipleDoc" #multipleDoc>
+                                                        <br>
+                                                        <br>
+                                                        <div class="col-md-8 mb-4" *ngIf="doc80c[i]">
+                                                            <div *ngFor="let item of doc80c[i]; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocumentsFor80c(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-8 mb-4" *ngFor="let item of docNameForoI1[i]; let i=index;">
+                                                            <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                            <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                            <a (click)="removedocNameForoI(i)"><i class="far fa-trash-alt"></i></a>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <button class="btn btn-primary" style="margin: 16px;" (click)="remove2(i)">Remove Details</button>
+                                                    </div>
+                                                </ng-container>
+
+                                                <div class="col-md-3 mb-3" *ngIf="incomeTax.value.c80investmentsCheckbox==true">
+                                                    <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addRequest2()">Add Details</button>
+                                                    <!-- <button let i=index; (click)="addRequest2()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.c80investmentsCheckbox==true">Add Details</button> -->
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="d80investmentsCheckbox">&nbsp;
+
+                                                    <label>DEDUCTION UNDER CHAPTER - VI A</label>
+                                                </div>
+                                                <br>
+                                                <!-- <label> DEDUCTION UNDER CHAPTER - VI A</label> -->
+
+
+
+                                                <ng-container formArrayName="d80investments" *ngFor="let item of quantities3().controls; let i = index;">
+                                                    <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                        <!-- <h3> {{i+1}}</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Particulars:</label>
+
+                                                            <select type="number" class="form-control" formControlName="particulars">
+                                                    <option value="">--Select--</option>
+                                                    <option>Sec 80D - Medical Insurance Premium (If the policy covers a senior citizen then exemption is Rs.50,000/-)</option>
+                                                    <option>Sec 80DD - Handicapped Dependent</option>
+                                                    <option>Sec 80E - Repayment of Loan for higher education (only Interest)</option>
+                                                    <option>Sec 80GG - Rent Paid</option>
+                                                    <option>Sec 80U - Handicapped</option>
+                                                    <option>Sec 80CCG - Rajeev Gandhi Equity Saving Scheme (Investment max upto Rs.50,000, would get a deduction of 50% on the amount invested)</option>
+                                                        <option>Sec 80TTA / 80TTB - Interest on saving a/c</option>
+                                                        <option>Any other Deduction (Please specify)</option>
+                                                    </select>
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Declare Amount:</label>
+                                                            <input type="number" class="form-control" formControlName="declareAmount">
+                                                            <small *ngIf="quantities3().controls[i].get('particulars').value=='Sec 80GG - Rent Paid'" class="text-danger">*Maximum limit is 60,000</small>
+                                                            <small *ngIf="quantities3().controls[i].get('particulars').value=='Sec 80CCG - Rajeev Gandhi Equity Saving Scheme (Investment max upto Rs.50,000, would get a deduction of 50% on the amount invested)'" class="text-danger">*Maximum limit is 25,000</small>
+                                                            <small *ngIf="quantities3().controls[i].get('particulars').value=='Sec 80TTA / 80TTB - Interest on saving a/c'" class="text-danger">*Maximum limit is 10,000/50,000</small>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                    <div class="row" style="margin: 6px;" *ngIf="status==1">
+                                                        <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                        <input type="file" [multiple]="true" (change)="uploadMultipleDocumentsFord80($event,i)" id="multipleDoc" #multipleDoc>
+                                                        <br>
+                                                        <br>
+                                                        <div class="col-md-8 mb-4" *ngIf="docNameFor80d[i]">
+                                                            <div *ngFor="let item of docNameFor80d[i]; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocumentsFor80d(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-8 mb-4" *ngFor="let item of docNameFordUC1[i]; let i=index;">
+                                                            <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                            <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                            <a (click)="removedocNameFordUC(i)"><i class="far fa-trash-alt"></i></a>
+                                                        </div>
+
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-primary" style="margin: 16px;" (click)="remove3(i)">Remove Details</button>
+                                                    </div>
+                                                </ng-container>
+                                                <div class="col-md-3 mb-3" *ngIf="incomeTax.value.d80investmentsCheckbox==true">
+                                                    <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addRequest3()">Add Details</button>
+                                                    <!-- <button let i=index; (click)="addRequest3()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.d80investmentsCheckbox==true">Add Details</button> -->
+                                                </div>
+
+
+
+                                            </div>
+
+
+
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="otherSourceCheckbox">&nbsp;
+
+                                                    <label>OTHER SOURCE OF INCOME </label>
+                                                </div>
+
+                                                <br>
+                                                <!-- <label>Other Sources of Income</label> -->
+
+
+                                                <ng-container formArrayName="otherIncomeSource" *ngFor="let item of otherIncomeSourceQuantities().controls; let i = index;">
+                                                    <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                        <br>
+                                                        <!-- <h3>Other Sources of Income Details</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Income from other sources:</label>
+                                                            <input type="number" class="form-control" formControlName="incomeFromOtherSources" placeholder="Enter Amount">
+
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Interest earned from Savings deposit:</label>
+                                                            <input type="number" class="form-control" formControlName="interestEarnedFromSavingsDeposit" placeholder="Enter Amount">
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Interest earned from Fixed deposits:</label>
+                                                            <input type="number" class="form-control" formControlName="interestEarnedFromFixedDeposits" placeholder="Enter Amount">
+                                                        </div>
+
+
+
+
+
+                                                    </div>
+                                                    <div class="row" style="margin: 6px;" *ngIf="status==1">
+                                                        <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                        <input type="file" [multiple]="true" (change)="uploadMultipleDocumentsForOIS($event,i)" id="multipleDoc" #multipleDoc>
+                                                        <br>
+                                                        <br>
+                                                        <div class="col-md-8 mb-4" *ngIf="docNameForOIS[i]">
+                                                            <div *ngFor="let item of docNameForOIS[i]; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocumentsForOIS(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-8 mb-4" *ngFor="let item of docNameForoSIncome1[i]; let i=index;">
+                                                            <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                            <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                            <a (click)="removedocNameForoSIncome(i)"><i class="far fa-trash-alt"></i></a>
+                                                        </div>
+
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-primary" style="margin: 16px;" (click)="removeOtherSourceIncome(i)">Remove Details</button>
+                                                    </div>
+
+
+
+
+
+                                                </ng-container>
+                                                <div class="col-md-3 mb-3" *ngIf="incomeTax.value.otherSourceCheckbox==true">
+                                                    <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addOtherSourceIncome()">Add Details</button>
+                                                    <!-- <button let i=index; (click)="addRequest3()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.d80investmentsCheckbox==true">Add Details</button> -->
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="deduction80CCCCCheckbox">&nbsp;
+
+                                                    <label>DEDUCTION U/S 80CCC (Maximum Limit 1,50,000.00 each)</label>
+                                                </div>
+                                                <br>
+                                                <!-- <h1></h1> -->
+                                                <!-- <label>DEDUCTION U/S 80CCC</label> -->
+
+
+                                                <ng-container *ngIf="incomeTax.value.deduction80CCCCCheckbox==true">
+                                                    <div class="row" style="margin: 6px;">
+                                                        <!-- <h3>DEDUCTION U/S 80CCC Details</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Annuity/Pension Plan:</label>
+                                                            <input type="text" class="form-control" formControlName="annuityPensionPlan">
+
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Declare Amount:</label>
+                                                            <input type="number" class="form-control" formControlName="appDeclareAmount">
+                                                        </div>
+
+                                                        <div class="row" *ngIf="status==1">
+                                                            <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                            <input type="file" formControlName="tDeductionUS80CCCidoc" [multiple]="true" (change)="uploadMultipleDocumentsFor80ccc($event)" id="multipleDoc" #multipleDoc>
+                                                            <br>
+                                                            <br>
+                                                            <div class="col-md-8 mb-4" *ngIf="documentsFor80ccc">
+                                                                <div *ngFor="let item of documentsFor80ccc; let i=index;">
+                                                                    <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                    <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                    <a (click)="removedocumentsFor80ccc(i)"><i class="far fa-trash-alt"></i></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-8 mb-4" *ngFor="let item of docNameForCCC; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocNameForCCC(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </ng-container>
+
+
+
+                                            </div>
+
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="deduction80CCCC1bCheckbox">&nbsp;
+
+                                                    <label>DEDUCTION U/S 80CC (1b) (Maximum Limit 50,000.00 each)</label>
+                                                </div>
+                                                <br>
+                                                <!-- <h1></h1> -->
+                                                <!-- <label>DEDUCTION U/S 80CC (1b)</label> -->
+
+
+                                                <ng-container *ngIf="incomeTax.value.deduction80CCCC1bCheckbox==true">
+                                                    <div class="row" style="margin: 6px;">
+                                                        <!-- <h3>DEDUCTION U/S 80CC (1b) Details</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Employee Contribution:</label>
+                                                            <input type="text" class="form-control" formControlName="employeeContribution">
+
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Declare Amount:</label>
+                                                            <input type="number" class="form-control" formControlName="ecDeclareAmount">
+                                                        </div>
+                                                        <div class="row" *ngIf="status==1">
+                                                            <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                            <input type="file" formControlName="deductionUS80CC1bdoc" [multiple]="true" (change)="uploadMultipleDocumentsFor80cc1b($event)" id="multipleDoc" #multipleDoc>
+                                                            <br>
+                                                            <br>
+                                                            <div class="col-md-8 mb-4" *ngIf="documentsFor80cc1b">
+                                                                <div *ngFor="let item of documentsFor80cc1b; let i=index;">
+                                                                    <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                    <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                    <a (click)="removedocumentsFor80cc1b(i)"><i class="far fa-trash-alt"></i></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-8 mb-4" *ngFor="let item of docNameForCCC1b; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocNameForCCC1b(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </ng-container>
+
+                                            </div>
+
+                                            <div class="card">
+                                                <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                    <input type="checkbox" class="checkbox-all" formControlName="deduction80CCDCheckbox">&nbsp;
+
+                                                    <label>DEDUCTION U/S 80CCD (Maximum Limit 1,50,000.00 each)</label>
+                                                </div>
+                                                <br>
+                                                <!-- <h1></h1> -->
+                                                <!-- <label>DEDUCTION U/S 80CCD</label> -->
+
+
+                                                <ng-container *ngIf="incomeTax.value.deduction80CCDCheckbox==true">
+                                                    <div class="row" style="margin:6px;">
+                                                        <!-- <h3>DEDUCTION U/S 80CCD Details</h3> -->
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Notified Pension Scheme:</label>
+                                                            <input type="text" class="form-control" formControlName="notifiedPensionScheme">
+
+                                                        </div>
+
+                                                        <div class="col-sm-3 mb-3">
+                                                            <label>Declare Amount:</label>
+                                                            <input type="number" class="form-control" formControlName="npsDeclareAmount">
+                                                        </div>
+                                                        <div class="row" *ngIf="status==1">
+                                                            <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                            <input type="file" formControlName="deductionUS80CCDdoc" [multiple]="true" (change)="uploadMultipleDocumentsFor80ccd($event)" id="multipleDoc" #multipleDoc>
+                                                            <br>
+                                                            <br>
+                                                            <div class="col-md-8 mb-4" *ngIf="documentsFor80ccd">
+                                                                <div *ngFor="let item of documentsFor80ccd; let i=index;">
+                                                                    <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                                    <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                    <a (click)="removedocumentsFor80ccd(i)"><i class="far fa-trash-alt"></i></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-8 mb-4" *ngFor="let item of docNameForCCD; let i=index;">
+                                                                <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                                <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                                <a (click)="removedocNameForCCD(i)"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </ng-container>
+
+                                            </div>
+                                        </div>
+                                        <div class="card-header" style="background:#FF7849;width:100%; border-radius: 10px;">
+
+                                            <label>Aggregate Deduction U/S 80C, 80CCC & 80CCD cannot exceed Rs. 150000/- Additional Deduction U/S 80CCD (1b) of Rs. 50000/-</label>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                <input type="checkbox" class="checkbox-all" formControlName="homeLoanCheckbox">&nbsp;
+                                                <label>HOME LOAN (Maximum Limit 200,000.00 each)</label>
+                                            </div>
+                                            <h3 style="margin: 16px;"><label>Note:</label> Is the employee repaying home loan for a self occupied house property?</h3>
+
+
+
+
+                                            <ng-container formArrayName="homeLoan" *ngFor="let item of quantities5().controls; let i = index;">
+                                                <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                    <!-- <h3>{{i+1}}</h3> -->
+
+
+                                                    <div class="col-sm-3 mb-3">
+                                                        <label>Principle Paid on Home Loan:</label>
+
+                                                        <input type="number" class="form-control" formControlName="principlePaidOnHomeLoan">
+                                                    </div>
+
+                                                    <div class="col-sm-3 mb-3">
+                                                        <label>Interest Paid on Home Loan:</label>
+
+                                                        <input type="number" class="form-control" formControlName="interestPaidOnHomeLoan">
+                                                    </div>
+
+                                                    <div class="col-md-3 mb-3">
+                                                        <label>Name of the Lender:</label>
+                                                        <input type="text" class="form-control" formControlName="nameOfTheLander">
+
+                                                    </div>
+
+                                                    <div class="col-md-3 mb-3">
+                                                        <label>Lender PAN:</label>
+                                                        <input type="text" class="form-control" formControlName="landerPAN">
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="row" style="margin: 6px;" *ngIf="status==1">
+                                                    <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                    <input type="file" [multiple]="true" (change)="uploadMultipleDocuments1($event,i)" id="multipleDoc" #multipleDoc>
+                                                    <br>
+
+                                                    <div class="col-md-8 mb-4" *ngIf="docName1[i]">
+                                                        <div *ngFor="let item of docName1[i]; let i=index;">
+                                                            <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                            <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                            <a (click)="removedocumentsForHl(i)"><i class="far fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-8 mb-4" *ngFor="let item of docNameForhL1[i]; let i=index;">
+                                                        <!-- {{doc+item.docName}} -->
+                                                        <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                        <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                        <a (click)="removedocNameForhL(i)"><i class="far fa-trash-alt"></i></a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <button class="btn btn-primary" style="margin: 16px;" (click)="remove5(i)">Remove Details</button>
+                                                </div>
+
+                                            </ng-container>
+                                            <div class="col-md-3 mb-3" *ngIf="incomeTax.value.homeLoanCheckbox==true">
+                                                <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addRequest5()">Add Details</button>
+                                                <!-- <button let i=index; (click)="addRequest5()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.homeLoanCheckbox==true">Add Details</button> -->
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" style="background: #fff3ef;width:100%; border-radius: 10px;">
+                                                <input type="checkbox" class="checkbox-all" formControlName="deduction24Checkbox">&nbsp;
+
+                                                <label>DEDUCTION U/S 24</label>
+                                            </div>
+                                            <br>
+                                            <!-- <h1> DEDUCTION U/S 24</h1> -->
+                                            <!-- <label> DEDUCTION U/S 24</label> -->
+
+                                            <ng-container formArrayName="deduction24" *ngFor="let item of quantities4().controls; let i = index;">
+                                                <div class="row" style="margin: 6px;" [formGroupName]="i">
+                                                    <!-- <h3> DEDUCTION U/S 24 Details</h3> -->
+
+                                                    <div class="col-sm-3 mb-3">
+                                                        <label>Particulars:</label>
+
+                                                        <select type="number" class="form-control" formControlName="particulars">
+                                                    <option value="">--Select--</option>
+                                                    <option>Interest on Housing Loan on fully constructed accomodation only </option>
+                                                    <option>Interest if the loan is taken before 01/04/99 on fully constructed accomodation only</option>
+                                                    
+                                                    </select>
+                                                    </div>
+
+                                                    <div class="col-sm-3 mb-3">
+                                                        <label>Declare Amount:</label>
+                                                        <input type="number" class="form-control" formControlName="declareAmount">
+                                                        <small *ngIf="quantities4().controls[i].get('particulars').value=='Interest on Housing Loan on fully constructed accomodation only'" class="text-danger">*Maximum Limit is 2,00,000</small>
+                                                        <small *ngIf="quantities4().controls[i].get('particulars').value=='Interest if the loan is taken before 01/04/99 on fully constructed accomodation only'" class="text-danger">*Maximum Limit is 30,000</small>
+
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="row" style="margin: 6px;" *ngIf="status==1">
+                                                    <label class="focus-label">Upload Document:<small class="text-danger"></small></label>
+                                                    <input type="file" formControlName="deductionUS24doc" [multiple]="true" (change)="uploadMultipleDocumentsForU24($event,i)" id="multipleDoc" #multipleDoc>
+                                                    <br>
+                                                    <br>
+                                                    <div class="col-md-8 mb-4" *ngIf="docNameFord24[i]">
+                                                        <div *ngFor="let item of docNameFord24[i]; let i=index;">
+                                                            <img style="height: 150px;width: 150px;" [src]="doc+item.docName">&nbsp;
+                                                            <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                            <a (click)="removedocumentsForU24(i)"><i class="far fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-8 mb-4" *ngFor="let item of docNameFordU241[i]; let i=index;">
+                                                        <img style="height: 150px;width: 150px;" [src]="doc+item.docName" />&nbsp;
+                                                        <label>{{item.docName}}</label>&nbsp;&nbsp;
+                                                        <a (click)="removedocNameFordU24(i)"><i class="far fa-trash-alt"></i></a>
+
+                                                    </div>
+
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-primary" style="margin: 16px;" (click)="remove4(i)">Remove Details</button>
+
+                                                </div>
+                                            </ng-container>
+                                            <div class="col-md-3 mb-3" *ngIf="incomeTax.value.deduction24Checkbox==true">
+                                                <button let i=index; class="fa fa-plus add" style="font-size: 16px;margin: 16px;" (click)="addRequest4()">Add Details</button>
+                                                <!-- <button let i=index; (click)="addRequest4()" class="btn btn-primary" style="margin-top: 1rem;" *ngIf="incomeTax.value.deduction24Checkbox==true">Add Details</button> -->
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </form>
+                                <div style="margin: 16px;">
+                                    <button class="btn btn-primary" *ngIf="status==0 || status==null" (click)="save()">Save</button>&nbsp;
+                                    <button class="btn btn-primary" *ngIf="status==0 || status==null" (click)="submit()">Submit</button>&nbsp;
+                                    <button class="btn btn-primary" *ngIf="status==1" (click)="update()">Update</button>&nbsp;
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

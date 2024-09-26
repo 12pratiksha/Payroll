@@ -1,0 +1,61 @@
+
+
+   <div class="row" >
+    <div class="col-sm-12">
+        <div class="card" >
+       
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm-12">
+                  
+<div class="col-sm-3" style="margin: auto;"><button class="btn btn-primary" (click)="getListChildChanged(arr)">Save Grants</button>  
+  <button class="btn btn-primary" style="margin: 1px;">Reset Grants</button></div>
+
+                        <ul *ngFor="let group of arr; index as i" class="disable_ul">
+                            <span class="font-weight-bold text-primary">{{group.name}}</span>
+                            <li *ngFor="let item of group.items; index as j" class="disable_ul">
+                              <span class="cursor-pointer caret" *ngIf="item.childs.length > 0"
+                                [ngClass]="item.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+                                (click)="item.expand = !item.expand"></span>
+                              <span class="mx-1" [ngClass]="item.checked ? 'fas fa-check-square' : 
+                                (checkMinusSquare(item) ? 'fas fa-minus-square' : 'far fa-square')"
+                                (click)="checkParent(i, j)">
+                              </span>
+                              <span class="cursor-pointer" (click)="item.expand = !item.expand">{{item.name}} </span>
+                              <ul [class.d-none]="!item.expand" class="disable_ul">
+                                <li *ngFor="let child of item.childs; index as k" class="disable_ul">
+                                  <span class="cursor-pointer caret" *ngIf="child.childs.length > 0"
+                                    [ngClass]="child.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+                                    (click)="child.expand = !child.expand"></span>
+                                  <span class="mr-1" [ngClass]="child.checked ? 'fas fa-check-square' : 
+                                  (checkMinusSquares(child) ? 'fas fa-minus-square' :'far fa-square')"
+                                    (click)="checkChild(i, j, k)">
+                                    <!-- (click)="checkParents(i, j, k)" -->
+                                  </span>
+                                  <span class="cursor-pointer"   (click)="checkChild(i, j, k)">{{child.name}}</span>
+
+                                <ul [class.d-none]="!child.expand" class="disable_ul">
+                                  <li *ngFor="let item of child.childs; index as l"  class="disable_ul">
+                                    
+                                    <span class="mr-1" [ngClass]="item.checked ? 'fas fa-check-square' : 'far fa-square'"
+                                    (click)="checkChilds(i, j, k, l)">
+                                  </span>
+                                    <span class="cursor-pointer" >{{item.name}}</span>
+                                  </li>
+                                </ul>
+
+                                </li>
+                              </ul>
+                            </li>
+
+                            
+                          </ul>
+
+
+         
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ </div>

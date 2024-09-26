@@ -1,0 +1,208 @@
+<div class="content container-fluid">
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-head-box">
+            <h3>View & Revise Salary</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Payroll</a></li>
+                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Manage</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">View & Revise Salary</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card tab-box mt-3">
+    <div class="row user-tabs">
+        <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+            <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                <li class="nav-item"><a href="#emp_profile" data-bs-toggle="tab" class="nav-link active" (click)="formReset()">Define Salary</a></li>
+                <li class="nav-item"><a href="#education" data-bs-toggle="tab" class="nav-link" >Current Salary  </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="tab-content">
+    <div id="education" class="tab-pane fade">
+<div class="row" >
+    <div class="col-sm-12">
+        <div class="card" >
+            <!-- <h1 class="card-title mb-0">Employee Master Edit</h1> -->
+        
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-sm">
+                    <form class="needs-validation" novalidate  [formGroup]="masterEditForm">
+                        <div class="form-row row">
+                      
+                            <div class="col-md-4 mb-3">
+                                <label>Employee Id</label>
+                                    <!-- <ng-select class="form-select form-control" formControlName="empId" (change)="onChange($event)">
+                                       <ng-option *ngFor="let item of employees" [value]="item.employeeId">[{{item.employeeCode}}] {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>                                 
+                                    </ng-select>   -->
+                                    <br>
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="empId" >
+                                        <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                            <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                                <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                            </div>
+                     
+                         </div> 
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="tableData">
+        <div class="col-sm-12">
+    
+            
+            <div class="card" >
+                <!-- <div class="card-header">
+                    <h3 class="card-title mb-0">  Candidate Information  </h3>
+                   
+                </div> -->
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="profile-img-wrap">
+                                <div class="profile-img">
+                                    <a><img *ngIf="data.imageName" [src]="path+'empimages/'+data.imageName"></a>
+                                    <a><img *ngIf="!data.imageName" src="/assets/img/user.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="profile-basic">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="profile-info-left">
+                                            <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Name:</div>
+                                                <div class="text" >{{data.firstName}} {{data.lastName}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Phone:</div>
+                                                <div class="text" >no data</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Email:</div>
+                                               
+                                                <div class="text" >{{data.personalEmailId?data.personalEmailId:"no data"}}</div>
+                                                
+                                            </li>
+                                            <li>
+                                                <div class="title">Address:</div>
+                                                <div class="text">{{data.address?data.address:'No Data'}}, {{data.state?data.state:'No Data'}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Branch</div>
+                                                <div class="text" >{{data.branch}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Category</div>
+                                                <div class="text" >{{data.category}}</div>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-7">
+                                        <ul class="personal-info">
+                                           
+                                           
+                                          
+                                            <li>
+                                                <div class="title">Designation:</div>
+                                                <div class="text" >{{data.designation}}</div>
+                                            </li>
+                                           
+                                            <li>
+                                                <div class="title">Pay Cader:</div>
+                                                <div class="text">no data</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Skill:</div>
+                                                <div class="text">no data</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Monthly CTC:</div>
+                                                <div class="text">no data</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Gross Salary:</div>
+                                                <div class="text">no data</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Anual CTC:</div>
+                                                <div class="text">no data</div>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div>  
+
+        <div class="row" > 
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table custom-table datatable" *ngIf="tableData">
+                        <thead >
+                            <tr>
+                                <th>EffectiveStartDate</th>
+                                <th>LookupName</th>
+                                <th>ComputationTypeName</th>
+                                <th>AddDeductionName</th>
+                                <th>ElementAmount</th>
+                                <th class="text-end no-sort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tableData">
+                                <td>{{ item.actual_effective_start_date | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.lookup_name}}</td>
+                                <td> {{item.computation_type_name}}</td>
+                                <td>{{item.add_deduction_name}}</td>
+                                <td> {{item.element_amount?item.element_amount:''}}</td>
+                               <td class="text-end ico-sec justify-content-end">
+                                    <!-- <a ><i class="fas fa-pen" (click)="edit(item.salary_id)"></i></a> -->
+                                    <a  ><i class="far fa-trash-alt" (click)="delete(item.salary_id)"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div >
+    </div>
+
+<div id="emp_profile" class="pro-overview tab-pane fade show active">
+<app-employee-master-edit-form ></app-employee-master-edit-form>
+
+</div>
+
+
+</div>

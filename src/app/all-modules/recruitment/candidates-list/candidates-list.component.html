@@ -1,0 +1,560 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Candidates List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Candidates List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Search Filter -->
+        <!-- <div class="row filter-row">
+						<div class="col-md-8"></div>
+						<div class="col-md-4">
+							<div class="add-emp-section">
+								<a class="btn btn-success btn-add-emp" *ngIf="!container" (click)="showContainer()"><i class="fas fa-plus" ></i> Add New	</a>
+								<a class="btn btn-success btn-add-emp" *ngIf="container" (click)="hideContainer()"><i class="fas fa-bars"></i> Show Table</a>
+							</div>
+						</div>
+					</div> -->
+        <!-- /Search Filter -->
+
+        <div class="row" *ngIf="!container">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Candidates List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="candList?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Qualification</th>
+                                        <th>Skills</th>
+                                        <th>Experience</th>
+                                        <th>For Designation</th>
+                                        <th>For Department</th>
+                                        <th>View Resume</th>
+                                        <th>Action</th>
+                                        <th>Cancel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of candList; let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <!-- <a routerLink="/layout/profile/profilelist" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a> -->
+                                                <a>{{item.first_name}} {{item.last_name}}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{item.description}}</td>
+                                        <td>{{item.skills}}</td>
+                                        <td>{{item.experience}} Year</td>
+                                        <td>{{item.designation}}</td>
+                                        <td>{{item.department_name}}</td>
+                                        <td class=" ico-sec justify-content-center">
+                                            <div class="button" id="net" data-toggle="modal" data-target="#resume">
+                                            </div>
+
+                                            <a href="{{this.baseurl}}/empdoc/{{item.cvName}}" target="_blank" class="fas fa-bars"></a>
+                                        </td>
+                                        <td>
+                                            <div class="submit">
+                                                <a class="btn btn-primary" (click)="schedule(item)">Schedule</a>
+                                            </div>
+                                        </td>
+                                        <td class=" cancel">
+                                            <a class="btn btn-primary" (click)="cancel(item)">Cancel</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="candList?.length==0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Qualification</th>
+                                        <th>Skills</th>
+                                        <th>Experience</th>
+                                        <th>For Designation</th>
+                                        <th>For Department</th>
+                                        <th>View Resume</th>
+                                        <th>Action</th>
+                                        <th>Cancel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of candList; let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <!-- <a routerLink="/layout/profile/profilelist" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a> -->
+                                                <a>{{item.first_name}} {{item.last_name}}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{item.description}}</td>
+                                        <td>{{item.skills}}</td>
+                                        <td>{{item.experience}} Year</td>
+                                        <td>{{item.designation}}</td>
+                                        <td>{{item.department_name}}</td>
+                                        <td class=" ico-sec justify-content-center">
+                                            <div class="button" id="net" data-toggle="modal" data-target="#resume">
+                                            </div>
+
+                                            <a href="{{this.baseurl}}/empdoc/{{item.cvName}}" target="_blank" class="fas fa-bars"></a>
+                                        </td>
+                                        <td>
+                                            <div class="submit">
+                                                <a class="btn btn-primary" (click)="schedule(item)">Schedule</a>
+                                            </div>
+                                        </td>
+                                        <td class=" cancel">
+                                            <a class="btn btn-primary" (click)="cancel(item)">Cancel</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row" *ngIf="container">
+						<div class="col-sm-12">
+    
+							
+							<div class="card" >
+								<div class="card-header">
+									<h1 class="card-title mb-0">New Requirement Form</h1>
+								   
+								</div>
+								<div class="card-body" > 
+									<div class="row">
+										<div class="col-sm">
+											<form class="needs-validation" novalidate  [formGroup]="candidatesForm">
+												<div class="form-row row">
+													<div class="col-md-3 mb-3">
+														<label >Full Name <small>*</small></label>
+														<input type="text" class="form-control" 
+															  required formControlName="name">
+														</div>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">City<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="city" >
+															  <option value="">--Select--</option>
+															  <option value="1">Department 1</option>
+															  <option value="2">Department 2</option>
+															</select>
+														</div>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">State<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="state" >
+															  <option value="">--Select--</option>
+															  <option value="1">Department 1</option>
+															  <option value="2">Department 2</option>
+															</select>
+														</div>
+														
+													<div class="col-md-3 mb-3">
+													   
+														<div class="form-group">
+															<label> Date of Birth</label>
+															<input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" 
+															formControlName="dob">
+														</div>
+													</div>
+													
+													<div class="col-md-3 mb-3">
+														<label >Email Address<small>*</small></label>
+														<input type="email" class="form-control" 
+															  required formControlName="email">
+														</div>
+													<div class="col-md-3 mb-3">
+														<label >Phone Number<small>*</small></label>
+														<input type="number" class="form-control" 
+															  required formControlName="phone">
+														</div>
+														<div class="col-md-3 mb-3">
+															<label class="focus-label">Required Gender<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="gender" >
+															  <option value="">--Select--</option>
+															  <option >Male</option>
+															  <option >Female</option>
+															 
+														   </select>
+														   </div>
+												
+													<div class="col-md-3 mb-3">
+														<label >Experience<small>*</small></label>
+														<input type="number" class="form-control" 
+															  required formControlName="requiredExp">
+														</div>
+													<div class="col-md-3 mb-3">
+														<label >CV <small>*</small></label>
+														<input type="file" class="form-control" 
+															  required >
+														</div>
+														<div class="col-md-3 mb-3">
+															<label >Skills</label>
+															<select class="form-select floating form-control" formControlName="skills" >
+																<option value="">--Select--</option>
+																<option >Tech</option>
+																<option >Non Tech</option>
+															   
+															 </select>
+															</div>
+														<div class="col-md-3 mb-3">
+															<label >Position Applied</label>
+															<select class="form-select floating form-control" formControlName="position" >
+																<option value="">--Select--</option>
+																<option >Tech</option>
+																<option >Non Tech</option>
+															   
+															 </select>
+															</div>				
+													</div>
+					 
+											
+												<button class="btn btn-primary"  (click)="add()" >Submit</button>
+												<button class="btn "   (click)="hideContainer()" >Cancel</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+					
+						 </div>
+					</div> -->
+
+        <div class="modal custom-modal fade" id="resume" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Candidates Details</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+                    </div>
+                    <div class="modal-body">
+                        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://writing.engr.psu.edu/workbooks/formal_report_template.doc' width='100%' height='300px' frameborder='0'></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="container">
+            <div class="col-sm-12">
+
+
+                <div class="card" style="background: #f7f6f5;">
+                    <div class="card-header" style="background: #f4baa7;height: 40px;">
+                        <h3>
+                            <div style="margin-left: 630px;width: 100%;">CANDIDATE DETAILS</div>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info" *ngIf="details">
+
+                                                    <li>
+                                                        <div class="title">Candidate Name:</div>
+                                                        <div class="text">{{details[0].first_name}} {{details[0].middle_name}} {{details[0].last_name}}</div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="title">Qualification:</div>
+                                                        <div class="text">{{details[0].qualification}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Experience:</div>
+                                                        <div class="text">{{details[0].experience}} Year</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Availability:</div>
+                                                        <div class="text">{{details[0].availability | date}}</div>
+                                                    </li>
+
+
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info" *ngIf="details">
+
+                                                <li>
+                                                    <div class="title">Skills:</div>
+
+                                                    <div class="text">{{details[0].skills}}</div>
+
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Address:</div>
+                                                    <div class="text"> {{details[0].city}} {{details[0].state}} </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Phone No.:</div>
+                                                    <div class="text">{{details[0].phone}}</div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Resume:</div>
+                                                    <div class="text"><a href="{{this.baseurl}}/empdoc/{{details[0].cv_name}}" target="_blank">Download here</a></div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info" *ngIf="details">
+
+                                                    <li>
+                                                        <div class="title">For Designation:</div>
+                                                        <div class="text">{{details[0].designation}}</div>
+                                                    </li>
+
+                                                    <!-- <li>
+                                                        <div class="title">Qualification:</div>
+                                                        <div class="text">{{details[0].qualification}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Experience:</div>
+                                                        <div class="text">{{details[0].experience}} Year</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Availability:</div>
+                                                        <div class="text">{{details[0].availability | date}}</div>
+                                                    </li>
+
+                                                     -->
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info" *ngIf="details">
+
+                                                <li>
+                                                    <div class="title">For Department:</div>
+
+                                                    <div class="text">{{details[0].department_name}}</div>
+
+                                                </li>
+
+                                                <!-- <li>
+                                                    <div class="title">Address:</div>
+                                                    <div class="text"> {{details.city}} {{details.state}} </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Phone No.:</div>
+                                                    <div class="text">{{details.phone}}</div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Phone No.:</div>
+                                                    <div class="text">{{details[0].phone}}</div>
+                                                </li> -->
+
+                                            </ul>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" *ngIf="container">
+            <div class="col-sm-12">
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Schedule Interview
+                            <!-- <h1> # 1</h1> -->
+                        </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="scheduleForm">
+                                    <div class="form-row row">
+                                        <!-- <div class="col-md-3 mb-3">
+														<label class="focus-label">No. Of Rounds<small>*</small></label>
+															<select class="form-select floating form-control" formControlName="rounds" (change)="addItem($event.target.value)">
+															  <option value="">--Select--</option>
+															  <option value="1">1</option>
+															  <option value="2">2</option>
+															  <option value="3">3</option>
+															  <option value="4">4</option>
+															</select>
+													</div> -->
+
+
+                                        <!-- <div class="col-md-3 mb-3">
+														<label class="focus-label">Interviewer</label>
+														<ngx-bootstrap-multiselect class="multselct" 
+														[options]="employees" 
+														[(ngModel)]="optionsModel" 
+														
+														value = data.employeeId
+														formControlName="rounds">
+				
+														</ngx-bootstrap-multiselect>
+													</div> -->
+
+                                        <!-- <div class="col-md-3 mb-3">
+														<label class="focus-label">Type <small>*</small></label>
+															<select class="form-select floating form-control" formControlName="type" >
+															  <option value="">--Select--</option>
+															  <option value="1">Telephonic Interview</option>
+															  <option value="2">Offline Interview</option>
+															  <option value="3">Onlone Interview</option>
+															 (ngModelChange)="addItem($event)"
+															</select>
+													</div>  -->
+                                        <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Rounds <small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" (change)="addItem($event.target.value)" formControlName="rounds">
+															<option value = "">--Select Rounds--</option>
+															<option value = "1">1</option>
+															<option value = "2">2</option>
+															<option value = "3">3</option>
+															<option value = "4">4</option>
+															<option value = "5">5</option>
+														</select>
+                                            <small *ngIf="scheduleForm.get('rounds').invalid && scheduleForm.get('rounds').touched" class="text-danger">*These field is required</small>
+
+                                        </div>
+
+
+
+                                        <ng-container formArrayName="fArray" *ngFor="let item of fArray().controls; let i=index">
+                                            <ng-container [formGroupName]="i">
+                                                <h4 class="focus-label" style="background-color: aliceblue; font-weight: 700;">Round # {{i + 1}}.</h4>
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Round Name<small class="text-danger">*</small></label>
+                                                    <select class="form-select form-control" required formControlName="round" required>
+														<option value="">--Select--</option>
+														<option value="Technical Round 1">Technical Round 1</option>
+														<option value="Technical Round 2">Technical Round 2</option>
+														<option value="HR Round">HR Round</option>
+														<option value="Management Round">Management Round</option>
+														</select>
+                                                    <small *ngIf="item.controls.round.invalid && item.controls.round.touched" class="text-danger">*This field is required</small>
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Interviewer<small class="text-danger">*</small></label>
+                                                    <!-- <ngx-bootstrap-multiselect class="multselct"
+														[options]="employees"  
+														
+														value =data.employeeId
+														formControlName="interview">
+				
+														</ngx-bootstrap-multiselect> -->
+                                                    <ng-select class="form-select form-control" multiple="true" required formControlName="interview">
+                                                        <ng-option value="">--Select--</ng-option>
+                                                        <ng-option *ngFor="let item of employees" [value]="{'empId':item.employeeId}">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                                    </ng-select>
+                                                    <small *ngIf="item.controls.interview.invalid && item.controls.interview.touched" class="text-danger">*This field is required</small>
+
+                                                    <!-- <select class="form-select floating form-control" formControlName="interview" >
+																<option value="">--Select--</option>
+																<option   *ngFor="let item of data" value={{item.employeeId}}>{{item.fullName}}</option>
+													
+															</select> -->
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label> On<small class="text-danger">*</small> </label>
+                                                    <input type="text" class="form-control datetimepicker" [minDate]="date" required placeholder="Select Date" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="onDate">
+                                                    <small *ngIf="item.controls.onDate.invalid && item.controls.onDate.touched" class="text-danger">*This field is required</small>
+
+                                                </div>
+                                                <div class="col-md-3 mb-3">
+                                                    <label>At</label>
+                                                    <input type="time" class="form-control" required formControlName="atTime">
+                                                    <small *ngIf="item.controls.atTime.invalid && item.controls.atTime.touched" class="text-danger">*This field is required</small>
+
+                                                </div>
+
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Mode Of Interview <small class="text-danger">*</small></label>
+                                                    <select class="form-select floating form-control" required formControlName="type">
+																  <option value="">--Select--</option>
+																  <option value="Telephonic Interview">Telephonic Interview</option>
+																  <option value="Offline Interview">Offline Interview</option>
+																  <option value="Onlone Interview">Online Interview</option>
+																
+																  
+																</select>
+                                                    <small *ngIf="item.controls.type.invalid && item.controls.type.touched" class="text-danger">*This field is required</small>
+
+                                                </div>
+
+                                            </ng-container>
+                                        </ng-container>
+
+                                    </div>
+
+                                    <button class="btn btn-primary" (click)="submit()">Schedule</button>&nbsp;
+                                    <button class="btn-primary" (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+</div>

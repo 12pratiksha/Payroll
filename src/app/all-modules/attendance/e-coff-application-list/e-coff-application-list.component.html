@@ -1,0 +1,374 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Employee Coff Application List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Compensatory Off</li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee Coff Application List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="card tab-box mt-3">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                    <li class="nav-item"><a href="#lA" data-bs-toggle="tab" class="nav-link active">ECoff Applications</a></li>
+                    <!-- <li class="nav-item"><a href="#personalInfo" data-bs-toggle="tab" class="nav-link">Personal</a></li> -->
+                    <li class="nav-item" *ngIf="userType=='Admin' || rpStatus=='true'"><a href="#lAA" data-bs-toggle="tab" class="nav-link">Ecoff Applications For Approval</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div id="lAA" class="pro-overview tab-pane fade">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div class="table-responsive" *ngIf="rpStatus=='true'">
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                        <thead>
+                                            <tr>
+
+                                                <th>Reason</th>
+                                                <th>Emploee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Leave Date</th>
+                                                <th>Type</th>
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <th>HalfDay/FullDay</th>
+                                                <th>FirstHalf/SecondHalf</th>
+                                                <th>Encashable Hours</th>
+                                                <th>Status</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let item of approvedData">
+                                                <td (click)="item.isExpanded = !item.isExpanded">
+                                                    <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                    <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                </td>
+                                                <td>{{item.employee_code}}
+                                                    <div *ngIf="item.isExpanded">
+                                                        <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForCoff}}</span></div>
+                                                </td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                <td>{{item.leavedate | date:'dd-MM-yyyy'}}</td>
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.fromtime }}</td>
+                                                <td>{{item.totime }}</td>
+                                                <td>{{item.halfOrFullDay}}</td>
+                                                <td>{{item.firstHalfOrSecondHalf}}</td>
+                                                <td>{{item.encashableHours}}</td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.inStatus" (change)="approve1($event.target.value, item)">
+                            <option value="1">Approve</option>
+                            <option value="2">Rejected</option>
+                            <option value="0">Pending</option>
+                        </select>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div class="table-responsive" *ngIf="userType=='Admin'">
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="dataForAdmin">
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Reason</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Leave Date</th>
+                                                <th>Type</th>
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <th>HalfDay/FullDay</th>
+                                                <th>FirstHalf/SecondHalf</th>
+                                                <th>Encashable Hours</th>
+                                                <th>Status</th>
+                                            </tr>
+
+
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of dataForAdmin">
+                                                <td (click)="item.isExpanded = !item.isExpanded">
+                                                    <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                    <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                </td>
+                                                <td>{{item.employeeCode}}
+                                                    <div *ngIf="item.isExpanded">
+                                                        <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForCoff}}</span></div>
+                                                </td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                <td>{{item.leavedate | date:'dd-MM-yyyy'}}</td>
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.fromtime }}</td>
+                                                <td>{{item.totime }}</td>
+                                                <td>{{item.halfOrFullDay}}</td>
+                                                <td>{{item.firstHalfOrSecondHalf}}</td>
+                                                <td>{{item.encashableHours}}</td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.inStatus" (change)="approve1($event.target.value, item)">
+                            
+                            <option value="1">Approve</option>
+                            <option value="2">Rejected</option>
+                            <option value="0">Pending</option>
+                        </select>
+                                                </td>
+                                            </tr>
+
+
+
+                                        </tbody>
+
+                                    </table>
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!dataForAdmin">
+                                        <thead>
+
+                                            <tr>
+
+                                                <th>Reason</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Leave Date</th>
+                                                <th>Type</th>
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <th>HalfDay/FullDay</th>
+                                                <th>FirstHalf/SecondHalf</th>
+                                                <th>Encashable Hours</th>
+                                                <th>Status</th>
+                                            </tr>
+
+
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of dataForAdmin">
+                                                <td (click)="item.isExpanded = !item.isExpanded">
+                                                    <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                    <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                </td>
+                                                <td>{{item.employeeCode}}
+                                                    <div *ngIf="item.isExpanded">
+                                                        <span style="font-weight: 700;">Reason: </span> <span>{{item.reasonForCoff}}</span></div>
+                                                </td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                <td>{{item.leavedate | date:'dd-MM-yyyy'}}</td>
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.fromtime }}</td>
+                                                <td>{{item.totime }}</td>
+                                                <td>{{item.halfOrFullDay}}</td>
+                                                <td>{{item.firstHalfOrSecondHalf}}</td>
+                                                <td>{{item.encashableHours}}</td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.inStatus" (change)="approve1($event.target.value, item)">
+                            
+                            <option value="1">Approve</option>
+                            <option value="2">Rejected</option>
+                            <option value="0">Pending</option>
+                        </select>
+                                                </td>
+                                            </tr>
+
+
+
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+       
+            <div id="lA" class="pro-overview tab-pane fade show active">
+                <div class="row" *ngIf="SelfData?.length!=0">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+                            <div class="table-responsive">
+                                <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="SelfData">
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>Reason</th>
+                                            <th>Leave Date</th>
+                                            <th>Type</th>
+                                            <th>From Time</th>
+                                            <th>To Time</th>
+                                            <th>HalfDay/FullDay</th>
+                                            <th>FirstHalf/SecondHalf</th>
+                                            <th>Status</th>
+                                        </tr>
+
+
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let item of SelfData">
+                                            <td (click)="item.isExpanded = !item.isExpanded">
+                                                <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                            </td>
+
+                                            <td>{{item.leavedate | date:'dd-MM-yyyy'}}</td>
+                                            <td>{{item.type}}</td>
+                                            <td>{{item.fromtime }}</td>
+                                            <td>{{item.totime }}</td>
+                                            <td>{{item.halfOrFullDay}}</td>
+                                            <td>{{item.firstHalfOrSecondHalf}}</td>
+
+                                            <td>{{item.inStatus == 0? 'Pending':item.inStatus == 1? 'Approved':'Rejected'}}</td>
+                                        </tr>
+
+
+                                    </tbody>
+
+                                </table>
+                                <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!SelfData">
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>Reason</th>
+                                            <th>Leave Date</th>
+                                            <th>Type</th>
+                                            <th>From Time</th>
+                                            <th>To Time</th>
+                                            <th>HalfDay/FullDay</th>
+                                            <th>FirstHalf/SecondHalf</th>
+                                            <th>Status</th>
+                                        </tr>
+
+
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let item of SelfData">
+                                            <td (click)="item.isExpanded = !item.isExpanded">
+                                                <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                            </td>
+
+                                            <td>{{item.leavedate | date:'dd-MM-yyyy'}}</td>
+                                            <td>{{item.type}}</td>
+                                            <td>{{item.fromtime }}</td>
+                                            <td>{{item.totime }}</td>
+                                            <td>{{item.halfOrFullDay}}</td>
+                                            <td>{{item.firstHalfOrSecondHalf}}</td>
+
+                                            <td>{{item.inStatus == 0? 'Pending':item.inStatus == 1? 'Approved':'Rejected'}}</td>
+                                        </tr>
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
+
+        <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-0">
+
+                <div class="table-responsive" *ngIf="dataForAdmin">
+                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                        <thead>
+                            <tr>
+
+                                <th>Reason</th>
+                                <th>Leave Date</th>
+                                <th>Type</th>
+                                <th>From Time</th>
+                                <th>To Time</th>
+                                <th>HalfDay/FullDay</th>
+                                <th>FirstHalf/SecondHalf</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataForAdmin">
+                                <td (click)="item.isExpanded = !item.isExpanded">
+                                    <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                    <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                </td>
+
+                                <td>{{item.leavedate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.type}}</td>
+                                <td>{{item.fromtime }}</td>
+                                <td>{{item.totime }}</td>
+                                <td>{{item.halfOrFullDay}}</td>
+                                <td>{{item.firstHalfOrSecondHalf}}</td>
+                                <td>
+                                    <select style="border: none;" [(ngModel)]="item.in_status" (change)="approve1($event.target.value, item)">
+                        
+                        <option value="1">Approve</option>
+                        <option value="2">Rejected</option>
+                        <option value="0">Pending</option>
+                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+   

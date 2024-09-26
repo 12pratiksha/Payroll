@@ -1,0 +1,222 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Time Office Policy List </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Time Office Policy List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <!-- <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i>Show Table</a> -->
+                <a class="btn btn-success btn-add-emp" routerLink="/layout/masters/officeTimePolicyList"><i class="fas fa-bars"></i>Display List</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <!-- <h1 class="card-title mb-0">Time Office Policy List</h1>  -->
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="needs-validation" [formGroup]="timeOfficeform">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark LWL As LLL</label>
+                                        <input type="checkbox" class="checkbox-all ms-3" formControlName="lwlaslll">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Permissible Late Arrival Minutes</label>
+                                        <!-- <input type="time" class="form-control" formControlName="lateArrival" min="00:00" max="24:00"> -->
+                                        <select class="form-select form-control" formControlName="lateArrival">
+                                        <option *ngFor="let item of minutes">{{item}}</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Working Hours Start With Shift Start Time</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="workingHoursStart">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark LHL As LLL</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="lhlaslll">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Permissible Early Arrival Minutes</label>
+                                        <!-- <input type="time" class="form-control" formControlName="lateArrivalminutes" min="00:00" max="24:00"> -->
+                                        <select class="form-select form-control" formControlName="earlyArrival">
+                                        <option *ngFor="let item of minutes">{{item}}</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Working Hours End With Shift End Time</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="workingHourEnds">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark LAL As LLL</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="lalaslll">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark Miss Punch As Absent</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="missPunchAbsent" *ngIf="!timeOfficeform.value.misspunchhalf" (click)="punchDisable('misspunchhalf')">
+                                        <input type="checkbox" class="checkbox-all ms-5" disabled *ngIf="timeOfficeform.value.misspunchhalf">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Deduct Out Work From Working Hours</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="deductOutWork">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark AWA As AAAs</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="awaasaaa">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark Miss punch As Half Day</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="misspunchhalf" *ngIf="!timeOfficeform.value.missPunchAbsent" (click)="punchDisable('missPunchAbsent')">
+                                        <input type="checkbox" class="checkbox-all ms-5" disabled *ngIf="timeOfficeform.value.missPunchAbsent">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Duplicate Check Minutes</label>
+                                        <!-- <input type="time" class="form-control" formControlName="duplicateCheckMinutes" min="00:00" max="24:00"> -->
+                                        <select class="form-select form-control" formControlName="duplicateCheckMinutes">
+                                        <option *ngFor="let item of minutes">{{item}}</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Mark AHA As AAA</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="ahaasaaa">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Show HW = Total HW - OT</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="showHw">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Search Filter -->
+        <div class="card">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <!-- <mat-form-field appearance="standard">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Chris" #input>
+                  </mat-form-field> -->
+
+                        <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+                          
+                    <ng-container matColumnDef="select">
+                      <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                      [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                      </th>
+                      <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      (change)="$event ? selection.toggle(row) : null"
+                                      [checked]="selection.isSelected(row)"
+                                      [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                      </td>
+                    </ng-container>
+                  
+                 
+                    <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef> Employee Id </th>
+                      <td mat-cell *matCellDef="let element"> {{element.employeeCode}} </td>
+                    </ng-container>
+                  
+                   
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+                    </ng-container>
+                  
+                    
+                    <ng-container matColumnDef="branch">
+                      <th mat-header-cell *matHeaderCellDef> Branch Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.branch}} </td>
+                    </ng-container>
+                  
+                  
+                    <ng-container matColumnDef="department">
+                      <th mat-header-cell *matHeaderCellDef> Department </th>
+                      <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef> Status </th>
+                      <td mat-cell *matCellDef="let element"> {{(element.status==true)?'Active':'Inactive'}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                        (click)="selection.toggle(row)"> 
+                    </tr>
+                  </table>   -->
+
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Branch</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th><input class="form-control" type="text" placeholder="Search Id" name="search-Id" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search Name" name="search-name" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search Branch" name="search-region" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search Department" name="search-country" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Status" name="search-status"></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr *ngFor="let item of employee ; let i = index" (click)="selectRow(i, item)">
+                                    <td>{{item.employeeCode}}</td>
+                                    <td>{{item.firstName}} {{item.lastName}}</td>
+                                    <td>{{item.branch}}</td>
+                                    <td>{{item.department}}</td>
+                                    <td>{{item.status == 0?'False':'True'}}</td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-12" style="text-align: center;">
+                    <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+                    <button type="button" class="btn btn-inverse" (click)="cancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>

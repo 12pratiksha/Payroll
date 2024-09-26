@@ -1,0 +1,455 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Add Meeting Feedback</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Meeting Feedback</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="showOtherContainer=='' ">
+        <div class="card" *ngIf="tableData?.length!=0">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th style="width: 7px;">Attendees</th>
+                                <th *ngIf="userType=='Admin'">Meeting Created By</th>
+                                <th>Action</th>
+                                <th>Action</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tableData; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.title}}</td>
+                                <td>{{item.date | date}}</td>
+                                <td>{{item.time}}</td>
+                                <td>
+                                    <!-- <div *ngFor="let item1 of item.meetingAttendies; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div> -->
+                                    <div *ngFor="let item1 of item.meetingAttendies|slice:0:visibleItemsCount; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div>
+                                    <a class="button" style="color :rgb(255, 120, 73); margin-left: 90px;" *ngIf="item.meetingAttendies?.length>4 && showMore" (click)="toggleVisibility(i,item.meetingAttendies)">Show More</a>
+                                    <a class="button" style="color :rgb(255, 120, 73); margin-left: 90px;" *ngIf="item.meetingAttendies?.length>4 && !showMore" (click)="toggleVisibility(i,item.meetingAttendies)">Show Less</a>
+
+                                </td>
+                                <td *ngIf="userType=='Admin'">{{item.cfirstName}} {{item.cmiddleName}} {{item.clastName}}</td>
+                                <td class="text-center ico-sec justify-content-center">
+                                    <!-- <div style="margin-right: 200px;"> -->
+                                    <div *ngIf="item.feedback==false">
+                                        <button class="btn-primary" (click)="addFeedback(item)" style="width: 90px;">Feedback</button>
+                                    </div>
+                                    <div *ngIf="item.feedback==true">
+                                        <button class="btn-primary" (click)="view(item)" style="width: 90px;">View</button>
+                                    </div>
+                                    <!-- </div> -->
+                                </td>
+                                <td>
+                                    <button class="btn-primary" (click)="close(item)" style="width: 90px;">Close</button>
+                                </td>
+                                <td>
+                                    <button class="btn-primary" (click)="cancelMeeting(item)" style="width: 90px;">Cancel</button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row" *ngIf="showOtherContainer=='nview' ||showOtherContainer=='view' ">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==''"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card" style="background: #f7f6f5;" *ngIf="showOtherContainer=='nview'">
+        <div class="card-header" style="background: #f4baa7;height: 40px;">
+
+            <label><div style="margin-left: 630px;width: 100%;">MEETING DETAILS</div></label>
+
+
+        </div>
+        <div class="card-body">
+            <div class="profile-basic">
+                <div class="row">
+                    <div class="col-md-5" style="font-size: 16px;">
+                        <div class="profile-info-left">
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Title:</div>
+                                    <div class="text">{{meetingDetails.title}}</div>
+                                </li>
+
+                                <li>
+                                    <div class="title">Date:</div>
+                                    <div class="text">{{meetingDetails.date| date}}</div>
+                                </li>
+                                <li>
+                                    <div class="title" *ngIf="attendeesName1">Attendees:</div>
+                                    <div class="text" *ngFor="let item of attendeesName1; let i=index; ">
+                                        {{i+1}}.{{item.firstName}} {{item.middleName}} {{item.lastName}}</div>
+                                </li>
+                                <li>
+                                    <div class="title" *ngIf="userType!='Admin'&& meetingDetails.meeting_mom!=null">Agenda</div>
+                                    <div class="text">{{meetingDetails.meetingMomName}}</div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-md-7" style="font-size: 16px;">
+                        <ul class="personal-info">
+                            <li>
+                                <div class="title">Time:</div>
+                                <div class="text">{{meetingDetails.time}}</div>
+                            </li>
+                            <li *ngFor="let item of meetingDetails.meetingMom ;let i=index">
+                                <div class="title">Meeting Agenda {{i+1}}:</div>
+                                <div class="text">{{item.meetingMomName}}</div>
+                            </li>
+                            <li>
+                                <div class="title">Remark:</div>
+
+                                <div class="text">{{meetingDetails.agenda}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card" *ngIf=" showOtherContainer=='nview'">
+            <div class="card-body">
+                <div class="col-sm">
+                    <form class="needs-validation" [formGroup]="meetingFeedbakForm">
+                        <div class="form-row row">
+
+                            <div class="col-md-4 mb-3">
+                                <label>Next Meeting Date<small class="text-danger">*</small></label>
+                                <input class="form-control floating datetimepicker" placeholder="--Select Date--" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                <small *ngIf="meetingFeedbakForm.get('date').invalid && meetingFeedbakForm.get('date').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Next Meeting Time<small class="text-danger">*</small></label>
+                                <input type="time" step="1" class="form-control" formControlName="time">
+                                <small *ngIf="meetingFeedbakForm.get('time').invalid && meetingFeedbakForm.get('time').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="card" style="margin: 5px;">
+                                <!-- <div class="col-md-3s mb-3">
+                                    <button let i=index; class="fa fa-plus add" (click)="addRequest()">Add Description</button>
+                                </div> -->
+
+                                <ng-container formArrayName="meetingDesc" *ngFor="let item of quantities().controls; let i = index;">
+                                    <div class="row" [formGroupName]="i">
+                                        <label><div *ngIf="agenda[i]">{{i+1}}.{{agenda[i].agenda}}</div></label>
+                                        <br>
+                                        <br>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Description<small class="text-danger">*</small></label>
+                                            <input type="text" class="form-control" formControlName="description">
+                                            <!-- <small *ngIf="quantities().controls[i].get('description').invalid && quantities().controls[i].get('description').touched" class="text-danger">*This field is required </small> -->
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee<small class="text-danger">*</small></label>
+                                            <ng-select class="form-select form-control" multiple="true" formControlName="employeeId">
+                                                <ng-option value="">--Select--</ng-option>
+                                                <ng-option *ngFor="let item of employees" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                            </ng-select>
+                                            <!-- <small *ngIf="quantities().controls[i].get('employeeId').invalid && quantities().controls[i].get('employeeId').touched" class="text-danger">*This field is required </small> -->
+                                        </div>
+
+                                        <div class="col-md-3 mb-3" style="margin-top: 20px;">
+                                            <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+                        <button class="btn btn-primary" (click)="submit()" *ngIf="!editId">Submit</button>
+                        <!-- <button class="btn btn-primary" (click)="updateForm(editId)" *ngIf="editId">Update</button> -->
+                        <button class="btn" (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div *ngIf="showOtherContainer=='view'">
+            <div class="card" style="background: #f7f6f5;">
+                <div class="card-header" style="background: #f4baa7;height: 40px;">
+
+                    <label><div style="margin-left: 630px;width: 100%;">MEETING DETAILS</div></label>
+
+
+                </div>
+                <div class="card-body">
+
+                    <div class="profile-basic">
+                        <div class="row">
+                            <div class="col-md-5" style="font-size: 16px;">
+                                <div class="profile-info-left">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Title:</div>
+                                            <div class="text">{{viewData.title}}</div>
+
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Date:</div>
+                                            <div class="text">{{viewData.date| date}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Attendees:</div>
+                                            <div class="text" *ngFor="let item of viewData.meetingAttendies; let i=index;">{{i+1}}.{{item.firstName}} {{item.middleName}} {{item.lastName}}</div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-md-7" style="font-size: 16px;">
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Time:</div>
+                                        <div class="text">{{viewData.time}}</div>
+                                    </li>
+                                    <li *ngFor="let item of viewData.meetingMom ;let i=index">
+                                        <div class="title">Meeting Agenda {{i+1}}:</div>
+                                        <div class="text">{{item.meetingMomName}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Remark:</div>
+
+                                        <div class="text">{{viewData.agenda}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card" style="background: #f7f6f5;">
+                <div class="card-header" style="background: #f4baa7;height: 40px;">
+
+                    <label><div style="margin-left: 350%;width: 100%;">TASK ASSIGN DETAILS</div></label>
+
+
+                </div>
+                <div class="card-body">
+                    <div class="profile-basic">
+                        <div class="row">
+                            <div class="col-md-5" style="font-size: 16px;">
+                                <div class="profile-info-left">
+                                    <ul class="personal-info">
+
+                                        <li>
+                                            <div class="title">Next Meeting Date:</div>
+                                            <div class="text">{{feedbackData.nextMeetingDate|date}}</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-md-7" style="font-size: 16px;">
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Next Meeting Time:</div>
+                                        <div class="text">{{feedbackData.nextMeetingtime}}</div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let item of feedbackData.meetingdescription; let i=index">
+                            <div>
+                                <h3>{{i+1}}.{{item.meetingMomName}}</h3>
+                            </div>
+                            <div class="col-md-5" style="font-size: 16px;">
+                                <div class="profile-info-left">
+                                    <ul class="personal-info">
+
+                                        <li>
+                                            <div class="title">Description:</div>
+                                            <div class="text">{{item.description}}</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="col-md-7" style="font-size: 16px;">
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Assign Employees:</div>
+                                        <div class="text" *ngFor="let item1 of item.meetingTaskAsignEmp; let i=index">{{i+1}}.{{item1.firstName}} {{item1.middleName}} {{item1.lastName}}</div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- <div id="lAA" class="pro-overview tab-pane fade">
+    <div *ngIf="showOtherContainer==false">
+        <div class="card" *ngIf="attendeesTableData?.length!=0">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="attendeesTableData">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of attendeesTableData; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.title}}</td>
+                                <td>{{item.date | date}}</td>
+                                <td>{{item.time}}</td>
+
+                                <td class="text-end ico-sec d-flex justify-content-end">
+                                    <button class="btn-primary" (click)="addFeedback1(item)">Feedback</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row" *ngIf="showOtherContainer==true">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="hideOtherCon()" *ngIf="showOtherContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row">
+        <div class="card" *ngIf="showOtherContainer==true">
+            <div class="card-body">
+
+                <div class="col-sm">
+                    <form class="needs-validation" [formGroup]="meetingFeedbakForm">
+                        <div class="form-row row">
+
+
+                            <div class="col-md-4 mb-3">
+                                <label>Next Meeting Date<small class="text-danger">*</small></label>
+                                <input class="form-control floating datetimepicker" placeholder="--Select Date--" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                <small *ngIf="meetingFeedbakForm.get('date').invalid && meetingFeedbakForm.get('date').touched" class="text-danger">*This field is required</small>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Next Meeting Time<small class="text-danger">*</small></label>
+                                <input type="time" step="1" class="form-control" formControlName="time">
+                                <small *ngIf="meetingFeedbakForm.get('time').invalid && meetingFeedbakForm.get('time').touched" class="text-danger">*This field is required</small>
+
+                            </div>
+
+                            <div class="card" style="margin: 5px;">
+                                <div class="col-md-3s mb-3">
+
+                                    <button let i=index; class="fa fa-plus add" (click)="addRequest()">Add Description</button>
+                                </div>
+
+
+                                <ng-container formArrayName="meetingDesc" *ngFor="let item of quantities().controls; let i = index;">
+                                    <div class="row" [formGroupName]="i">
+                                        <label><div *ngIf="agenda && userType=='Admin'">{{i+1}}.{{agenda[i].agenda}}</div></label>
+                                        <br>
+                                        <br>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Description<small class="text-danger">*</small></label>
+                                            <input type="text" class="form-control" formControlName="description">
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee<small class="text-danger">*</small></label>
+                                            <ng-select class="form-select form-control" multiple="true" formControlName="employeeId">
+                                                <ng-option value="">--Select--</ng-option>
+                                                <ng-option *ngFor="let item of employees" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.middleName}} {{item.lastName}}</ng-option>
+                                            </ng-select>
+
+
+
+                                        </div>
+                                        <div class="col-md-3 mb-3" style="margin-top: 20px;">
+                                            <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </ng-container>
+                            </div>
+
+
+
+                        </div>
+                        <button class="btn btn-primary" (click)="submit()" *ngIf="!editId">Submit</button>
+                        <button class="btn" (click)="cancel()">Cancel</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</div> -->
+<!-- </div>
+</div> -->
+<!-- <tr>
+
+
+    <th>&nbsp;</th>
+    <td style="border-right: 1px solid;">&nbsp;</td>
+    <td>&nbsp;</td>
+    <th><strong>NET SALARY</strong></th>
+    <td>{{netsalary}}</td>
+</tr> -->

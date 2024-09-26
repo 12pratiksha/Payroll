@@ -1,0 +1,95 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Trainings</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Training</li>
+                        <li class="breadcrumb-item active" aria-current="page">Training</li>
+                        <li class="breadcrumb-item active" aria-current="page">Trainings</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="showMyContainer==false">
+        <div class="col-md-12">
+            <div class="card mb-4"  >
+                <div class="card-body " *ngFor="let item of tableData; let i = index"  >
+                    <div class="col-md-4">
+                    <div  class="row filter-row p-3 mb-4" style="border: 3px solid #ffc2ad;
+                         background: #fff3ef;width: 300px;height: 350px;">
+
+                         <img style="padding-right:0px;padding-left:0px;" src="/assets/img/multiple-choice-questions.jpg">
+                         <h3 style="font-weight: 700;text-align: center;font-size: 20px;">{{item.title}}</h3>
+                         <h3 style="font-weight: 700;text-align: center;font-size: 20px;">{{item.type}}</h3>
+                         <button class="btn-primary" (click)="getQuiz(item)" >Start Test</button>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row" *ngIf="showMyContainer==true">
+        <div class="col-md-12">
+            <div class="card mb-0">
+              <div class="card-body">
+                <form [formGroup]="quizForm" >
+                  <div *ngFor="let item of quiz; let i = index" [hidden]="i !== pageIndex">
+                    <p style="font-weight: 700; font-size: 20px;">{{i+1}}. {{item.question}}</p>
+                    <div style="font-size: 17px;">
+                        <div *ngFor="let option of ['optionA', 'optionB', 'optionC', 'optionD']; let j = index">
+                            <div><input type="radio" [value]="item[option]" [formControlName]="'answer' + i"> {{item[option]}}</div>
+                        </div>
+                    </div>
+                  </div>
+                  <mat-paginator [pageSize]="pageSize" [length]="quiz.length" (page)="pageIndex = $event.pageIndex">
+                  </mat-paginator>
+                  <div *ngIf="pageIndex === quiz.length - 1">
+                    <button type="submit" (click)="submit()">Submit</button>
+                    <button type="button" (click)="hide()">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        <!-- <div class="col-md-12" >
+            <div class="card mb-0" >
+                <div class="card-body">
+                <form [formGroup]="quizForm">
+                <div *ngFor="let item of quiz; let i = index" [hidden]="i !== pageIndex">
+                <p style="font-weight: 700;font-size: 20px;">{{i+1}}.{{item.question}}</p>
+                <form class="needs-validation" [formGroup]="quizForm">
+                <div style="font-size: 17px;">
+                    <div >
+                        <input type="radio" formControlName="optionA" [value]="item.optionA"> {{item.optionA}}
+                    </div>
+                    <div>
+                        <input type="radio" formControlName="optionA" [value]="item.optionB"> {{item.optionB}}
+                    </div>
+                    <div>
+                        <input type="radio" formControlName="optionA" [value]="item.optionC"> {{item.optionC}}
+                    </div>
+                    <div>
+                        <input type="radio" formControlName="optionA" [value]="item.optionD"> {{item.optionD}}
+                    </div>
+                </div>
+               </form>
+                
+              <mat-paginator [pageSize]="pageSize" [length]="length"
+              (page)="pageIndex = $event.pageIndex">
+              </mat-paginator>
+              <div>
+                <button *ngIf="length==i+1" (click)="submit()">Submit</button>
+                <button *ngIf="length==i+1" (click)="hide()">Cancel</button>
+              </div>
+              </div>
+              </form>
+              </div>
+              </div>
+              </div> -->
+    </div>
+</div>
+    
+    

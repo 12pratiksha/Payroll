@@ -1,0 +1,94 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3> Assign Shift</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> Assign Shift</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <a class="btn btn-success btn-add-emp"  style="width: auto;"  routerLink="/layout/masters/shift"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12">
+    
+            <!-- Custom Boostrap Validation -->
+            <div class="card" >
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Assign Shift</h5>
+                </div>
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="shiftAssignImport">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                      <label class="focus-label">Choose File</label>
+                                      <input class="form-control" type="file" (change)="onChange($event)" class="form-control"> 
+                                       
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                   <button class="btn btn-primary" (click)="getSheet()">Get Sheet</button>
+
+                                   <button class="download btn btn-success ;"  (click)="exportexcel()" style="margin-left: 10px;"><i class="fas fa-download"></i></button>
+                                    </div>
+                                    <div class="col-md-4 mb-3" *ngIf="sheet">
+                                        <label  >Given For</label>
+                                        <select class="form-select form-control" formControlName="givenFor">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let item of sheet" [value]="item.employeeId+'~' +item.firstShift">{{item.firstShift}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+    
+                             
+                                
+                               
+                                <button class="btn btn-primary"   (click)="submit()">Submit</button>
+                                <button class="btn " >Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div> 
+     </div>
+
+     <div style=" margin: auto; width: 50%;" style="display: none;">
+        
+        <table id="excel-table">
+          <tr>
+              <td>effectiveDate</td>
+              <td>date</td>
+              <td>onShift</td>
+              <td>defaultShift</td>
+              <td>firstShift</td>
+              <td>secondShift</td>
+              <td>daySlot1</td>
+              <td>daySlot2</td>
+              <td>daySlot3</td>
+              <td>employeeId</td>
+          </tr>
+         
+        </table>
+      </div>

@@ -1,0 +1,198 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Sub Depatment Wise Branch Shift List</h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">masters</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance Setup</li>
+                        <li class="breadcrumb-item active" aria-current="page">Sub Depatment Wise Branch Shift List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-12">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-plus"></i>Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+    <div class="row" *ngIf="!showMyContainer">
+        <div class="col-sm-12">
+            <div class="card mb-0">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <!-- {{tableData| json}} -->
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0">
+                            <tfoot>
+
+                                <tr>
+                                    <th><input class="form-control" type="text" placeholder="Search Id" name="search-Id" /></th>
+                                    <!-- <th><input class="form-control" type="text" placeholder="Search state name" name="search-state-name" /></th> -->
+                                    <th><input class="form-control" type="text" placeholder="Search branch name" name="search-branch-name" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search Department name" name="search-department-name" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search Sub-Department name" name="search-subdepartment-name" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search shift name" name="search-shift-name" /></th>
+                                    <th><input class="form-control" type="text" placeholder="Search Status" name="search-shift-status" /></th>
+                                    <th><input class="form-control" type="text" style="display: none;"></th>
+                                </tr>
+                            </tfoot>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <!-- <th>State Name</th> -->
+                                    <th>Branch Name</th>
+                                    <th>Department Name</th>
+                                    <th>Sub Department Name</th>
+                                    <th>Shift Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let item of tableData; let i = index">
+                                    <td>{{item.subDepartmentWiseBranchShiftId}}</td>
+                                    <!-- <td>
+                                        <div *ngFor="let state of item.states">{{state.name}}</div>
+                                    </td> -->
+                                    <td>
+                                        <div *ngFor="let branch of item.branchs">{{branch.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let department of item.departments">{{department.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let sub of item.subdepartments">{{sub.name}}</div>
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let shift of item.shifts">{{shift.name}}</div>
+                                    </td>
+                                    <td>{{(item.status == true)?'Active':'Inactive'}}</td>
+                                    <td class="text-end ico-sec justify-content-start">
+                                        <a (click)="edit(item.subDepartmentWiseBranchShiftId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)="delete(item.subDepartmentWiseBranchShiftId)"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!tableData">
+                        <thead>
+                          <tr>
+                          <th>ID</th>
+                          <th>State Name</th>
+                          <th>Branch Name</th>
+                          <th>Department Name</th>
+                          <th>Sub Department Name</th>
+                          <th>Shift Name</th>
+                          <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                        </table> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- end of data table  -->
+    <div *ngIf="showMyContainer">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <h4 class="card-title mb-0">Sub Depatment Wise Branch Shift Form</h4>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form [formGroup]="SubDivForm">
+                                    <div class="form-row row">
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>State {{state?.length}}<span class="text-danger">*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselct " [options]="state" [(ngModel)]="statehModel" [value]=state.id formControlName="state">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+
+                                            <small *ngIf="SubDivForm.get('state').invalid && SubDivForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Branch<span class="text-danger">*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselct " [options]="branch" [(ngModel)]="branchModel" [value]=branch.id formControlName="branch">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="SubDivForm.get('branch').invalid && SubDivForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                        </div>
+
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Department<span class="text-danger">*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="department" [(ngModel)]="departmentModel" [value]=department.id formControlName="department">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="SubDivForm.get('department').invalid && SubDivForm.get('department').touched" class="text-danger"> *Department is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Sub-Department<span class="text-danger">*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="subDepartment" [(ngModel)]="subDepartmentModel" [value]=subDepartment.id formControlName="subDepartment">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="SubDivForm.get('subDepartment').invalid && SubDivForm.get('subDepartment').touched" class="text-danger"> *Sub-Department is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label>Shift<span class="text-danger">*</span></label>
+                                            <div>
+                                                <ngx-bootstrap-multiselect class="multselect " [options]="shift" [(ngModel)]="shiftModel" [value]=shift.name formControlName="shift">
+
+                                                </ngx-bootstrap-multiselect>
+                                            </div>
+                                            <small *ngIf="SubDivForm.get('shift').invalid && SubDivForm.get('shift').touched" class="text-danger"> *Shift is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label>Status</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" (click)="submit('add')" *ngIf="!update">Submit</button>
+                                    <button type="button" class="btn btn-primary" *ngIf="update" (click)="submit('update')">Update</button>
+                                    <button type="button" class="btn " (click)="cancel()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

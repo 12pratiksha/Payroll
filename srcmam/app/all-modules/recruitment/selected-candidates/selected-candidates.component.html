@@ -1,0 +1,147 @@
+<div class="page-wrapper">
+
+
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Selected List</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Selected List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Selected Candidate List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Candidate Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>For Department</th>
+                                        <th>For Designation</th>
+                                        <th>Status</th>
+                                        <th>Resume</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData ; let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.firstName}} {{item.lastName}}</td>
+                                        <td> {{item.phone}} </td>
+                                        <td> {{item.email}} </td>
+                                        <td> {{item.department_name}} </td>
+                                        <td> {{item.desg}} </td>
+                                        <td> {{item.status}} </td>
+                                        <td>
+                                            <a href="{{this.baseurl}}/empdoc/{{item.cvName}}" target="_blank" class="fas fa-bars"></a>
+                                        </td>
+                                        <td>
+                                            <div class="submit" *ngIf="item.round_status==1">
+                                                <!-- <a class="btn btn btn-outline-danger me-2" (click)="cancel()">Cancel</a> -->
+                                                <a class="btn btn-primary" (click)="offer(item,1)">Offer</a>
+                                            </div>
+
+                                            <div class="submit" *ngIf="item.round_status==2">
+                                                <!-- <a class="btn btn btn-outline-danger me-2" (click)="cancel()">Cancel</a> -->
+                                                <a class="btn btn-primary" (click)="offer(item,2)">Re-Offer</a>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="submit">
+                                                <a class="btn btn-primary" (click)="rejectOffer(item)">Reject</a>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="submit" *ngIf="item.round_status==2">
+
+                                                <a class="btn btn-primary" (click)="join(item)">Join</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData?.length==0">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>For Department</th>
+                                        <th>For Designation</th>
+                                        <th>Status</th>
+                                        <th>Resume</th>
+                                        <th>Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData">
+                                        <td>{{item.firstName}} {{item.lastName}}</td>
+                                        <td> {{item.phone}} </td>
+                                        <td> {{item.email}} </td>
+                                        <td> {{item.department_name}} </td>
+                                        <td> {{item.desg}} </td>
+                                        <td> {{item.status}}</td>
+                                        <td>
+                                            <a href="{{this.baseurl}}/empdoc/{{item.cvName}}" target="_blank" class="fas fa-bars"></a>
+                                        </td>
+                                        <td>
+                                            <div class="submit" *ngIf="item.round_status==1">
+                                                <!-- <a class="btn btn btn-outline-danger me-2" (click)="cancel()">Cancel</a> -->
+                                                <a class="btn btn-primary" (click)="offer(item,1)">Offer</a>
+                                            </div>
+
+                                            <div class="submit" *ngIf="item.round_status==2">
+                                                <!-- <a class="btn btn btn-outline-danger me-2" (click)="cancel()">Cancel</a> -->
+                                                <a class="btn btn-primary" (click)="offer(item,2)">Re-Offer</a>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="submit">
+                                                <a class="btn btn-primary" (click)="rejectOffer(item)">Reject</a>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="submit" *ngIf="item.round_status==2">
+
+                                                <a class="btn btn-primary" (click)="join(item)">Join</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

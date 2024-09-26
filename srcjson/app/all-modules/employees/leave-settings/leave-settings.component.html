@@ -1,0 +1,655 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Leave Settings</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Leaves Settings</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-md-12 col-lg-3">
+            <div class="nav flex-column nav-pills" id="pills-sub-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-leave-tab" data-bs-toggle="pill" href="#v-pills-leave" role="tab" aria-controls="v-pills-leave" aria-selected="true"><i class="fas fa-angle-right"></i> Annual Leave</a>
+                <a class="nav-link" id="v-pills-sick-tab" data-bs-toggle="pill" href="#v-pills-sick" role="tab" aria-controls="v-pills-sick" aria-selected="false"><i class="fas fa-angle-right"></i> Sick</a>
+                <a class="nav-link" id="v-pills-hsp-tab" data-bs-toggle="pill" href="#v-pills-hsp" role="tab" aria-controls="v-pills-hsp" aria-selected="false"><i class="fas fa-angle-right"></i> Hospitalisation</a>
+                <a class="nav-link" id="v-pills-maternity-tab" data-bs-toggle="pill" href="#v-pills-maternity" role="tab" aria-controls="v-pills-maternity" aria-selected="false"><i class="fas fa-angle-right"></i> Maternity</a>
+                <a class="nav-link" id="v-pills-paternity-tab" data-bs-toggle="pill" href="#v-pills-paternity" role="tab" aria-controls="v-pills-paternity" aria-selected="false"><i class="fas fa-angle-right"></i> Paternity</a>
+                <a class="nav-link" id="v-pills-lop-tab" data-bs-toggle="pill" href="#v-pills-lop" role="tab" aria-controls="v-pills-lop" aria-selected="false"><i class="fas fa-angle-right"></i> LOP</a>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-9">
+            <div class="tab-content pt-0" id="pills-sub-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-leave" role="tabpanel" aria-labelledby="v-pills-leave-tab">
+                    <!-- Annual Leave -->
+                    <div class="card leave-box" id="leave_annual">
+                        <div class="card-header">
+                            Annual
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_annual"
+                                    checked>
+                                <label class="onoffswitch-label" for="switch_annual">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="leave-item">
+                                        <!-- Annual Days Leave -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <div class="form-group">
+                                                        <label>Days</label>
+                                                        <input type="text" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right">
+                                                <button class="leave-edit-btn">Edit</button>
+                                            </div>
+                                        </div>
+                                        <!-- /Annual Days Leave -->
+        
+                                        <!-- Carry Forward -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Carry forward</label>
+                                                    <div class="leave-inline-form">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                id="carry_no" value="option1" >
+                                                            <label class="form-check-label" for="carry_no">No</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                id="carry_yes" value="option2" >
+                                                            <label class="form-check-label" for="carry_yes">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right mt-0">
+                                                <button class="leave-edit-btn">Edit</button>
+                                            </div>
+                                        </div>
+                                        <!-- /Carry Forward -->
+        
+                                        <!-- Earned Leave -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Earned leave</label>
+                                                    <div class="leave-inline-form">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                id="earned_no" value="option1" disabled>
+                                                            <label class="form-check-label" for="earned_no">No</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                id="earned_yes" value="option2" disabled>
+                                                            <label class="form-check-label" for="earned_yes">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right">
+                                                <button class="leave-edit-btn">
+                                                    Edit
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- /Earned Leave -->
+        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Custom Policy -->
+                                    <div class="custom-policy">
+                                        <div class="leave-header">
+                                            <div class="title">Custom policy</div>
+                                            <div class="leave-action">
+                                                <button class="btn btn-sm btn-primary btn-add-emp" type="button" data-bs-toggle="modal" data-bs-target="#add_custom_policy"><i class="fa fa-plus"></i> Add custom policy</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-nowrap leave-table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="l-name">Policy Name</th>
+                                                        <th class="l-days">Days</th>
+                                                        <th class="l-assignee">Assignee</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let custom of allCustomPolicy;let i = index">
+                                                        <td>{{custom.policyname}} </td>
+                                                        <td>{{custom.days}}</td>
+                                                        <td>
+                                                            <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                                                    src="{{custom.profileimg}}"></a>
+                                                            <a routerLink="/layout/employees/employeeprofile">{{custom.name}}</a>
+                                                        </td>
+                                                        <td class="text-end ico-sec justify-content-end">
+                                                            <a data-bs-toggle="modal" data-bs-target="#edit_custom_policy" (click)="edit(custom.id)"><i class="fas fa-pen"></i></a>
+                                                            <a data-bs-toggle="modal" data-bs-target="#delete_custom_policy" (click)="tempId = custom.id"><i class="far fa-trash-alt"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /Custom Policy -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Annual Leave -->
+                </div>
+                <div class="tab-pane fade" id="v-pills-sick" role="tabpanel" aria-labelledby="v-pills-sick-tab">
+                    <!-- Sick Leave -->
+                    <div class="card leave-box" id="leave_sick">
+                        <div class="card-header">
+                            Sick
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_sick"
+                                    checked>
+                                <label class="onoffswitch-label" for="switch_sick">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="leave-item">
+                                <div class="leave-row">
+                                    <div class="leave-left">
+                                        <div class="input-box">
+                                            <div class="form-group">
+                                                <label>Days</label>
+                                                <input type="text" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="leave-right">
+                                        <button class="leave-edit-btn">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Sick Leave -->
+                </div>
+                <div class="tab-pane fade" id="v-pills-hsp" role="tabpanel" aria-labelledby="v-pills-hsp-tab">
+                    <!-- Hospitalisation Leave -->
+                    <div class="card leave-box" id="leave_hospitalisation">
+                        <div class="card-header">
+                            Hospitalisation
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                    id="switch_hospitalisation">
+                                <label class="onoffswitch-label" for="switch_hospitalisation">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="leave-item">
+
+                                        <!-- Annual Days Leave -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <div class="form-group">
+                                                        <label>Days</label>
+                                                        <input type="text" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right">
+                                                <button class="leave-edit-btn">
+                                                    Edit
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- /Annual Days Leave -->
+        
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Custom Policy -->
+                                    <div class="custom-policy">
+                                        <div class="leave-header">
+                                            <div class="title">Custom policy</div>
+                                            <div class="leave-action">
+                                                <button class="btn btn-sm btn-primary btn-add-emp" type="button" data-bs-toggle="modal" data-bs-target="#add_custom_policy"><i class="fa fa-plus"></i> Add policy</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-nowrap leave-table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="l-name">Policy Name</th>
+                                                        <th class="l-days">Days</th>
+                                                        <th class="l-assignee">Assignee</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let custom of allCustomPolicy;let i = index">
+                                                        <td>{{custom.policyname}} </td>
+                                                        <td>{{custom.days}}</td>
+                                                        <td>
+                                                            <a class="avatar"><img alt="" src="{{custom.profileimg}}"></a>
+                                                            <a>{{custom.name}}</a>
+                                                        </td>
+                                                        <td class="text-end ico-sec justify-content-end">
+                                                            <a data-bs-toggle="modal" data-bs-target="#edit_custom_policy" (click)="edit(custom.id)"><i class="fas fa-pen"></i></a>
+                                                            <a data-bs-toggle="modal" data-bs-target="#delete_custom_policy" (click)="tempId = custom.id"><i class="far fa-trash-alt"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /Custom Policy -->
+                                </div>
+                            </div>                                                                 
+                        </div>
+                    </div>
+                    <!-- /Hospitalisation Leave -->
+                </div>
+                <div class="tab-pane fade" id="v-pills-maternity" role="tabpanel" aria-labelledby="v-pills-maternity-tab">
+                    <!-- Maternity Leave -->
+                    <div class="card leave-box" id="leave_maternity">
+                        <div class="card-body">
+                            <div class="h3 card-title with-switch">
+                                Maternity <span class="subtitle">Assigned to female only</span>
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_maternity"
+                                        checked>
+                                    <label class="onoffswitch-label" for="switch_maternity">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="leave-item">
+                                <div class="leave-row">
+                                    <div class="leave-left">
+                                        <div class="input-box">
+                                            <div class="form-group">
+                                                <label>Days</label>
+                                                <input type="text" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="leave-right">
+                                        <button class="leave-edit-btn">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Maternity Leave -->
+                </div>
+                <div class="tab-pane fade" id="v-pills-paternity" role="tabpanel" aria-labelledby="v-pills-paternity-tab">
+                    <!-- Paternity Leave -->
+                    <div class="card leave-box" id="leave_paternity">
+                        <div class="card-body">
+                            <div class="h3 card-title with-switch">
+                                Paternity <span class="subtitle">Assigned to male only</span>
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                        id="switch_paternity">
+                                    <label class="onoffswitch-label" for="switch_paternity">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="leave-item">
+                                <div class="leave-row">
+                                    <div class="leave-left">
+                                        <div class="input-box">
+                                            <div class="form-group">
+                                                <label>Days</label>
+                                                <input type="text" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="leave-right">
+                                        <button class="leave-edit-btn">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Paternity Leave -->
+                </div>
+                <div class="tab-pane fade" id="v-pills-lop" role="tabpanel" aria-labelledby="v-pills-lop-tab">
+                    <!-- Custom Create Leave -->
+                    <div class="card leave-box mb-0" id="leave_custom01">
+                        <div class="card-header">
+                            LOP
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_custom01"
+                                    checked>
+                                <label class="onoffswitch-label" for="switch_custom01">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="leave-item">
+
+                                        <!-- Annual Days Leave -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <div class="form-group">
+                                                        <label>Days</label>
+                                                        <input type="text" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right">
+                                                <button class="leave-edit-btn">Edit</button>
+                                            </div>
+                                        </div>
+                                        <!-- /Annual Days Leave -->
+        
+                                        <!-- Carry Forward -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Carry forward</label>
+                                                    <div class="leave-inline-form">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="carryForward"
+                                                                id="carry_no_01" value="option1" disabled>
+                                                            <label class="form-check-label" for="carry_no_01">No</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="carryForward"
+                                                                id="carry_yes_01" value="option2" disabled>
+                                                            <label class="form-check-label" for="carry_yes_01">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right mt-0">
+                                                <button class="leave-edit-btn">Edit</button>
+                                            </div>
+                                        </div>
+                                        <!-- /Carry Forward -->
+        
+                                        <!-- Earned Leave -->
+                                        <div class="leave-row">
+                                            <div class="leave-left">
+                                                <div class="input-box">
+                                                    <label class="d-block">Earned leave</label>
+                                                    <div class="leave-inline-form">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                id="inlineRadio1" value="option1" disabled>
+                                                            <label class="form-check-label" for="inlineRadio1">No</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                                id="inlineRadio2" value="option2" disabled>
+                                                            <label class="form-check-label" for="inlineRadio2">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="leave-right">
+                                                <button class="leave-edit-btn">
+                                                    Edit
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- /Earned Leave -->
+        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Custom Policy -->
+                                    <div class="custom-policy">
+                                        <div class="leave-header">
+                                            <div class="title">Custom policy</div>
+                                            <div class="leave-action">
+                                                <button class="btn btn-sm btn-primary btn-add-emp" type="button" data-bs-toggle="modal" data-bs-target="#add_custom_policy"><i class="fa fa-plus"></i> Add custom policy</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-nowrap leave-table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="l-name">Policy Name</th>
+                                                        <th class="l-days">Days</th>
+                                                        <th class="l-assignee">Assignee</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let custom of allCustomPolicy;let i = index">
+                                                        <td>{{custom.policyname}} </td>
+                                                        <td>{{custom.days}}</td>
+                                                        <td>
+                                                            <a class="avatar"><img alt="" src="{{custom.profileimg}}"></a>
+                                                            <a>{{custom.name}}</a>
+                                                        </td>
+                                                        <td class="text-end ico-sec justify-content-end">
+                                                            <a data-bs-toggle="modal" data-bs-target="#edit_custom_policy" (click)="edit(custom.id)"><i class="fas fa-pen"></i></a>
+                                                            <a data-bs-toggle="modal" data-bs-target="#delete_custom_policy" (click)="tempId = custom.id"><i class="far fa-trash-alt"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /Custom Policy -->
+                                </div>
+                            </div>
+                            
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Content -->
+
+        <!-- Add Custom Policy Modal -->
+        <div id="add_custom_policy" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        h4 class="modal-title">Add Custom Policy</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form (ngSubmit)="addCustom()" [formGroup]="addCustomPolicyForm">
+                            <div class="form-group">
+                                <label>Policy Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control"
+                                    [class.invalid]="addCustomPolicyForm.get('addNames').invalid && addCustomPolicyForm.get('addNames').touched"
+                                    formControlName="addNames">
+                                <div
+                                    *ngIf="addCustomPolicyForm.get('addNames').invalid && addCustomPolicyForm.get('addNames').touched">
+                                    <small
+                                        *ngIf="addCustomPolicyForm.get('addNames').invalid && addCustomPolicyForm.get('addNames').touched"
+                                        class="text-danger"> *Policy name is required</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Days <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control"
+                                    [class.invalid]="addCustomPolicyForm.get('addDays').invalid && addCustomPolicyForm.get('addDays').touched"
+                                    formControlName="addDays">
+                                <div
+                                    *ngIf="addCustomPolicyForm.get('addDays').invalid && addCustomPolicyForm.get('addDays').touched">
+                                    <small
+                                        *ngIf="addCustomPolicyForm.get('addDays').invalid && addCustomPolicyForm.get('addDays').touched"
+                                        class="text-danger"> *Days is required</small>
+                                </div>
+                            </div>
+                            <p-pickList [source]="sourceProducts" [target]="targetProducts" sourceHeader="Employee List"
+                                targetHeader="Selected Employee" dragdrop="true" [responsive]="true"
+                                [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="name"
+                                sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+                                <ng-template let-product pTemplate="item">
+                                    <div class="product-item">
+                                        <div class="product-list-detail">
+                                            h4 class="p-mb-2">{{product.name}}</h5>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-pickList>
+
+                            <div class="submit-section">
+                                <button class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Add Custom Policy Modal -->
+
+        <!-- Edit Custom Policy Modal -->
+        <div id="edit_custom_policy" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        h4 class="modal-title">Edit Custom Policy</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form (ngSubmit)="editCustom()" [formGroup]="editCustomPolicy">
+                            <div class="form-group">
+                                <label>Policy Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control"
+                                    [class.invalid]="editCustomPolicy.get('editNames').invalid && editCustomPolicy.get('editNames').touched"
+                                    formControlName="editNames">
+                                <div
+                                    *ngIf="editCustomPolicy.get('editNames').invalid && editCustomPolicy.get('editNames').touched">
+                                    <small
+                                        *ngIf="editCustomPolicy.get('editNames').invalid && editCustomPolicy.get('editNames').touched"
+                                        class="text-danger"> *Policy name is required</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Days <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="4"
+                                    [class.invalid]="editCustomPolicy.get('editDays').invalid && editCustomPolicy.get('editDays').touched"
+                                    formControlName="editDays">
+                                <div
+                                    *ngIf="editCustomPolicy.get('editDays').invalid && editCustomPolicy.get('editDays').touched">
+                                    <small
+                                        *ngIf="editCustomPolicy.get('editDays').invalid && editCustomPolicy.get('editDays').touched"
+                                        class="text-danger"> *Days is required</small>
+                                </div>
+                            </div>
+                            <p-pickList [source]="sourceProducts" [target]="targetProducts" sourceHeader="Employee List"
+                                targetHeader="Selected Employee" dragdrop="true" [responsive]="true"
+                                [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="name"
+                                sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+                                <ng-template let-product pTemplate="item">
+                                    <div class="product-item">
+                                        <div class="product-list-detail">
+                                            h4 class="p-mb-2">{{product.name}}</h5>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-pickList>
+
+                            <div class="submit-section">
+                                <button class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Edit Custom Policy Modal -->
+
+        <!-- Delete Custom Policy Modal -->
+        <div class="modal custom-modal fade" id="delete_custom_policy" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-header">
+                            <h3>Delete Custom Policy</h3>
+                            <p>Are you sure want to delete?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a  class="btn btn-primary continue-btn"
+                                        (click)='deleteCustom()'>Delete</a>
+                                </div>
+                                <div class="col-6">
+                                    <a  data-bs-dismiss="modal"
+                                        class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Delete Custom Policy Modal -->

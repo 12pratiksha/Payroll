@@ -1,0 +1,238 @@
+<div class="content container-fluid">
+    <div class="mat-typography">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Employee Compensatory Off Master form</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                            <li class="breadcrumb-item active" aria-current="page">Compensatory Off</li>
+                            <li class="breadcrumb-item active" aria-current="page">Employee Compensatory Off Master</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row filter-row">
+            <div class="col-md-12">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp"><i class="fas fa-bars"></i>Show Table</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Employee Compensatory Off Master Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form [formGroup]="coffForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label>Employee <small class="text-danger"> *</small></label>
+                                            <ng-select class="form-select form-control" formControlName="employeeId">
+                                                <!-- (change)="valid()" -->
+                                                <ng-option *ngFor="let item of employees; let i = index" [value]="item.employeeId">{{item.employeeCode}} {{item.firstName}} {{item.lastName}}
+                                                </ng-option>
+                                            </ng-select>
+                                            <small *ngIf="coffForm.get('employeeId').invalid && coffForm.get('employeeId').touched" class="text-danger">Employee
+                                                is required</small>
+                                        </div>
+                                        <div class="col-md-2" style="margin-top: 17px;">
+                                            <button class="btn btn-primary" (click)="details()" [disabled]="disabled">Details</button>
+
+                                        </div>
+
+
+
+                                        <!-- <div class="col-md-4 mb-2">
+                                            <label> Coff Code </label>
+                                            <input class="form-control" formControlName="code" disabled>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label> Generated Date <span class="text-danger">*</span></label>
+                                            <ng-select [items]="generatedDate" [multiple]="true" bindLabel="name"
+                                                [closeOnSelect]="false" bindValue="name"
+                                                class="form-select form-control" formControlName="generatedDate">
+                                                <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                    let-index="index">
+                                                    <div>
+                                                        <input id="item-{{index}}" type="checkbox"
+                                                            [ngModel]="item$.selected"
+                                                            [ngModelOptions]="{standalone: true}" />
+                                                        {{item['name']}}
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template ng-multi-label-tmp let-items="items">
+                                                    <div style="margin-right: 2px;"
+                                                        *ngFor="let item of items | slice: 0:3">
+                                                        <span *ngIf="items.length < 4">{{ item['name'] }} </span>
+                                                    </div>
+                                                    <div *ngIf="items.length > 3">
+                                                        <span>{{ items.length }} Selected</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <small
+                                                *ngIf="coffForm.get('generatedDate').invalid && coffForm.get('generatedDate').touched"
+                                                class="text-danger"> *This Fild is Required</small>
+                                        </div>
+
+                                        <div class="col-md-4 mb-2">
+                                            <label> Reason </label>
+                                            <textarea class="form-control" formControlName="reason"></textarea>
+                                        </div> -->
+
+
+                                    </div>
+
+                                    <div class="form-row row" style="width:100%;overflow-x: scroll;">
+                                        <div class="card mb-0">
+                                            <div class="card-body" style="width:100%;overflow-x: scroll;">
+                                                <table class="table table-bordered">
+                                                    <thead class="center" style="background-color: aliceblue;">
+                                                        <tr>
+                                                            <!-- <th>CoffCode</th> -->
+                                                            <!-- <th>Balance</th> -->
+                                                            <th>Generated Date</th>
+                                                            <th>Expire Date</th>
+                                                            <th>OT Hours</th>
+                                                            <th>Reason</th>
+                                                            <th>Type</th>
+                                                            <th>HalfDay or FullDay</th>
+                                                            <th>FirstHalf or SecondHalf</th>
+                                                            <th>Leave Date</th>
+                                                            <th>From Time</th>
+                                                            <th>To Time</th>
+                                                            <th>Encashment</th>
+                                                            <th>Select</th>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <ng-container formArrayName="fArray">
+
+                                                            <ng-container *ngFor="let quantity of fArray().controls; let i=index" [formGroupName]="i">
+                                                                <tr>
+                                                                    <!-- <td>{{item1.coffCode}}</td> -->
+                                                                    <!-- <td id="balance" 
+                                                              name="balance"
+                                                                 >{{item1.mainbalance}}</td> -->
+                                                                    <td id="fromDate" name="fromDate"><input id="fromDate" formControlName="fromDate" name="fromDate" readonly /> </td>
+                                                                    <td id="toDate" name="toDate"><input id="toDate" formControlName="toDate" name="toDate" readonly /> </td>
+
+                                                                    <td id="otHours" name="otHours"><input id="EcoffHoursForOT" formControlName="EcoffHoursForOT" name="EcoffHoursForOT" readonly /> </td>
+
+                                                                    <td>
+                                                                        <!-- <div *ngFor="let reasonForCoff of coffForm.get('multipleValues').controls; let i = index"> -->
+                                                                        <input id="reasonForCoff" type="text" formControlName="reasonForCoff" name="reasonForCoff" />
+                                                                        <!-- </div> -->
+                                                                    </td>
+
+                                                                    <td id="type" name="type">
+                                                                        <input id="type" formControlName="type" name="type" readonly /></td>
+
+                                                                    <td id="type2" name="type2">
+                                                                        <tr *ngIf="quantity.value.type2">
+                                                                            <input id="type2" formControlName="type2" name="type2" readonly />
+                                                                        </tr>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <tr *ngIf="quantity.value.type2=='HalfDay'">
+                                                                            <select class="form-select" formControlName="fistorsecondhalf">
+                                                                                <option value="">Select</option>
+                                                                                <option value="First Half">First Half</option>
+                                                                                <option value="Second Half">Second Half</option>
+                                                                            </select>
+
+                                                                        </tr>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <input id="leavedate" class="text-danger" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true}" formControlName="leavedate" name="leavedate" />
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <tr *ngIf="quantity.value.type=='OverTime' && quantity.value.encash==false">
+                                                                            <input type="time" class="form-control" formControlName="fromTime">
+                                                                        </tr>
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <tr *ngIf="quantity.value.type=='OverTime' && quantity.value.encash==false">
+                                                                            <input type="time" class="form-control" formControlName="toTime">
+                                                                        </tr>
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <input id="encash" type="checkbox" checked="true" formControlName="encash" name="encash" (change)="encash($event.target.checked)" />
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <input id="scoff" type="checkbox" checked="true" formControlName="scoff" name="scoff" (change)="mychange($event.target.checked,quantity)" />
+
+                                                                    </td>
+                                                                    <!-- <td><select class="form-select form-control"  id="type" name="type" formControlName="type" >
+                                                                    <option value="">Select</option>
+                                                                    <option value="Encashment">Encashment</option>
+                                                                    <option value="Leave">Leave</option>
+                                                                    <option value="Overtime">Overtime</option>
+                                                                 </select> </td> -->
+
+
+
+                                                                    <!-- <td  >
+                                                                        <tr *ngIf="coffForm.controls.type.value=='leave'" disabled>
+                                                                        <select class="form-select"  name="type2" id="type2" value="" formControlName="type2"  >
+                                                                            <option value="">Select</option>
+                                                                            <option value="Full Day">Full Day</option>
+                                                                            <option value="Half Day">Half Day</option>
+                                                                        </select>
+                                                                        
+                                                                    </tr>
+                                                                    </td> -->
+
+
+
+
+                                                                    <!-- <td>{{reasonForCoff.description}}</td> -->
+                                                                </tr>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-3 mb-2 submit">
+                                        <button (click)="submit()" class="btn btn-primary">Submit </button>
+                                        <button (click)="cancel()" class="btn ">Cancel </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,200 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Mark Present/Absent</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Mark Present/Absent</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="content container-fluid">
+
+
+        <div class="row filter-row">
+            <div class="col-md-12">
+                <form [formGroup]="markForm">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3">
+   
+                            <label>FromDate <small class="text-danger">*</small></label>
+                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                            <small *ngIf="markForm.get('fromDate').invalid && markForm.get('fromDate').touched" class="text-danger"> *From Date is required</small>
+                            
+
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                            <label>To Date <small class="text-danger">*</small></label>
+                            <div class="form-group form-focus mb-0">
+                                <div class="cal-icon">
+                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: false }" formControlName="toDate">
+                                </div>
+                                <small *ngIf="markForm.get('toDate').invalid && markForm.get('toDate').touched" class="text-danger">*To Date is required</small>
+
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <!-- <div class="col-sm-3 col-md-3" style="margin: auto; margin-top: 12px;">   
+                    <a class="btn btn-success btn-search" (click)="getAttendance()"><i class="fas fa-search me-2"></i> Search </a>
+                </div> -->
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Employee code</th>
+                                    <th>Employee Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Department Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of Data; let i = index" (click)="selectRow(i, item)">
+                                    <td>{{item.employeeCode}}</td>
+                                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                    <td>{{item.branch}}</td>
+                                    <td>{{item.department}}</td>
+                                    <td>{{item.status}}</td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+                        <div class="table-responsive">
+                            <mat-form-field appearance="standard">
+                        <mat-label>Filter</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Chris" #input>
+                      </mat-form-field>
+                      
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+    
+                              
+                        <ng-container matColumnDef="select">
+                          <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                          [checked]="selection.hasValue() && isAllSelected()"
+                                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                          [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                          (change)="$event ? selection.toggle(row) : null"
+                                          [checked]="selection.isSelected(row)"
+                                          [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                          </td>
+                        </ng-container>
+                      
+                     
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef> Employee Code </th>
+                          <td mat-cell *matCellDef="let element"> {{element.employeeCode}} </td>
+                        </ng-container>
+                      
+                       
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef> Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="branch">
+                          <th mat-header-cell *matHeaderCellDef> Branch Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.branch}} </td>
+                        </ng-container>
+                      
+                      
+                        <ng-container matColumnDef="department">
+                          <th mat-header-cell *matHeaderCellDef> Department </th>
+                          <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                          <th mat-header-cell *matHeaderCellDef> Status </th>
+                          <td mat-cell *matCellDef="let element"> {{(element.status==true)?'Active':'Inactive'}} </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="selection.toggle(row)"> 
+                        </tr>
+                      </table>  
+                      <mat-paginator
+                      [length]="tableLen"
+                      [pageSizeOptions]="[5, 10, 20]"
+                      showFirstLastButtons >
+                      </mat-paginator>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <button type="present" id="btn1" class="btn btn-primary" style="font-size: small;" [disabled]="dbtn" (click)="present(item,1)">Mark Present</button>&nbsp;&nbsp;
+            <button type="absent" id="btn2" class="btn btn-primary" style="font-size: small;" [disabled]="dbtn1" (click)="absent(item,2)">Mark Absent</button>&nbsp;&nbsp;
+            <button type="halfday" class="btn btn-primary" style="font-size: small;" [disabled]="dbtn2" (click)="halfDay(item,3)">Mark HalfDay</button>
+       
+    </div>
+   
+    </div>
+    <!-- /Search Filter -->
+                                  
+
+
+
+    <!-- <div class="row"> 
+    <div class="col-md-12">
+        <div class="card mb-0">
+                <div class="table-responsive">
+            <table class="table table-striped custom-table datatable mb-0" datatable [dtOptions]="dtOptions">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Employee Code</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of Data; let i = index">
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.employeeCode}}</td>
+                        <td>{{item.department}}</td>
+                        <td>{{item.designation}}</td>
+                         <td></td> 
+                      
+                    </tr>
+                </tbody>
+            </table>
+           
+        </div>
+      
+    </div>
+    </div>
+    </div> 
+
+</div>-->

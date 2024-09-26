@@ -1,0 +1,191 @@
+<div class="page-wrapper">
+
+    <div class="content container-fluid ">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Consultant Register </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item" >Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Consultant Register </li>
+                           
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="container"><i class="fas fa-plus"></i> Add New</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="!container"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="row" *ngIf="container">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table  datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData">
+                        <thead>
+                            <tr>
+                                <th>Requester Name</th>
+                                <th >Designation</th>
+                                <th>Qualification</th>
+                                <th>Experience</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let item1 of regId">
+                            
+                            <tr *ngFor="let item of tableData;">
+                                <td>{{item.requesterName}}</td>
+                                <td>{{item.designation}}</td>
+                                <td>{{item.qualification}}</td>
+                                <td>{{item.requiredExp}}</td>
+                                <td class="text-end ico-sec justify-content-end">
+                                  <a ><i class="fas fa-pen"  (click)="edit(item1)"></i></a>
+                                  <a ><i class="far fa-trash-alt" (click)="delete(item)"></i></a>
+                              </td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+        <div class="row" *ngIf="!container">
+            <div class="col-sm-12">
+        
+                <!-- Custom Boostrap Validation -->
+                <div class="card" >
+                    <div class="card-header">
+                        <h1 class="card-title mb-0">Consultant Register Form</h1>
+                       
+                    </div>
+                    <div class="card-body" > 
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate  [formGroup]="jobForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-3 mb-3">
+                                            <label class="focus-label">Consultancy <small>*</small></label>
+                                            <select class="form-select floating form-control" formControlName="consultantRegister" >
+                                              <option value="">--Select--</option>
+                                              <option value="1">C1</option>
+                                              <option value="2">C2</option>
+                                               
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                           
+                                            <div class="form-group">
+                                                <label>Request Date</label>
+                                                <input type="text" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" 
+                                                formControlName="requestDate">
+                                               <small *ngIf="jobForm.get('requestDate').invalid && jobForm.get('requestDate').touched">This Field is Required *</small>
+
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-3 mb-3">
+                                            
+                                            <button (click)="addRequest()" class="btn btn-primary" style="margin-top: 1rem;" [disabled]="jobForm.controls.requestDate.invalid">Add New </button>   
+                                        </div>  
+                                    <ng-container formArrayName="newRequest" *ngFor="let item of jobForm.get('newRequest').controls; let i = index;">
+                                        <div class="col-md-12" style="text-align: center; margin: 15px 0 15px 0; background-color: aliceblue;"> <h1>  Requirement {{i+1}}</h1></div>
+                                        <div class="row">
+                                            <div class="col-sm">
+                                        <div [formGroupName]="i"  class="col-sm-12">  
+                                          
+                                            <div class="form-row row">
+                                                <div class="col-md-3 mb-3">
+                                                    <label class="focus-label">Requester Name<small>*</small></label>
+                                                    <select class="form-select floating form-control" formControlName="requesterName" >
+                                                      <option value="">--Select--</option>
+                                                      <option value="1">req1</option>
+                                                      <option value="2">req2</option>
+                                                       
+                                                    </select>
+                                                </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Designation<small>*</small></label>
+                                                <select class="form-select floating form-control" formControlName="designation" >
+                                                  <option value="">--Select--</option>
+                                                  <option value="1">D1</option>
+                                                  <option value="2">D2</option>
+                                                   
+                                                </select>
+                                            </div>
+        
+                                            <div class="col-md-3 mb-3">
+                                                <label class="focus-label">Qualification<small>*</small></label>
+                                                <select class="form-select floating form-control" formControlName="qualification" >
+                                                
+                                                  <option value="">--Select--</option>
+                                                  <option >Q1</option>
+                                                  <option >Q2</option>
+                                               </select>
+                                              
+                                            </div>
+                                           <div class="col-md-3 mb-3">
+                                            <label >No. of Vacancy <small>*</small></label>
+                                            <input type="number" class="form-control" 
+                                                  required formControlName="noOfVacancy">
+                                            </div>
+        
+                                           
+                                            <div class="col-md-3 mb-3">
+                                                <label >Required Exp. <small>*</small></label>
+                                                <input type="number" class="form-control" 
+                                                      required formControlName="requiredExp">
+                                                </div>
+                                         
+                                                   
+                                                    <div class="col-md-3 mb-3" style="margin-top: auto;">
+                                                        <button class="btn btn-danger"  (click)="remove(i)">Remove</button>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                    </div>
+                                                    <div class="col-md-3 mb-3 add" >
+                                                        <a class="btn btn-success" (click)="addRequest()" ><i class="fas fa-plus"></i> Add </a>
+                                                    </div>
+    
+                                           
+                                          </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                              
+                              
+                                    </ng-container>
+    
+                                        </div>
+         
+                                  
+                                    <button class="btn btn-primary"  (click)="add()" >Submit</button>
+                                    <button class="btn "   (click)="hideContainer()" >Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+             </div>
+         </div>  
+    
+    
+    
+    
+    </div>
+</div>

@@ -1,0 +1,37 @@
+.card-img-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ebebeb;
+    background-color: white;
+    width: 130px !important;
+    height: 130px;
+    position: absolute;     
+    top: -300px;
+    left: -61px;
+}
+  img {
+    vertical-align: middle;
+}
+.footer{
+  color: azure;
+  bottom: 0px;
+  position: static;
+  text-align: center;
+  margin: auto;
+  z-index: 111;
+  background: #8fa6d4;
+  /* width: 100%; */
+}
+.social{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+.bck{
+  background-image: url('/assets/img/bck.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+}

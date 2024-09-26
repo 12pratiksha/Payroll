@@ -1,0 +1,646 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Candidate Evolution Form</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Candidate Evolution Form</li>
+
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+
+
+                <div class="card" style="background: #f7f6f5;">
+                    <div class="card-header" style="background: #f4baa7;height: 40px;">
+                        <h3>
+                            <div style="margin-left: 630px;width: 100%;">JOB DESCRIPTION</div>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="profile-basic">
+                                    <div class="row" *ngFor="let item of data1; let i = index">
+                                        <div class="col-md-6">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+
+                                                    <li>
+                                                        <div class="title">Position Name:</div>
+                                                        <div class="text">{{item.designation}}&nbsp;</div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="title">Department</div>
+                                                        <div class="text">{{item.department}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Experience</div>
+                                                        <div class="text">{{item.required_exp}} Year</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Expected Joining Date</div>
+                                                        <div class="text">{{item.expected_joining_date | date}}</div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="personal-info">
+
+                                                <li>
+                                                    <div class="title">Required Candidates:</div>
+
+                                                    <div class="text">{{item.no_of_vacancy}}</div>
+
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Location</div>
+                                                    <div class="text">{{item.location}} </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="title">Skill:</div>
+                                                    <div class="text">{{item.skills}}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Approved By:</div>
+                                                    <div class="text">{{item.firstName}} {{item.middleName}} {{item.lastName}}</div>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card" style="background: #f7f6f5;" *ngIf="pTechRDetails?.length>0">
+            <div class="card-header" style="background: #f4baa7;height: 40px;">
+                <h3>
+                    <div style="margin-left: 630px;width: 100%;">PREVIOUS TECHNICAL ROUND</div>
+                </h3>
+            </div>
+            <!-- <div class="card" >
+            <div class="card-header">
+                <h3 class="card-title mb-0"> Previous Technical Round Details </h3>
+
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="profile-basic">
+                            <div class="row" *ngFor="let item of pTechRDetails; let i = index">
+                                <div>
+                                    <h3>#Technical Round {{i+1}}</h3>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Round Name:</div>
+                                                <div class="text">{{item.round}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Evaluation Date:</div>
+                                                <div class="text">{{item.date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Interview Date:</div>
+                                                <div class="text">{{item.on_date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Job Knowledge:</div>
+                                                <div class="text">{{item.job_knowledge}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Candidate Enthusiasm:</div>
+                                                <div class="text">{{item.candidate_enthusiasm}}&nbsp;</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Personal Appearance:</div>
+                                                <div class="text">{{item.personal_appearance}}&nbsp;</div>
+                                            </li>
+
+
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Round Type:</div>
+                                            <div class="text">{{item.type}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interviewee:</div>
+                                            <div class="text">{{item.fname}} {{item.lname}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interview Time:</div>
+                                            <div class="text">{{item.at_time }}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Comments:</div>
+                                            <div class="text">{{item.comments}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Decision Making:</div>
+                                            <div class="text">{{item.decision_making}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title"> Overall Evaluation And Recommendation:</div>
+
+                                            <div class="text">{{item.overall_evaluation_and_recommendation}}&nbsp;</div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="background: #f7f6f5;" *ngIf="pHrRDetails?.length>0">
+            <div class="card-header" style="background: #f4baa7;height: 40px;">
+                <h3>
+                    <div style="margin-left: 630px;width: 100%;">PREVIOUS HR ROUND</div>
+                </h3>
+            </div>
+            <!-- <div class="card" >
+            <div class="card-header">
+                <h3 class="card-title mb-0"> Previous HR Round Details </h3>
+
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="profile-basic">
+                            <div class="row" *ngFor="let item of pHrRDetails; let i = index">
+                                <div>
+                                    <h3>#HR Round {{i+1}}</h3>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+
+                                            <li>
+                                                <div class="title">Round Name:</div>
+                                                <div class="text">{{item.round}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Evaluation Date:</div>
+                                                <div class="text">{{item.date | date}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Interview Date:</div>
+                                                <div class="text">{{item.on_date | date}}&nbsp;</div>
+                                            </li>
+
+
+                                            <li>
+                                                <div class="title">last_employer:</div>
+                                                <div class="text">{{item.last_employer}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Comments:</div>
+                                                <div class="text">{{item.additional_remarks}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Present Salary:</div>
+                                                <div class="text">{{item.present_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Expected Salary:</div>
+                                                <div class="text">{{item.expected_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Professional Presentation:</div>
+                                                <div class="text">{{item.professional_presentation}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Communication Skills:</div>
+                                                <div class="text">{{item.communication_skills}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Expected Salary:</div>
+                                                <div class="text">{{item.expected_salary}}&nbsp;</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Has Applied Before</div>
+                                                <div class="text">{{item.has_candidate_applied_before}}&nbsp;</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="personal-info">
+
+                                        <li>
+                                            <div class="title">Round Type:</div>
+                                            <div class="text">{{item.type}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interviewee:</div>
+                                            <div class="text">{{item.fname}} {{item.lname}}&nbsp;</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Interview Time:</div>
+                                            <div class="text">{{item.at_time }}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title"> Hiring Comments:</div>
+                                            <div class="text">{{item.hiring_comments}}&nbsp;</div>
+                                        </li>
+
+
+
+                                        <li>
+                                            <div class="title"> Other Benifits:</div>
+                                            <div class="text">{{item.other_benefits}}&nbsp;</div>
+                                        </li>
+
+
+                                        <li>
+                                            <div class="title">Reason For Leaving:</div>
+                                            <div class="text">{{item.reasonfor_leaving}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Additional Remarks:</div>
+                                            <div class="text">{{item.additional_remarks}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Present Salary:</div>
+                                            <div class="text">{{item.present_salary}}&nbsp;</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Salary Offered</div>
+                                            <div class="text">{{item.salary_offered}}&nbsp;</div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="showMyContainer==false"><i class="fas fa-plus"></i> Add New</a>
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a> </div>
+            </div>
+        </div> -->
+        <!-- <div class="row" *ngIf="showMyContainer==false ">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">Candidate Evolution List</h3>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="tableData?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>Position Applied for</th>
+                                        <th>Qualification</th>
+                                        <th>Salary Offered</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let item of tableData; let i = index">
+                                        <td>{{item.firstName}} {{item.surname}}</td>
+                                        <td>{{item.date | date:'dd-MM-YYYY'}}</td>
+                                        <td>{{item.positionAppliedfor}}</td>
+                                        <td>{{item.qualification}}</td>
+                                        <td>{{item.salaryOffered}}</td>
+
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <a class="fas fa-pen" (click)="edit(item)"></a>
+                                            <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title mb-0"> Candidate Evolution Form</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="candidateEvolutionForm">
+                                    <div class="form-row row">
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Date <small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="date" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
+                                            <small *ngIf="candidateEvolutionForm.get('date').invalid && candidateEvolutionForm.get('date').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>First Name<small class="text-danger">*</small></label>
+                                            <input readonly type="text" formControlName="firstName" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('firstName').invalid && candidateEvolutionForm.get('firstName').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Middle Name<small class="text-danger">*</small></label>
+                                            <input readonly type="text" formControlName="middleName" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('middleName').invalid && candidateEvolutionForm.get('middleName').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Last Name<small class="text-danger">*</small></label>
+                                            <input readonly type="text" formControlName="lastName" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('lastName').invalid && candidateEvolutionForm.get('lastName').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Position Applied For<small class="text-danger">*</small></label>
+                                            <input readonly type="text" formControlName="positionAppliedfor" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('positionAppliedfor').invalid && candidateEvolutionForm.get('positionAppliedfor').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Qualification<small class="text-danger">*</small></label>
+                                            <input readonly type="text" formControlName="qualification" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('qualification').invalid && candidateEvolutionForm.get('qualification').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Total Experience<small class="text-danger">*</small></label>
+                                            <input readonly type="text" formControlName="totalExperience" maxlength="2" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('totalExperience').invalid && candidateEvolutionForm.get('totalExperience').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Relevant Experience<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="relevantExperience" maxlength="2" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('relevantExperience').invalid && candidateEvolutionForm.get('relevantExperience').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Comments<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="comments" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('comments').invalid && candidateEvolutionForm.get('comments').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Last Employer<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="lastEmployer" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('lastEmployer').invalid && candidateEvolutionForm.get('lastEmployer').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Reason For Leaving<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="reasonforLeaving" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('reasonforLeaving').invalid && candidateEvolutionForm.get('reasonforLeaving').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Present Salary<small class="text-danger">*</small></label>
+                                            <input type="number" formControlName="presentSalary" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('presentSalary').invalid && candidateEvolutionForm.get('presentSalary').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Expected Salary<small class="text-danger">*</small></label>
+                                            <input type="number" formControlName="expectedSalary" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('expectedSalary').invalid && candidateEvolutionForm.get('expectedSalary').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Communication Skills<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="communicationSkills" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('communicationSkills').invalid && candidateEvolutionForm.get('communicationSkills').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Professional Presentation<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="professionalPresentation" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('professionalPresentation').invalid && candidateEvolutionForm.get('professionalPresentation').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Hr Additional Comments<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="hradditionalComments" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('hradditionalComments').invalid && candidateEvolutionForm.get('hradditionalComments').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Suitable Shift Timings<small class="text-danger">*</small></label>
+                                            <ng-select type="text" formControlName="suitableShiftTimings" class="form-control">
+                                                <ng-option value="">--Select--</ng-option>
+                                                <ng-option *ngFor="let item of shiftTimings" [value]=[{shiftName:item.name}]>{{item.name}}</ng-option>
+
+                                            </ng-select>
+                                            <small *ngIf="candidateEvolutionForm.get('suitableShiftTimings').invalid && candidateEvolutionForm.get('suitableShiftTimings').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Expected DOJ<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="expectedDOJ" [minDate]="date" class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }">
+                                            <small *ngIf="candidateEvolutionForm.get('expectedDOJ').invalid && candidateEvolutionForm.get('expectedDOJ').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Has Candidate Applied Before<small class="text-danger">*</small></label>
+                                            <select type="text" formControlName="hasCandidateAppliedBefore" class="form-select form-control">
+                                           <option value="">--Select--</option>
+                                           <option value="Yes">Yes</option>
+                                           <option value="No">No</option>
+                                           </select>
+                                            <small *ngIf="candidateEvolutionForm.get('hasCandidateAppliedBefore').invalid && candidateEvolutionForm.get('hasCandidateAppliedBefore').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Worked At IMH Before<small class="text-danger">*</small></label>
+                                            <select type="text" formControlName="workedAtIMHbefore" class="form-select form-control">
+                                                <option value="">--Select--</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option> 
+                                                </select>
+                                            <small *ngIf="candidateEvolutionForm.get('workedAtIMHbefore').invalid && candidateEvolutionForm.get('workedAtIMHbefore').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Overal Evaluation And Recommendation<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="overallEvaluationAndRecommendation" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('overallEvaluationAndRecommendation').invalid && candidateEvolutionForm.get('overallEvaluationAndRecommendation').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+
+
+
+
+
+                                        <!-- <div class="col-md-3 mb-3">
+                                            <label>HOD Additional Comments<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="hodAdditionalComments" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('hodAdditionalComments').invalid && candidateEvolutionForm.get('hodAdditionalComments').touched" class="text-danger"> *This Field is Required</small>
+                                        </div> -->
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Shift Timings Department Requirement<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="shiftTimingsDepartmentRequirement" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('shiftTimingsDepartmentRequirement').invalid && candidateEvolutionForm.get('shiftTimingsDepartmentRequirement').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <!-- <div class="col-md-3 mb-3">
+                                            <label>overallEvaluationAndRecommendation<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="overallEvaluationAndRecommendation" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('overallEvaluationAndRecommendation').invalid && candidateEvolutionForm.get('overallEvaluationAndRecommendation').touched" class="text-danger"> *This Field is Required</small>
+                                        </div> -->
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Hiring Comments<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="hiringComments" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('hiringComments').invalid && candidateEvolutionForm.get('hiringComments').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Management Comments<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="managementComments" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('managementComments').invalid && candidateEvolutionForm.get('managementComments').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Salary Offered<small class="text-danger">*</small></label>
+                                            <input type="number" formControlName="salaryOffered" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('salaryOffered').invalid && candidateEvolutionForm.get('salaryOffered').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Shifts Agreed On<small class="text-danger">*</small></label>
+                                            <select class="form-select form-control" formControlName="shiftsAgreedOn">
+                                                <option value=""></option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                         </select>
+
+
+                                            <!-- <input type="text" formControlName="shiftsAgreedOn" class="form-control"> -->
+                                            <small *ngIf="candidateEvolutionForm.get('shiftsAgreedOn').invalid && candidateEvolutionForm.get('shiftsAgreedOn').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Other Benefits<small class="text-danger">*</small></label>
+                                            <input type="text" formControlName="otherBenefits" class="form-control">
+                                            <small *ngIf="candidateEvolutionForm.get('otherBenefits').invalid && candidateEvolutionForm.get('otherBenefits').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Additional Remarks<small class="text-danger">*</small></label>
+                                            <textarea type="text" formControlName="additionalRemarks" value="" required class="form-control"></textarea>
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <small *ngIf="candidateEvolutionForm.get('additionalRemarks').invalid && candidateEvolutionForm.get('additionalRemarks').touched" class="text-danger"> *This Field is Required</small>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Selected or Not</label>
+                                            <select class="form-select form-control" formControlName="select" (change)="approve($event.target.value, item)">
+                                                <option value="3">On Hold</option>
+                                               <option value="1">Selected</option>
+                                               <option value="2">Not Selected</option>
+                                        </select>
+
+                                        </div>
+
+
+                                        <!-- <div class="col-md-4 mb-3">
+                                            <label>Status</label>
+                                            <input type="checkbox" class="checkbox-all ms-3" formControlName="status">
+                                        </div> -->
+
+
+
+                                    </div>
+                                    <button class="btn-primary" (click)="submit()"> Submit</button>&nbsp;
+                                    <!-- <button class="btn-primary" *ngIf="editId" (click)="update(editId)">Update</button>&nbsp; -->
+                                    <button class="btn-primary" (click)="cancel()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

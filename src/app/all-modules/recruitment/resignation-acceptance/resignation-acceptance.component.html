@@ -1,0 +1,252 @@
+<div class="page-wrapper">
+    <div class="content container-fluid ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-head-box">
+                    <h3>Resignation Acceptance</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/layout/recruitment/dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item">Recruitment</li>
+                            <li class="breadcrumb-item active" aria-current="page">Resignation Acceptance</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row filter-row" *ngIf="showMyContainer">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="add-emp-section">
+                    <a class="btn btn-success btn-add-emp" (click)="hideContainer()"><i class="fas fa-bars"></i> Show Table</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!showMyContainer">
+            <div class="col-md-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h2 class="card-title mb-0">Resignation Acceptance List</h2>
+                    </div>
+                    <div class="card-body" style="margin: 10px;">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table table-nowrap custom-table mb-0" *ngIf="tableData?.length!=0">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Last Working Day</th>
+                                        <th>Exit Concern</th>
+                                        <th>Other Info</th>
+                                        <th>Remark</th>
+                                        <th>Assets</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData">
+                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                        <td>{{item.last_working_day | date:'dd-MM-YYYY'}}</td>
+                                        <td>{{item.exit_interview_concern}}</td>
+                                        <td>{{item.other_info}}</td>
+                                        <td>{{item.remark==0 ? 'Rejected':'Accepted'}}</td>
+                                        <td>{{item.assets==yes? 'Recieved' :'Pending'}}</td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <div class="text-center">
+                                                <a class="fas fa-pen" (click)="edit(item)"></a>
+                                                <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table datatable [dtOptions]="dtOptions" class="table table-nowrap custom-table mb-0" *ngIf="tableData?.length==0">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Last Working Day</th>
+                                        <th>Exit Concern</th>
+                                        <th>Other Info</th>
+                                        <th>Remark</th>
+                                        <th>Assets</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of tableData">
+                                        <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                        <td>{{item.last_working_day | date:'dd-MM-YYYY'}}</td>
+                                        <td>{{item.exit_interview_concern}}</td>
+                                        <td>{{item.other_info}}</td>
+                                        <td>{{item.remark==0 ? 'Rejected':'Accepted'}}</td>
+                                        <td>{{item.assets==yes? 'Recieved' :'Pending'}}</td>
+                                        <td class="text-end ico-sec justify-content-end">
+                                            <div class="text-center">
+                                                <a class="fas fa-pen" (click)="edit(item)"></a>
+                                                <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="showMyContainer">
+            <div class="row">
+                <div class="card" style="margin-left: 10px;">
+                    <div class="card-body">
+                        <!-- <div class="card-header">
+                            <h2 style="margin-left: 40%;">Employee Details</h2>
+                        </div> -->
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5" style="font-size: 16px;">
+                                    <div class="profile-info-left">
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Employee Name:</div>
+                                                <div class="text">{{details.firstName}} {{details.middleName}} {{details.lastName}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Type:</div>
+                                                <div class="text">{{details.seperationType}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Resignation Date:</div>
+                                                <div class="text">{{details.dateOfResignation| date}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Reason:</div>
+                                                <div class="text">{{details.resignationReason}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-7" style="font-size: 16px;">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Actual Releaving Date:</div>
+                                            <div class="text">{{details.actualReleavingDate| date}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Request Releving Date:</div>
+                                            <div class="text">{{details.requestReleavingDate |date}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Remark:</div>
+                                            <div class="text">{{details.remark}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="resigationForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-3 mb-2">
+                                            <label class="focus-label"> Last Working Day <small>*(based on req. date)</small></label>
+                                            <div class="form-group form-focus mb-0">
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true }" formControlName="lastDate">
+                                                </div>
+                                                <small *ngIf="resigationForm.get('lastDate').invalid && resigationForm.get('lastDate').touched" class="text-danger">*This field is required</small>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- <div class="col-md-3 mb-3">
+                                            <label>Remark<small>*</small></label>
+                                            <select class="form-select form-control" formControlName="remark">
+                                                <option value="">--Select--</option>
+                                               <option value="1">Accept</option>
+                                               <option value="0">Reject</option>
+                                              </select>
+                                        </div> -->
+
+
+
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Department Clearance Doc</label>
+                                            <!-- <input type="checkbox" class="checkbox-all ms-5" formControlName="docClearance"> -->
+                                            <input type="file" class="form-control">
+                                            <!-- <input type="file" class="form-control" *ngIf="!resigationForm.value.docClearance" disabled> -->
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Exit Interview Concern</label>
+                                            <textarea type="text" class="form-control" formControlName="exitConcern"> </textarea>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label>Other Info</label>
+                                            <textarea type="text" class="form-control" formControlName="other"></textarea>
+
+                                        </div>
+
+                                        <!-- <div class="col-md-3 mb-3">
+                                            <label>Assets Assigned List</label>
+                                            <input type="checkbox" class="checkbox-all ms-5" formControlName="assets">
+                                        </div> -->
+
+                                    </div>
+
+                                    <button class="btn btn-primary" (click)="update()">Update</button>
+
+                                    <button class="btn" (click)="hideContainer()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-table">
+                <div class="card-header">
+                    <div>
+                        <button class="btn btn-primary" (click)="update1()">Update</button>
+                    </div>
+                    <h3 class="card-title mb-0"> Assets list</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-nowrap custom-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#Item Code</th>
+                                    <th> Item Type</th>
+                                    <th>Unit</th>
+                                    <th>Select</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of assetsList">
+                                    <td>{{item.assetAssignId}}</td>
+                                    <td>{{item.assetName}}</td>
+                                    <td>{{item.assetValue}}</td>
+                                    <td><input type="checkbox" class="checkbox-all ms-5" (change)="check1($event.target.checked,item)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

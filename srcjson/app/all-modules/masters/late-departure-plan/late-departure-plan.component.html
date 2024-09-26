@@ -1,0 +1,277 @@
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3 *ngIf="!showMyContainer">Late Departure Plan List</h3>
+               <h3 *ngIf="showMyContainer">Late Coming Plan Form</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Master</a></li>
+                       <li class="breadcrumb-item active" aria-current="page">Late Coming Policy</li>
+                       <li class="breadcrumb-item active" aria-current="page">Late Deduction Plan List</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-12">
+        <div class="add-emp-section">
+            <!-- <a class="btn btn-success btn-add-emp" (click)="showMyContainer=!showMyContainer">Create New</a> -->
+            <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus"></i>Create New </a>
+            <a class="btn btn-success btn-add-emp"  style="width: auto;" (click)="hideMyContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i> Show Table</a>
+        </div>
+       </div>
+   </div>
+
+   <div class="col-sm-12">
+    <div class="card mb-0">
+        <div class="col-sm-4 col-md-3"> 
+  <button class="ml-2"  (click)="exportToExcel()">Excel</button>
+  <button (click)="downloadAsPDF('sectionToPrint')">Print</button>
+  </div>
+  </div>
+  </div>
+
+   <!-- /Search Filter -->
+   <div class="row"  *ngIf="!showMyContainer">
+    <div class="col-sm-12">
+        <div class="card mb-0">
+            
+            <div class="card-body ">
+
+                <div class="table-responsive" id="sectionToPrint" #epltable>
+                   
+                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="departureDataTable">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style=" vertical-align: top;">Plan Name</th>
+                                <th rowspan="2" style=" vertical-align: top;">Late Exempt Days</th>
+                                <th rowspan="2" style=" vertical-align: top;">Every Late Days</th>
+                                <th colspan="6" style=" vertical-align: top;">Deduction Scale</th>
+                                <th class="text-end no-sort" rowspan="2">Edit</th>
+                                <th class="text-end no-sort" rowspan="2">Delete</th>
+                            </tr>
+                            <tr>
+                                <td>From</td>
+                                <td>To</td>
+                                <td>Deduction Type</td>
+                                <td>Leave Code</td>
+                                <td>Leave Value</td>
+                                <td>Deduct FromHour Worked</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of departureDataTable | keyvalue; let i = index">
+                                <td>{{item.value.planName}}</td>
+                                <td>{{item.value.lateExemptDays}}</td>
+                                <td>{{item.value.everylateDays}}</td>
+                                <td><div *ngFor="let details of item.value.lateDepartureDetails">{{details.lateMinutesFrom}}</div></td>
+                                <td><div *ngFor="let details of item.value.lateDepartureDetails">{{details.lateMinuteTo}}</div></td>
+                                <td><div *ngFor="let details of item.value.lateDepartureDetails">{{details.deductionType}}</div></td>
+                                <td><div *ngFor="let details of item.value.lateDepartureDetails">{{details.depatureLeave}}</div></td>
+                                <td><div *ngFor="let details of item.value.lateDepartureDetails">{{details.leaveValue}}</div></td>
+                                <td><div *ngFor="let details of item.value.lateDepartureDetails">{{details.deductHourWork}}</div></td>
+                                <td> 
+                                    <a  (click)="editDepartureForm(item.value.lateDepatureId)"><i class="fas fa-pen"></i></a>
+                                   
+                                </td>
+                                <td> 
+                                  
+                                    <a (click)="delete(item.value.lateDepatureId)"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                                </tr>
+                        </tbody>
+                       </table>
+                           
+                       <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!departureDataTable">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style=" vertical-align: top;">Plan Name</th>
+                                <th rowspan="2" style=" vertical-align: top;">Late Exempt Days</th>
+                                <th rowspan="2" style=" vertical-align: top;">Every Late Days</th>
+                                <th colspan="6" style=" vertical-align: top;">Deduction Scale</th>
+                                <th class="text-end no-sort" rowspan="2">Edit</th>
+                                <th class="text-end no-sort" rowspan="2">Delete</th>
+                            </tr>
+                            <tr>
+                                <td>From</td>
+                                <td>To</td>
+                                <td>Deduction Type</td>
+                                <td>Leave Code</td>
+                                <td>Leave Value</td>
+                                <td>Deduct FromHour Worked</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of departureDataTable | keyvalue; let i = index">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                </tr>
+                        </tbody>
+                       </table>
+                           
+                    
+                </div>
+               
+            </div>
+           
+        </div>
+    </div>
+    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+</div>
+   
+<!-- end of data table  -->
+
+
+<!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="!departureDataTable"> -->
+<!-- Late Departure Plan Form -->
+
+
+
+<div *ngIf="showMyContainer">
+    <div class="row" >
+        <div class="col-sm-12">
+          
+            <div class="card-body pt-0" >
+
+                <div class="card" >
+                    <h1 class="card-title mb-0">Late Departure Plan Form </h1>
+              <br>
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form [formGroup]="departurePlanForm">
+                        <div class="form-row row">
+                            <div class="col-md-4 mb-3">
+                                <label >Plan Name <small>*</small></label>
+                                <input type="text" class="form-control" formControlName="planName"> 
+                                <small *ngIf="departurePlanForm.get('planName').invalid && departurePlanForm.get('planName').touched ">Plan Name is Required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label >Late ExemptDays <small>*</small></label>
+                                <input type="number" class="form-control" formControlName="exemptDays"> 
+                                <small *ngIf="departurePlanForm.get('exemptDays').invalid && departurePlanForm.get('exemptDays').touched ">Late ExemptDays is Required</small>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>EveryLate Days</label>
+                                <input type="number" class="form-control" formControlName="everyLateDays"> 
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Status</label>
+                                <input type="checkbox" class="checkbox-all ms-5" formControlName="status"> 
+                            </div>
+                        </div>
+                        <!-- <button (click)="addQuantity()" class="btn btn-primary">Add More</button> -->
+                        <!-- <button class="btn btn-primary">Add line</button> -->
+                        <div >
+                       
+                        <table class="col-sm-12" formArrayName="quantities" >
+                            <!-- <tr>
+                              
+                              <th width="150px"></th>
+                            </tr> -->
+                            <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                              <td >
+                                  <label>From</label>
+                                  <input type="number" class="form-control" [format]=24  formControlName="lateMinutesFrom1" >
+                                  <!-- <select class="form-select form-control"  formControlName="lateMinutesFrom">
+                                    <option *ngFor="let item of minutes">{{item}}</option>
+                                  </select> -->
+                              </td>
+                              <td >
+                                <label>To</label>
+                                  <input type="number" class="form-control" formControlName="lateMinuteTo1">
+                                  <!-- <select class="form-select form-control"  formControlName="lateMinuteTo" >
+                                    <option *ngFor="let item of minutes">{{item}}</option>
+                                  </select> -->
+                              </td>
+                            
+                             <td >
+                                <label>DeductionTypeName</label>
+                                <select class="form-select form-control" formControlName="deductionType" >
+                                    <option value="">--Select--</option>
+                                     <option value="OnLeaveBasis">On LeaveBasis</option>
+                                     <option value="DeductOnHourWork">Deduct From WorkHour</option>
+                                </select>
+                               <!-- <div>{{departurePlanForm.value.quantities[i].deductionType}}</div>  -->
+                              </td>
+                             <td *ngIf="departurePlanForm.value.quantities[i].deductionType == ''" >
+                                <label>Leave Code</label>
+                                <select class="form-select form-control"   disabled>
+                                    <option value="">--Select--</option>
+                                     <option *ngFor="let item of leave" [value]="item.name" >{{item.name}}</option>
+                                 </select>
+                              </td>
+                              <td *ngIf="departurePlanForm.value.quantities[i].deductionType == ''">
+                                <label >Leave Half Name</label>
+                                <select class="form-select form-control" disabled>
+                                    <option value="">--Select--</option>
+                                     <option value="1">1</option>
+                                     <option value="0.5">0.5</option>
+                                </select>
+                              </td>
+                             
+                             <!--   <td *ngIf="departurePlanForm.value.quantities[i].deductionType == ''" >
+                                <label>Deduction From HourWork</label>
+                                <input type="time" class="form-control" disabled>
+                              </td> -->
+                             
+                              <td  *ngIf="departurePlanForm.value.quantities[i].deductionType == 'OnLeaveBasis'">
+                                <label >Leave Code</label>
+                                <select class="form-select form-control" formControlName="depatureLeave"  >
+                                    <option value="">--Select--</option>
+                                     <option *ngFor="let item of leave" [value]="item.name">{{item.name}}</option>
+                                 </select>
+                              </td>
+                              <td *ngIf="departurePlanForm.value.quantities[i].deductionType == 'OnLeaveBasis'">
+                                <label >Leave Half Name</label>
+                                <select class="form-select form-control" formControlName="leaveValue" >
+                                    <option value="">--Select--</option>
+                                     <option value="1">1</option>
+                                     <option value="0.5">0.5</option>
+                                </select>
+                              </td>
+                             
+                              <td  *ngIf="departurePlanForm.value.quantities[i].deductionType == 'DeductOnHourWork'">
+                                <label >Deduction From HourWork</label>
+                                <input type="number" formControlName="deductHourWork1"  class="form-control" readonly>
+                              </td>
+                              
+
+                              <!-- <td >
+                               
+                                  <button class="btn btn-danger" (click)="removeQuantity(i)" style="    margin-top: 24px;background-color: red; margin-left: 50px;">Remove</button>
+                              </td> -->
+                            </tr>
+                               
+
+                        </table>
+                        </div>
+                        <div style="display: flex; justify-content: center; margin-top: 20px;" class="col-md-12">
+                      <button *ngIf="editDepartureid==null" type="button" class="btn btn-primary" (click)="submitDepartureForm()">Submit</button>
+                      <button *ngIf="editDepartureid" type="button" class="btn btn-primary" (click)="updateDepartureForm()">Update</button>
+                      <button type="button" class="btn" (click)="cancel()">Cancel</button>
+                    </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Late Departure Plan Form -->
+

@@ -1,0 +1,95 @@
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Role Master</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">Masters</li>
+                        <li class="breadcrumb-item">Role Center</li>
+                        <li class="breadcrumb-item active" aria-current="page">Role Master </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+
+
+                <a class="btn btn-success btn-add-emp" (click)="showTable()"><i class="fas fa-bars"></i>Show Table</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h1 class="card-title mb-0">Role Master Form</h1>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" novalidate [formGroup]="roleForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Company Name<small>*</small></label>
+                                        <select formControlName="name" class="form-select form-control">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item of company" [value]="item.companyInformationId">{{item.companyName}}</option>
+                                </select>
+                                        <small *ngIf="roleForm.get('name').invalid && roleForm.get('name').touched">This Field is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Role Type <small>*</small></label>
+                                        <select class="form-select form-control" formControlName="roleType">
+                                 <option value="">--Select--</option>
+                                 <option >Administrator</option>
+                                 <option >Employee</option>
+                                </select>
+                                        <small *ngIf="roleForm.get('roleType').invalid && roleForm.get('roleType').touched">This Field is Required</small>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Role Name <small>*</small></label>
+                                        <input type="text" class="form-control" formControlName="roleName">
+                                        <small *ngIf="roleForm.get('roleName').invalid && roleForm.get('roleName').touched">This Field is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="type">Description </label>
+                                        <input type="text" class="form-control" formControlName="roleDescription">
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Status</label>
+                                        <input type="checkbox" class="checkbox-all ms-5" formControlName="status">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" (click)="submit()" *ngIf="editId == 'add';else other_content">Submit</button>
+                                <!-- <ng-template #other_content>  <button class="btn btn-primary" (click)="update()" >Update</button></ng-template> -->
+
+                                <button class="btn" (click)="cancel()">Cancel</button>
+
+                                <!-- <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only" id="loading"></span>
+                            </div>
+                        </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-roles *ngIf="editId !='add'" [formData]="roleForm"></app-roles>
+
+</div>

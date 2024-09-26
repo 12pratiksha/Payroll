@@ -1,0 +1,478 @@
+<!-- <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body style="font: 400 14px/20px Roboto, 'Helvetica Neue', sans-serif !important;
+letter-spacing: normal !important;
+letter-spacing: normal;"> -->
+
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+
+                <h3>Out Duty List</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Leaves</li>
+                        <li class="breadcrumb-item active" aria-current="page">Manage</li>
+                        <li class="breadcrumb-item active" aria-current="page">Out Duty Master</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="card tab-box mt-3">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                    <li class="nav-item"><a href="#oA" data-bs-toggle="tab" class="nav-link active">Out Duty Leave Applications</a></li>
+                    <!-- <li class="nav-item"><a href="#personalInfo" data-bs-toggle="tab" class="nav-link">Personal</a></li> -->
+                    <li class="nav-item" *ngIf="userType=='Admin' || userType=='Super Admin'|| rpStatus=='true'"><a href="#oAA" data-bs-toggle="tab" class="nav-link">Out Duty Leave Approve Applications</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="oA" class="pro-overview tab-pane fade show active">
+                <div class="row filter-row">
+                    <div class="col-md-12">
+                        <div class="add-emp-section">
+                            <a class="btn btn-success btn-add-emp" (click)="showContainer()" *ngIf="!showMyContainer"><i class="fas fa-plus" ></i>Create New</a>
+                            <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer"><i class="fas fa-bars"></i>Show Table</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="!showMyContainer">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="outDuty">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Applicable Date</th>
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <th>Reason</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of outDuty">
+                                                <td>{{item.employee_code}}</td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                <td>{{item.date | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{item.from_time | slice:0:5}}</td>
+                                                <td>{{item.to_time | slice:0:5}}</td>
+                                                <td>{{item.reason}}</td>
+                                                <td>{{item.final_status}}</td>
+
+                                                <td class="text-end ico-sec justify-content-end">
+                                                    <a (click)="editOutDuty(item.out_duty_master_id)"><i class="fas fa-pen" ></i></a>
+                                                    <a><i class="far fa-trash-alt" (click)="delete(item.out_duty_master_id)"></i></a>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" *ngIf="!outDuty">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Applicable Date</th>
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <th>Reason</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of outDuty">
+                                                <td>{{item.employeeCode}}</td>
+                                                <td>{{item.fullName}}</td>
+                                                <td>{{item.date | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{item.fromTime}}</td>
+                                                <td>{{item.toTime}}</td>
+                                                <td>{{item.reason}}</td>
+                                                <td>{{item.finalStatus}}</td>
+
+                                                <td class="text-end ico-sec justify-content-end">
+                                                    <a (click)="editOutDuty(item.outDutyMasterId)"><i class="fas fa-pen" ></i></a>
+                                                    <a><i class="far fa-trash-alt" ></i></a>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                    </div>
+                </div>
+
+                <div *ngIf="showMyContainer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <h4 class="card-title mb-0">Out Duty Entry </h4>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <form [formGroup]="onDutyForm">
+                                                <div class="form-row row">
+                                                    <!-- <div class="col-md-4 mb-3">
+                                <label>Employee</label>
+                                <select class="form-select form-control" formControlName="employeeId">
+                                    <option value="">--Select--</option>
+                                     <option *ngFor="let item of employee" [value]="item.employeeId">[{{item.employeeId}}] {{item.firstName}} {{item.lastName}}</option>
+                                 </select>
+                                
+                            </div> -->
+
+                                                    <!-- <div class="col-md-4 mb-3" style="position: relative">
+                               
+                                <label class="form-label">Employee</label>
+                                <input  list="datalistOptions" >
+                                <datalist id="datalistOptions"  style="position: absolute" >
+                                <option *ngFor="let item of employee" [value]="item.employeeId"> {{item.firstName}} {{item.lastName}}</option>
+                                </datalist>
+                            </div> -->
+
+                                                    <div class="col-md-4 mb-3"  *ngIf="userType!='Admin'">
+                                                        <label class="">Employee <small>*</small></label>
+                                                        <ng-select class="form-select form-control" formControlName="employeeId">
+                                                            <ng-option value="">--Select--</ng-option>
+                                                            <ng-option *ngFor="let item of employee" [value]="item.employeeId">[{{item.employeeCode}}]{{item.firstName}} {{item.lastName}}</ng-option>
+                                                        </ng-select>
+                                                        <small *ngIf="onDutyForm.get('employeeId').invalid && onDutyForm.get('employeeId').touched" class="text-danger"> *Date is Required</small>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3" *ngIf="userType=='Admin'">
+                                                        <label class="">Employee<small> *</small></label>
+                                                        <mat-form-field class="example-full-width" appearance="outline">
+                                                            <input type="text" placeholder="--Select--" matInput [matAutocomplete]="employee_data" (keyup)="getEmpList($event)" [ngModel]="selected" formControlName="employeeId">
+                                                            <mat-autocomplete class="matautocss" #employee_data="matAutocomplete" style="padding: 1px;">
+                                                                <mat-option *ngFor="let data of employee1" [value]="data.employeeId" (click)="displayEmp(data.employeeCode,data.firstName,data.lastName)">
+                                                                    <span>[{{data.employeeCode}}] {{data.firstName}} {{data.middleName}} {{data.lastName}}</span>
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+                                                        </mat-form-field>
+                                                        <small *ngIf="onDutyForm.get('employeeId').invalid && onDutyForm.get('employeeId').touched">Employee is required</small>
+                                                    </div>
+
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <label class="focus-label">Date <small>*</small></label>
+                                                        <div class="form-group form-focus mb-0">
+                                                            <div class="cal-icon">
+                                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                                            </div>
+                                                            <small *ngIf="onDutyForm.get('date').invalid && onDutyForm.get('date').touched" class="text-danger"> *Date is Required</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label>From Time <small>*</small></label>
+                                                        <div class="cs-form">
+                                                            <input type="time" step="1" class="form-control" formControlName="fromTime">
+                                                        </div>
+                                                        <small *ngIf="onDutyForm.get('fromTime').invalid && onDutyForm.get('fromTime').touched" class="text-danger"> *From Time is Required</small>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label>To Time <small>*</small></label>
+                                                        <div class="cs-form">
+                                                            <input type="time" step="1" class="form-control" formControlName="toTime">
+                                                        </div>
+                                                        <small *ngIf="onDutyForm.get('toTime').invalid && onDutyForm.get('toTime').touched" class="text-danger"> *To TIme is Required</small>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label>Reason <small>*</small></label>
+                                                        <div class="cs-form">
+                                                            <input type="text" class="form-control" formControlName="reason">
+                                                        </div>
+                                                        <small *ngIf="onDutyForm.get('reason').invalid && onDutyForm.get('reason').touched" class="text-danger"> Reason is Required</small>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <button class="btn btn-primary" *ngIf="Id" (click)="update()">Update</button>
+                                            <button class="btn btn-primary" *ngIf="(Id == undefined)" (click)="submit()">Submit</button>
+                                            <button class="btn " (click)="cancel()">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="oAA" class="pro-overview tab-pane fade">
+
+                <div class="row filter-row">
+                    <div class="col-md-12">
+                        <form [formGroup]="filterForm">
+                            <div class="row" style="height: 64px; margin-top: 4px;">
+
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group form-focus mb-0">
+                                        <label>Employee <small class="text-danger">*</small></label>
+                                        <ng-select class="form-select form-control" formControlName="employee">
+                                            <ng-option value="">--Select--</ng-option>
+                                            <ng-option [value]="item.employeeId" *ngFor="let item of employee">[{{item.employeeCode}}] {{item.firstName}} {{item.lastName}}</ng-option>
+
+                                        </ng-select>
+                                        <small *ngIf="filterForm.get('employee').invalid && filterForm.get('employee').touched" class="text-danger"> *Employee Name is Required</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group form-focus mb-0">
+                                        <label>FromDate </label>
+                                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="fromDate">
+                                        <small *ngIf="filterForm.get('fromDate').invalid && filterForm.get('fromDate').touched" class="text-danger"> *From Date is Required</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group form-focus mb-0">
+                                        <label>ToDate</label>
+                                        <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="toDate">
+                                        <small *ngIf="filterForm.get('toDate').invalid && filterForm.get('toDate').touched" class="text-danger"> *To Date is Required</small>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-6 col-md-3" style=" margin-top: 6px;">
+                                    <a class="btn btn-success btn-search" (click)="search()"><i class="fas fa-search me-2"></i> Search <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></a>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+                            <div class="card-body">
+
+                                <div class="table-responsive" *ngIf="outDutyLeaves?.length!=0 && filterId?.length==0">
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                        <thead>
+                                            <caption><b>Out Duty Leaves</b></caption>
+                                            <tr>
+
+                                                <th>Reason</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Applicable Date</th>
+                                                <!-- <th >Leave Code</th> -->
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <!-- <th >Total Days</th> -->
+                                                <th>Status</th> 
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <ng-container>
+                                                <tr *ngFor="let item of outDutyLeaves| slice:0:20;">
+                                                    <td (click)="item.isExpanded = !item.isExpanded">
+                                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                    </td>
+                                                    <td>
+                                                        {{item.employeeCode}}
+                                                        <div *ngIf="item.isExpanded">
+                                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                                    </td>
+                                                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                    <td>{{item.date | date:'dd-MM-yyyy' }}</td>
+                                                    <!-- <td>{{item.leaveType}}</td> -->
+                                                    <td>{{item.fromTime }}</td>
+                                                    <td>{{item.toTime }}</td>
+                                                    <!-- <td>{{item.totalDays}}</td> -->
+                                                    <td>
+                                                        <select style="border: none;" [(ngModel)]="item.status" (change)="approveOutDutyLeaves($event.target.value, item)">
+                                    <!-- <option value="">{{item.status}}</option> -->
+                                    <!-- <option *ngFor="let item of options" [value]="item.value">{{item.value}}</option> -->
+                                    
+                                    <option value="1">Approve</option>
+                                    <option value="2">Rejected</option>
+                                    <option value="0">Pending</option>
+                                </select></td>
+                                                </tr>
+
+                                            </ng-container>
+
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+                            <div class="card-body">
+
+                                <div class="table-responsive" *ngIf="filterId?.length!=0">
+                                    <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0">
+                                        <thead>
+                                            <caption><b>Out Duty Leaves</b></caption>
+                                            <tr>
+
+                                                <th>Reason</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Applicable Date</th>
+                                                <!-- <th >Leave Code</th> -->
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <!-- <th >Total Days</th> -->
+                                                <th>Status</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <ng-container>
+                                                <tr *ngFor="let item of filterId">
+                                                    <td (click)="item.isExpanded = !item.isExpanded">
+                                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                    </td>
+                                                    <td>
+                                                        {{item.employee_code}}
+                                                        <div *ngIf="item.isExpanded">
+                                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                                    </td>
+                                                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                    <td>{{item.date | date:'dd-MM-yyyy' }}</td>
+                                                    <!-- <td>{{item.leaveType}}</td> -->
+                                                    <td>{{item.from_time }}</td>
+                                                    <td>{{item.to_time }}</td>
+                                                    <!-- <td>{{item.totalDays}}</td> -->
+                                                    <td>
+                                                        <select style="border: none;" [(ngModel)]="item.final_status" (change)="approveOutDutyLeaves1($event.target.value, item)">
+                                    <!-- <option value="">{{item.status}}</option> -->
+                                    <!-- <option *ngFor="let item of options" [value]="item.value">{{item.value}}</option> -->
+                                    
+                                    <option value="1">Approve</option>
+                                    <option value="2">Rejected</option>
+                                    <option value="0">Pending</option>
+                                </select></td>
+                                                </tr>
+
+                                            </ng-container>
+
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card mb-0">
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table datatable [dtOptions]="dtOptions" *ngIf="outDutyLeavesHistory?.length!=0" class="datatable table table-stripped mb-0">
+                                        <thead>
+                                            <caption><b>Approved Out Duty Leaves</b></caption>
+                                            <tr>
+
+                                                <th>Reason</th>
+                                                <th>Employee ID</th>
+                                                <th>Employee Name</th>
+                                                <th>Applicable Date</th>
+                                                <!-- <th >Leave Code</th> -->
+                                                <th>From Time</th>
+                                                <th>To Time</th>
+                                                <!-- <th >Total Days</th> -->
+                                                <th>Status</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <ng-container>
+
+                                                <tr *ngFor="let item of outDutyLeavesHistory">
+                                                    <td (click)="item.isExpanded = !item.isExpanded">
+                                                        <i class="fa fa-plus-circle" aria-hidden="true" style="color:green" *ngIf="!item.isExpanded"></i>
+                                                        <i class="fa fa-minus-circle" aria-hidden="true" style="color:green" *ngIf="item.isExpanded"></i>
+                                                    </td>
+                                                    <td>
+                                                        {{item.employee_id}}
+                                                        <div *ngIf="item.isExpanded">
+                                                            <span style="font-weight: 700;">Reason: </span> <span>{{item.reason}}</span></div>
+                                                    </td>
+                                                    <td>{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
+                                                    <td>{{item.date | date:'dd-MM-yyyy' }}</td>
+
+                                                    <td>{{item.from_time }}</td>
+                                                    <td>{{item.to_time }}</td>
+
+                                                    <td>
+                                                        {{item.status == 0? 'Pending':item.status == 1? 'Approved':'Rejected'}}
+                                                    </td>
+
+
+                                                </tr>
+
+                                            </ng-container>
+
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>

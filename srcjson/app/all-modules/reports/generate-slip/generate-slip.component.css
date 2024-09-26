@@ -1,0 +1,22 @@
+@media sectionToPrint 
+{
+   @page
+   {
+    size: 8.5in 5.5in;
+    
+  }
+  img {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust:exact;
+}
+}
+img {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust:exact;
+
+}
+
+th{
+  padding-left:5px !important;
+  
+}

@@ -1,0 +1,344 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Add Meeting Feedback</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Meeting</li>
+                        <li class="breadcrumb-item active" aria-current="page">Meeting Feedback</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="card tab-box mt-3">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom pt-3 pb-2">
+                    <li class="nav-item"><a href="#lA" data-bs-toggle="tab" class="nav-link active">Assigned Task </a></li>
+                    <li class="nav-item"><a href="#lAA" data-bs-toggle="tab" class="nav-link">Assigned Task Of Other Employee</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div id="lA" class="pro-overview tab-pane fade show active">
+                <div>
+                    <div class="row" *ngIf="showMyContainer==false && userType!='Admin'">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="allUpdate1">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Meeting Title</th>
+                                                    <th>Next Meetng Date</th>
+                                                    <th>Next Meeting Time</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of allUpdate1; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{item.title}}</td>
+                                                    <td>{{item.next_meeting_date | date}}</td>
+                                                    <td>{{item.next_meetingtime}}</td>
+                                                    <td>{{item.status==1? 'Completed':item.status==0? 'Pending':item.status==2?'Hold':item.status==3?'Reassign':'Approve'}}</td>
+                                                    <td class="text-start ico-sec d-flex justify-content-center" *ngIf="item.status==0 || item.status==3">
+                                                        <button class="btn-primary" (click)="addTaskUpdate(item)">Add Task Update</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="row filter-row" *ngIf="showMyContainer==true">
+                        <div class="col-md-12">
+
+                            <div class="add-emp-section">
+                                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" *ngIf="showMyContainer==true"><i class="fas fa-bars"></i> Show Table</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left: -2px;">
+                        <div class="card" *ngIf="showMyContainer==true">
+                            <div class="card-body">
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5" style="font-size: 16px;">
+                                            <div class="profile-info-left">
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <div class="title">Meeting Title:</div>
+                                                        <div class="text">{{data.title}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Date:</div>
+                                                        <div class="text">{{data.next_meeting_date|date}}</div>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-7" style="font-size: 16px;">
+                                            <ul class="personal-info">
+
+
+                                                <li>
+                                                    <div class="title">Time:</div>
+                                                    <div class="text">{{data.next_meetingtime}}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Description:</div>
+                                                    <div class="text">{{data.description}}</div>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left: -2px; margin-top: -17px;">
+                        <div class="card" *ngIf="showMyContainer==true ">
+                            <div class="card-body">
+
+                                <div class="col-sm">
+                                    <form class="needs-validation" [formGroup]="updateTaskForm">
+                                        <div class="form-row row">
+
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Date<small class="text-danger">*</small></label>
+                                                <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                                                <span *ngIf="updateTaskForm.get('date').invalid && updateTaskForm.get('date').touched" class="text-danger">*This field is required</span>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Remark</label>
+                                                <input type="text" class="form-control" formControlName="remark">
+
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <label>Task Update<small class="text-danger">*</small></label>
+                                                <select class="form-select form-control" formControlName="task">
+                        <option value="">--Select--</option>
+                        <option value="1">Completed</option>
+                        <option value="0">Pending</option>
+                        <option value="2">Hold</option>
+                        </select>
+                                                <span *ngIf="updateTaskForm.get('task').invalid && updateTaskForm.get('task').touched" class="text-danger">*This field is required</span>
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                        <button class="btn btn-primary" (click)="submit(editId)">Submit</button>
+                                        <button class="btn" (click)="cancel()">Cancel</button>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div id="lAA" class="pro-overview tab-pane fade">
+                <div class="row" *ngIf="showMyContainer==false && usertype=='Admin' || usertype=='Super Admin'">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="allUpdate1">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Title</th>
+                                                <th>Next Meeting Date</th>
+                                                <th>Next Meeting Time</th>
+                                                <th>Assign Employee</th>
+                                                <th>Meeting Created By</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of allUpdate1; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.title}}</td>
+                                                <td>{{item.next_meeting_date | date}}</td>
+                                                <td>{{item.next_meetingtime}}</td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}} </td>
+                                                <td>{{item.cfirstName}} {{item.cmiddleName}} {{item.clastName}}</td>
+                                                <td>{{item.status==1? 'Completed':item.status==0? 'Pending':item.status==2?'Hold':item.status==3?'Reassign':'Approve'}}</td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.status" (change)="approve($event.target.value, item)">
+                                                    <option value=" ">--Select--</option>
+                                                    <option value="4">Approve</option>
+                                                    <option value="3">Reassign</option>
+                                                    </select>
+                                                </td>
+                                                <!-- <td class="text-start ico-sec justify-content-end">
+                                                    <a class="fas fa-pen" (click)="edit(item)"></a>
+                                                    <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="userType!='Admin'">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table datatable [dtOptions]="dtOptions" class="table custom-table datatable" *ngIf="assignTask">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Title</th>
+                                                <th>Next Meetng Date</th>
+                                                <th>Next Meeting Time</th>
+                                                <th>Assign Employee</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of assignTask; let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.title}}</td>
+                                                <td>{{item.next_meeting_date | date}}</td>
+                                                <td>{{item.next_meetingtime}}</td>
+                                                <td>{{item.firstName}} {{item.middleName}} {{item.lastName}} </td>
+                                                <td>{{item.status==1? 'Completed':item.status==0? 'Pending':item.status==2?'Hold':item.status==3?'Reassign':'Approve'}}</td>
+                                                <td>
+                                                    <select style="border: none;" [(ngModel)]="item.status" (change)="approve($event.target.value, item)">
+                                                    <option value=" ">--Select--</option>
+                                                    <option value="4">Approve</option>
+                                                    <option value="3">Reassign</option>
+                                                    </select>
+                                                </td>
+                                                <!-- <td class="text-start ico-sec justify-content-end">
+                                                    <a (click)="delete(item)"><i class="far fa-trash-alt"></i></a>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- <div class="card" *ngIf="showMyContainer==true && usertype=='Admin' || usertype=='Super Admin'">
+        <div class="card-body">
+
+            <div class="col-sm">
+                <form class="needs-validation" [formGroup]="meetingFeedbakForm">
+                    <div class="form-row row">
+
+
+                        <div class="col-md-3 mb-3">
+                            <label>Date<small class="text-danger">*</small></label>
+                            <input class="form-control floating datetimepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" formControlName="date">
+                            <span *ngIf="meetingFeedbakForm.get('date').invalid && meetingFeedbakForm.get('date').touched" class="text-danger">*This field is required</span>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Time<small class="text-danger">*</small></label>
+                            <input type="time" step="1" class="form-control" formControlName="time">
+                            <span *ngIf="meetingFeedbakForm.get('time').invalid && meetingFeedbakForm.get('time').touched" class="text-danger">*This field is required</span>
+
+                        </div>
+
+                        <div class="card" style="margin: 5px;">
+                            <div class="col-md-3 mb-3">
+
+                                <button let i=index; class="fa fa-plus add" (click)="addRequest()">Add Description</button>
+                            </div>
+
+
+                            <ng-container formArrayName="meetingDesc" *ngFor="let item of quantities().controls; let i = index;">
+                                <div class="row" [formGroupName]="i">
+
+                                    <div class="col-md-3 mb-3">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" formControlName="description">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label>Employee</label>
+                                        <div>
+                                            <ngx-bootstrap-multiselect class="multselect " [options]="employee" [(ngModel)]="optionsModel" [value]="employee.id" formControlName="employeeId" [texts]="myTexts" [settings]="mySettings">
+
+                                            </ngx-bootstrap-multiselect>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-3 mb-3" style="margin-top: 20px;">
+                                        <button class="btn btn-primary" (click)="remove(i)">Remove Details</button>
+                                    </div>
+                                </div>
+
+
+
+
+                            </ng-container>
+                        </div>
+
+
+
+                    </div>
+                    <button class="btn btn-primary" *ngIf="!editId" (click)="submit()">Submit</button>
+                    <button class="btn btn-primary" (click)="updateForm(editId)" *ngIf="editId">Update</button>
+                    <button class="btn" (click)="cancel()">Cancel</button>
+                </form>
+            </div>
+
+        </div>
+    </div> -->

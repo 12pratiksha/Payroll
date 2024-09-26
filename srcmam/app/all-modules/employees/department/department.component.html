@@ -1,0 +1,167 @@
+<div class="content container-fluid">
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Sub-Department</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">General Setup</a></li>
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Departments</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sub-Department</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" (click)="showMyContainer()" style="width: auto;" *ngIf="mycontainer==false"><i class="fas fa-plus"></i> Add New</a>
+                <a class="btn btn-success btn-add-emp" (click)="hideContainer()" style="width: auto;" *ngIf="mycontainer==true"><i class="fas fa-plus"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="mycontainer==false">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-body">
+                    <table datatable [dtOptions]="dtOptions" class="table datatable" *ngIf="subDepartments?.length!=0">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;">#</th>
+                                <th>State Name</th>
+                                <th>Branch Name</th>
+                                <th>Department Name</th>
+                                <th>Sub-Department Name</th>
+                                <th>Status</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of subDepartments; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.state}}</td>
+                                <td>{{item.branch}}</td>
+                                <td>{{item.departmentName}}</td>
+                                <td>{{item.subDepartmentName}}</td>
+                                <td><span>{{(item.status==true)?'Active':'Inactive'}}</span></td>
+
+                                <td class="text-end ico-sec d-flex justify-content-end">
+                                    <a (click)="edit(item.subDepartmentId)"><i class="fas fa-pen"></i></a>
+                                    <a (click)="delete(item.subDepartmentId)"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped custom-table datatable mb-0" *ngIf="subDepartments?.length==0">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;">#</th>
+
+                                <th>State Name</th>
+                                <th>Branch Name</th>
+                                <th>Department Name</th>
+                                <th>Sub-Department Name</th>
+                                <th>Status </th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of subDepartments; let i = index">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="mycontainer==true">
+        <div class="col-sm-12">
+
+            <!-- Custom Boostrap Validation -->
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title mb-0">Sub-Department Master Form</h1>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="subDepartmentForm">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">State</label>
+                                        <select class="form-select floating form-control" formControlName="state">
+                                                <option value=""></option>
+                                                <option  *ngFor="let item of states" [value]="item.stateId">{{item.stateName}}</option>
+                                            </select>
+
+
+                                        <small *ngIf="subDepartmentForm.get('state').invalid && subDepartmentForm.get('state').touched" class="text-danger"> *State is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Branch</label>
+                                        <select class="form-select floating form-control" formControlName="branch" (change)="getDepartment()">
+                                                  <option value=""></option>
+                                                  <option  *ngFor="let item of branch" [value]="item.id">{{item.branchName}}</option>
+                                              </select>
+
+
+                                        <small *ngIf="subDepartmentForm.get('branch').invalid && subDepartmentForm.get('branch').touched" class="text-danger"> *Branch is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Department</label>
+                                        <select class="form-select floating form-control" formControlName="departmentName">
+                                            <option value="">--Select--</option>
+                                            <option  *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>
+                                        </select>
+                                        <small *ngIf="subDepartmentForm.get('departmentName').invalid && subDepartmentForm.get('departmentName').touched" class="text-danger"> *Department is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Sub-Department Name</label>
+                                        <input type="text" formControlName="subDepartment" class="form-control">
+                                        <small *ngIf="subDepartmentForm.get('subDepartment').invalid && subDepartmentForm.get('subDepartment').touched" class="text-danger"> *Sub-Department is Required</small>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="focus-label">Status</label>
+                                        <select class="form-select floating form-control" formControlName="status">
+                                                  
+                                                  <option selected value="true">Active</option>
+                                                  <option value="false">Inactive</option>
+                                              </select>
+                                        <small *ngIf="subDepartmentForm.get('status').invalid && subDepartmentForm.get('status').touched" class="text-danger"> *Status is Required</small>
+                                    </div>
+                                </div>
+
+
+
+                                <button [disabled]="submitLoader" class="btn btn-primary" *ngIf="update" (click)="updateSubDepartment()">Update  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button [disabled]="submitLoader" class="btn btn-primary" (click)="addSubDepartment()" *ngIf="!update">Submit<img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn " (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->

@@ -1,0 +1,158 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Designations</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item">General Setup</li>
+                        <li class="breadcrumb-item">Designations</li>
+                        <li class="breadcrumb-item active" aria-current="page">Designations</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="showMyContainer()" *ngIf="!mycontainer"><i class="fas fa-plus"></i>Create New</a>
+                <a class="btn btn-success btn-add-emp" style="width: auto;" (click)="hideMyContainer()" *ngIf="mycontainer"><i class="fas fa-bars"></i> Show Table</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+
+    <div class="row">
+        <div class="col-md-12" *ngIf="!mycontainer">
+
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="datatable table table-stripped mb-0" id="datatable" *ngIf="lstDesignation">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px;">#</th>
+                                    <th>Designation </th>
+                                    <th>Description </th>
+                                    <th>Reporting </th>
+                                    <th>Status </th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of lstDesignation; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.description}}</td>
+                                    <td>{{item.reporting}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td class="text-end ico-sec d-flex justify-content-end">
+                                        <a (click)="edit(item.designationMasterId)"><i class="fas fa-pen"></i></a>
+                                        <a (click)=deleteDesignation(item.designationMasterId)><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table datatable [dtOptions]="dtOptions" class="table datatable" *ngIf="!lstDesignation">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px;">#</th>
+                                    <th>Designation </th>
+                                    <th>Description </th>
+                                    <th>Reporting </th>
+                                    <th>Status </th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of lstDesignation; let i=index">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader">
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="mycontainer==true">
+            <div class="col-sm-12">
+
+                <!-- Custom Boostrap Validation -->
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title mb-0">Designation Master Form</h1>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <form class="needs-validation" novalidate [formGroup]="designationForm">
+                                    <div class="form-row row">
+                                        <div class="col-md-4 mb-3">
+                                            <label class="focus-label">Name <small style="color: red;">*</small></label>
+                                            <input type="text" formControlName="name" class="form-control">
+                                            <small *ngIf="designationForm.get('name').invalid && designationForm.get('name').touched" class="text-danger"> *Name is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="focus-label">Description</label>
+                                            <input type="text" formControlName="description" class="form-control">
+                                            <small *ngIf="designationForm.get('description').invalid && designationForm.get('description').touched" class="text-danger"> *Description is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="focus-label">Reporting</label>
+
+                                            <select class="form-select floating form-control" formControlName="reporting">
+                                                <option value="">--Select--</option>
+                                                <option *ngFor="let item of lstDesignation" [value]="item.designationMasterId">{{item.name}}</option>
+                                            </select>
+                                            <small *ngIf="designationForm.get('reporting').invalid && designationForm.get('reporting').touched" class="text-danger"> *Reporting is Required</small>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="focus-label">Status</label>
+                                            <select class="form-select floating form-control" formControlName="status">
+                                                 
+                                                  <option value="true">Active</option>
+                                                  <option value="false">Inactive</option>
+                                              </select>
+                                            <small *ngIf="designationForm.get('status').invalid && designationForm.get('status').touched" class="text-danger"> *Status is Required</small>
+                                        </div>
+                                    </div>
+
+
+
+                                    <button class="btn btn-primary" *ngIf="update" (click)="updateDesignation()">Update</button>
+                                    <button class="btn btn-primary" (click)="addDesignation()" *ngIf="!update">Submit </button>
+                                    <button class="btn " (click)="cancel()">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="!lstDesignation">  -->
+
+
+
+
+    <!-- Delete Designation Modal -->
+
+    <!-- /Delete Designation Modal -->

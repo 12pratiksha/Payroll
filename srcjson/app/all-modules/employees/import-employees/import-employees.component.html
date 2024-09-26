@@ -1,0 +1,139 @@
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Import Employee</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Import Employees</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="add-emp-section">
+               
+                <a class="btn btn-success btn-add-emp"  style="width: auto;"  routerLink="/layout/employees/employeelist"><i class="fas fa-bars"></i>Show Table</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12">
+    
+            <!-- Custom Boostrap Validation -->
+            <div class="card" >
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Import Employees</h5>
+                </div>
+                <div class="card-body" > 
+                    <div class="row">
+                        <div class="col-sm">
+                            <form class="needs-validation" [formGroup]="employeeImport">
+                                <div class="form-row row">
+                                    <div class="col-md-4 mb-3">
+                                      <label class="focus-label">Choose File</label>
+                                      <input class="form-control" #myInput type="file" (change)="onChange($event)" class="form-control"> 
+                                        <!-- <small
+                                        *ngIf="subDepartmentForm.get('state').invalid && subDepartmentForm.get('state').touched"
+                                        class="text-danger"> *State is Required</small> -->
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                   <button class="btn btn-primary" (click)="getSheet()" [disabled]="disabled" style="margin-top: 18px;">Get Sheet<img  src="/assets/img/loader/button.gif"  *ngIf="getsheet" style="width: 15px; height:15px;"></button>
+                                   <!-- <button class="btn btn-primary" href="/assets/Excle/employees.xlsx" [disabled]="disabled">Get Sheet</button> -->
+                                   <!-- <a href="/assets/Excle/employees.xlsx" class="btn btn-primary">test</a> -->
+
+                                   <button class="download btn btn-success ;"  (click)="exportexcel()" style="margin-left: 10px; margin-top: 18px;"><i class="fas fa-download"></i></button>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <!-- <label  >Given For</label>
+                                        <select class="form-select form-control" formControlName="givenFor" [disabled]="disabled">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let item of sheet" [value]="item.lastName+'~' +item.firstName">{{item.firstName}}</option>
+                                        </select> -->
+                                    </div>
+                                    <div class="col-md-4 mb-3" *ngIf="sheet">
+                                        <label  >Given For</label>
+                                        <select class="form-select form-control" formControlName="givenFor" [disabled]="disabled">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let item of sheet" [value]="item.lastName+'~' +item.firstName">{{item.firstName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+    
+                             
+                                
+                                <!-- <button class="btn btn-primary" *ngIf="update" (click)="updateSubDepartment()">Update</button> -->
+                                <button class="btn btn-primary"   (click)="submit()" [disabled]="disabled"> Submit  <img  src="/assets/img/loader/button.gif"  *ngIf="submitLoader" style="width: 15px; height:15px;"></button>
+                                <button class="btn " (click)="cancel()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+         </div>
+     </div> 
+
+     <!-- <div  class="card"  *ngIf="message" [ngStyle]="{color: message.status=='207'?'red':'blue'}"> 
+       {{message.message}}
+    </div> -->
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0" style="color: red;">{{errorMessage}}</h5>
+        </div>
+    </div>
+
+     </div>
+
+     <div style=" margin: auto; width: 50%;" style="display: none;">
+        
+        <table id="excel-table">
+          <tr>
+            <th>employeeCode</th>
+            <th>lastName</th>
+            <th>firstName</th>
+            <th>middleName</th>
+            <th>gender</th>
+            <th>dateOfBirth</th>
+            <th>dateOfJoining</th>
+            <th>companyEmailId</th>
+            <th>personalEmailId</th>
+            <th>state</th>
+            <th>branch</th>
+            <th>company</th>
+            <th>category</th>
+            <th>department</th>
+            <th>subdepartment</th>
+            <th>designation</th>
+            <th>rfidCardNo</th>
+            <th>una</th>
+            <th>aadhaarCardNo</th>
+            <th>reportingManager</th>
+            <th>reportingManager2</th>
+            <th>grade</th>
+            <th>ptApplicable</th>
+            <th>esIApplicable</th>
+            <th>pfno</th>
+            <th>otApplicable</th>
+            <th>paymentMethod</th>
+            <th>payeename</th>
+            <th>bankname</th>
+            <th>bankBranchName</th>
+            <th>accounttype</th>
+            <th>ifscCode</th>
+            <th>accountNo</th>
+          </tr>
+         
+        </table>
+      </div>

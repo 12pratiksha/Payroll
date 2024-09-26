@@ -1,0 +1,116 @@
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-head-box">
+                <h3>Coff Approval List</h3>
+               
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance & Leave</li>
+                        <li class="breadcrumb-item active" aria-current="page">Compensatory Off</li>
+                        <li class="breadcrumb-item active" aria-current="page">Coff Approval List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="applicationListForm">
+        <div class="row filter-row">
+           <div class="col-md-12">
+               <div class="row">
+                <div class="col-md-4">
+    
+                    <label class="focus-label">From Date<small class="text-danger">*</small></label>
+                    <div class="form-group form-focus mb-0">
+                        <div class="cal-icon">
+                         
+                            <input class="form-control floating datetimepicker"  bsDatepicker  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true}" formControlName="fromDate" >
+
+                        </div>
+                        <!-- <small
+                        *ngIf="addEmployeeForm.get('DOB').invalid && addEmployeeForm.get('DOB').touched"
+                        class="text-danger"> *Date of Birth is Required</small> -->
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+    
+                    <label class="focus-label">To Date <small class="text-danger">*</small></label>
+                    <div class="form-group form-focus mb-0">
+                        <div class="cal-icon">
+                          
+                            <input class="form-control floating datetimepicker"  bsDatepicker  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',  returnFocusToInput: true}" formControlName="toDate" >
+
+                        </div>
+                        <!-- <small
+                        *ngIf="addEmployeeForm.get('DOB').invalid && addEmployeeForm.get('DOB').touched"
+                        class="text-danger"> *Date of Birth is Required</small> -->
+                    </div>
+
+                </div>
+
+            <div class="col-md-4">
+               <div class="add-emp-section" style="margin-top: 10px;">
+                   <a class="btn btn-success btn-add-emp"><i class="fas fa-plus"></i>View Details</a>
+               </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </form>
+       <div class="row"  >
+           <div class="col-sm-12">
+               <div class="card mb-0">
+                   
+                   <div class="card-body">
+       
+                       <div class="table-responsive">
+                           
+                           <div class="mat-elevation-z8">
+                            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable" class="datatable table table-stripped mb-0" >
+                      
+                               <thead>
+                                   <tr>
+                                       <th>Coff Id</th>
+                                       <th>Employee Id</th>
+                                       <th>Name</th>
+                                       <th>Applicable Date</th>
+                                       <th>COff Code </th>
+                                       <th>From Date </th>
+                                       <th>To Date </th>
+                                       <th>Total Day </th>
+                                       <th>Reason</th>
+                                       <th>Status</th>
+                                      
+                                   </tr>
+                               </thead>
+                           
+                               <tbody>
+                                   <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                   </tr>
+                                   
+                               </tbody>
+                              
+                           </table>
+
+
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
+       </div>
+    </div>
+</div>
+<!-- <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> -->

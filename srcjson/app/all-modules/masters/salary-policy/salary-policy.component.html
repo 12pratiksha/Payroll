@@ -1,0 +1,106 @@
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="row">
+       <div class="col-md-12">
+           <div class="page-head-box">
+               <h3>Salary Policy List</h3>
+               <nav aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                       <li class="breadcrumb-item">Masters</li>
+                       <li class="breadcrumb-item">Payroll Setup</li>
+                       <li class="breadcrumb-item active" aria-current="page">Salary Policy</li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+   </div>
+   <!-- Search Filter -->
+   <div class="row filter-row">
+       <div class="col-md-8">
+
+       </div>
+       <div class="col-md-4">
+           <div class="add-emp-section">
+              
+               <a  class="btn btn-success btn-add-emp" (click)="salaryPolicy('add')"><i class="fas fa-plus"></i>Create New</a>
+               
+           </div>
+           
+       </div>
+   </div>
+   <!-- /Search Filter -->
+   <div class="row" > 
+    <div class="col-md-12">
+        <div class="card mb-0">
+        <div class="card-body">
+        <div class="table-responsive">
+            <table class="table custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="tableData">
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>Branch</th>
+                        <th>Category</th>
+                        <!-- <th>SubCategory</th> -->
+                        <th>Grade</th>
+                        <th>SalaryDays</th>
+                        <th>EffectiveDate</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                       <td>{{item.state}}</td>
+                       <td>{{item.branch}}</td>
+                       <td>{{item.category}}</td>
+                       <!-- <td>{{item.subCategory}}</td> -->
+                       <td>{{item.grade}}</td>
+                       <td>{{item.days}}</td>
+                       <td>{{item.effectiveDate | date : 'dd-MM-yyyy'}} </td>
+                       <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen" (click)="salaryPolicy(item.salaryPolicyId)"></i></a>
+                            <a  ><i class="far fa-trash-alt" (click)="delete(item.salaryPolicyId)"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table custom-table datatable" datatable  [dtOptions]="dtOptions" *ngIf="!tableData">
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>Branch</th>
+                        <th>Category</th>
+                        <!-- <th>SubCategory</th> -->
+                        <th>Grade</th>
+                        <th>SalaryDays</th>
+                        <th>EffectiveDate</th>
+                        <th class="text-end no-sort">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                       <td>{{item.state}}</td>
+                       <td>{{item.branch}}</td>
+                       <td>{{item.category}}</td>
+                       <!-- <td>{{item.subCategory}}</td> -->
+                       <td>{{item.grade}}</td>
+                       <td>{{item.days}}</td>
+                       <td>{{item.effectiveDate | date : 'dd-MM-yyyy'}} </td>
+                       <td class="text-end ico-sec justify-content-end">
+                            <a ><i class="fas fa-pen" (click)="salaryPolicy(item.salaryPolicyId)"></i></a>
+                            <a  ><i class="far fa-trash-alt" (click)="delete(item.salaryPolicyId)"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div>
+        <img class="loader " src="/assets/img/loader/loader.gif" *ngIf="loader"> 
+    </div>
+</div>
+   
+   </div>
+   
+  

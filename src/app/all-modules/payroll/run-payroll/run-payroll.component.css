@@ -1,0 +1,24 @@
+small{
+    color: red;
+}
+.mat-form-field-appearance-outline {
+    width: 100%;
+    padding: 2px;
+    .mat-form-field-flex {
+        padding: 0 .75em 0 .75em;
+        margin-top: -0.25em;
+        position: relative;
+        width: 100%;
+      }
+}
+
+.example-full-width {
+    height: 60px;
+    padding-bottom: 60px;
+}
+
+.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
+    height: 25px;
+    padding: 1.5px;
+    font-size: 15px;
+}
